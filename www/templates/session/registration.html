@@ -1,0 +1,57 @@
+<section class="padding-10" style="max-width: 300px;margin:auto;">
+    <h1>Let’s set up your account.</h1>
+    <p class="margin-v-10" style="text-align: center">This only requires 2 steps to get started!</p>
+    <br><br><br>
+    <p class="comment-message" style="text-align: left;"><asterisk>*</asterisk>All fields are required</p>
+
+    <form name="registrationForm" novalidate class="margin-v-10" autocomplete="off">
+        <fieldset>
+            <div class="item-floating-label text-field-1" ng-class="{invalid: registrationForm.first_name.$invalid && registrationForm.$filled}">
+                <span class="input-label">First Name<asterisk>*</asterisk></span>
+                <input type="text" ng-model="data.first_name" required name="first_name" autocapitalize="on" i-capitalize />
+            </div>
+            <div class="item-floating-label text-field-1" ng-class="{invalid: registrationForm.last_name.$invalid && registrationForm.$filled}">
+                <span class="input-label">Last Name<asterisk>*</asterisk></span>
+                <input type="text" ng-model="data.last_name" required name="last_name" autocapitalize="on" i-capitalize />
+            </div>
+            <div class="item-floating-label text-field-1" ng-class="{invalid: registrationForm.username.$invalid && registrationForm.$filled}">
+                <span class="input-label">Username<asterisk>*</asterisk></span>
+                <i class="icon-field icon-username"></i>
+                <input type="text" ng-model="data.username"
+                       ng-pattern="/^[a-zA-Z0-9._-]+[a-zA-Z0-9]$/"
+                       required name="username" autocapitalize="off" autocorrect="off" />
+            </div>
+        </fieldset>
+        <fieldset ng-if="!data.facebook_id">
+            <i-errors field="registrationForm.password" ng-show="registrationForm.$filled"
+                  messages="{
+                    password: 'Hold on! We know it\'s painful, but your password must be at least six characters long with at least 1 number. Thanks!'
+                  }"
+                ></i-errors>
+            <div class="item-floating-label text-field-1" ng-class="{invalid: registrationForm.password.$invalid && registrationForm.$filled}">
+                <span class="input-label">Password<asterisk>*</asterisk></span>
+                <i class="icon-field icon-protected"></i>
+                <input type="password"  class="password"  ng-model="data.password" ng-required="!data.facebook_id"
+                       i-repeat="confirm" name="password" i-password-validator/>
+            </div>
+            <div class="item-floating-label text-field-1" ng-class="{invalid: registrationForm.confirm.$invalid && registrationForm.$filled}">
+                <span class="input-label">Confirm Password<asterisk>*</asterisk></span>
+                <i class="icon-field icon-protected"></i>
+                <input type="password"  class="password" ng-model="data.confirm" ng-required="!data.facebook_id" i-repeat="password" name="confirm"/>
+            </div>
+        </fieldset>
+    </form>
+
+</section>
+
+<section class="screen-process">
+    <i class="step active"></i>
+    <i class="step"></i>
+</section>
+
+<section class="footer-fixed">
+    <button ng-click="back()" class="btn-text-footer">Back</button>
+    <button ng-click="next()" class="btn-text-footer">Next</button>
+</section>
+
+<div class="wrap-center wrap-dark" ng-show="loading"><spinner></spinner></div>

@@ -1,0 +1,29 @@
+{
+  "name": "js-collection",
+  "version": "0.0.1",
+  "homepage": "https://github.com/intellectsoft-uk/js-collection",
+  "description": "javascript collection and model",
+  "main": "js-collection.js",
+  "keywords": [
+    "collection",
+    "model"
+  ],
+  "dependencies": {
+    "lodash": ">2.4.0"
+  },
+  "devDependencies": {
+    "angular-mocks": "1.2.*",
+    "angular": "1.2.*"
+  },
+  "license": "MIT",
+  "ignore": [
+    "gulpfile.js",
+    "package.json",
+    "node_modules",
+    "karma.conf.js",
+    "bower_components",
+    "test",
+    "tests",
+    "src"
+  ]
+}

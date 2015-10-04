@@ -1,0 +1,49 @@
+.guide {
+  .content {
+    padding-top: 0;
+  }
+  .guide-content {
+    margin: auto;
+    position: relative;
+    max-width: 600px;
+
+    header {
+      height: 40px;
+      line-height: 40px;
+      color: #575757;
+      font-size: 15px;
+      padding: 0 15px;
+
+      .btn-close {
+        background: url("../images/v2/icons/x-40.png") center center no-repeat;
+        background-size: 20px;
+        width: 40px;
+        height: 40px;
+        position: absolute;
+        top: 0;
+        right: 5px;
+      }
+    }
+
+    .wrap {
+      position: relative;
+      .wrap-animate {
+        width: 1000%;
+        transition: all linear 0.2s;
+      }
+      figure {
+        box-sizing: border-box;
+        display: block;
+        overflow: hidden;
+        overflow-y: scroll;
+        width: 10%;
+        padding: 0 15px;
+        float: left;
+        img {
+          width: 100%;
+        }
+      }
+    }
+  }
+
+}

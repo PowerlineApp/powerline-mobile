@@ -1,0 +1,31 @@
+{
+  "name": "HelloIonic",
+  "private": "true",
+  "dependencies": {
+    "angular-touch": "~1.4.7",
+    "angular-route": "~1.4.7",
+    "underscore": "1.7.0",
+    "jquery": "~2.1.4",
+    "iscroll": "5.0.5",
+    "momentjs": "~2.4.0",
+    "ionic": "driftyco/ionic-bower#1.1.0",
+    "angular-google-maps": "~2.0.6",
+    "Autolinker.js": "~0.15.2",
+    "angular-bindonce": "~0.3.3",
+    "textarea-caret-position": "~3.0.0",
+    "js-collection": "https://github.com/intellectsoft-uk/js-collection.git#~0.0.2",
+    "bluebird": "~2.10.2",
+    "angular-resource": "~1.4.7"
+  },
+  "devDependencies": {
+    "angular-scenario": "~1.4.7",
+    "angular-mocks": "~1.4.7"
+  },
+  "resolutions": {
+    "angular": "1.4.3",
+    "angular-route": "~1.4.7",
+    "angular-touch": "~1.4.7",
+    "angular-mocks": "~1.4.7",
+    "angular-scenario": "~1.4.7"
+  }
+}

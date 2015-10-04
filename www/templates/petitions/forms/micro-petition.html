@@ -1,0 +1,6 @@
+<fieldset class="add-post">
+    <textarea ng-model="data.petition_body" maxlength="300"
+              name="petition_body" required placeholder="Type your message here"
+              ng-init="data.chars_left = 300"
+              ng-change="data.chars_left = 300 - data.petition_body.length"></textarea>
+</fieldset>

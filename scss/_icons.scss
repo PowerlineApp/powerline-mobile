@@ -1,0 +1,118 @@
+.petition-green {
+  display: inline-block;
+  background: url("../images/icons/petition-green.png") center center no-repeat;
+  background-size: 33px auto;
+  width: 33px;
+  height: 16px;
+}
+
+.question-green {
+  display: inline-block;
+  background: url("../images/icons/question-green.png") center center no-repeat;
+  background-size: 15.5px auto;
+  width: 15.5px;
+  height: 15.5px;
+}
+
+.facebook-btn-icon {
+  display: block;
+  position: absolute;
+  left: 0;
+  top: 5px;
+  height: 39px;
+  width: 50px;
+  background: url("../images/icons/facebook.png") center center no-repeat;
+  background-size: 11.5px auto;
+  border-right: solid 1px #627aad;
+}
+
+.completed-ok {
+  display: inline-block;
+  width: 21px;
+  height: 21px;
+  background: url("../images/v2/icons/completed-ok.png");
+  background-size: 21px;
+}
+
+.icon-send {
+  display: inline-block;
+  width: 25px;
+  height: 25px;
+  background: url("../images/v2/icons/header-icons-sprite.png") center center no-repeat;
+  background-size: 330px auto;
+  background-position: -295px -14px;
+  vertical-align: middle;
+  margin: auto;
+}
+
+.icon-field {
+  display: inline-block;
+  background: url("../images/v2/icons/form-icons.png") no-repeat;
+  background-size: 21px 549px;
+  width: 21px;
+  height: 21px;
+
+  &.icon-username {background-position-y: 0px;}
+  &.icon-protected {background-position-y: -49px;}
+  &.icon-email {background-position-y: -98px;}
+  &.icon-phone {background-position-y: -148px;}
+  &.icon-date {background-position-y: -527px;}
+  &.icon-gender {background-position-y: -187px;}
+  &.icon-race {background-position-y: -220px;}
+  &.icon-married {background-position-y: -248px;}
+  &.icon-employed {background-position-y: -282px;}
+  &.icon-unknown1 {background-position-y: -325px;}
+  &.icon-unknown2 {background-position-y: -359px;}
+  &.icon-philosophy {background-position-y: -377px;}
+  &.icon-party {background-position-y: -417px;}
+  &.icon-donor {background-position-y: -453px;}
+  &.icon-vote {background-position-y: -493px;}
+}
+
+.icon-magnifier {
+  display: inline-block;
+  background: url("../images/v2/icons/magnifier.png") center center no-repeat;
+  background-size: 27px auto;
+  width: 27px;
+  height: 24px;
+}
+
+.icon-group {
+  display: inline-block;
+  background: url("../images/v2/icons/profile-spite.png") 0 0 no-repeat;
+  background-size: 38px auto;
+  width: 38px;
+  height: 38px;
+
+  &.icon-interests {background-position-y: 3px;}
+  &.icon-account {background-position-y: -47px;}
+  &.icon-contact {background-position-y: -96px;}
+  &.icon-personal {background-position-y: -141px;}
+  &.icon-employment {background-position-y: -190px;}
+  &.icon-cultural {background-position-y: -240px;}
+
+}
+
+.icon-photo {
+  display: inline-block;
+  background: url("../images/v2/icons/photo.png") center center no-repeat;
+  background-size: 10px auto;
+  width: 10px;
+  height: 8px;
+  vertical-align: middle;
+}
+
+.activity-control {
+  $top: 4px;
+  display: inline-block;
+  width: 40px; height: 40px;
+  background: url('../images/v2/icons/activity-controls.png') 0 $top no-repeat;
+  background-size: 485px 30px;
+  vertical-align: top;
+
+  &.double-up {background-position: 0 $top;}
+  &.double-down {background-position: -89px $top;}
+  &.up {background-position: -323px $top;}
+  &.down {background-position: -412px $top;}
+  &.reply {background-position: -174px $top;}
+}

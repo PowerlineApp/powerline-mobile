@@ -1,0 +1,55 @@
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Lato';
+  text-align: center;
+  color: #fff;
+  font-weight: $weightBold;
+  &.gray {
+    color: #818282;
+  }
+}
+
+h1, h2, h3, h4, h5, h6 {
+  &.section-title {
+    text-align: left;
+    text-indent: 20px;
+    color: #030366;
+  }
+}
+
+h1 {
+  font-size: 17.5px;
+  &.app {
+    font-size: 53px;
+  }
+  &.screen-title {
+    font-size: 20px;
+    text-align: left;
+    margin-bottom: 15px;
+    font-weight: normal;
+  }
+}
+
+h2 {font-size: 16px;}
+h3 {font-size: 15px;}
+h4 {font-size: 13px;}
+
+.gray-content h3,
+.white-content h3 {
+  color: #7eae33;
+  text-align: left;
+  padding: 30px 10px 0 10px;
+}
+
+.gray-content h3 {
+  padding-left: 0;
+  padding-top: 5px;
+}
+
+.light {
+  h1 {
+    font-size: 18px;
+    text-align: center;
+    font-family: Lato;
+    color: #030366;
+  }
+}

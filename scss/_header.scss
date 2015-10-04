@@ -1,0 +1,465 @@
+.top-bar {
+
+  position: fixed;
+  top: 0;
+  height: 46px;
+  background: #030366;
+  border-bottom:solid 1px #06067b;
+  box-shadow: 0px 1px 5px #000;
+  left: 0;
+  width: 100%;
+  z-index: 10;
+
+  .center {
+    text-align: center;
+    h1 {
+      padding: 3px 50px 0;
+      line-height: 46px;
+      color: #eee;
+      font-weight: normal;
+      font-size: 17px;
+      @include ellipsisRows(1);
+    }
+  }
+
+  .right, .left {
+    position: absolute;
+    min-width: 55px;
+    height: 46px;
+    top: 0;
+  }
+
+  .right {
+    right: 0;
+  }
+
+  .left {
+    left: 0;
+  }
+
+  .btn-share,
+  .btn-text,
+  .btn-reg,
+  .btn-menu,
+  .btn-back,
+  .btn-plus,
+  .btn-pencil,
+  .btn-save,
+  .btn-new-post {
+    display: block;
+    width: 100%;
+    height: 100%;
+    box-sizing: border-box;
+    background: url("../images/v2/icons/header-icons-sprite.png") center center no-repeat;
+    background-size: 330px auto;
+    background-position: 0 0;
+    &.ng-click-active {opacity: 0.7;}
+  }
+
+  .btn-text {
+    color: #fff;
+    font-size: 15px;
+    text-align: center;
+    line-height: 46px;
+    padding-top: 4px;
+    font-weight: normal;
+    background: none;
+    &.ng-click-active {opacity: 0.7;}
+  }
+
+  .btn-send i {
+    display: inline-block;
+    width: 25px;
+    height: 46px;
+    background: url("../images/v2/icons/header-icons-sprite.png") center center no-repeat;
+    background-size: 330px auto;
+    background-position: -295px -2px;
+    vertical-align: top;
+    margin-right: 9px;
+  }
+
+  .btn-menu {
+    background-position: 5px 0;
+  }
+
+  .btn-back {
+    background: url("../images/v2/icons/back-sprite.png") -53px 13px no-repeat;
+    background-size: auto 28px;
+  }
+
+  .btn-reg {
+    background: url("../images/buttons/reg.png") center center no-repeat;
+    background-size: auto 25px;
+  }
+
+  .btn-new-post {
+    background-position: -59px 0;
+  }
+
+  .btn-plus {
+    background-position: -222px 0;
+  }
+
+  .btn-pencil {
+    background-position: -113px 0;
+  }
+
+  .btn-save {
+    background-position: -164px 0;
+  }
+
+  .btn-share {
+    background: url("../images/buttons/share.png") center center no-repeat;
+    background-size: auto 27px;
+  }
+}
+
+.notifications {
+  height: 38px;
+  width: 100%;
+  position: relative;
+  z-index: 9;
+  background: #0c0c54;
+  margin: auto;
+  li {
+    width: 33%;
+    border-left: solid 1px #2c3666;
+    box-sizing: border-box;
+    float: left;
+    &:last-child {
+      width: 34%;
+    }
+    &:last-child.active {
+      float: right;
+    }
+    &:first-child {
+      border: none;
+    }
+    height: 100%;
+    display: block;
+    background: #0c0c54;
+    text-align: center;
+    i {
+      position: relative;
+      display: inline-block;
+      height: 100%;
+      width: 60px;
+      background: url('../images/v2/icons/notification-icons-sprite.png') no-repeat;
+      background-size: 128px auto;
+      background-position-y: -3px;
+    }
+    &.news {
+      i {
+        background-position-x: 10px;
+      }
+    }
+    &.followers {
+      i {
+        background-position-x: -34px;
+      }
+    }
+    &.messages {
+      i {
+        background-position-x: -81px;
+      }
+    }
+
+    span {
+      box-sizing: border-box;
+      color: #fff;
+      background: #54c5ff;
+      min-width: 10px;
+      height: 10px;
+      display: block;
+      border-radius: 5px;
+      position: absolute;
+      font-style: normal;
+      top: 6px;
+      right: 15px;
+      text-align: center;
+      line-height: 10px;
+      font-size: 8px;
+      font-family: "Lato Bold";
+    }
+
+    &.news span {background-color: $red;}
+
+    &.ng-click-active {
+      background: #2c3666;
+    }
+    &.active {
+      background: #54c5ff;
+      i {
+        background-position-y: -47px;
+      }
+      span {
+        background: #0c0c54;
+      }
+      &.news span {background-color: $red;}
+    }
+
+  }
+}
+
+.light .top-bar {
+  background-color: transparent;
+  border-color: transparent;
+  box-shadow: none;
+
+  .btn-back {
+    background: url("../images/v2/icons/back-blue.png") center center no-repeat;
+    background-size: 17px 23px;
+  }
+}
+
+.q-header {
+  border-radius: 2px;
+  background: #023a73;
+  background: -webkit-radial-gradient(center, ellipse cover, #04b4dd 0%, #023a73 100%);
+  background-position: 0 -50px;
+  padding-top: 8px;
+
+  .avatar {
+    display: block;
+    width: 64px;
+    height: 64px;
+    overflow: hidden;
+    border: solid 1px #fff;
+    border-radius: 2px;
+    img {
+      width: 64px;
+    }
+    margin: 0 auto 8px;
+  }
+
+  .q-info {
+    width: 100%;
+    background: #fff;
+    padding: 8px;
+    box-sizing: border-box;
+    height: 44px;
+    border-radius: 0 0 2px 2px;
+    div {
+      box-sizing: border-box;
+      width: 25%;
+      height: 27px;
+      float: left;
+      border-left: solid 1px #dbdddc;
+      text-overflow: ellipsis;
+      font-family: Lato;
+      font-size: 9px;
+      line-height: 13px;
+      text-align: center;
+      color: #798ca6;
+      &:first-child {
+        border: none;
+      }
+      strong, time, span {
+        color: #252571;
+        font-size: 15px;
+      }
+      &.small time{
+        font-size: 9px;
+        margin-right: 3px;
+      }
+    }
+    &.two-sections div {
+      width: 50%;
+    }
+    &.three-sections div {
+      width: 33%;
+    }
+    .icon-responses, .icon-time, .icon-calendar {
+      display: inline-block;
+      vertical-align: top;
+      width: 14px;
+      height: 14px;
+      background: url('../images/v2/icons/q-info-sprite.png') no-repeat;
+      background-size: 74px 17px;
+      background-position: 0 -3px;
+      &.icon-time {background-position: -31px -2px;}
+      &.icon-calendar {background-position: -59px -3px;}
+    }
+    .icon-fundraiser, .icon-event, .icon-petition, .icon-discussion, .icon-poll, .icon-post {
+      display: block;
+      width: 25px;
+      height: 20px;
+      margin: auto;
+      background: url('../images/v2/icons/post-icons.png') no-repeat;
+      background-size: 100px auto;
+
+      &.icon-poll {background-position: -2px -6px;}
+      &.icon-petition {background-position: -38px -6px;}
+      &.icon-discussion {background-position: -74px -6px;}
+      &.icon-post {background-position: -76px -48px;}
+      &.icon-event {background-position: -36px -48px;}
+      &.icon-fundraiser {background-position: 0px -48px;}
+    }
+  }
+}
+
+.p-header {
+  padding: 14px 8px 14px 112px;
+  margin: 15px 8px;
+  position: relative;
+  min-height: 125px;
+  background: #fff;
+  box-shadow: 1px 1px 1px #e3e4e8;
+  box-sizing: border-box;
+  .avatar {
+    display: block;
+    width: 90px;
+    height: 90px;
+    overflow: hidden;
+    border-radius: 2px;
+    img {
+      width: 90px;
+    }
+    position: absolute;
+    left: 8px;
+    top: 14px;
+  }
+  color: #798ca6;
+
+  h3 {
+    color: #030366;
+    font-family: "Lato Bold";
+    font-size: 15px;
+    text-align: left;
+  }
+
+  p {
+    line-height: 17px;
+    font-size: 9px;
+    font-family: Lato;
+  }
+}
+
+.profile-header-2,
+.profile-header {
+  box-shadow: 1px 1px 1px #e3e4e8;
+  box-sizing: border-box;
+  border-radius: 3px;
+  background: #fff;
+  font-size: 10px;
+  color: #798ca6;
+  position: relative;
+  padding: 19px 15px 15px;
+  min-height: 120px;
+
+  .title {
+    font-size: 14px;
+    color: #030366;
+    font-family: "Lato Bold";
+  }
+
+  .slogan {
+    font-style: italic;
+    margin: 15px auto;
+  }
+
+  p {
+    line-height: 1.4;
+  }
+
+  .avatar {
+    display: block;
+    width: 63px;
+    height: 63px;
+    overflow: hidden;
+    border: solid 1px #dbdddc;
+    border-radius: 3px;
+    float: left;
+    margin: -2px 11px 14px -2px;
+    position: relative;
+    background: #eaf1f4;
+    img {width: 100%;}
+    .icon-photo {
+      position: absolute;
+      z-index: 1;
+      top: 2px;
+      right: 2px;
+    }
+  }
+
+  .editable-field {
+    margin: 2px auto;
+
+    textarea, input {
+      padding: 8px;
+      box-sizing: border-box;
+      background: none;
+      width: 100%;
+      max-width: 200px;
+      background: #eaf1f4;
+    }
+    textarea {
+      min-height: 40px;
+    }
+  }
+
+  .completion-fill {
+    margin-top: 10px;
+    width: 100%;
+    clear: both;
+    .process-wrap {
+      height: 5px;
+      display: inline-block;
+      margin-left: 15px;
+      position: relative;
+      top: -1px;
+      border-radius: 5px;
+      max-width: 200px;
+      .process {
+        height: 5px;
+        border-radius: 5px;
+      }
+    }
+  }
+
+  strong {
+    font-family: "Lato Bold";
+  }
+}
+
+.profile-header-2 {
+  box-shadow: none;
+  font-size: 12px;
+  min-height: 100%;
+  margin: auto;
+  padding: 0;
+
+  .icon-user-account {
+    background: url("../images/v2/cut/account.png") center center no-repeat;
+    background-size: 30px;
+    width: 30px;
+    height: 30px;
+    display: inline-block;
+    &.icon-user-account-l {
+      background: url("../images/v2/cut/account-l.png") center center no-repeat;
+      background-size: 60px;
+      width: 60px;
+      height: 60px;
+    }
+  }
+
+  .completion-fill {
+    text-align: center;
+    width: 275px;
+    margin: auto;
+    position: relative;
+    .icon-user-account {
+      position: absolute;
+      top: -3px;
+      left: 12px;
+      &.icon-user-account-l {
+        top: -15px;
+        left: -20px;
+      }
+    }
+    span, strong {
+      font-size: 12px;
+      color: #798ca6;
+    }
+  }
+}

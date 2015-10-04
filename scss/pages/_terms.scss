@@ -1,0 +1,28 @@
+.terms {
+  text-align: left;
+  color: #8a8a8a;
+  padding: 10px;
+
+  h3 {
+    font-size: $baseFontSize * 1.2;
+    color: #798ca6;
+    text-align: left;
+    font-family: Lato;
+  }
+
+  h4 {
+    font-size: $baseFontSize * 1.1;
+    color: #798ca6;
+    text-align: left;
+    font-family: Lato;
+  }
+
+  a {
+    color: #030366;
+  }
+
+  p {
+    margin: 10px 0;
+    text-indent: 20px;
+  }
+}

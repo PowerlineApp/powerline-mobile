@@ -1,0 +1,28 @@
+<div class="popup-overflow">
+    <fieldset class="popup">
+        <a class="text-close" ng-click="selectOption()">Cancel</a>
+        <p class="section-title">
+            <strong>Submit?</strong>
+            <span>{{ current.value }}</span>
+        </p>
+        <div class="text-field-2">
+            <textarea ng-model="$parent.data.comment" placeholder="(Optional) You can add your comment here" maxlength="500"></textarea>
+        </div>
+
+        <div class="margin-10">
+            <div class="checkbox-privacy" ng-class="{checked: data.privacy}" guide="privacy-option" ng-click="data.privacy = data.privacy ? 0 : 1">
+                <i></i>
+                {{ data.privacy ? 'Username hidden' : 'Username visible'  }}
+            </div>
+        </div>
+        <div class="section-footer">
+            <span ng-bind="500 - data.comment.length"></span>
+            <a class="btn-text" ng-click="answer()">
+                Submit
+                <i class="icon-send"></i>
+            </a>
+        </div>
+    </fieldset>
+</div>
+
+<div class="wrap-center wrap-dark" ng-show="loading"><spinner></spinner></div>

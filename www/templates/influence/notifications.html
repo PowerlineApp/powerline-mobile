@@ -1,0 +1,25 @@
+<section ng-include="'templates/notifications.html'"></section>
+
+<tab-panel open="currentTab.options.key">
+  <ul class="header header-50">
+    <li ng-click="open($event);setCurrentTab(0)">
+      You <i class="counter" ng-show="tabYou.get('number_of_new')">{{ tabYou.get('number_of_new') }}</i>
+    </li>
+    <li ng-click="open($event);setCurrentTab(1)">
+      Following <i class="counter" ng-show="tabFollowing.get('number_of_new')">{{ tabFollowing.get('number_of_new') }}</i>
+    </li>
+  </ul>
+  <tabs style="background: #fff;border-right: solid 1px #dae3e6;" ng-style="{'min-height': (minContentHeight - 130) + 'px'}">
+    <tab class="sa-items">
+      <sa-item ng-repeat="item in tabYou.get('activities')"></sa-item>
+      <p ng-hide="tabYou.get('activities').length || loading" class="no-results">No results</p>
+    </tab>
+    <tab class="sa-items">
+      <sa-item ng-repeat="item in tabFollowing.get('activities')"></sa-item>
+      <p ng-hide="tabFollowing.get('activities').length || loading" class="no-results">No results</p>
+    </tab>
+  </tabs>
+</tab-panel>
+
+
+<div class="wrap-center" ng-show="loading"><spinner></spinner></div>

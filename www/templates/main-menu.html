@@ -1,0 +1,12 @@
+<p ng-click="cleanSearchCache();closeMenu();path('/search')" class="search-item">Search</p>
+<div i-scroll="ul" i-swipe i-swipe-left="closeMenu()"
+     class="menu-items"
+     ng-click="$event.stopPropagation();$event.preventDefault()"
+     ng-style="{'height': minContentHeight - 46}">
+    <ul>
+        <li ng-class="item.getClass()" ng-repeat="item in items" data-path="{{ item.path }}" ng-click="navigate(item)">
+            <i></i>
+            {{ item.name }}
+        </li>
+    </ul>
+</div>

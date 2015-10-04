@@ -1,0 +1,114 @@
+$menuBgColor: #0c0c54;
+$menuBgColorActive: #54c5ff;
+$menuColor: #fff;
+$menuColorActive: #fff;
+$menuBorderBottomColor: #31316e;
+
+.nav {
+  position: fixed;
+  top: 0px;
+  left: 0px;
+  margin-left: -260px;
+  width: 260px;
+  height: 100%;
+  background: $menuBgColor;
+  z-index: 11;
+  overflow-y: scroll;
+
+  .menu-items {
+    overflow: hidden;
+    width: 100%;
+  }
+
+  li {
+    height: 57px;
+    border-bottom: solid 1px $menuBorderBottomColor;
+    color: $menuColor;
+    background-color: $menuBgColor;
+    font-size: 15px;
+    line-height: 57px;
+
+    i {
+      display: block;
+      height: 57px;
+      width: 64px;
+      float: left;
+      background-image: url("../images/v2/icons/menu-sprite.png");
+      background-size: 129px 585px;
+      background-repeat: no-repeat;
+      background-position-y: 55px;
+      background-position-x: -63px;
+    }
+
+  }
+
+  li.home-item i {background-position-y: 11px;}
+  li.groups-item i {background-position-y: -47px;}
+  li.influences-item i {background-position-y: -102px;}
+  li.representatives-item i {background-position-y: -161px;}
+  li.other-item i {background-position-y: -328px;}
+  li.profile-item i {background-position-y: -216px;}
+  li.settings-item i {background-position-y: -272px;}
+  li.logout-item i {background-position-y: -384px;}
+  li.help-item i {background-position-y: -443px;}
+  li.share-item i {background-position-y: -493px;}
+
+  li.active,
+  li.ng-click-active {
+    background-color: $menuBgColorActive;
+    color: $menuColorActive;
+  }
+
+  .search-item {
+    height: 46px;
+    width: 100%;
+    background: #030366;
+    border-bottom:solid 1px #06067b;
+    box-shadow: 0px 1px 0px #000;
+    line-height: 46px;
+    text-indent: 10px;
+    font-size: 15px;
+    color: #fff;
+    position: relative;
+  }
+}
+
+.new-post-window {
+  width: 230px;
+  position: fixed;
+  z-index: 11;
+  top: 45px;
+  right: 10px;
+  padding-top: 9px;
+  background: url('../images/v2/cut/top-corner.png') 204px top no-repeat;
+  background-size: 19px auto;
+  box-shadow: -1px 5px 10px rgba(0, 0, 0, 0.2);
+  a {
+    display: block;
+    width: 100%;
+    height: 50px;
+    line-height: 50px;
+    color: #030366;
+    font-size: 12px;
+    border-top: solid 1px #f7f7f7;
+    border-bottom: solid 1px #ddd;
+    background: #fff;
+    &:first-child {border-top: none;}
+    &:last-child {border-bottom: none;}
+    i {
+      width: 55px;
+      height: 50px;
+      display: inline-block;
+      background: url('../images/v2/icons/post-icons.png') no-repeat;
+      background-size: 115px auto;
+      vertical-align: middle;
+      &.micropetition {
+        background-position: -71px -41px;
+      }
+      &.petition {
+        background-position: -30px 9px;
+      }
+    }
+    &.ng-click-active {background-color: #ddd;}
+  }
+}

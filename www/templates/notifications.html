@@ -1,0 +1,17 @@
+<ul class="notifications" ng-controller="notifications">
+    <li class="news" ng-click="activity()" ng-class="getClass('/main')">
+        <i>
+            <span ng-show="homeCtrlParams.filter.unansweredCount">{{ homeCtrlParams.filter.unansweredCount }}</span>
+        </i>
+    </li>
+    <li class="followers" ng-click="followersNotifications()" ng-class="getClass('/influences/notifications')">
+        <i>
+            <span ng-show="SAState.hasNew || SAState.requestCount">{{ SAState.requestCount || ' '}}</span>
+        </i>
+    </li>
+    <li class="messages" ng-click="goToMessages()" ng-class="getClass('/messages')">
+        <i>
+            <span ng-show="messagesCount">{{ messagesCount }}</span>
+        </i>
+    </li>
+</ul>

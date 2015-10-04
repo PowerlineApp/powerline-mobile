@@ -1,0 +1,52 @@
+<section class="p-header">
+    <div class="avatar">
+        <img ng-src="{{ data.avatar_file_name }}"/>
+    </div>
+    <div>
+        <h3 ng-bind="data.username"></h3>
+        <p class="text-gray-light" ng-bind="data.first_name + ' ' + data.last_name"></p>
+    </div>
+    <br>
+    <button class="btn-large"
+       ng-show="follow && (!follow.isFollow() || follow.isApproved())"
+       ng-click="changeStatus(follow.isFollow() ? 'unfollow' : 'follow')"
+       ng-bind="follow.isFollow() ? 'unfollow' : 'follow'"
+       ng-class="{'btn-primary': !follow.isFollow(), 'btn-red1': follow.isFollow()}"
+       style="text-transform: capitalize"></button>
+    <p ng-if="follow.isFollow() && !follow.isApproved()" style="font-style: italic;">pending approval</p>
+</section>
+
+<section>
+    <ul class="info-list">
+        <li ng-show="data.birth">
+            <p><span>Date of Birth</span></p>
+            <p ng-bind="data.birth"></p>
+            <i class="icon-date"></i>
+        </li>
+        <li ng-show="data.facebook_link" ng-click="openSystem(data.facebook)">
+            <p><span>Facebook</span></p>
+            <p ng-bind="data.facebook_link"></p>
+        </li>
+        <li ng-show="data.twitter_link" ng-click="openSystem('https://twitter.com/' + data.twitter)">
+            <p><span>Twitter</span></p>
+            <p ng-bind="data.twitter_link"></p>
+        </li>
+        <li ng-show="data.city">
+            <p><span>City</span></p>
+            <p ng-bind="data.city"></p>
+            <i class="icon-address"></i>
+        </li>
+        <li ng-show="data.state">
+            <p><span>State</span></p>
+            <p ng-bind="data.state"></p>
+        </li>
+        <li ng-show="data.country">
+            <p><span>Country</span></p>
+            <p ng-bind="data.country"></p>
+        </li>
+    </ul>
+</section>
+
+<section ng-include=" 'templates/home/activities.html' "></section>
+
+<div class="wrap-center" ng-show="loading"><spinner></spinner></div>

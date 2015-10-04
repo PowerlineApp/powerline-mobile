@@ -1,0 +1,13 @@
+<section class="margin-8">
+    <ul class="services-list">
+        <li ng-click="openSystem(item.link)" ng-repeat="item in items">
+            <h2 ng-bind="item.title"></h2>
+            <p ng-bind="item.description"></p>
+            <figure>
+                <img ng-src="{{ item.logo }}">
+            </figure>
+        </li>
+    </ul>
+</section>
+
+<p class="copyrights padding-10" style="padding-bottom: 20px;text-align: center;">All copyrights and trademarks belong to their respective owners.</p>

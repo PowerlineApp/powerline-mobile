@@ -1,0 +1,8 @@
+<section class="tab two" ng-controller="influences.tabs" ng-show="!isEmpty()">
+    <a ng-click="switchView('following')" ng-class="tabLinkClass('following')">Following</a>
+    <a ng-click="switchView('followers')" ng-class="tabLinkClass('followers')">Followers</a>
+</section>
+
+<ng-include src="'templates/influence/' + view + '.html'" ng-hide="loading"></ng-include>
+
+<div class="wrap-center" ng-show="loading"><spinner></spinner></div>

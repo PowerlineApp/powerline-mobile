@@ -1,0 +1,12 @@
+<div class="left">
+    <p class="btn-menu" ng-show="data.menu" ng-click="menuToggle()"></p>
+    <p class="btn-back" ng-show="data.back" ng-click="back()"></p>
+    <p ng-class="data.left.btnClass" ng-show="data.left" ng-click="data.left.click()"></p>
+</div>
+<div class="center" ng-show="data.title"><h1 ng-bind="data.title"></h1></div>
+<div class="right">
+    <p ng-class="data.right.btnClass" ng-show="data.right" ng-click="data.right.click()">
+        {{ data.right.title }}
+        <i></i>
+    </p>
+</div>

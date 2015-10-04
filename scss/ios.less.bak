@@ -1,0 +1,27 @@
+@import 'app.less';
+
+.top-bar {
+  position: absolute;
+}
+
+body {
+  overflow: hidden;
+}
+
+.news-feed {
+  .notifications {
+    position: static;
+  }
+
+  .groups-filter-panel {
+    position: static;
+  }
+
+  .activity-list-wrap {
+    overflow-y: scroll;
+  }
+  .content {
+    padding-top: 46px;
+    overflow: hidden;
+  }
+}

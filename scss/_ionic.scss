@@ -1,0 +1,163 @@
+fieldset .item,
+form .item {
+  border-color: #ddd;
+  background-color: #fff;
+  color: #444;
+  position: relative;
+  z-index: 2;
+  display: block;
+  margin: -1px;
+  padding: 16px;
+  border-width: 1px;
+  border-style: solid;
+  font-size: 16px;
+}
+
+.toggle {
+  position: relative;
+  display: inline-block;
+  margin: -5px;
+  padding: 5px; }
+.toggle input:checked + .track {
+  border-color: #4a87ee;
+  background-color: #4a87ee; }
+.toggle.dragging .handle {
+  background-color: #fff !important; }
+.toggle.toggle-light input:checked + .track {
+  border-color: #ddd;
+  background-color: #ddd; }
+.toggle.toggle-stable input:checked + .track {
+  border-color: #b2b2b2;
+  background-color: #b2b2b2; }
+.toggle.toggle-positive input:checked + .track {
+  border-color: #4a87ee;
+  background-color: #4a87ee; }
+.toggle.toggle-calm input:checked + .track {
+  border-color: #54c5ff;
+  background-color: #54c5ff; }
+.toggle.toggle-assertive input:checked + .track {
+  border-color: #ef4e3a;
+  background-color: #ef4e3a; }
+.toggle.toggle-balanced input:checked + .track {
+  border-color: #66cc33;
+  background-color: #66cc33; }
+.toggle.toggle-energized input:checked + .track {
+  border-color: #f0b840;
+  background-color: #f0b840; }
+.toggle.toggle-royal input:checked + .track {
+  border-color: #8a6de9;
+  background-color: #8a6de9; }
+.toggle.toggle-dark input:checked + .track {
+  border-color: #444;
+  background-color: #444; }
+
+/* hide the actual input checkbox */
+.toggle input {
+  display: none; }
+
+/* the track appearance when the toggle is "off" */
+.toggle .track {
+  -webkit-transition-timing-function: ease-in-out;
+  -moz-transition-timing-function: ease-in-out;
+  transition-timing-function: ease-in-out;
+  -webkit-transition-duration: 0.2s;
+  -moz-transition-duration: 0.2s;
+  transition-duration: 0.2s;
+  -webkit-transition-property: background-color, border;
+  -moz-transition-property: background-color, border;
+  transition-property: background-color, border;
+  display: inline-block;
+  box-sizing: border-box;
+  width: 54px;
+  height: 32px;
+  border: solid 2px #E5E5E5;
+  border-radius: 20px;
+  background-color: #E5E5E5;
+  content: ' ';
+  cursor: pointer; }
+
+/* the handle (circle) thats inside the toggle's track area */
+/* also the handle's appearance when it is "off" */
+.toggle .handle {
+  -webkit-transition: 0.2s ease-in-out;
+  -moz-transition: 0.2s ease-in-out;
+  transition: 0.2s ease-in-out;
+  position: absolute;
+  top: 7px;
+  left: 7px;
+  display: block;
+  width: 28px;
+  height: 28px;
+  border-radius: 28px;
+  background-color: #fff;
+  /* used to create a larger (but hidden) hit area to slide the handle */ }
+.toggle .handle:before {
+  position: absolute;
+  top: -4px;
+  left: -22px;
+  padding: 19px 35px;
+  content: " ";
+}
+
+/* the handle when the toggle is "on" */
+.toggle input:checked + .track .handle {
+  -webkit-transform: translateX(22px);
+//  -moz-transform: translate3d(22px, 0, 0);
+  transform: translateX(22px);
+  background-color: #fff;
+}
+
+/* make sure list item content have enough padding on right to fit the toggle */
+.item-toggle {
+  padding-right: 99px;
+}
+.item-toggle.active {
+  box-shadow: none;
+}
+
+/* position the toggle to the right within a list item */
+.item-toggle .toggle {
+  position: absolute;
+  top: 7.5px;
+  right: 15px;
+  z-index: 3; }
+
+.toggle input:disabled + .track {
+  opacity: 0.6;
+}
+
+/* CUSTOM CLASSES */
+
+
+.toggle-comment-1 .item-toggle{
+  text-align: right;
+  border-color: transparent;
+  background-color: transparent;
+  font-size: 12px;
+  color: #798ca6;
+  padding: 19px 60px 3px 0;
+  .toggle {
+    right: 0;
+  }
+}
+
+.item-floating-label {
+  display: block;
+  background-color: transparent;
+  box-shadow: none; }
+.item-floating-label .input-label {
+  position: relative;
+  padding: 5px 0 0 0;
+  opacity: 0;
+  top: 10px;
+  -webkit-transition: opacity 0.15s ease-in, top 0.2s linear;
+  -moz-transition: opacity 0.15s ease-in, top 0.2s linear;
+  transition: opacity 0.15s ease-in, top 0.2s linear;
+}
+.item-floating-label .input-label.has-input {
+  opacity: 1;
+  top: 0;
+  -webkit-transition: opacity 0.15s ease-in, top 0.2s linear;
+  -moz-transition: opacity 0.15s ease-in, top 0.2s linear;
+  transition: opacity 0.15s ease-in, top 0.2s linear;
+}

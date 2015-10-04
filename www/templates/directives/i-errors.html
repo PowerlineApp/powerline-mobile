@@ -1,0 +1,3 @@
+<div class="i-errors" ng-show="field.$invalid">
+  <p ng-repeat="(key, value) in field.$error" ng-show="value" ng-if="messages[key]">{{ messages[key] }}</p>
+</div>

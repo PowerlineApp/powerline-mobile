@@ -1,0 +1,21 @@
+<section ng-include="'templates/notifications.html'"></section>
+
+<section class="margin-8" style="padding-bottom: 50px;">
+    <ul ng-repeat="group in items" class="profiles-list">
+        <li class="title">{{ group.letter }}</li>
+        <li ng-repeat="item in group.items">
+            <figure ng-click="navigateTo('group-profile', item)">
+                <img ng-src="{{ item.avatar_file_path }}">
+            </figure>
+            <p ng-click="navigateTo('group-profile', item)">{{ item.official_title }}</p>
+            <p ng-if="item.status === 1" class="btn-remove" ng-click="unjoin(item)"></p>
+            <p ng-if="item.status === 0" class="pending-message">pending approval</p>
+        </li>
+    </ul>
+    <br><br>
+</section>
+<section ng-show="!items.length" class="margin-10">
+    <p class="info-message" ng-show="!loading">Looks like you haven't joined any groups yet! Join or create one to make Powerline work for you!</p>
+</section>
+
+<div class="wrap-center" ng-show="loading"><spinner></spinner></div>

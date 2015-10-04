@@ -1,0 +1,263 @@
+.btn-larger,
+.btn-large {
+  height: 45px;
+  width: 100%;
+  display: block;
+  font-family: "Lato Light";
+  font-size: 16px;
+  line-height: 45px;
+  text-align: center;
+  border-radius: 6px;
+  &.btn-link {
+    text-indent: 16px;
+  }
+  a {
+    color:#fff;
+  }
+}
+
+.btn-larger {
+  height: 55px;
+  font-size: $baseFontSize * 1.25;
+  line-height: 55px;
+}
+
+.btn-medium {
+  height: 35px;
+  width: 100%;
+  display: block;
+  font-size: 13px;
+  line-height: 35px;
+  text-align: center;
+}
+
+.btn-green {
+  background: #54c5ff;
+  color: #fff;
+  font-weight: bold;
+
+  &.ng-click-active {background-color: #54c5ff;}
+}
+
+.btn-primary {
+  background: #030366;
+  color: #fff;
+  font-weight: bold;
+
+  &.ng-click-active {opacity: 0.8;}
+}
+
+.btn-blue {
+  background: #555588;
+  color: #fff;
+  span {color: #9e9ecb;}
+  &.ng-click-active {opacity: 0.8;}
+}
+
+.btn-text-1 {
+  font-size: 12px;
+  line-height: 15px;
+}
+
+.btn-text-bordered {
+  display: inline-block;
+  border: solid 1px #54c5ff;
+  padding: 3px;
+  border-radius: 5px;
+  color: #798ca6;
+  text-align: center;
+  background: transparent;
+  &.pressed {
+    color: #fff;
+    background: #54c5ff;
+  }
+}
+
+.btn-text-footer {
+  font-size: 17px;
+  display: inline-block;
+  width: 49%;
+  color: #fff;
+  background: none;
+  text-align: center;
+  font-family: "Lato Light";
+  &.ng-click-active {opacity: 0.8;}
+  padding: 10px 0;
+  &[disabled] {
+    color: #798ca6;
+  }
+}
+
+.btn-link {
+  text-align: left;
+  background-image: url("../images/arrows/white-right.png");
+  background-repeat: no-repeat;
+  background-position: 95% center;
+  background-size: auto 14px;
+}
+
+.btn-dark {
+  background: #030366;
+  color: #fff;
+  @include boxShadow(0, -1px, 1px, #26292d);
+
+  &.ng-click-active {background-color: #4a4c52;}
+}
+
+.btn-dark-simple {
+  background: #030366;
+  color: #fff;
+  &.ng-click-active {background-color: #4a4c52;}
+  font-weight: bold;
+}
+
+.btn-red1,
+.btn-red {
+  background: #762026;
+  color: #fff;
+  &.ng-click-active {background-color: #803137;}
+  font-weight: bold;
+}
+.btn-red1 {background: #762026;}
+
+.btn-info {
+  width: 55px;
+  height: 55px;
+  display: inline-block;
+  background: url("../images/buttons/info-sprite.png") 13px center no-repeat;
+  background-size: auto 29px;
+
+  &.ng-click-active {background-position-x: -62px;}
+}
+
+.btn-update {
+  width: 55px;
+  height: 55px;
+  display: inline-block;
+  background: url("../images/buttons/update-sprite.png") 9px center no-repeat;
+  background-size: auto 40px;
+
+  &.ng-click-active {background-position-x: -51px;}
+}
+
+.btn-plus {
+  width: 55px;
+  height: 55px;
+  display: inline-block;
+  background: url("../images/buttons/plus-sprite.png") 20px center no-repeat;
+  background-size: 62px auto;
+
+  &.ng-click-active {background-position-x: -25px;}
+}
+
+.btn-icons {position: relative;}
+
+.share-section {
+  text-align: right;
+  & > share {
+    margin: 8px 4px;
+    display: inline-block;
+    width: 24px;
+    height: 23px;
+    background: url('../images/v2/icons/share-sprite.png') 0 center no-repeat;
+    background-size: 86px 23px;
+    &.btn-share-fb {background-position-x: 1px;}
+    &.btn-share-ln {background-position-x: -64px;}
+    &.btn-share-twitter {background-position-x: -32px;}
+    vertical-align: middle;
+  }
+  & > .share-message {
+    padding-top: 5px;
+    box-sizing: border-box;
+    background: none;
+    width: auto;
+    color: #798ca6;
+    font-size: 10px;
+  }
+}
+
+.btn-plus-1,
+.btn-remove,
+.btn-add {
+  display: inline-block;
+  width: 30px;
+  height: 23px;
+  background: url("../images/v2/icons/controls-sprite.png") no-repeat;
+  background-size: 70px auto;
+  background-repeat: no-repeat;
+}
+.btn-add {background-position-x: 0px;}
+.btn-remove {background-position-x: -45px;}
+.btn-plus-1 {background-position-x: 0px;}
+
+.h-buttons-2 {
+  .btn-large, .btn-medium {
+    width: 50%;
+    float: left;
+  }
+  @include clearAfter()
+}
+
+.header-btn {
+  -webkit-box-sizing: border-box;
+  width: 34%;
+  height: 50px;
+  float: left;
+  border-top: solid 1px #f4f4f4;
+  border-right: solid 1px #f4f4f4;
+  border-bottom: solid 1px #dadada;
+  border-left: solid 1px #dadada;
+  background-color: #ebebeb;
+  background-position: center center;
+  background-repeat: no-repeat;
+  &:first-child {border-left: none;width: 33%;}
+  &:last-child {border-right: none;width: 33%;}
+  &.ng-click-active {background-color: #f3f3f3;}
+  &.petition {
+    background-image: url("../images/icons/petition-dark.png");
+    background-size: 34.5px auto;
+  }
+  &.open-letter {
+    background-image: url("../images/icons/letter-dark.png");
+    background-size: 20px auto;
+  }
+  &.hand {
+    background-image: url("../images/icons/hand-dark.png");
+    background-size: 23.5px auto;
+  }
+}
+
+.btn-close {
+  display: inline-block;
+  background: url("../images/v2/icons/x.png") center center no-repeat;
+  background-size: 12px auto;
+  width: 40px;
+  height: 40px;
+}
+
+.representative-button-groups {
+  text-align: center;
+
+  .btn-large {
+    height: auto;
+    padding: 10px 10px 8px 48px;
+    display: inline-block;
+    width: 42%;
+    font-size: 12px;
+    line-height: 14px;
+    min-width: 134px;
+    &:first-child {
+      background-image: url("../images/v2/icons/committee.png");
+      background-size: 31px;
+      background-repeat: no-repeat;
+      background-position: 11px 9px;
+    }
+    &:last-child {
+      background-image: url("../images/v2/icons/bill.png");
+      background-size: 36px;
+      background-repeat: no-repeat;
+      background-position: 11px 9px;
+      margin-left: 8px;
+    }
+  }
+}

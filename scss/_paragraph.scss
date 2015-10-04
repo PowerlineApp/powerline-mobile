@@ -1,0 +1,159 @@
+.text-white,
+.text-white-50 {
+  color: #fff;
+  a {
+    color: #8a8a8a;
+    &.ng-click-active {
+      color: #fff;
+    }
+  }
+}
+
+.text-gray-light {color: #eee;}
+
+
+.text-white-50 {
+  opacity: 0.5;
+}
+
+.text-md {font-size: 14px;}
+
+.white-content {
+  background: #eee;
+  color: #474a4f;
+  font-size: 13px;
+  p {
+    padding: 20px 10px 25px 10px;
+    line-height: 1.4;
+  }
+  hash-tag {color: #5fb6f3;}
+}
+
+.gray-content {
+  color: #8a8a8a;
+  font-size: 13px;
+  p {
+    line-height: 1.4;
+    a {
+      color: #72a8db;
+    }
+  }
+
+  .title {
+    text-align: center;
+    font-size: 15px;
+    margin-bottom: 10px;
+  }
+
+  .title-white {
+    color: #fff;
+    font-size: 16px;
+    margin: 25px;
+    text-align: center;
+  }
+
+  .link {
+    text-align: right;
+    color: #7eae33;
+  }
+
+  hash-tag {color: #4ca4e1;}
+}
+
+.info-message {
+  text-align: center;
+  margin: 15px 0;
+  padding: 15px 0px;
+  font-style: italic;
+  border-top: solid 1px #d6d6d6;
+  border-bottom: solid 1px #d6d6d6;
+  strong {font-family: Lato;}
+}
+
+.grey-description {
+    color: #8a8a8a;
+    font-size: 16px;
+    text-align: center;
+    padding: 0px 10px;
+    p {
+        line-height: 1.4;
+    }
+}
+
+.q-content {
+  margin: 4px 8px;
+  background: #fff;
+  box-shadow: 1px 1px 1px #e3e4e8;
+  box-sizing: border-box;
+  color: #636363;
+  line-height: 1.4;
+  border: solid 1px transparent;
+
+  h1 {
+    font-family: "Lato Bold";
+    color: #798ca6;
+    font-size: 13px;
+    margin: 15px 8px;
+    text-align: left;
+  }
+
+  p {
+    margin: 15px 8px;
+    line-height: 1.4;
+    &[i-open-system-links] a,
+    hash-tag {
+      font-family: "Lato Bold";
+      color: #030366;
+      &.ng-click-active {opacity: 0.7;}
+    }
+    strong {
+      font-family: Lato;
+    }
+  }
+
+  .title {
+    font-size: 11px;
+    color: #798ca6;
+    font-family: "Lato";
+    margin: 12px 8px;
+    strong {
+      color: #030366;
+      font-family: "Lato Bold";
+    }
+    box-sizing: border-box;
+    @include ellipsisRows(1);
+    span {
+      font-family: Lato;
+      color: #798ca6;
+      border-left: solid 1px #798ca6;
+      margin: auto 3px;
+      padding-left: 3px;
+    }
+  }
+}
+
+.comment-message {
+  text-align: center;
+  padding: 8px 0;
+  color: #798ca6;
+  font-size: 13px;
+  a {
+    text-decoration: underline;
+    &.ng-click-active {text-decoration: none;}
+  }
+}
+
+.screen-link {
+  a {
+    text-decoration: underline;
+    &.ng-click-active {text-decoration: none;}
+  }
+  font-size: 13px;
+  color: #000066;
+  text-align: center;
+}
+
+asterisk {
+  color: #c1353c;
+  position: relative;
+}

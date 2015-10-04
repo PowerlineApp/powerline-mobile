@@ -1,0 +1,26 @@
+<div class="wrap-center" ng-show="loading"><spinner></spinner></div>
+
+<section ng-show="!loading" class="padding-10">
+    <form name="joinFrom" novalidate ng-class="formClass" autocomplete="off" ng-show="!showApproveMessage">
+        <fieldset class="margin-v-10" ng-show="isPasscodeRequired">
+            <div class="text-field" ng-class="invalidClass(joinFrom.passcode.$invalid)">
+                <input type="password" placeholder="Passcode" ng-model="data.passcode" ng-required="isPasscodeRequired" name="passcode" autocapitalize="off" autocorrect="off" />
+            </div>
+        </fieldset>
+
+        <fieldset class="padding-v-10" ng-show="isFieldRequired">
+            <ng-form name="fields" ng-repeat="item in data.fields">
+                <div class="text-field text-field-label" ng-class="invalidClass(fields.value.$invalid)">
+                    <label ng-bind="item.field.field_name"></label>
+                    <input type="text" name="value" placeholder="Type text here" ng-model="item.field_value" required/>
+                </div>
+            </ng-form>
+        </fieldset>
+        <button class="btn-large btn-primary margin-v-10" ng-click="join()">Continue</button>
+    </form>
+</section>
+
+<div ng-show="showApproveMessage" class="info-message" style="margin-top: 70px;">
+    <p>Awating Approval <br> from Group Administrator</p>
+</div>
+<br>

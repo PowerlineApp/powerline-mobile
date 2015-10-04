@@ -1,0 +1,12 @@
+<fieldset>
+    <div class="checkbox-field-long" ng-repeat="option in q.options" ng-class="getActiveClass(current, option)" ng-click="selectOption(option)">
+        <span><i></i></span>
+        <p>{{ option.value }}</p>
+    </div>
+</fieldset>
+
+<p class="info-message" ng-show="q.recipients">
+    Your response will be sent to <span ng-bind="q.recipients"></span>
+</p>
+
+<section ng-controller="question.answer-form" ng-include="'templates/question/answer-form.html'" ng-show="current"></section>

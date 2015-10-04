@@ -1,0 +1,9 @@
+<fieldset class="add-post">
+    <div class="title-field" ng-class="invalidClass(petitionForm.title.$invalid)">
+        <input ng-model="data.title" name="title" maxlength="255" required placeholder="Type title here" />
+    </div>
+    <textarea ng-model="data.petition_body" maxlength="2500" name="petition_body"
+              required placeholder="Type your message here"
+              ng-init="data.chars_left = 2500"
+              ng-change="data.chars_left = 2500 - data.petition_body.length"></textarea>
+</fieldset>

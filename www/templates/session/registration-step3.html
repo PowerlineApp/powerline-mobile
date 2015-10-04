@@ -1,0 +1,29 @@
+<section class="padding-10" style="max-width: 300px;margin:auto;padding-top: 100px;" ng-show="!loading">
+    <h1 style="font-size: 24px;">Hi, {{ user.first_name }}</h1>
+    <p class="margin-v-10" style="text-align: center">Welcome to Powerline!</p>
+    <br><br><br>
+</section>
+<br>
+<section class="profile-header-2" style="position: relative;left: 20px;">
+  <div class="completion-fill">
+    <i class="icon-user-account icon-user-account-l"></i>
+    <span>Your profile is: </span> <strong ng-bind="(percent | number) + '%'" style="color: #030366;"></strong>
+    <span>complete</span>
+    <br>
+    <div class="process-wrap">
+      <div class="process" ng-style="{width: (percent | number) + '%' }"></div>
+    </div>
+  </div>
+</section>
+<br><br>
+<section class="screen-process" style="width: 202px;margin: auto;line-height: 1.4;">
+    Do you want to <strong>complete</strong> the
+    rest of your profile now?
+</section>
+
+<section class="footer-fixed">
+    <button ng-click="path('/guide')" class="btn-text-footer">Skip for now</button>
+    <button ng-click="path('/profile-2')" class="btn-text-footer">Yes, proceed!</button>
+</section>
+
+<div class="wrap-center wrap-dark" ng-show="loading"><spinner></spinner></div>

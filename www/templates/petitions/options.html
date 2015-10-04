@@ -1,0 +1,8 @@
+<fieldset>
+    <div class="checkbox-field" ng-repeat="option in petition.options" ng-class="getActiveClass(current, option)" ng-click="select(option)">
+        <span><i></i></span>
+        <p>{{ option.value }}</p>
+    </div>
+</fieldset>
+
+<section class="margin-v-10" ng-controller="petition.answer-form" ng-include="'templates/petitions/answer-form.html'" ng-show="current"></section>

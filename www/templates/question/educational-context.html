@@ -1,0 +1,32 @@
+<div class="groups-1">
+    <div class="group-1" i-groups="0" ng-show="q.educationalContextByTypes.text.length">
+        <h3 ng-click="toggle()" >Information <i></i></h3>
+        <ul i-toggle-elem style="display: none">
+            <li ng-repeat="item in q.educationalContextByTypes.text">
+                <p ng-bind="item.text"></p>
+            </li>
+        </ul>
+    </div>
+
+    <div class="group-1" i-groups="0" ng-show="q.educationalContextByTypes.image.length">
+        <h3 ng-click="toggle()" >Photos <i></i></h3>
+        <ul i-toggle-elem style="display: none" class="images"
+            ng-class="{two: q.educationalContextByTypes.image.length == 2, three: q.educationalContextByTypes.image.length == 3}">
+            <li ng-repeat="item in q.educationalContextByTypes.image">
+                <img ng-src="{{ item.imageSrc }}" />
+            </li>
+        </ul>
+    </div>
+
+    <div class="group-1" i-groups="0" ng-show="q.educationalContextByTypes.video.length">
+        <h3 ng-click="toggle()" >Videos <i></i></h3>
+        <ul i-toggle-elem style="display: none" class="images">
+            <li ng-repeat="item in q.educationalContextByTypes.video">
+                <div class="video-item">
+                  <youtube link="item.text"></youtube>
+                  <br><br>
+                </div>
+            </li>
+        </ul>
+    </div>
+</div>

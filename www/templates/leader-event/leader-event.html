@@ -1,0 +1,95 @@
+<section class="q-header margin-10">
+    <div class="avatar" ng-click="navigateTo('owner-profile', q.user)">
+        <img ng-src="{{ q.user.avatar_file_path }}"/>
+    </div>
+    <div class="q-info">
+        <div>
+            <i class="icon-responses"></i> Responses <br>
+            <span ng-bind="q.votes_count"></span>
+        </div>
+        <div class="small">
+            <i class="icon-time"></i> Start <br>
+            <time ng-bind="q.started_at_date | date:'M.d.yy'"></time>
+            <time ng-bind="q.started_at_date | date:'HH:mm'"></time>
+        </div>
+        <div class="small">
+            <i class="icon-time"></i> End <br>
+            <time ng-bind="q.finished_at_date | date:'M.d.yy'"></time>
+            <time ng-bind="q.finished_at_date | date:'HH:mm'"></time>
+        </div>
+        <div>
+            Event <br>
+            <i class="icon-event"></i>
+        </div>
+    </div>
+</section>
+
+
+<section class="q-content">
+    <div class="title">
+        <strong ng-bind="q.user.official_title + ' ' + q.user.first_name +  ' '  +  q.user.last_name" ng-click="navigateTo('owner-profile', q.user)"></strong>
+    </div>
+    <h1 ng-bind="q.title"></h1>
+    <p i-bind-taggable="q.subject" i-tags="q.cached_hash_tags"></p>
+
+    <section class="margin-h-10" ng-hide="q.is_answered">
+        <fieldset>
+            <div class="checkbox-field-long" ng-repeat="option in q.options" ng-class="{active: data.option === option}"
+                 ng-click="select(option)">
+                <span><i></i></span>
+                <p>{{ option.payment_amount ? option.payment_amount + '$ - ' : '' }}{{ option.value }}</p>
+            </div>
+        </fieldset>
+    </section>
+
+    <section class="info-message" ng-show="q.is_answered" style="padding: 15px;">
+        <p>You RSVP’d</p>
+        <button class="btn-medium btn-primary" ng-click="addToCalendar()">Re-add to calendar</button>
+    </section>
+
+    <ng-include src="'templates/widget/share.html'" ng-if="q.is_allow_outsiders"></ng-include>
+</section>
+
+
+<section ng-show="data.showAnswerForm">
+    <div class="popup-overflow">
+        <fieldset class="popup">
+            <a class="text-close" ng-click="data.showAnswerForm = false;data.option = null;">Cancel</a>
+            <p class="section-title">
+              <strong>Submit?</strong>
+              <span>{{ data.option.value }}</span>
+            </p>
+            <div class="text-field-2">
+                <textarea ng-model="data.comment" placeholder="(Optional) You can add your comment here" maxlength="500"></textarea>
+            </div>
+            <div class="margin-10">
+                <div class="checkbox-privacy" ng-class="{checked: data.privacy}" ng-click="data.privacy = data.privacy ? 0 : 1" guide="privacy-option">
+                    <i></i>
+                    {{ data.privacy ? 'Username hidden' : 'Username visible'  }}
+                </div>
+            </div>
+            <div class="section-footer">
+                <span ng-bind="500 - data.comment.length"></span>
+                <a class="btn-text" ng-click="submit()">
+                    Submit
+                    <i class="icon-send"></i>
+                </a>
+            </div>
+        </fieldset>
+    </div>
+
+    <div class="wrap-center wrap-dark" ng-show="answerLoading"><spinner></spinner></div>
+</section>
+
+<tab-panel>
+    <ul class="header">
+        <li ng-click="open($event)">Discussion</li>
+        <li ng-click="open($event)">More</li>
+    </ul>
+    <tabs>
+        <tab><discussions id="q.id" entity="'poll'"></discussions></tab>
+        <tab><ng-include src="'templates/question/educational-context.html'"></ng-include></tab>
+    </tabs>
+</tab-panel>
+
+<div class="wrap-center" ng-show="loading"><spinner></spinner></div>

@@ -1,0 +1,109 @@
+<section class="p-header">
+    <div class="avatar">
+        <img ng-src="{{ data.avatar_file_path }}"/>
+    </div>
+    <h3 ng-bind="data.first_name +  ' '  +  data.last_name"></h3>
+    <p class="text-gray-light" ng-bind="data.official_title"></p>
+</section>
+
+<section ng-show="data.storage_id" class="representative-button-groups">
+    <button class="btn-large btn-primary" ng-click="loadCommittees();sponsoredBillsLoaded=false">Committee<br> Membership</button>
+    <button class="btn-large btn-primary" ng-click="loadSponsoredBills();committeesLoaded=false">Sponsored<br> Bills</button>
+</section>
+<section ng-show="committeesLoaded">
+    <ul class="info-list"  ng-show="committeesLoaded" style="margin-bottom: 0;">
+        <li class="title">Committee Membership</li>
+    </ul>
+    <ul ng-repeat="committee in committees" class="info-list" style="margin-top: 0;margin-bottom: 0;">
+        <li>
+            <p ng-bind="committee.committee"></p>
+            <p><span ng-bind="committee.position" style="text-transform: capitalize;"></span></p>
+        </li>
+        <li ng-show="committee.subcommittee" style="padding-left: 60px;">
+            <p ng-bind="committee.subcommittee"></p>
+        </li>
+    </ul>
+    <ul class="info-list" ng-show="committeesLoaded && !committees.length" style="margin-top: 0;">
+        <li>
+            <p>Information is not available</p>
+        </li>
+    </ul>
+</section>
+
+<section ng-show="sponsoredBillsLoaded">
+    <ul class="info-list">
+        <li class="title">Sponsored Bills</li>
+        <li ng-repeat="bill in sponsoredBills" ng-click="openSystem(bill.url)">
+            <p ng-bind="bill.title" style="-webkit-line-clamp: 2;"></p>
+            <i class="icon-website"></i>
+        </li>
+        <li ng-show="sponsoredBillsLoaded && !sponsoredBills.length">
+            <p>Information is not available</p>
+        </li>
+    </ul>
+</section>
+
+<section>
+    <ul class="info-list">
+        <li ng-show="data.official_address" ng-click="openSystem((data.full_address | createGoogleMapsLink))">
+            <p><span>Address</span></p>
+            <p ng-bind="data.official_address"></p>
+            <i class="icon-address"></i>
+        </li>
+        <li ng-show="data.party">
+            <p><span>Party</span></p>
+            <p ng-bind="data.party"></p>
+            <i class="icon-party"></i>
+        </li>
+        <li ng-show="data.birthday">
+            <p><span>Birthday</span></p>
+            <p ng-bind="data.birthday"></p>
+            <i class="icon-date"></i>
+        </li>
+        <li ng-show="data.start_term">
+            <p><span>Term Start</span></p>
+            <p ng-bind="data.start_term"></p>
+            <i class="icon-date"></i>
+        </li>
+        <li ng-show="data.end_term">
+            <p><span>Term End</span></p>
+            <p ng-bind="data.end_term"></p>
+            <i class="icon-date"></i>
+        </li>
+        <li ng-show="data.official_phone" ng-click="openSystem((data.official_phone | iTel))">
+            <p><span>Phone Number</span></p>
+            <p ng-bind="data.official_phone"></p>
+            <i class="icon-phone"></i>
+        </li>
+        <li ng-show="data.fax">
+            <p><span>Fax</span></p>
+            <p ng-bind="data.fax"></p>
+        </li>
+        <li ng-show="data.email" ng-click="openSystem('mailto:' + data.email)">
+            <p><span>E-mail</span></p>
+            <p ng-bind="data.email"></p>
+            <i class="icon-email"></i>
+        </li>
+        <li ng-show="data.website" ng-click="openSystem(data.website)">
+            <p><span>Website</span></p>
+            <p ng-bind="data.website"></p>
+            <i class="icon-website"></i>
+        </li>
+        <li ng-show="data.facebook" ng-click="openSystem(data.facebook)">
+            <p><span>Facebook</span></p>
+            <p ng-bind="data.facebook"></p>
+        </li>
+        <li ng-show="data.youtube" ng-click="openSystem('http://www.youtube.com/' + data.youtube)">
+            <p><span>YouTube</span></p>
+            <p ng-bind="data.youtube"></p>
+        </li>
+        <li ng-show="data.twitter" ng-click="openSystem('https://twitter.com/' + data.twitter)">
+            <p><span>Twitter</span></p>
+            <p ng-bind="data.twitter"></p>
+        </li>
+    </ul>
+</section>
+
+<section  ng-show="!loading" ng-include=" 'templates/home/activities.html' "></section>
+
+<div class="wrap-center" ng-show="loading"><spinner></spinner></div>
