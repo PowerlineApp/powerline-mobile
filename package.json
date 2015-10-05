@@ -20,7 +20,6 @@
     "cordova-plugin-whitelist",
     "cordova-plugin-splashscreen",
     "com.ionic.keyboard",
-    "cordova-plugin-android-support-v4",
     "com.google.playservices",
     "com.phonegap.plugins.facebookconnect",
     {
@@ -41,9 +40,11 @@
       "id": "cordova-plugin-inappbrowser"
     },
     "cordova-plugin-statusbar",
-    "phonegap-plugin-push"
+    "phonegap-plugin-push",
+    "android.support.v4"
   ],
   "cordovaPlatforms": [
-    "ios"
+    "ios",
+    "android"
   ]
 }

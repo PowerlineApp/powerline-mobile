@@ -35,13 +35,14 @@
 	<platform name="android">
 		<config-file target="res/xml/config.xml" parent="/*">
 			<feature name="FlurryPlugin">
-				<param name="android-package" value="com.phonegap.plugins.flurry.Flurry" />
+				<param name="android-package" value="com.phonegap.plugins.Flurry" />
 			</feature>
 		</config-file>
 
 		<source-file src="src/android/Flurry.java"
 					target-dir="src/com/phonegap/plugins/flurry/" />
-        <framework src="com.google.android.gms:play-services-plus:+" />
+		<dependency id="com.google.playservices" />
+		<dependency id="android.support.v4" />
 		<config-file target="AndroidManifest.xml" parent="/*/application">
 			<meta-data android:name="com.google.android.gms.version"
 			  android:value="@integer/google_play_services_version"/>

@@ -8,7 +8,6 @@ import org.apache.cordova.CallbackContext;
 import org.apache.cordova.CordovaPlugin;
 import android.util.Log;
 
-import com.flurry.android.Constants;
 import com.flurry.android.FlurryAgent;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -36,10 +35,9 @@ public class Flurry extends CordovaPlugin {
         try{
             Log.d("Flurry", action);
             if(action.equals("startSession")) {
-                FlurryAgent.init(cordova.getActivity().getBaseContext(), args.getString(0));
-                FlurryAgent.onStartSession(cordova.getActivity().getBaseContext(), args.getString(0));
+                FlurryAgent.onStartSession(cordova.getActivity().getApplicationContext(), args.getString(0));
             } else if(action.equals("endSession")) {
-                FlurryAgent.onEndSession(cordova.getActivity().getBaseContext());
+                FlurryAgent.onEndSession(cordova.getActivity().getApplicationContext());
             } else if(action.equals("setSessionContinueSeconds")) {
                 FlurryAgent.setContinueSessionMillis(args.getLong(0));
             } else if(action.equals("setAppVersion")) {
@@ -47,14 +45,7 @@ public class Flurry extends CordovaPlugin {
             } else if(action.equals("setUserID")) {
                 FlurryAgent.setUserId(args.getString(0));
             } else if(action.equals("setGender")) {
-                byte gender = Constants.UNKNOWN;
-                if (args.getString(0) == "m") {
-                    gender = Constants.MALE;
-                }
-                else if (args.getString(0) == "f") {
-                    gender = Constants.FEMALE;
-                }
-                FlurryAgent.setGender(gender);
+                FlurryAgent.setGender((byte)args.getLong(0));
             } else if(action.equals("setAge")) {
                 FlurryAgent.setAge((int)args.getLong(0));
             } else if (action.equals("logEvent") || action.equals("logEventWithParameters")
