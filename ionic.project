@@ -2,6 +2,7 @@
   "name": "PowerlineApp",
   "app_id": "",
   "gulpStartupTasks": [
+    "check-config-exists",
     "sass",
     "watch"
   ],

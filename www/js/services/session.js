@@ -22,7 +22,6 @@ angular.module('app.services').factory('session', function (serverConfig, $http,
       });
       return deferred.promise;
     },
-
     facebookLogin: function (params) {
       return $http({
         method: 'POST',
@@ -38,7 +37,6 @@ angular.module('app.services').factory('session', function (serverConfig, $http,
         return response;
       });
     },
-
     registration: function (data) {
       return $http({
         method: 'POST',
@@ -58,7 +56,6 @@ angular.module('app.services').factory('session', function (serverConfig, $http,
         return response;
       });
     },
-
     forgotPassword: function (email) {
       var data = {
         email: email
@@ -69,7 +66,6 @@ angular.module('app.services').factory('session', function (serverConfig, $http,
         }
       });
     },
-
     logout: function () {
       iStorage.set('token', '');
       iStorage.set('user_id', '');
@@ -130,11 +126,9 @@ angular.module('app.services').factory('session', function (serverConfig, $http,
   var profile;
 
   var service = {
-
     get: function () {
       return profile;
     },
-
     load: function () {
       var deferred = $q.defer();
       var newProfile = Profile.get({}, function () {
@@ -146,13 +140,11 @@ angular.module('app.services').factory('session', function (serverConfig, $http,
       });
       return deferred.promise;
     },
-
     getPercentCompleted: function () {
       return _(profile).reduce(function (memo, item, key) {
         return memo + ((item && percents[key]) ? percents[key] : 0);
       }, 0);
     },
-
     checkRemind: function () {
       if (service.getPercentCompleted() > 89) {
         return;
@@ -176,7 +168,6 @@ angular.module('app.services').factory('session', function (serverConfig, $http,
 
       iStorage.set(profile.id + '_reminder', reminder);
     },
-
     sex: ['Male', 'Female'],
     orientations: ['Straight', 'Lesbian', 'Gay', 'Bisexual', 'Transgender'],
     races: ['White', 'African-American', 'Hispanic', 'Asian Pacific Islander', 'Native American'],
@@ -191,13 +182,11 @@ angular.module('app.services').factory('session', function (serverConfig, $http,
     philosophies: ['Very Conservative', 'Conservative', 'Moderate', 'Liberal', 'Very Liberal', 'I Don\'t Know', 'Other'],
     donors: ['Frequently', 'Occasionally', 'Never'],
     registrations: ['Registered to Vote', 'Not Registered to Vote'],
-
     states: ['AL', 'AK', 'AZ', 'AR', 'CA', 'CO', 'CT', 'DE', 'DC', 'FL', 'GA', 'HI', 'ID', 'IL', 'IN', 'IA', 'KS',
       'KY', 'LA', 'ME', 'MD', 'MA', 'MI', 'MN', 'MS', 'MO', 'MT', 'NE', 'NV', 'NH', 'NJ', 'NM', 'NY', 'NC', 'ND',
       'OH', 'OK', 'OR', 'PA', 'RI', 'SC', 'SD', 'TN', 'TX', 'UT', 'VT', 'VA', 'WA', 'WV', 'WI', 'WY', 'AS', 'GU',
       'MP', 'PR', 'VI', 'UM'
     ],
-
     interests: ['Animals', 'Children', 'Community', 'Criminal Justice', 'Democracy', 'Economy', 'Education', 'Energy',
       'Environment', 'Food', 'Healthcare', 'Human Rights', 'Infrastructure', 'LGBT', 'Labor', 'Leadership',
       'NGOs', 'Peace', 'Politics', 'Poverty', 'Sustainability', 'Water', 'Women\'s Rights'],
@@ -214,49 +203,49 @@ angular.module('app.services').factory('session', function (serverConfig, $http,
   function loadProfile(params) {
     var deferred = $q.defer();
     FB.api(uid + '/?fields=email,first_name,last_name,picture,gender,address,birthday,link',
-      ['public_profile', 'email', 'user_friends'], function (fu) {
-        var data = {
-          facebook_id: params.facebook_id,
-          facebook_token: params.facebook_token,
-          country: 'US',
-          email: fu.email,
-          email_confirm: fu.email,
-          first_name: fu.first_name,
-          last_name: fu.last_name,
-          avatar_file_name: fu.pic,
-          sex: fu.gender ? fu.gender[0].toUpperCase() + fu.gender.slice(1, fu.gender.length) : '',
-          facebook_link: fu.link
-        };
+            ['public_profile', 'email', 'user_friends'], function (fu) {
+      var data = {
+        facebook_id: params.facebook_id,
+        facebook_token: params.facebook_token,
+        country: 'US',
+        email: fu.email,
+        email_confirm: fu.email,
+        first_name: fu.first_name,
+        last_name: fu.last_name,
+        avatar_file_name: fu.pic,
+        sex: fu.gender ? fu.gender[0].toUpperCase() + fu.gender.slice(1, fu.gender.length) : '',
+        facebook_link: fu.link
+      };
 
-        if (fu.address) {
-          data.address1 = fu.address.street;
-          data.city = fu.address.city;
-          data.state = stateAbbreviations.US[fu.address.state];
-          data.zip = fu.address.zip;
-        }
-        if (fu.birthday) {
-          data.birth = fu.birthday;
-        }
+      if (fu.address) {
+        data.address1 = fu.address.street;
+        data.city = fu.address.city;
+        data.state = stateAbbreviations.US[fu.address.state];
+        data.zip = fu.address.zip;
+      }
+      if (fu.birthday) {
+        data.birth = fu.birthday;
+      }
 
-        if (fu.picture && fu.picture.data) {
-          data.avatar_file_name = fu.picture.data.url;
-        }
+      if (fu.picture && fu.picture.data) {
+        data.avatar_file_name = fu.picture.data.url;
+      }
 
-        if (fu.email) {
-          data.username = fu.email.split('@')[0];
-        }
+      if (fu.email) {
+        data.username = fu.email.split('@')[0];
+      }
 
-        iStorageMemory.put('registration-form-data', data);
-        deferred.resolve(data);
-        $rootScope.execApply();
-      }, function () {
-        var data = {
-          facebook_id: params.facebook_id,
-          facebook_token: params.facebook_token
-        };
+      iStorageMemory.put('registration-form-data', data);
+      deferred.resolve(data);
+      $rootScope.execApply();
+    }, function () {
+      var data = {
+        facebook_id: params.facebook_id,
+        facebook_token: params.facebook_token
+      };
 
-        deferred.resolve(data);
-      });
+      deferred.resolve(data);
+    });
 
     return deferred.promise;
   }
@@ -265,7 +254,6 @@ angular.module('app.services').factory('session', function (serverConfig, $http,
     init: function () {
       FB = $window.facebookConnectPlugin;
     },
-
     login: function () {
       var deferred = $q.defer();
 
@@ -286,9 +274,7 @@ angular.module('app.services').factory('session', function (serverConfig, $http,
 
       return deferred.promise;
     },
-
     loadProfile: loadProfile,
-
     setRegistrationFormData: function (params) {
       return loadProfile(params).then(function (data) {
         iStorageMemory.put('registration-form-data', data);
@@ -296,24 +282,22 @@ angular.module('app.services').factory('session', function (serverConfig, $http,
         return data;
       });
     },
-
     share: function (params) {
       var deferred = $q.defer();
 
       FB.ui({
-          method: 'feed',
-          name: params.name,
-          link: params.link,
-          picture: params.picture,
-          description: params.description
-        }, function (response) {
-          deferred.resolve(response);
-          $rootScope.execApply();
-        }
+        method: 'feed',
+        name: params.name,
+        link: params.link,
+        picture: params.picture,
+        description: params.description
+      }, function (response) {
+        deferred.resolve(response);
+        $rootScope.execApply();
+      }
       );
       return deferred.promise;
     },
-
     loadFriends: function () {
       FB.api('/me/friends', [], function (response) {
         if (response.data) {
@@ -321,20 +305,17 @@ angular.module('app.services').factory('session', function (serverConfig, $http,
         }
       });
     },
-
     getFriends: function () {
       return friends;
     }
   };
 }).factory('authInterceptor', function ($q, $location) {
-  return function (promise) {
-    return promise.then(function (response) {
-      return response;
-    }, function (response) {
+  return {
+    responseError: function (response) {
       if (response.status === 401) {
-        $location.path('/login');
+       $location.path('/login');
       }
       return $q.reject(response);
-    });
+    }
   };
 });
