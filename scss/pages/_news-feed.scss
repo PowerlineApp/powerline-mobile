@@ -1,18 +1,18 @@
 .news-feed {
   .notifications {
     position: fixed;
-    top: 46px;
+    top: $mainHeaderHeight;
   }
 
   .groups-filter-panel {
     position: fixed;
     width: 100%;
     left: 0;
-    top: 84px;
+    top: $mainHeaderHeight+38px;
     z-index: 9;
   }
 
   .content {
-    padding-top: 134px;
+    padding-top: 88px;
   }
 }

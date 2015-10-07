@@ -19,19 +19,23 @@ angular.module('app', [
 
   //$locationProvider.html5Mode(false);
 
-  
-}).run(function (session, $location, layout, $document, $rootScope, $window, iStorageMemory, profile/*, $ionicPlatform*/) {
 
-  /*$ionicPlatform.ready(function() {
+}).run(function ($location, layout, $document, $rootScope, $window, iStorageMemory, $state, $ionicPlatform) {
+
+  $ionicPlatform.ready(function () {
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
     // for form inputs)
-    if(window.cordova && window.cordova.plugins.Keyboard) {
+    if (window.cordova && window.cordova.plugins.Keyboard) {
       cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
     }
-    if(window.StatusBar) {
+    if (window.StatusBar) {
       StatusBar.styleDefault();
     }
-  });*/
+  });
+
+  $rootScope.checkURLState = function (stateName) {
+    return $state.includes('app.' + stateName);
+  };
 
   var $body = $document.find('body');
   $document.bind('scroll', function () {
@@ -45,24 +49,25 @@ angular.module('app', [
   });
 
   layout.init();
-  if (session.token) {
-    if (session.is_registration_complete) {
-      profile.load()
-        .then(function () {
-          profile.checkRemind();
-        })
-      ;
-      if (!$location.path() || '/' === $location.path()) {
-        $location.path('/main');
-      }
-    } else {
-      $location.path('/profile');
-    }
-  } else {
-    $location.path('/login');
-  }
 
   iStorageMemory.put('home-activities-need-load', true);
+
+  //add Wrapper class for each state
+  $rootScope.$on('$stateChangeSuccess', function (event, toState, toParams, fromState, fromParams) {
+    var stateKey = toState.name.substr(4);
+    var wrapperClasses = [];
+    var lightClassStates = ['terms', 'forgotPassword', 'registration', 'registrationStep2', 'registrationStep3', 'guide', 'guideConfirm'];
+    if (lightClassStates.indexOf(stateKey) !== -1) {
+      wrapperClasses.push('light');
+    }
+    if (['guide'].indexOf(stateKey) !== -1) {
+      wrapperClasses.push('guide');
+    }
+    if (['main', 'newActivities'].indexOf(stateKey) !== -1) {
+      wrapperClasses.push('news-feed');
+    }
+    $rootScope.wrapperClass = wrapperClasses.join(' ');
+  });
 
 }).config(function ($compileProvider) {
 //    $compileProvider.urlSanitizationWhitelist(/^\s*(https?|ftp|mailto|tel):/);
@@ -71,5 +76,5 @@ angular.module('app', [
     //    key: 'your api key',
     v: '3.18',
     libraries: 'places'
-  });
+    });
 }]);

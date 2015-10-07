@@ -1,73 +1,79 @@
-<section class="padding-10" style="max-width: 300px;margin:auto;">
-    <h1>Enter your contact details.</h1>
-    <p class="margin-v-10" style="text-align: center">You're almost done!</p>
-    <br><br><br>
-    <p class="comment-message" style="text-align: left;">
-        Your information is never shared with other users. Group leaders must receive your permission before they can access this information.
-    </p>
+<ion-view hide-nav-bar="true">
+  <form name="registrationForm" novalidate class="margin-v-10" autocomplete="off">
+    <ion-content class="has-header has-footer">
+      <section class="padding-10" style="max-width: 300px;margin:auto;">
+        <h1>Enter your contact details.</h1>
+        <p class="margin-v-10" style="text-align: center">You're almost done!</p>
+        <br><br><br>
+        <p class="comment-message" style="text-align: left;">
+          Your information is never shared with other users. Group leaders must receive your permission before they can access this information.
+        </p>
 
-    <form name="registrationForm" novalidate class="margin-v-10" autocomplete="off">
         <fieldset>
-            <div class="item-floating-label text-field-1" ng-class="{invalid: registrationForm.address1.$invalid && registrationForm.$filled}">
-                <span class="input-label">Street Address<asterisk>*</asterisk></span>
-                <input type="text" ng-model="data.address1" i-address="geocode" placeholder="" required name="address1"/>
-            </div>
-            <div class="item-floating-label text-field-1" ng-class="{invalid: registrationForm.address2.$invalid && registrationForm.$filled}">
-                <span class="input-label">Apt/Suite #</span>
-                <input type="text" ng-model="data.address2" name="address2"/>
-            </div>
-            <div class="item-floating-label text-field-1" ng-class="{invalid: registrationForm.zip.$invalid && registrationForm.$filled}">
-                <span class="input-label">Zipcode<asterisk>*</asterisk></span>
-                <input type="text" ng-model="data.zip" required name="zip"/>
-            </div>
-            <div class="item-floating-label text-field-1" ng-class="{invalid: registrationForm.city.$invalid && registrationForm.$filled}">
-                <span class="input-label">City<asterisk>*</asterisk></span>
-                <input type="text"  ng-model="data.city" i-address="(cities)" placeholder="" required name="city"/>
-            </div>
-            <div class="item-floating-label text-field-1" ng-class="{invalid: registrationForm.state.$invalid && registrationForm.$filled}">
-                <span class="input-label">State<asterisk>*</asterisk></span>
-                <input type="text" ng-model="data.state" name="state" required i-address="(regions)" placeholder="">
-            </div>
-            <div class="item-floating-label text-field-1" ng-class="{invalid: registrationForm.country.$invalid && registrationForm.$filled}">
-                <span class="input-label">Country<asterisk>*</asterisk></span>
-                <input type="text" ng-model="data.country" name="country" required>
-            </div>
-            <div class="item-floating-label text-field-1" ng-class="{invalid: registrationForm.email.$invalid && registrationForm.$filled}">
-                <span class="input-label">Email<asterisk>*</asterisk></span>
-                <i class="icon-field icon-email"></i>
-                <input type="email" ng-model="data.email" name="email" required i-repeat="email_confirm"/>
-            </div>
-            <div class="item-floating-label text-field-1" ng-class="{invalid: registrationForm.email_confirm.$invalid && registrationForm.$filled}">
-              <span class="input-label">Confirm Email<asterisk>*</asterisk></span>
-              <i class="icon-field icon-email"></i>
-              <input type="email" ng-model="data.email_confirm" name="email_confirm" required i-repeat="email"/>
-            </div>
-            <div class="item-floating-label text-field-1" ng-class="{invalid: registrationForm.phone.$invalid && registrationForm.$filled}">
-                <span class="input-label">Phone<asterisk>*</asterisk></span>
-                <i class="icon-field icon-phone"></i>
-                <input type="text" ng-model="data.phone" name="phone" required/>
-            </div>
-            <div class="item-floating-label text-field-1" ng-class="{invalid: registrationForm.birth.$invalid && registrationForm.$filled}">
-              <span class="input-label" ng-class="{'has-input': data.birth}">Birthday<asterisk>*</asterisk></span>
-              <i class="icon-field icon-date"></i>
-              <input type="idate" ng-model="data.birth" i-date name="birth" required/>
-            </div>
+          <div class="item-floating-label text-field-1" ng-class="{invalid: registrationForm.address1.$invalid && registrationForm.$filled}">
+            <span class="input-label">Street Address<asterisk>*</asterisk></span>
+            <input type="text" ng-model="data.address1" i-address="geocode" placeholder="" required name="address1"/>
+          </div>
+          <div class="item-floating-label text-field-1" ng-class="{invalid: registrationForm.address2.$invalid && registrationForm.$filled}">
+            <span class="input-label">Apt/Suite #</span>
+            <input type="text" ng-model="data.address2" name="address2"/>
+          </div>
+          <div class="item-floating-label text-field-1" ng-class="{invalid: registrationForm.zip.$invalid && registrationForm.$filled}">
+            <span class="input-label">Zipcode<asterisk>*</asterisk></span>
+            <input type="text" ng-model="data.zip" required name="zip"/>
+          </div>
+          <div class="item-floating-label text-field-1" ng-class="{invalid: registrationForm.city.$invalid && registrationForm.$filled}">
+            <span class="input-label">City<asterisk>*</asterisk></span>
+            <input type="text"  ng-model="data.city" i-address="(cities)" placeholder="" required name="city"/>
+          </div>
+          <div class="item-floating-label text-field-1" ng-class="{invalid: registrationForm.state.$invalid && registrationForm.$filled}">
+            <span class="input-label">State<asterisk>*</asterisk></span>
+            <input type="text" ng-model="data.state" name="state" required i-address="(regions)" placeholder="">
+          </div>
+          <div class="item-floating-label text-field-1" ng-class="{invalid: registrationForm.country.$invalid && registrationForm.$filled}">
+            <span class="input-label">Country<asterisk>*</asterisk></span>
+            <input type="text" ng-model="data.country" name="country" required>
+          </div>
+          <div class="item-floating-label text-field-1" ng-class="{invalid: registrationForm.email.$invalid && registrationForm.$filled}">
+            <span class="input-label">Email<asterisk>*</asterisk></span>
+            <i class="icon-field icon-email"></i>
+            <input type="email" ng-model="data.email" name="email" required i-repeat="email_confirm"/>
+          </div>
+          <div class="item-floating-label text-field-1" ng-class="{invalid: registrationForm.email_confirm.$invalid && registrationForm.$filled}">
+            <span class="input-label">Confirm Email<asterisk>*</asterisk></span>
+            <i class="icon-field icon-email"></i>
+            <input type="email" ng-model="data.email_confirm" name="email_confirm" required i-repeat="email"/>
+          </div>
+          <div class="item-floating-label text-field-1" ng-class="{invalid: registrationForm.phone.$invalid && registrationForm.$filled}">
+            <span class="input-label">Phone<asterisk>*</asterisk></span>
+            <i class="icon-field icon-phone"></i>
+            <input type="text" ng-model="data.phone" name="phone" required/>
+          </div>
+          <div class="item-floating-label text-field-1" ng-class="{invalid: registrationForm.birth.$invalid && registrationForm.$filled}">
+            <span class="input-label" ng-class="{'has-input': data.birth}">Birthday<asterisk>*</asterisk></span>
+            <i class="icon-field icon-date"></i>
+            <input type="idate" ng-model="data.birth" i-date name="birth" required/>
+          </div>
         </fieldset>
-    </form>
-    <p class="comment-message" style="text-align: left;">
+        <p class="comment-message" style="text-align: left;">
         <asterisk>*</asterisk>Powerline requires this information to link you to your communities and, if available, your specific elected leaders. This helps prove you are real and not a robot. We may also aggregate this information for anonymous reporting purposes.
-    </p>
+        </p>
 
-</section>
+      </section>
 
-<section class="screen-process">
-    <i class="step active"></i>
-    <i class="step"></i>
-</section>
+      <section class="screen-process">
+        <i class="step active"></i>
+        <i class="step"></i>
+      </section>
 
-<section class="footer-fixed">
-    <button ng-click="back()" class="btn-text-footer">Back</button>
-    <button ng-click="next()" class="btn-text-footer">Register</button>
-</section>
+    </ion-content>
 
-<div class="wrap-center wrap-dark" ng-show="loading"><spinner></spinner></div>
+    <section class="footer-fixed">
+      <button ng-click="back()" class="btn-text-footer">Back</button>
+      <button ng-click="next(registrationForm)" class="btn-text-footer">Register</button>
+    </section>
+    
+  </form>
+
+  <div class="wrap-center wrap-dark" ng-show="loading"><spinner></spinner></div>
+</ion-view>

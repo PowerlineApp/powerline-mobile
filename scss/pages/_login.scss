@@ -1,0 +1,11 @@
+.page-login{
+  section{
+    max-width: 300px;
+    margin: $mainHeaderHeight auto 0 auto; 
+  }
+}
+.page-login, .page-preload{
+  background: -webkit-radial-gradient(center, ellipse cover, #fff 0%, #afcbe6 100%);
+  background-position: 0 -50px;
+  background-size: auto;
+}

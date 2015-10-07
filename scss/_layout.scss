@@ -5,31 +5,18 @@ html, body {
 }
 
 body {
-  background: url("../images/v2/bg-body.png");
-  background-size: 8px auto;
-  &.gradient {
-    #container {background: none;}
-    background: -webkit-radial-gradient(center, ellipse cover, #fff 0%, #afcbe6 100%);
-    background-position: 0 -50px;
-    background-size: auto;
+  ion-view ion-content{
+    background: url("../images/v2/bg-body.png");
+    background-size: 8px auto;
   }
-  &.hidden-header {
-    .top-bar {
-      display: none;
+
+  .light{
+    ion-view ion-content{
+      background: #fff; 
+      background-size: auto;
+      color: #798ca6;
     }
   }
-
-  &.light {
-    #container {background: none;}
-    background: #fff;
-    background-size: auto;
-    color: #798ca6;
-  }
-}
-
-#container {
-  background: url("../images/v2/bg-body.png");
-  background-size: 8px auto;
 }
 
 * {
@@ -38,11 +25,9 @@ body {
 }
 
 .content {
-  padding-top: 47px;
   -webkit-box-sizing: border-box;
   box-sizing: border-box;
   max-width: 1000px;
-  margin: auto;
   overflow-x:hidden;
 }
 

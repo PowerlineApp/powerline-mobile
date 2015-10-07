@@ -1,35 +1,39 @@
-<section class="padding-h-10" style="max-width: 300px;margin:auto;">
-    <h1 class="app margin-v-10"><img src="images/v2/logo.png" width="192"></h1>
-    <form novalidate ng-submit="login()">
-      <fieldset class="margin-v-20">
+<ion-view hide-nav-bar="true">
+  <ion-content class="page-login content">
+    <section class="padding-h-10">
+      <h1 class="app margin-v-10"><img src="images/v2/logo.png" width="192"></h1>
+      <form novalidate ng-submit="login()">
+        <fieldset class="margin-v-20">
           <div class="text-field-3">
-              <input type="text" placeholder="Username" ng-model="data.username" autocapitalize="off" autocorrect="off" width-fix />
+            <input type="text" placeholder="Username" ng-model="data.username" autocapitalize="off" autocorrect="off" width-fix />
           </div>
           <div class="text-field-3">
-              <input type="password" class="password" ng-model="data.password" placeholder="Password" width-fix />
+            <input type="password" class="password" ng-model="data.password" placeholder="Password" width-fix />
           </div>
           <div class="toggle-comment-1">
-              <ion-toggle-custom ng-model="keepLogged" toggle-class="toggle-calm">Keep me logged in</ion-toggle-custom>
+            <ion-toggle-custom ng-model="keepLogged" toggle-class="toggle-calm">Keep me logged in</ion-toggle-custom>
           </div>
-      </fieldset>
-      <button class="btn-large btn-primary" type="submit">Login</button>
-    </form>
-    <p class="comment-message" style="font-size: 9px;">
+        </fieldset>
+        <button class="btn-large btn-primary" type="submit">Login</button>
+      </form>
+      <p class="comment-message" style="font-size: 9px;">
         By logging in, you agree to our <a ng-click="path('/terms')">Terms of Service</a> and <a ng-click="path('/terms')">Privacy Policy</a>
-    </p>
-    <br><br>
-    <button class="btn-large btn-blue btn-text-1" ng-click="facebookLogin()" style="margin-bottom: 3px;">
+      </p>
+      <br><br>
+      <button class="btn-large btn-blue btn-text-1" ng-click="facebookLogin()" style="margin-bottom: 3px;">
         Register/Login with Facebook <br>
         <span>(Recommended)</span>
-    </button>
-    <button class="btn-large btn-blue btn-text-1" ng-click="path('/registration')" >Register with E-mail</button>
+      </button>
+      <button class="btn-large btn-blue btn-text-1" ng-click="path('/registration')" >Register with E-mail</button>
 
-    <p class="screen-link padding-10">
+      <p class="screen-link padding-10">
         <a ng-click="forgotPassword()">Forgot password</a>
-    </p>
-    <p class="screen-link padding-10">
-      Powerline will not post to Facebook without your permission
-    </p>
-</section>
+      </p>
+      <p class="screen-link padding-10">
+        Powerline will not post to Facebook without your permission
+      </p>
+    </section>
 
-<div class="wrap-center wrap-dark" ng-show="loading"><spinner></spinner></div>
+  </ion-content>
+  <div class="wrap-center wrap-dark" ng-show="loading"><spinner></spinner></div>
+</ion-view>

@@ -25,25 +25,17 @@
       }
     }
 
-    .wrap {
-      position: relative;
-      .wrap-animate {
-        width: 1000%;
-        transition: all linear 0.2s;
-      }
-      figure {
-        box-sizing: border-box;
-        display: block;
-        overflow: hidden;
-        overflow-y: scroll;
-        width: 10%;
-        padding: 0 15px;
-        float: left;
-        img {
-          width: 100%;
-        }
+    ion-slide{
+      box-sizing: border-box;
+      display: block;
+      overflow: hidden;
+      overflow-y: scroll;
+      padding: 0 15px;
+      img {
+        width: 100%;
       }
     }
+
   }
 
 }

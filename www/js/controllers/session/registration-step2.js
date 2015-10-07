@@ -1,8 +1,6 @@
 angular.module('app.controllers').controller('session.registration-step2',
-  function ($scope, topBar, session, $location, $window, iStorageMemory, profile, layout, flurry) {
-
-    topBar.reset();
-    layout.setBodyClass('hidden-header light');
+  function ($scope, topBar, session, $location, $window, iStorageMemory, profile, layout, flurry, $ionicSideMenuDelegate) {
+    $ionicSideMenuDelegate.canDragContent(false);
 
     $scope.states = profile.states;
     $scope.countries = profile.countries;
@@ -13,9 +11,9 @@ angular.module('app.controllers').controller('session.registration-step2',
       iStorageMemory.put('registration-form-data', $scope.data);
     });
 
-    $scope.next = function () {
-      $scope.registrationForm.$filled = true;
-      if ($scope.registrationForm.$invalid) {
+    $scope.next = function (registrationForm) {
+      registrationForm.$filled = true;
+      if (registrationForm.$invalid) {
         $scope.alert('Correct the errors and try again', null, 'Error', 'OK');
       } else {
         if ((new Date()).getFullYear() - (new Date($scope.data.birth)).getFullYear() < 13) {
@@ -33,8 +31,8 @@ angular.module('app.controllers').controller('session.registration-step2',
             $scope.loading = false;
             if (response.data && response.data.errors) {
               _(response.data.errors).each(function (error) {
-                if ($scope.registrationForm[error.property]) {
-                  $scope.registrationForm[error.property].$setValidity('required', false);
+                if (registrationForm[error.property]) {
+                  registrationForm[error.property].$setValidity('required', false);
                 }
               });
               if (response.data.errors.length) {

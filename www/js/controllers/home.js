@@ -1,17 +1,12 @@
 angular.module('app.controllers').controller('home', function ($scope, topBar, socialActivity, homeCtrlParams,
                                                                profile, activity, groups, flurry, layout) {
-  topBar.setHomeBar();
-  topBar.set('right', {
-    btnClass: 'btn-new-post',
-    click: function () {
-      $scope.showPostWindow = !$scope.showPostWindow;
-      $scope.execApply();
-    }
-  });
-
-  layout.setContainerClass('news-feed');
-
+ 
   flurry.log('news feed');
+
+  $scope.togglePostWindow = function(){
+    $scope.showPostWindow = !$scope.showPostWindow;
+    $scope.execApply();
+  };
 
   $scope.newPost = function (type) {
     var types = {
@@ -115,8 +110,21 @@ angular.module('app.controllers').run(function(homeCtrlParams, $document, $rootS
   });
 });
 
-angular.module('app.controllers').controller('preload', function (topBar) {
-  topBar.reset().set('title', 'Powerline').set('menu', true);
+angular.module('app.controllers').controller('preload', function (topBar, session, profile, $location) {
+  if (session.token) {
+    if (session.is_registration_complete) {
+      profile.load().then(function () {
+        profile.checkRemind();
+      });
+      if (!$location.path() || '/' === $location.path() || '/preload' === $location.path()) {
+        $location.path('/main');
+      }
+    } else {
+      $location.path('/profile');
+    }
+  } else {
+    $location.path('/login');
+  }
 });
 
 angular.module('app.controllers').directive('iActivity', function($rootScope, questions, petitions, discussion, elapsedFilter) {

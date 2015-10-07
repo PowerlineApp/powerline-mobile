@@ -1,64 +1,79 @@
-<section ng-show="showPostWindow" class="new-post-window" ng-click="$event.stopPropagation()">
+<ion-view view-title="Powerline" hide-back-button="true">
+  <ion-nav-buttons side="left">
+    <button menu-toggle="left" class="button button-icon icon ion-navicon"></button>
+  </ion-nav-buttons>
+  <ion-nav-buttons side="right">
+    <button class="button button-icon ion-compose button-clear" ng-click="togglePostWindow()"></button>
+  </ion-nav-buttons>
+  
+  <!-- fixed header content -->
+  <section ng-show="showPostWindow" class="new-post-window" ng-click="$event.stopPropagation()">
     <a ng-click="newPost(2)"><i class="micropetition"></i>New Post</a>
     <a ng-click="newPost(1)"><i class="petition"></i>New Petition</a>
-</section>
-
-<section ng-include="'templates/notifications.html'"></section>
-
-<section ng-hide="loading" class="groups-filter-panel">
+  </section>
+  <section ng-include="'templates/notifications.html'"></section>
+  <section ng-hide="loading" class="groups-filter-panel">
     <div class="article-list-filter">
-        <div ng-click="filter.selectedGroup = null" ng-class="{selected: !filter.selectedGroup}">
-            <figure>
-                <img src="images/v2/icons/all-group.png" />
-                <span ng-show="filter.unansweredCount" ng-bind="filter.unansweredCount"></span>
-            </figure>
-            <span>All</span>
-        </div>
-        <div ng-repeat="group in filter.groups.slice(0, 3)" ng-click="filter.selectedGroup = group"
-             ng-class="{selected: group == filter.selectedGroup, read: group.read}">
-            <figure>
-                <img ng-src="{{ group.getIcon() }}" />
-                <span ng-show="group.unansweredCount" ng-bind="group.unansweredCount"></span>
-            </figure>
-            <span ng-bind="group.getTitle()"></span>
-        </div>
-        <div ng-click="filter.filter_full_view = !filter.filter_full_view" class="more"
-             ng-class="{selected: filter.selectedGroup.group_type === 0, open: filter.filter_full_view}">
-            <figure>
-                <img src="images/v2/icons/more.png" />
-            </figure>
-            <span ng-hide="filter.selectedGroup.group_type === 0">More</span>
-            <span ng-show="filter.selectedGroup.group_type === 0"
-                  ng-bind="filter.selectedGroup.acronym ? filter.selectedGroup.acronym : filter.selectedGroup.official_title | limitTo: 6"></span>
-        </div>
+      <div ng-click="filter.selectedGroup = null" ng-class="{selected: !filter.selectedGroup}">
+        <figure>
+          <img src="images/v2/icons/all-group.png" />
+          <span ng-show="filter.unansweredCount" ng-bind="filter.unansweredCount"></span>
+        </figure>
+        <span>All</span>
+      </div>
+      <div ng-repeat="group in filter.groups.slice(0, 3)" ng-click="filter.selectedGroup = group"
+           ng-class="{selected: group == filter.selectedGroup, read: group.read}">
+        <figure>
+          <img ng-src="{{ group.getIcon()}}" />
+          <span ng-show="group.unansweredCount" ng-bind="group.unansweredCount"></span>
+        </figure>
+        <span ng-bind="group.getTitle()"></span>
+      </div>
+      <div ng-click="filter.filter_full_view = !filter.filter_full_view" class="more"
+           ng-class="{selected: filter.selectedGroup.group_type === 0, open: filter.filter_full_view}">
+        <figure>
+          <img src="images/v2/icons/more.png" />
+        </figure>
+        <span ng-hide="filter.selectedGroup.group_type === 0">More</span>
+        <span ng-show="filter.selectedGroup.group_type === 0"
+              ng-bind="filter.selectedGroup.acronym ? filter.selectedGroup.acronym : filter.selectedGroup.official_title | limitTo: 6"></span>
+      </div>
     </div>
     <div class="article-list-filter shadow"
          ng-show="filter.filter_full_view"
-         ng-click="filter.filter_full_view = false; $event.stopPropagation()"
-            ng-repeat="start in steps()">
-        <div ng-repeat="group in filter.groups.slice(start, start + filterLineStep())" ng-click="filter.selectedGroup = group"
-             ng-class="{selected: group == filter.selectedGroup, read: group.read}">
-            <figure>
-                <img ng-src="{{ group.getIcon() }}" />
-                <span ng-show="group.unansweredCount" ng-bind="group.unansweredCount"></span>
-            </figure>
-            <span ng-bind="group.getTitle()"></span>
-        </div>
-        <div ng-click="path('/groups/search')" ng-if="$last">
-            <figure style="margin-bottom: 2px;">
-                <img src="images/v2/icons/add-dark.png" />
-            </figure>
-            <span>Add Group</span>
-        </div>
+         ng-click="filter.filter_full_view = false;
+               $event.stopPropagation()"
+         ng-repeat="start in steps()">
+      <div ng-repeat="group in filter.groups.slice(start, start + filterLineStep())" ng-click="filter.selectedGroup = group"
+           ng-class="{selected: group == filter.selectedGroup, read: group.read}">
+        <figure>
+          <img ng-src="{{ group.getIcon()}}" />
+          <span ng-show="group.unansweredCount" ng-bind="group.unansweredCount"></span>
+        </figure>
+        <span ng-bind="group.getTitle()"></span>
+      </div>
+      <div ng-click="path('/groups/search')" ng-if="$last">
+        <figure style="margin-bottom: 2px;">
+          <img src="images/v2/icons/add-dark.png" />
+        </figure>
+        <span>Add Group</span>
+      </div>
     </div>
-</section>
-<div class="wrap-center" style="position: static;padding-top: 50px;" ng-show="loading"><spinner></spinner></div>
-<p class="info-message" ng-show="!loading && !activities.length && !filter.selectedGroup">
-  Hmm - Your newsfeed is empty! Looks like a great opportunity to take a stand, start a discussion,
-  or improve your community by creating a post or petition. Use the button in the upper-right corner of the screen!
-</p>
-<section ng-show="!loading"
-         ng-style="{'height': (minContentHeight - 134)}"
-         class="activity-list-wrap" ng-include=" 'templates/home/activities.html' "></section>
+  </section>
+  <!-- fixed header content -->
+  
+  <ion-content class="page-home content">
 
-<br>
+    
+    <div class="wrap-center" style="position: static;padding-top: 50px;" ng-show="loading"><spinner></spinner></div>
+    <p class="info-message" ng-show="!loading && !activities.length && !filter.selectedGroup">
+      Hmm - Your newsfeed is empty! Looks like a great opportunity to take a stand, start a discussion,
+      or improve your community by creating a post or petition. Use the button in the upper-right corner of the screen!
+    </p>
+    <section ng-show="!loading"
+             ng-style="{'height': (minContentHeight - 134)}"
+             class="activity-list-wrap" ng-include=" 'templates/home/activities.html'"></section>
+
+    <br>
+  </ion-content>
+</ion-view>

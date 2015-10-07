@@ -1,10 +1,19 @@
-angular.module('app.controllers').controller('session.login',function ($scope, topBar, session, facebook, $timeout, flurry, layout) {
-  topBar.reset();
-  layout.setBodyClass('gradient hidden-header');
+angular.module('app.controllers').controller('session.login',function ($scope, $location, session, facebook, $timeout, flurry, $ionicSideMenuDelegate, $ionicHistory) {
+  $ionicSideMenuDelegate.canDragContent(false);
+  
   $scope.keepLogged = true;
   $scope.data = {};
 
   flurry.log('login');
+  
+  if (session.token) {
+    $location.path('/preload');
+    return;
+  }
+  
+  //clear cache and history
+  $ionicHistory.clearCache();
+  $ionicHistory.clearHistory();
 
   $scope.login = function () {
     if (!$scope.data.username || !$scope.data.password) {
@@ -71,12 +80,15 @@ angular.module('app.controllers').controller('session.login',function ($scope, t
     $scope.path('/forgot-password');
   };
 
-}).controller('session.logout', function ($scope, session, $window, flurry) {
-
+}).controller('session.logout', function ($scope, $location, session, $window, flurry) {
   flurry.log('logout');
 
   if (!session.getToken()) {
-    $window.navigator.app.exitApp();
+    if($window.navigator.app){
+      $window.navigator.app.exitApp();
+    }else{
+      $location.path('/login');
+    }
     return;
   }
 

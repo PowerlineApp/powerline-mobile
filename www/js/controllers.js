@@ -65,7 +65,11 @@ angular.module('app.controllers', [
   };
 
   $rootScope.alert = function () {
-    $window.navigator.notification.alert.apply(null, arguments);
+    if($window.navigator.notification){
+      $window.navigator.notification.alert.apply(null, arguments);
+    }else{
+      alert(arguments[0]);
+    }
   };
 
   $rootScope.confirmAction = function (message, title, buttonLabels) {
@@ -91,5 +95,11 @@ angular.module('app.controllers', [
     if (_.isFunction(callback)) {
       callback.apply(this, arguments);
     }
+  };
+}).controller('AppCtrl', function($scope, $rootScope){
+  $scope.getWrapperClass = function () {
+    var obj = {};
+    obj[$rootScope.wrapperClass || ''] = true;
+    return obj;
   };
 });

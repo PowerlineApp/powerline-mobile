@@ -92,7 +92,7 @@
     top: -10px;
     padding-top: 10px;
   }
-
+  
   &.item-floating-label {
     input {
       @include placeholder(transparent);
@@ -102,6 +102,8 @@
       opacity: 1;
       padding: 0 0 0 1px;
       top: 9px;
+      display: inline-block;
+      width: auto;
       &.has-input {
         top: 0;
         font-size: 9px;

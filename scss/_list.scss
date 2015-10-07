@@ -691,15 +691,23 @@
     background: #fff;
     position: relative;
     overflow: hidden;
+    padding: 0px;
+    margin: 0px;
+    white-space: normal;
+    border-width: 0px;
+    color: inherit;
 
     .item-content {
       padding: 7px 10px 15px 58px;
       font-size: 14px;
       min-height: 60px;
       position: relative;
+      white-space: normal;
+      overflow: visible;
       p {
         @include ellipsisRows(3);
         line-height: 1.4em;
+        white-space: normal;
         &.unanswered {
           font-family: "Lato";
         }

@@ -7,6 +7,7 @@
 @import "grid";
 @import "forms";
 @import "buttons";
+@import "notifications";
 @import "header";
 @import "menu";
 @import "headings";
@@ -19,6 +20,7 @@
 
 /* pages */
 
+@import "pages/login";
 @import "pages/coming-soon";
 @import "pages/terms";
 @import "pages/guide";

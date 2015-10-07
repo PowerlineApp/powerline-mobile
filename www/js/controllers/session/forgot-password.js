@@ -1,16 +1,11 @@
-angular.module('app.controllers').controller('session.forgot-password', function ($scope, topBar, session, flurry, layout) {
-  topBar.reset().set('back', true);
-  layout.setBodyClass('light');
+angular.module('app.controllers').controller('session.forgot-password', function ($scope, session, flurry, layout, $ionicSideMenuDelegate) {
+  $ionicSideMenuDelegate.canDragContent(false);
 
   $scope.data = {};
 
   flurry.log('forgot password');
 
   $scope.sendEmail = function () {
-    if ($scope.forgotForm.$invalid) {
-      $scope.forgotForm.$filled = true;
-      return;
-    }
     $scope.loading = true;
     session.forgotPassword($scope.data.email).then(function () {
       $scope.alert('Please check your email', null, 'Success', 'OK');

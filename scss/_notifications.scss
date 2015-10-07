@@ -1,0 +1,86 @@
+.notifications {
+  height: 38px;
+  width: 100%;
+  position: relative;
+  z-index: 9;
+  background: #0c0c54;
+  margin: auto;
+  li {
+    width: 33%;
+    border-left: solid 1px #2c3666;
+    box-sizing: border-box;
+    float: left;
+    &:last-child {
+      width: 34%;
+    }
+    &:last-child.active {
+      float: right;
+    }
+    &:first-child {
+      border: none;
+    }
+    height: 100%;
+    display: block;
+    background: #0c0c54;
+    text-align: center;
+    i {
+      position: relative;
+      display: inline-block;
+      height: 100%;
+      width: 60px;
+      background: url('../images/v2/icons/notification-icons-sprite.png') no-repeat;
+      background-size: 128px auto;
+      background-position-y: -3px;
+    }
+    &.news {
+      i {
+        background-position-x: 10px;
+      }
+    }
+    &.followers {
+      i {
+        background-position-x: -34px;
+      }
+    }
+    &.messages {
+      i {
+        background-position-x: -81px;
+      }
+    }
+
+    span {
+      box-sizing: border-box;
+      color: #fff;
+      background: #54c5ff;
+      min-width: 10px;
+      height: 10px;
+      display: block;
+      border-radius: 5px;
+      position: absolute;
+      font-style: normal;
+      top: 6px;
+      right: 15px;
+      text-align: center;
+      line-height: 10px;
+      font-size: 8px;
+      font-family: "Lato Bold";
+    }
+
+    &.news span {background-color: $red;}
+
+    &.ng-click-active {
+      background: #2c3666;
+    }
+    &.active {
+      background: #54c5ff;
+      i {
+        background-position-y: -47px;
+      }
+      span {
+        background: #0c0c54;
+      }
+      &.news span {background-color: $red;}
+    }
+
+  }
+}

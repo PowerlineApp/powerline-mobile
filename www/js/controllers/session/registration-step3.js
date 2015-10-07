@@ -1,11 +1,9 @@
 angular.module('app.controllers').controller('session.registration-step3',
-  function ($scope, topBar, session, $location, $window, iStorageMemory, profile, layout) {
-
-    topBar.reset();
-    layout.setBodyClass('hidden-header light');
+  function ($scope, topBar, session, $location, $window, iStorageMemory, profile, layout, $ionicSideMenuDelegate) {
+    $ionicSideMenuDelegate.canDragContent(false);
 
     $scope.loading = true;
-
+    
     profile.load().then(function () {
       $scope.user = profile.get();
       $scope.loading = false;
