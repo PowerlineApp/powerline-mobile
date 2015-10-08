@@ -85,7 +85,7 @@ angular.module('app.directives').directive('iRadioListClass',function ($parse) {
       elements.first().addClass('first-child');
     });
   };
-}).directive('tabPanel', function ($parse) {
+}).directive('tabPanel', function ($parse, $ionicScrollDelegate) {
   return {
     restrict: 'E',
     scope: true,
@@ -97,6 +97,7 @@ angular.module('app.directives').directive('iRadioListClass',function ($parse) {
           if (li === el) {
             angular.element(li).addClass('active');
             angular.element($tabs[id]).css('display', 'block');
+            $ionicScrollDelegate.resize();
             return true;
           }
         });

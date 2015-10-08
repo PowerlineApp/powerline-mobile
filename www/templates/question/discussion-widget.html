@@ -1,73 +1,72 @@
 <section ng-controller="discussion">
-    <form class="comment-answer-form" ng-controller="discussion.comment-form" ng-submit="reply()">
-        <div class="checkbox-privacy" ng-class="{checked: data.privacy}" ng-click="data.privacy = data.privacy ? 0 : 1" guide="privacy-option">
-            <i></i>
-        </div>
-        <div class="text-field-2">
-            <textarea i-flexible-field="13" style="width: 90%;"
-                      ng-model="data.comment" maxlength="500" placeholder="Add Comment..."
-                      i-autocomplete
-                      ></textarea>
-            <button class="btn-input-send" type="submit" ng-click></button>
-        </div>
-    </form>
-    <section ng-init="commentsLimit=10">
-        <div class="comments">
-            <div class="item" ng-repeat="comment in comment.children | limitTo:commentsLimit" bindonce>
-                <div class="wrap">
-                    <figure ng-click="navigateTo('influence-profile', comment.user.id)">
-                        <img bo-src="comment.author_picture" width="35">
-                    </figure>
-                    <div class="header">
-                        <strong
-                                bo-bind="comment.user.full_name"
-                                ng-click="navigateTo('owner-profile', comment.user)"></strong>
-                        <br>
-                        <time ng-bind="(comment.created_at | elapsed)"></time>
-                        <div class="comment-controls">
-                            <span class="replay" ng-bind="comment.children.length" ng-click="path('/discussion/' + entity + '/' + id + '/' + comment.id)"></span>
-                            <span class="btn-menu"
-                                  ng-click="view.selectedId = view.selectedId === comment.id ? null : comment.id"
-                                  ng-class="{active: comment.id === view.selectedId}"></span>
-                        </div>
-                    </div>
-                </div>
-                <div class="item-content">
-                    <p bo-html="comment.comment_body_html"
-                       i-content-link
-                       ng-click="view.selectedId = view.selectedId === comment.id ? null : comment.id"></p>
-                    <p class="rates">
-                        <span ng-bind="comment.rate_up" ng-class="{active: comment.rate_status === 1}"></span>
-                        <i class="icon-up-mini"></i>
-
-                        <span ng-bind="comment.rate_down" ng-class="{active: comment.rate_status === -1}"></span>
-                        <i class="icon-down-mini"></i>
-                    </p>
-                </div>
-                <div ng-include="'templates/widget/share.html'"
-                     ng-init="shareBody = comment.comment_body;shareTitle = ''"
-                     ng-show="view.selectedId === comment.id && view.commentToShare.id === comment.id"></div>
-                <div class="comment-menu" ng-show="comment.id === view.selectedId">
-                    <p ng-show="isAvailable(comment)" ng-click="up(comment)" ng-class="{active: comment.rate_status === 1}">
-                        <i class="icon-up"></i>
-                    </p>
-                    <p ng-show="isAvailable(comment)" ng-click="down(comment)" ng-class="{active: comment.rate_status === -1}">
-                        <i class="icon-down"></i>
-                    </p>
-                    <p ng-click="path('/discussion/' + entity + '/' + id + '/' + comment.id)">
-                        <i class="icon-replay"></i>
-                    </p>
-                    <p ng-click="view.commentToShare = view.commentToShare.id === comment.id ? null : comment">
-                        <i class="icon-share"></i>
-                    </p>
-                    <p bo-show="comment.link" i-open-system="comment.link" ng-click>
-                        <i class="icon-link"></i>
-                    </p>
-                </div>
+  <form class="comment-answer-form" ng-controller="discussion.comment-form" ng-submit="reply()">
+    <div class="checkbox-privacy" ng-class="{checked: data.privacy}" ng-click="data.privacy = data.privacy ? 0 : 1" guide="privacy-option">
+      <i></i>
+    </div>
+    <div class="text-field-2">
+      <textarea i-flexible-field="14" style="width: 90%;"
+                ng-model="data.comment" maxlength="500" placeholder="Add Comment..."
+                i-autocomplete
+                ></textarea>
+      <button class="btn-input-send" type="submit"></button>
+    </div>
+  </form>
+  <section ng-init="commentsLimit = 10">
+    <div class="comments">
+      <div class="item" ng-repeat="comment in comment.children| limitTo:commentsLimit" bindonce>
+        <div class="wrap">
+          <figure ng-click="navigateTo('influence-profile', comment.user.id)">
+            <img bo-src="comment.author_picture" width="35">
+          </figure>
+          <div class="header">
+            <strong
+              bo-bind="comment.user.full_name"
+              ng-click="navigateTo('owner-profile', comment.user)"></strong>
+            <br>
+            <time ng-bind="(comment.created_at | elapsed)"></time>
+            <div class="comment-controls">
+              <span class="replay" ng-bind="comment.children.length" ng-click="path('/discussion/' + entity + '/' + id + '/' + comment.id)"></span>
+              <span class="btn-menu"
+                    ng-click="view.selectedId = view.selectedId === comment.id ? null : comment.id"
+                    ng-class="{active: comment.id === view.selectedId}"></span>
             </div>
+          </div>
         </div>
-        <button class="btn-large btn-primary margin-10" ng-click="commentsLimit=comment.children.length" ng-show="comment.children.length > commentsLimit">See More</button><br>
-    </section>
+        <div class="item-content">
+          <p bo-html="comment.comment_body_html"
+             i-content-link
+             ng-click="view.selectedId = view.selectedId === comment.id ? null : comment.id"></p>
+          <p class="rates">
+            <span ng-bind="comment.rate_up" ng-class="{active: comment.rate_status === 1}"></span>
+            <i class="icon-up-mini"></i>
 
-    <div class="wrap-center wrap-dark" ng-show="loading"><spinner></spinner></div>
+            <span ng-bind="comment.rate_down" ng-class="{active: comment.rate_status === -1}"></span>
+            <i class="icon-down-mini"></i>
+          </p>
+        </div>
+        <div ng-include="'templates/widget/share.html'"
+             ng-init="shareBody = comment.comment_body;
+                       shareTitle = ''"
+             ng-show="view.selectedId === comment.id && view.commentToShare.id === comment.id"></div>
+        <div class="comment-menu" ng-show="comment.id === view.selectedId">
+          <p ng-show="isAvailable(comment)" ng-click="up(comment)" ng-class="{active: comment.rate_status === 1}">
+            <i class="icon-up"></i>
+          </p>
+          <p ng-show="isAvailable(comment)" ng-click="down(comment)" ng-class="{active: comment.rate_status === -1}">
+            <i class="icon-down"></i>
+          </p>
+          <p ng-click="path('/discussion/' + entity + '/' + id + '/' + comment.id)">
+            <i class="icon-replay"></i>
+          </p>
+          <p ng-click="view.commentToShare = view.commentToShare.id === comment.id ? null : comment">
+            <i class="icon-share"></i>
+          </p>
+          <p bo-show="comment.link" i-open-system="comment.link" ng-click>
+            <i class="icon-link"></i>
+          </p>
+        </div>
+      </div>
+    </div>
+    <button class="btn-large btn-primary" ng-click="commentsLimit = comment.children.length" ng-show="comment.children.length > commentsLimit">See More</button><br>
+  </section>
 </section>

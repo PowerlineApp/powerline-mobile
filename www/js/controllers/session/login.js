@@ -6,14 +6,6 @@ angular.module('app.controllers').controller('session.login',function ($scope, $
 
   flurry.log('login');
   
-  if (session.token) {
-    $location.path('/preload');
-    return;
-  }
-  
-  //clear cache and history
-  $ionicHistory.clearCache();
-  $ionicHistory.clearHistory();
 
   $scope.login = function () {
     if (!$scope.data.username || !$scope.data.password) {
@@ -23,6 +15,9 @@ angular.module('app.controllers').controller('session.login',function ($scope, $
     $scope.loading = true;
     session.login($scope.data, $scope.keepLogged).then(
       function () {
+        //clear cache and history
+        $ionicHistory.clearCache();
+        $ionicHistory.clearHistory();
         flurry.log('logged in');
         if (!session.is_registration_complete) {
           $scope.path('/profile');

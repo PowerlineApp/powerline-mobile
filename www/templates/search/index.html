@@ -1,79 +1,82 @@
-<section>
-    <form class="filter" ng-submit="search(query)">
+<ion-view view-title="Powerline">
+  <ion-content class="page-search content">
+    <section>
+      <form class="filter" ng-submit="search(query)">
         <input type="text" ng-model="query" placeholder="Search" />
-        <i class="icon-magnifier" ng-click="search(query)"></i>
-    </form>
-</section>
+        <i class="icon ion-ios-search" ng-click="search(query)"></i>
+      </form>
+    </section>
 
-<p class="info-message" ng-hide="!data || data.users.length || data.groups.length || data.representatives.length || data.petitions.length">
-  That's strange. Looks like we couldn't find anything for <strong>{{ query }}</strong>
-</p>
+    <p class="info-message" ng-hide="!data || data.users.length || data.groups.length || data.representatives.length || data.petitions.length">
+      That's strange. Looks like we couldn't find anything for <strong>{{ query}}</strong>
+    </p>
 
-<ul ng-show="data.users.length" class="margin-10 profiles-list-two">
-    <li class="title">Users</li>
-    <li ng-repeat="item in data.users" ng-click="navigateTo('owner-profile', item)">
+    <ul ng-show="data.users.length" class="margin-10 profiles-list-two">
+      <li class="title">Users</li>
+      <li ng-repeat="item in data.users" ng-click="navigateTo('owner-profile', item)">
         <figure>
-            <img ng-src="{{ item.avatar_file_name }}">
+          <img ng-src="{{ item.avatar_file_name}}">
         </figure>
-        <p>{{ item.username }}</p>
-        <p><span>{{ item.first_name }} {{ item.last_name }}</span></p>
-    </li>
-</ul>
+        <p>{{ item.username}}</p>
+        <p><span>{{ item.first_name}} {{ item.last_name}}</span></p>
+      </li>
+    </ul>
 
-<ul ng-show="data.groups.length" class="margin-10 profiles-list">
-    <li class="title">Groups</li>
-    <li ng-repeat="item in data.groups" ng-click="navigateTo('owner-profile', item)">
+    <ul ng-show="data.groups.length" class="margin-10 profiles-list">
+      <li class="title">Groups</li>
+      <li ng-repeat="item in data.groups" ng-click="navigateTo('owner-profile', item)">
         <figure>
-            <img ng-src="{{ item.avatar_file_path }}">
+          <img ng-src="{{ item.avatar_file_path}}">
         </figure>
-        <p>{{ item.official_title }}</p>
-    </li>
-</ul>
+        <p>{{ item.official_title}}</p>
+      </li>
+    </ul>
 
-<ul ng-show="data.representatives.length" class="margin-10 profiles-list-two">
-    <li class="title">Representatives</li>
-    <li ng-repeat="item in data.representatives" ng-click="navigateTo('owner-profile', item)">
+    <ul ng-show="data.representatives.length" class="margin-10 profiles-list-two">
+      <li class="title">Representatives</li>
+      <li ng-repeat="item in data.representatives" ng-click="navigateTo('owner-profile', item)">
         <figure>
-            <img ng-show="item.avatar_file_path" ng-src="{{ item.avatar_file_path }}">
+          <img ng-show="item.avatar_file_path" ng-src="{{ item.avatar_file_path}}">
         </figure>
-        <p>{{ item.first_name }} {{ item.last_name }}</p>
-        <p><span>{{ item.official_title }}</span></p>
-    </li>
-</ul>
+        <p>{{ item.first_name}} {{ item.last_name}}</p>
+        <p><span>{{ item.official_title}}</span></p>
+      </li>
+    </ul>
 
-<div class="article-list margin-10" ng-show="data.petitions">
-    <article class="item" ng-repeat="item in data.petitions" ng-click="navigateTo('path', 'petition', item.id)">
+    <div class="article-list margin-10" ng-show="data.petitions">
+      <article class="item" ng-repeat="item in data.petitions" ng-click="navigateTo('path', 'petition', item.id)">
         <div class="item-title">
-            <figure ng-click="navigateTo('owner-profile', item.owner)">
-                <img ng-show="item.owner.avatar" ng-src="{{ item.owner.avatar }}">
-            </figure>
-            <div ng-class="item.owner.type">
-                <p ng-bind="item.owner.name"></p>
-            </div>
+          <figure ng-click="navigateTo('owner-profile', item.owner)">
+            <img ng-show="item.owner.avatar" ng-src="{{ item.owner.avatar}}">
+          </figure>
+          <div ng-class="item.owner.type">
+            <p ng-bind="item.owner.name"></p>
+          </div>
         </div>
         <div class="item-content">
-            <p>{{ item.petition_body }}</p>
-            <div ng-show="item.count_to_quorum" class="completion-fill">
-                <p>
-                    <span ng-bind="item.count_to_quorum"></span> Boosters
-                </p>
-                <div class="process-wrap">
-                    <div class="process" ng-style="{width: item.completed_percent + '%' }"></div>
-                </div>
+          <p>{{ item.petition_body}}</p>
+          <div ng-show="item.count_to_quorum" class="completion-fill">
+            <p>
+              <span ng-bind="item.count_to_quorum"></span> Boosters
+            </p>
+            <div class="process-wrap">
+              <div class="process" ng-style="{width: item.completed_percent + '%' }"></div>
             </div>
+          </div>
         </div>
         <div class="item-footer">
-            <div>
-                <i class="petition"><span class="petition">Petition</span></i>
-            </div>
-            <div>
-                <i class="responses"> <span>{{ item.responses_count }} Responses</span></i>
-            </div>
-            <div>
-                <i class="time"><time>{{ item.created_at | elapsed }}</time></i>
-            </div>
+          <div>
+            <i class="petition"><span class="petition">Petition</span></i>
+          </div>
+          <div>
+            <i class="responses"> <span>{{ item.responses_count}} Responses</span></i>
+          </div>
+          <div>
+            <i class="time"><time>{{ item.created_at | elapsed }}</time></i>
+          </div>
         </div>
-    </article>
-</div>
-
-<div class="wrap-center" ng-show="loading"><spinner></spinner></div>
+      </article>
+    </div>
+  </ion-content>
+  <div class="wrap-center" ng-show="loading"><spinner></spinner></div>
+</ion-view>

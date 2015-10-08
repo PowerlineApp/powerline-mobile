@@ -1,22 +1,16 @@
-angular.module('app.controllers').controller('question',function ($scope, topBar, questions, $routeParams, layout,
-                                                                  iStorageMemory, iJoinFilter, activity, flurry) {
+angular.module('app.controllers').controller('question',function ($scope, $location, questions, $stateParams, layout,
+                                                                  iStorageMemory, activity, flurry) {
 
-  topBar
-    .reset()
-    .set('back', true)
-    .set('title', 'QUESTION')
-  ;
-
-  flurry.log('question', {id: $routeParams.id});
+  flurry.log('question', {id: $stateParams.id});
 
   var optionsSubview = 'templates/question/options.html';
   var resultsSubview = 'templates/question/results.html';
 
   $scope.loading = true;
   $scope.blockedLoading = false;
-  activity.setEntityRead({id: Number($routeParams.id), type: 'question'});
+  activity.setEntityRead({id: Number($stateParams.id), type: 'question'});
 
-  questions.load($routeParams.id).then(function (question) {
+  questions.load($stateParams.id).then(function (question) {
     $scope.loading = false;
     $scope.q = question;
 
@@ -33,7 +27,7 @@ angular.module('app.controllers').controller('question',function ($scope, topBar
     if (!$scope.answer_message) {
       $scope.answer_message = question.is_answered ? 'You answered' : ' You did not answer';
     }
-    layout.focus($routeParams.focus);
+    layout.focus($location.search().focus);
   }, function (error) {
     $scope.alert(error, function () {
       $scope.loading = false;
@@ -56,71 +50,70 @@ angular.module('app.controllers').controller('question',function ($scope, topBar
       $scope.current = null;
     }
   };
-}).controller('question.answer-form',function ($scope, $route, iStorageMemory, homeCtrlParams, flurry) {
-
-  $scope.loading = false;
+  
+  $scope.$watch('loading', function(){
+    if($scope.loading){
+      $scope.$emit('showSpinner');
+    } else if($scope.loading === false) {
+      $scope.$emit('hideSpinner');
+    }
+  });
+}).controller('question.answer-form',function ($scope, $state, iStorageMemory, homeCtrlParams, flurry) {
 
   $scope.answer = function () {
 
-    $scope.loading = true;
+    $scope.$emit('showSpinner');
     $scope.$parent.q.answer($scope.data).then(function () {
       homeCtrlParams.loaded = false;
       flurry.log('answer to question', {id: $scope.$parent.q.id});
-      $scope.loading = false;
+      $scope.$emit('hideSpinner');
       if ($scope.q.recipients) {
         iStorageMemory.put('question-answered-' + $scope.$parent.q.id, 'Your response “' + $scope.$parent.current.title + '” was sent to ' +
           $scope.$parent.q.recipients);
       }
-      $route.reload();
+      $state.reload();
 
     }, function () {
-      $scope.loading = false;
-      $route.reload();
+      $scope.$emit('hideSpinner');
+      $state.reload();
     });
   };
-}).controller('question.influences',function ($scope, $routeParams, questions, questionCache, loaded, flurry) {
-  $scope.q = questionCache.get($routeParams.id);
-  questions.loadAnswers($routeParams.id).then(loaded($scope, function (answers) {
+}).controller('question.influences',function ($scope, $stateParams, questions, questionCache, loaded, flurry) {
+  $scope.q = questionCache.get($stateParams.id);
+  questions.loadAnswers($stateParams.id).then(loaded($scope, function (answers) {
     $scope.answers = answers;
   }), loaded($scope));
-}).controller('question.news',function ($scope, topBar, $routeParams, questions, iJoinFilter, activity, flurry, layout) {
-  topBar
-    .reset()
-    .set('back', true)
-    .set('title', 'NEWS')
-  ;
+}).controller('question.news',function ($scope, $location, $stateParams, questions, iJoinFilter, activity, flurry, layout) {
+  
+  flurry.log('leader news', {id: $stateParams.id});
+  activity.setEntityRead({id: Number($stateParams.id), type: 'leader-news'});
 
-  flurry.log('leader news', {id: $routeParams.id});
-  $scope.loading = true;
-  activity.setEntityRead({id: Number($routeParams.id), type: 'leader-news'});
-
-  questions.load($routeParams.id).then(function (question) {
-    $scope.loading = false;
+  $scope.$emit('showSpinner');
+  questions.load($stateParams.id).then(function (question) {
+    $scope.$emit('hideSpinner');
     $scope.q = question;
     $scope.shareBody = question.subject;
     $scope.shareImage = question.share_picture;
-    layout.focus($routeParams.focus);
-  }, $scope.back);
+    layout.focus($location.search().focus);
+  }, function(){
+    $scope.$emit('hideSpinner');
+    $scope.back();
+  });
 
-}).controller('question.leader-petition', function ($scope, topBar, $routeParams, questions, $route, iJoinFilter,
+}).controller('question.leader-petition', function ($scope, $state, $stateParams, questions, iJoinFilter,
                                                     serverConfig, homeCtrlParams, activity, flurry, layout) {
-  topBar
-    .reset()
-    .set('back', true)
-    .set('title', 'PETITION')
-  ;
-
-  flurry.log('leader petition', {id: $routeParams.id});
-  $scope.blockedLoading = false;
-  $scope.loading = true;
+  
+  flurry.log('leader petition', {id: $stateParams.id});
+  
   $scope.data = {
     privacy: 0,
     comment: ''
   };
-  activity.setEntityRead({id: Number($routeParams.id), type: 'petition'});
+  activity.setEntityRead({id: Number($stateParams.id), type: 'petition'});
 
-  questions.load($routeParams.id).then(function (question) {
-    $scope.loading = false;
+  $scope.$emit('showSpinner');
+  questions.load($stateParams.id).then(function (question) {
+    $scope.$emit('hideSpinner');
     $scope.q = question;
     $scope.data.option_id = question.options[0].id;
 
@@ -128,25 +121,26 @@ angular.module('app.controllers').controller('question',function ($scope, topBar
     $scope.shareBody = question.petition_body;
     $scope.shareLink = serverConfig.shareLink + '/petition/' + question.id;
     $scope.shareImage = question.share_picture;
-    layout.focus($routeParams.focus);
-
-  }, $scope.back);
+    layout.focus($stateParams.focus);
+  }, function(){
+    $scope.$emit('hideSpinner');  
+    $scope.back();
+  });
 
   $scope.answer = function () {
-    $scope.blockedLoading = true;
+    $scope.$emit('showSpinner');
     $scope.q.answer($scope.data).then(function () {
       homeCtrlParams.loaded = false;
       flurry.log('answer to leader petition', {id: $scope.q.id});
-      $route.reload();
+      $state.reload();
     }, function () {
-      $scope.blockedLoading = false;
-      $route.reload();
+      $state.reload();
     });
   };
 
   $scope.unsign = function () {
-    $scope.loading = true;
-    questions.unsignFromPetition($scope.q.id, $scope.q.options[0].id).then($route.reload, $route.reload);
+    $scope.$emit('showSpinner');
+    questions.unsignFromPetition($scope.q.id, $scope.q.options[0].id).then($state.reload, $state.reload);
     flurry.log('unsign petition', {id: $scope.q.id});
     homeCtrlParams.loaded = false;
   };

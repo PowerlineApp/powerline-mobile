@@ -1,4 +1,4 @@
-angular.module('app.controllers').controller('groups',function ($scope, groups, $route, topBar, $location, flurry) {
+angular.module('app.controllers').controller('groups',function ($scope, groups, $state, topBar, $location, flurry) {
   $scope.loading = true;
   $scope.items = [];
 
@@ -30,10 +30,10 @@ angular.module('app.controllers').controller('groups',function ($scope, groups, 
       $scope.loading = true;
       groups.unjoin(item.id).then(function () {
         $scope.loading = false;
-        $route.reload();
+        $state.reload();
       }, function () {
         $scope.loading = false;
-        $route.reload();
+        $state.reload();
       });
     });
   };
@@ -100,7 +100,7 @@ angular.module('app.controllers').controller('groups',function ($scope, groups, 
   $scope.$watch(groups.getNewGroups, function (newValue) {
     $scope.newItems = newValue;
   });
-}).controller('groups.profile',function ($scope, topBar, groups, $routeParams, $route, activity, invites, influence, homeCtrlParams, flurry) {
+}).controller('groups.profile',function ($scope, topBar, groups, $stateParams, $state, activity, invites, influence, homeCtrlParams, flurry) {
   topBar
     .reset()
     .set('back', true)
@@ -108,7 +108,7 @@ angular.module('app.controllers').controller('groups',function ($scope, groups, 
   ;
   influence.loadFollowers();
 
-  var id = parseInt($routeParams.id, 10);
+  var id = parseInt($stateParams.id, 10);
 
   flurry.log('group profile', {id: id});
 
@@ -147,10 +147,10 @@ angular.module('app.controllers').controller('groups',function ($scope, groups, 
         groups.resetInfo($scope.data.id);
         $scope.loading = false;
         flurry.log('unjoin', {id: id});
-        $route.reload();
+        $state.reload();
       }, function () {
         $scope.loading = false;
-        $route.reload();
+        $state.reload();
       });
     });
   };
@@ -205,13 +205,13 @@ angular.module('app.controllers').controller('groups',function ($scope, groups, 
   }, function (newValue) {
     $scope.data = newValue;
   });
-}).controller('groups.join', function ($scope, topBar, $routeParams, groups, groupsInvites, homeCtrlParams, flurry) {
+}).controller('groups.join', function ($scope, topBar, $stateParams, groups, groupsInvites, homeCtrlParams, flurry) {
   topBar.reset().set('back', true).set('title', 'Join Group');
   $scope.loading = true;
   $scope.data = {};
-  $scope.isFieldRequired = Number($routeParams.isFieldRequired);
-  var id = Number($routeParams.id);
-  $scope.publicStatus = Number($routeParams.publicStatus);
+  $scope.isFieldRequired = Number($stateParams.isFieldRequired);
+  var id = Number($stateParams.id);
+  $scope.publicStatus = Number($stateParams.publicStatus);
   $scope.isPasscodeRequired = !groupsInvites.hasInvite(id) && 2 === $scope.publicStatus;
 
   groups.loadInfo(id).then(function () {

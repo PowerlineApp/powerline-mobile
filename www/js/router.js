@@ -77,8 +77,52 @@ angular.module('app')
               templateUrl: 'templates/guide/confirm.html',
               controller: 'guide.confirm'
             }, {
+              name: 'search',
+              url: '/search',
+              templateUrl: 'templates/search/index.html',
+              controller: 'search'
+            }, {
+              name: 'paymentPolls-paymentRequest',
+              url: '/payment-polls/payment-request/:id',
+              templateUrl: 'templates/payment-polls/payment-request.html',
+              controller: 'question.payment-request'
+            }, {
+              name: 'paymentPolls-crowdfundingPaymentRequest',
+              url: '/payment-polls/crowdfunding-payment-request/:id',
+              templateUrl: 'templates/payment-polls/crowdfunding-payment-request.html',
+              controller: 'question.payment-request'
+            }, {
+              name: 'petition',
+              url: '/petition/:id',
+              templateUrl: 'templates/petitions/petition.html',
+              controller: 'petition'
+            }, {
+              name: 'discussion',
+              url: '/discussion/:entity/:id/:comment',
+              templateUrl: 'templates/question/discussion.html',
+              controller: 'discussion'
+            }, {
+              name: 'question',
+              url: '/questions/:id',
+              templateUrl: 'templates/question/layout.html',
+              controller: 'question'
+            }, {
+              name: 'questionNews',
+              url: '/questions/news/:id',
+              templateUrl: 'templates/question/news.html',
+              controller: 'question.news'
+            }, {
+              name: 'questionLeaderPetition',
+              url: '/question/leader-petition/:id',
+              templateUrl: 'templates/question/petition.html',
+              controller: 'question.leader-petition'
+            }, {
+              name: 'questionLeaderEvent',
+              url: '/leader-event/:id',
+              templateUrl: 'templates/leader-event/leader-event.html',
+              controller: 'question.leader-event'
+            }, {
             }];
-
 
           states.forEach(function (state) {
             if (!state.name) {
@@ -96,7 +140,7 @@ angular.module('app')
             $stateProvider.state('app.' + state.name, options);
           });
 
-          $urlRouterProvider.otherwise('/preload');
+          //$urlRouterProvider.otherwise('/preload');
 
           /*$routeProvider
            .when('/', {

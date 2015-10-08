@@ -635,7 +635,7 @@ hr {
     width: 30px;
     height: 30px;
     position: absolute;
-    top: 0;
+    top: 2px;
     right: 0;
     z-index: 1; }
     .text-field-2 .btn-input-send.ng-click-active {
@@ -847,10 +847,12 @@ checkbox {
     font-size: 14px;
     width: 100%;
     background: transparent; }
-  .filter .icon-magnifier {
+  .filter .icon {
     position: absolute;
     right: 8px;
-    top: 11px; }
+    top: 12px;
+    font-size: 28px;
+    color: #fff; }
 
 .search {
   width: 100%;
@@ -2431,7 +2433,8 @@ asterisk {
   background: #fff;
   position: relative;
   overflow: hidden;
-  display: block; }
+  display: block;
+  padding: 0px; }
   .comments .item.ng-click-active {
     background: #dae3e6; }
   .comments .item .header {
@@ -3254,13 +3257,6 @@ tab-panel {
     background-position-y: -453px; }
   .icon-field.icon-vote {
     background-position-y: -493px; }
-
-.icon-magnifier {
-  display: inline-block;
-  background: url("../images/v2/icons/magnifier.png") center center no-repeat;
-  background-size: 27px auto;
-  width: 27px;
-  height: 24px; }
 
 .icon-group {
   display: inline-block;

@@ -1,99 +1,101 @@
-<section class="q-header margin-10">
-    <div class="avatar" ng-click="navigateTo('owner-profile', q.user)">
-        <img ng-src="{{ q.user.avatar_file_path }}"/>
-    </div>
-    <div class="q-info three-sections">
+<ion-view view-title="PAYMENT REQUEST">
+  <ion-content class="content page-payment-request">
+    <section class="q-header margin-10">
+      <div class="avatar" ng-click="navigateTo('owner-profile', q.user)">
+        <img ng-src="{{ q.user.avatar_file_path}}"/>
+      </div>
+      <div class="q-info three-sections">
         <div>
-            <i class="icon-responses"></i> Responses <br>
-            <span ng-bind="q.votes_count"></span>
+          <i class="icon-responses"></i> Responses <br>
+          <span ng-bind="q.votes_count"></span>
         </div>
         <div>
-            <i class="icon-calendar"></i> Created <br>
-            <time ng-bind="q.published_at_date | date:'M.d.yy'"></time>
+          <i class="icon-calendar"></i> Created <br>
+          <time ng-bind="q.published_at_date | date:'M.d.yy'"></time>
         </div>
         <div>
-            Payment Request <br>
-            <i class="icon-fundraiser"></i>
+          Payment Request <br>
+          <i class="icon-fundraiser"></i>
         </div>
-    </div>
-</section>
+      </div>
+    </section>
 
 
-<section class="q-content">
-    <div class="title">
-        <strong ng-bind="q.user.official_title + ' ' + q.user.first_name +  ' '  +  q.user.last_name" ng-click="navigateTo('owner-profile', q.user)"></strong>
-    </div>
-    <h1 ng-bind="q.title"></h1>
-    <p i-bind-taggable="q.subject" i-tags="q.cached_hash_tags"></p>
+    <section class="q-content">
+      <div class="title">
+        <strong ng-bind="q.user.official_title + ' ' + q.user.first_name + ' ' + q.user.last_name" ng-click="navigateTo('owner-profile', q.user)"></strong>
+      </div>
+      <h1 ng-bind="q.title"></h1>
+      <p i-bind-taggable="q.subject" i-tags="q.cached_hash_tags"></p>
 
-    <section class="margin-v-10" ng-hide="q.is_answered">
+      <section class="margin-v-10" ng-hide="q.is_answered">
         <fieldset>
-            <div class="checkbox-field-long" ng-repeat="option in q.options" ng-class="{active: data.option === option}"
-                 ng-click="select(option)">
-                <span><i></i></span>
-                <p>{{ option.is_user_amount ? '' : '$' + option.payment_amount + ' - ' }}{{ option.value }}</p>
-            </div>
+          <div class="checkbox-field-long" ng-repeat="option in q.options" ng-class="{active: data.option === option}"
+               ng-click="select(option)">
+            <span><i></i></span>
+            <p>{{ option.is_user_amount ? '' : '$' + option.payment_amount + ' - ' }}{{ option.value}}</p>
+          </div>
         </fieldset>
-    </section>
+      </section>
 
-    <section class="margin-v-10 info-message" ng-show="q.is_answered">
+      <section class="margin-v-10 info-message" ng-show="q.is_answered">
         <p>
-            <strong>Thank You! Your Receipt:</strong><br>
-            ${{ q.answer_entity.current_payment_amount }} - {{ q.answer_entity.option.value }}
+          <strong>Thank You! Your Receipt:</strong><br>
+          ${{ q.answer_entity.current_payment_amount}} - {{ q.answer_entity.option.value}}
         </p>
-    </section>
-    <p>
+      </section>
+      <p>
         <strong ng-show="charge.has('receipt_number')">Receipt Number:</strong> {{ charge.get('receipt_number')}}<br>
-        <strong ng-show="charge.has('created')">Transaction Date:</strong> {{ charge.get('created') | date:'medium' }}
-    </p>
+        <strong ng-show="charge.has('created')">Transaction Date:</strong> {{ charge.get('created') | date:'medium'}}
+      </p>
 
-    <ng-include src="'templates/widget/share.html'" ng-if="q.is_allow_outsiders"></ng-include>
-</section>
+      <ng-include src="'templates/widget/share.html'" ng-if="q.is_allow_outsiders"></ng-include>
+    </section>
 
-<section ng-show="data.showAnswerForm">
-    <div class="popup-overflow">
+    <section ng-show="data.showAnswerForm">
+      <div class="popup-overflow">
         <fieldset class="popup">
-            <a class="text-close" ng-click="data.showAnswerForm = false;data.option = null;">Cancel</a>
-            <p class="section-title">
-                <strong>Submit?</strong>
-                <span>{{ data.option.value }}{{ data.option.is_user_amount ? '' : ' for $' + data.option.payment_amount }}</span>
-            </p>
-            <div class="text-field-2" ng-if="data.option.is_user_amount">
-                <input type="number" ng-model="data.payment_amount" required name="payment_amount" placeholder="Enter custom amount here (number only)" />
+          <a class="text-close" ng-click="data.showAnswerForm = false;
+                data.option = null;">Cancel</a>
+          <p class="section-title">
+            <strong>Submit?</strong>
+            <span>{{ data.option.value}}{{ data.option.is_user_amount ? '' : ' for $' + data.option.payment_amount }}</span>
+          </p>
+          <div class="text-field-2" ng-if="data.option.is_user_amount">
+            <input type="number" ng-model="data.payment_amount" required name="payment_amount" placeholder="Enter custom amount here (number only)" />
+          </div>
+          <div class="text-field-2">
+            <textarea ng-model="data.comment" placeholder="(Optional) You can add your comment here" maxlength="500"></textarea>
+          </div>
+          <div class="margin-10">
+            <div class="checkbox-privacy" ng-class="{checked: data.privacy}" ng-click="data.privacy = data.privacy ? 0 : 1" guide="privacy-option">
+              <i></i>
+              {{ data.privacy ? 'Username hidden' : 'Username visible'  }}
             </div>
-            <div class="text-field-2">
-                <textarea ng-model="data.comment" placeholder="(Optional) You can add your comment here" maxlength="500"></textarea>
-            </div>
-            <div class="margin-10">
-                <div class="checkbox-privacy" ng-class="{checked: data.privacy}" ng-click="data.privacy = data.privacy ? 0 : 1" guide="privacy-option">
-                    <i></i>
-                    {{ data.privacy ? 'Username hidden' : 'Username visible'  }}
-                </div>
-            </div>
-            <div class="section-footer">
-                <span ng-bind="500 - data.comment.length"></span>
-                <a class="btn-text" ng-click="pay()">
-                    {{ data.option.payment_amount || data.option.is_user_amount ? 'Pay' : 'Submit' }}
-                    <i class="icon-send"></i>
-                </a>
-            </div>
+          </div>
+          <div class="section-footer">
+            <span ng-bind="500 - data.comment.length"></span>
+            <a class="btn-text" ng-click="pay()">
+              {{ data.option.payment_amount || data.option.is_user_amount ? 'Pay' : 'Submit' }}
+              <i class="icon-send"></i>
+            </a>
+          </div>
         </fieldset>
-    </div>
+      </div>
 
-    <div class="wrap-center wrap-dark" ng-show="answerLoading"><spinner></spinner></div>
-</section>
+    </section>
 
-<cards ng-if="data.showCardsInfo" cancel="data.showCardsInfo=false" completed="data.showCardsInfo = false;data.showAnswerForm = true"></cards>
+    <cards ng-if="data.showCardsInfo" cancel="data.showCardsInfo=false" completed="data.showCardsInfo = false;data.showAnswerForm = true"></cards>
 
-<tab-panel>
-    <ul class="header">
+    <tab-panel>
+      <ul class="header">
         <li ng-click="open($event)">Discussion</li>
         <li ng-click="open($event)">More</li>
-    </ul>
-    <tabs>
+      </ul>
+      <tabs>
         <tab><discussions id="q.id" entity="'poll'"></discussions></tab>
         <tab><ng-include src="'templates/question/educational-context.html'"></ng-include></tab>
-    </tabs>
-</tab-panel>
-
-<div class="wrap-center" ng-show="loading"><spinner></spinner></div>
+      </tabs>
+    </tab-panel>
+  </ion-content>
+</ion-view>

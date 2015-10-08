@@ -1,9 +1,9 @@
 angular.module('app.controllers').controller('petitions.add',
-function ($scope, topBar, petitions, PetitionsResource, groups, $routeParams, errorFormMessage, getFormData,
+function ($scope, topBar, petitions, PetitionsResource, groups, $stateParams, errorFormMessage, getFormData,
             camelcase2underscore, profile, homeCtrlParams, $document, session, flurry) {
   topBar.reset()
     .set('back', true)
-    .set('title', $routeParams.type === 'quorum' ? 'New Post' : 'New Petition')
+    .set('title', $stateParams.type === 'quorum' ? 'New Post' : 'New Petition')
     .set('right', {
       btnClass: 'btn-text btn-send',
       title: 'Send',
@@ -39,12 +39,12 @@ function ($scope, topBar, petitions, PetitionsResource, groups, $routeParams, er
   ];
   $scope.data = {
     is_outsiders_sign: false,
-    type: $routeParams.type
+    type: $stateParams.type
   };
 
-  if ($routeParams.group_id) {
+  if ($stateParams.group_id) {
     $scope.data.group = _($scope.groups).find(function (item) {
-      return item.id === Number($routeParams.group_id);
+      return item.id === Number($stateParams.group_id);
     });
   } else {
     $scope.data.openChoices = true;
@@ -82,7 +82,7 @@ function ($scope, topBar, petitions, PetitionsResource, groups, $routeParams, er
       petition.$save(function () {
         homeCtrlParams.loaded = false;
         flurry.log('micro petition created');
-        if ($routeParams.group_id) {
+        if ($stateParams.group_id) {
           petitions.loadAll().then($scope.back, $scope.back);
         } else {
           $scope.back();
@@ -134,35 +134,34 @@ function ($scope, topBar, petitions, PetitionsResource, groups, $routeParams, er
     });
   });
 
-}).controller('petition',function ($scope, topBar, petitions, $routeParams, loaded, $cacheFactory, session, $route,
+}).controller('petition',function ($scope, topBar, petitions, $stateParams, loaded, $cacheFactory, session, $state,
                                    homeCtrlParams, activity, flurry, layout) {
-  topBar
-    .reset()
-    .set('back', true)
-    .set('title', 'Post')
-  ;
+                                   
   var cache = $cacheFactory.get('petitionController');
-  $scope.petition = cache.get($routeParams.id);
-  activity.setEntityRead({id: Number($routeParams.id), type: 'micro-petition'});
+  $scope.petition = cache.get($stateParams.id);
+  activity.setEntityRead({id: Number($stateParams.id), type: 'micro-petition'});
 
-  flurry.log('micro petition', {id: Number($routeParams.id)});
+  flurry.log('micro petition', {id: Number($stateParams.id)});
 
   if (!$scope.petition) {
-    $scope.loading = true;
+    $scope.$emit('showSpinner');
   }
 
   $scope.select = function (option) {
     $scope.current = option;
   };
 
-  petitions.load($routeParams.id).then(loaded($scope, function (petition) {
+  petitions.load($stateParams.id).then(function (petition) {
+    $scope.$emit('hideSpinner');
     $scope.petition = petition;
     if (petition.answer_id) {
       $scope.answer_message = 'Your response “' + petition.getOptionLabel(petition.answer_id) + '” was sent to “' + petition.group.official_title + '” group';
     }
-    cache.put($routeParams.id, petition);
-    layout.focus($routeParams.focus);
-  }), loaded($scope));
+    cache.put($stateParams.id, petition);
+    layout.focus($stateParams.focus);
+  }, function(){
+    $scope.$emit('hideSpinner');
+  });
 
   $scope.$watch('petition', function (petition) {
     if (petition) {
@@ -184,20 +183,22 @@ function ($scope, topBar, petitions, PetitionsResource, groups, $routeParams, er
 
   $scope.unsign = function () {
     $scope.loading = true;
-    $scope.petition.$unsign($route.reload, $route.reload);
+    $scope.petition.$unsign($state.reload, $state.reload);
     homeCtrlParams.loaded = false;
   };
 
-}).controller('petition.answer-form', function ($scope, $route, homeCtrlParams, flurry) {
+}).controller('petition.answer-form', function ($scope, $state, homeCtrlParams, flurry) {
 
   $scope.submit = function () {
-    $scope.loading = true;
+    $scope.$emit('showSpinner');
     $scope.$parent.petition.$answer({option_id: $scope.$parent.current.id}, function () {
+      $scope.$emit('hideSpinner');
       flurry.log('answer to micro petition', {id: $scope.$parent.petition.id});
       homeCtrlParams.loaded = false;
-      $route.reload();
+      $state.reload();
     }, function () {
-      $route.reload();
+      $scope.$emit('hideSpinner');
+      $state.reload();
     });
   };
 });

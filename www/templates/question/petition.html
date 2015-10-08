@@ -1,67 +1,70 @@
-<section class="q-header margin-10">
-    <div class="avatar" ng-click="navigateTo('owner-profile', q.user)">
-        <img ng-src="{{ q.user.avatar_file_path }}"/>
-    </div>
-    <div class="q-info three-sections">
-        <div>
-            <i class="icon-responses"></i> Signed <br>
-            <span ng-bind="q.votes_count"></span>
-        </div>
+<ion-view view-title="PETITION">
+  
+  <ion-content class="content">
+    <section class="q-header margin-10">
+      <div class="avatar" ng-click="navigateTo('owner-profile', q.user)">
+          <img ng-src="{{ q.user.avatar_file_path }}"/>
+      </div>
+      <div class="q-info three-sections">
+          <div>
+              <i class="icon-responses"></i> Signed <br>
+              <span ng-bind="q.votes_count"></span>
+          </div>
 
-        <div>
-            <i class="icon-calendar"></i> Created <br>
-            <time ng-bind="q.published_at_date | date:'M.d.yy'"></time>
-        </div>
-        <div>
-            Petition <br>
-            <i class="icon-petition"></i>
-        </div>
-    </div>
-</section>
-
-<section class="q-content">
-    <div class="title">
-        <strong ng-bind="q.user.official_title + ' ' + q.user.first_name +  ' '  +  q.user.last_name" ng-click="navigateTo('owner-profile', q.user)"></strong>
-    </div>
-
-    <h1 ng-bind="q.petition_title"></h1>
-
-    <p i-bind-taggable="q.petition_body" i-tags="q.cached_hash_tags"></p>
-
-
-    <section ng-show="!loading && !q.is_answered" class="margin-h-10">
-        <div style="float: left;width: 50%;padding-top: 12px;" class="margin-v-20">
-            <div class="checkbox-privacy" ng-class="{checked: data.privacy}" ng-click="data.privacy = data.privacy ? 0 : 1" guide="privacy-option">
-                <i></i>
-                {{ data.privacy ? 'Username hidden' : 'Username visible'  }}
-            </div>
-        </div>
-        <div style="float: left;width: 50%;" class="margin-v-20">
-            <button class="btn-large btn-primary" ng-click="answer()">Sign</button>
-        </div>
+          <div>
+              <i class="icon-calendar"></i> Created <br>
+              <time ng-bind="q.published_at_date | date:'M.d.yy'"></time>
+          </div>
+          <div>
+              Petition <br>
+              <i class="icon-petition"></i>
+          </div>
+      </div>
     </section>
 
-    <section class="info-message" ng-show="q.is_answered && !loading">
-        Signed
+    <section class="q-content">
+      <div class="title">
+          <strong ng-bind="q.user.official_title + ' ' + q.user.first_name +  ' '  +  q.user.last_name" ng-click="navigateTo('owner-profile', q.user)"></strong>
+      </div>
+
+      <h1 ng-bind="q.petition_title"></h1>
+
+      <p i-bind-taggable="q.petition_body" i-tags="q.cached_hash_tags"></p>
+
+
+      <section ng-show="!loading && !q.is_answered" class="margin-h-10">
+          <div style="float: left;width: 50%;padding-top: 12px;" class="margin-v-20">
+              <div class="checkbox-privacy" ng-class="{checked: data.privacy}" ng-click="data.privacy = data.privacy ? 0 : 1" guide="privacy-option">
+                  <i></i>
+                  {{ data.privacy ? 'Username hidden' : 'Username visible'  }}
+              </div>
+          </div>
+          <div style="float: left;width: 50%;" class="margin-v-20">
+              <button class="btn-large btn-primary" ng-click="answer()">Sign</button>
+          </div>
+      </section>
+
+      <section class="info-message" ng-show="q.is_answered && !loading">
+          Signed
+      </section>
+
+      <section ng-show="q.is_answered && !loading" class="margin-v-10">
+          <button class="btn-large btn-red1" ng-click="unsign()" style="width: 190px; margin: auto;">Unsign</button><br><br>
+      </section>
+
+      <ng-include src="'templates/widget/share.html'"></ng-include>
     </section>
 
-    <section ng-show="q.is_answered && !loading" class="margin-v-10">
-        <button class="btn-large btn-red1" ng-click="unsign()" style="width: 190px; margin: auto;">Unsign</button><br><br>
-    </section>
+    <tab-panel>
+      <ul class="header">
+          <li ng-click="open($event)">Discussion</li>
+          <li ng-click="open($event)">More</li>
+      </ul>
+      <tabs>
+          <tab><discussions id="q.id" entity="'poll'"></discussions></tab>
+          <tab><ng-include src="'templates/question/educational-context.html'"></ng-include></tab>
+      </tabs>
+    </tab-panel>
 
-    <ng-include src="'templates/widget/share.html'"></ng-include>
-</section>
-
-<tab-panel>
-    <ul class="header">
-        <li ng-click="open($event)">Discussion</li>
-        <li ng-click="open($event)">More</li>
-    </ul>
-    <tabs>
-        <tab><discussions id="q.id" entity="'poll'"></discussions></tab>
-        <tab><ng-include src="'templates/question/educational-context.html'"></ng-include></tab>
-    </tabs>
-</tab-panel>
-
-<div class="wrap-center" ng-show="loading"><spinner></spinner></div>
-<div class="wrap-center wrap-dark" ng-show="blockedLoading" class="ng-hide"><spinner></spinner></div>
+  </ion-content>
+</ion-view>

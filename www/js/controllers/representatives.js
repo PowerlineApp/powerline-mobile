@@ -23,17 +23,17 @@ angular.module('app.controllers').controller('representatives',function ($scope,
     $scope.loading = false;
   });
 
-}).controller('representatives.profile', function ($scope, representatives, topBar, $routeParams, $location, loaded, activity, flurry) {
+}).controller('representatives.profile', function ($scope, representatives, topBar, $stateParams, $location, loaded, activity, flurry) {
   topBar
     .reset()
     .set('back', true)
     .set('title', 'Rep Profile')
   ;
-  var id = parseInt($routeParams.id, 10),
-    storageId = parseInt($routeParams.storageId, 10)
+  var id = parseInt($stateParams.id, 10),
+    storageId = parseInt($stateParams.storageId, 10)
     ;
 
-  flurry.log('representative profile', {id: $routeParams.id, storage_id: $routeParams.storageId});
+  flurry.log('representative profile', {id: $stateParams.id, storage_id: $stateParams.storageId});
 
   $scope.loading = false;
   $scope.data = representatives.get(id, storageId);

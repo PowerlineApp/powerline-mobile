@@ -17,9 +17,7 @@ angular.module('app.controllers').controller('home', function ($scope, topBar, s
       (homeCtrlParams.filter.selectedGroup ? homeCtrlParams.filter.selectedGroup.id : ''));
   };
 
-  if (!profile.get()) {
-    profile.load();
-  }
+  
   $scope.filter = homeCtrlParams.filter;
 
   var activities = activity.getActivities();
@@ -61,18 +59,13 @@ angular.module('app.controllers').controller('home', function ($scope, topBar, s
   $scope.$watch('filter.selectedGroup', function (value) {
     topBar.set('title', value ? value.getTitle() + ' Powerline' : 'Powerline');
   });
-
-  getActivities();
-
-  if (!homeCtrlParams.loaded) {
-    $scope.loading = true;
-    activity.load().then(function () {
-      prepare();
-      $scope.$emit('home.activities-reloaded');
-    }, prepare).finally(socialActivity.load);
-  } else {
-    prepare();
-  }
+  $scope.$watch('loading', function(){
+    if($scope.loading){
+      $scope.$emit('showSpinner');
+    } else if($scope.loading === false) {
+      $scope.$emit('hideSpinner');
+    }
+  });
 
   $scope.$on('notification.received', function () {
     activity.load().then(prepare, prepare);
@@ -100,6 +93,27 @@ angular.module('app.controllers').controller('home', function ($scope, topBar, s
     }
     return steps;
   };
+  
+  
+  //call this when this view is loaded because this view is cached
+  $scope.$on('$ionicView.enter', function(){
+    console.log(homeCtrlParams.loaded)
+    if (!profile.get()) {
+      profile.load();
+    }
+  
+    getActivities();
+  
+    if (!homeCtrlParams.loaded) {
+      $scope.loading = true;
+      activity.load().then(function () {
+        prepare();
+        $scope.$emit('home.activities-reloaded');
+      }, prepare).finally(socialActivity.load);
+    } else {
+      prepare();
+    }
+  });
 });
 
 angular.module('app.controllers').run(function(homeCtrlParams, $document, $rootScope) {

@@ -40,7 +40,7 @@ angular.module('app.controllers').controller('topBar',function ($scope, topBar, 
     }
   });
 
-}).controller('notifications', function ($scope, socialActivityTabManager, $location, groupsInvites, invites, announcements, $route, homeCtrlParams) {
+}).controller('notifications', function ($scope, socialActivityTabManager, $location, groupsInvites, invites, announcements, $state, homeCtrlParams) {
 
   $scope.homeCtrlParams = homeCtrlParams;
 
@@ -56,7 +56,7 @@ angular.module('app.controllers').controller('topBar',function ($scope, topBar, 
     if ('/main' !== $location.path()) {
       $location.path('/main');
     } else {
-      $route.reload();
+      $state.reload();
     }
   };
 
@@ -69,7 +69,7 @@ angular.module('app.controllers').controller('topBar',function ($scope, topBar, 
   $scope.followersNotifications = function () {
     $scope.SAState.reload = true;
     if ('/influences/notifications' === $location.path()) {
-      $route.reload();
+      $state.reload();
     } else {
       $location.path('/influences/notifications');
     }

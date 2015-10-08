@@ -1,126 +1,128 @@
-<section class="q-header margin-10">
-    <div class="avatar" ng-click="navigateTo('owner-profile', q.user)">
-        <img ng-src="{{ q.user.avatar_file_path }}"/>
-    </div>
-    <div class="q-info three-sections">
-        <div>
-            <i class="icon-responses"></i> Responses <br>
-            <span ng-bind="q.votes_count"></span>
-        </div>
+<ion-view view-title="PAYMENT REQUEST">
+  <ion-content class="content">
+    <section class="q-header margin-10">
+      <div class="avatar" ng-click="navigateTo('owner-profile', q.user)">
+          <img ng-src="{{ q.user.avatar_file_path }}"/>
+      </div>
+      <div class="q-info three-sections">
+          <div>
+              <i class="icon-responses"></i> Responses <br>
+              <span ng-bind="q.votes_count"></span>
+          </div>
 
-        <div>
-            <i class="icon-calendar"></i>Created <br>
-            <time ng-bind="q.published_at_date | date:'M.d.yy'"></time>
-        </div>
+          <div>
+              <i class="icon-calendar"></i>Created <br>
+              <time ng-bind="q.published_at_date | date:'M.d.yy'"></time>
+          </div>
 
-        <div>
-            Payment Request <br>
-            <i class="icon-fundraiser"></i>
-        </div>
-    </div>
-</section>
-
-
-<section class="q-content">
-    <div class="title">
-        <strong ng-bind="q.user.official_title + ' ' + q.user.first_name +  ' '  +  q.user.last_name" ng-click="navigateTo('owner-profile', q.user)"></strong>
-    </div>
-    <h1 ng-bind="q.title"></h1>
-    <p>
-        <span>Goal amount: ${{ q.crowdfunding_goal_amount }}</span><br>
-        <span>Total pledged: ${{ q.crowdfunding_pledged_amount || 0 }}</span><br>
-        <span>Deadline: {{ q.crowdfunding_deadline | date:'medium' }}</span><br><br>
-        <span i-bind-taggable="q.subject" i-tags="q.cached_hash_tags"></span>
-    </p>
-
-    <section class="margin-v-10" ng-hide="q.is_answered || q.is_crowdfunding_deadline">
-        <fieldset>
-            <div class="checkbox-field-long" ng-repeat="option in q.options" ng-class="{active: data.option === option}"
-                 ng-click="select(option)">
-                <span><i></i></span>
-                <p>{{ option.is_user_amount ? '' : '$' + option.payment_amount + ' - ' }}{{ option.value }}</p>
-            </div>
-        </fieldset>
+          <div>
+              Payment Request <br>
+              <i class="icon-fundraiser"></i>
+          </div>
+      </div>
     </section>
 
-    <section class="margin-v-10" ng-show="q.is_answered || q.is_crowdfunding_deadline">
-            <p ng-if="!q.is_answered">No response</p>
-            <p ng-if="q.is_answered" class="info-message">
-                <strong>Thank You! Your Receipt:</strong><br>
-                ${{ q.answer_entity.current_payment_amount }} - {{ q.answer_entity.option.value }}
-                <br><br>
-                <strong ng-if="q.answer_entity.current_payment_amount">Status: </strong>
-                <span ng-if="q.answer_entity.current_payment_amount">
-                    <span ng-if="charge.get('status') === 'succeeded'">
-                        You were charged ${{ (charge.get('amount') / 100) | number: 2 }} on {{ charge.get('created') | date:'medium' }}
-                            since this campaign reached its goal. Thanks!
-                    </span>
-                    <span ng-if="charge.has('status') && charge.get('status') !== 'succeeded'">
-                        {{ charge.get('status') }}
-                    </span>
-                    <span ng-if="!charge.has('status') && q.is_crowdfunding_completed">
-                        This campaign did not reach its goal. You were not charged.
-                    </span>
-                    <span ng-if="!charge.has('status') && !q.is_crowdfunding_completed">
-                        You will be charged ${{ q.answer_entity.current_payment_amount }}
-                             on {{ q.crowdfunding_deadline | date:'medium' }} only if this campaign reaches its goal. Check back soon!
-                    </span>
-                </span>
 
-            </p>
-            <p ng-if="charge.has('status')">
-              <strong ng-show="charge.has('receipt_number')">Receipt Number:</strong> {{ charge.get('receipt_number')}}<br>
-              <strong ng-show="charge.has('created')">Transaction Date:</strong> {{ charge.get('created') | date:'medium' }}
-            </p>
+    <section class="q-content">
+      <div class="title">
+          <strong ng-bind="q.user.official_title + ' ' + q.user.first_name +  ' '  +  q.user.last_name" ng-click="navigateTo('owner-profile', q.user)"></strong>
+      </div>
+      <h1 ng-bind="q.title"></h1>
+      <p>
+          <span>Goal amount: ${{ q.crowdfunding_goal_amount }}</span><br>
+          <span>Total pledged: ${{ q.crowdfunding_pledged_amount || 0 }}</span><br>
+          <span>Deadline: {{ q.crowdfunding_deadline | date:'medium' }}</span><br><br>
+          <span i-bind-taggable="q.subject" i-tags="q.cached_hash_tags"></span>
+      </p>
+
+      <section class="margin-v-10" ng-hide="q.is_answered || q.is_crowdfunding_deadline">
+          <fieldset>
+              <div class="checkbox-field-long" ng-repeat="option in q.options" ng-class="{active: data.option === option}"
+                   ng-click="select(option)">
+                  <span><i></i></span>
+                  <p>{{ option.is_user_amount ? '' : '$' + option.payment_amount + ' - ' }}{{ option.value }}</p>
+              </div>
+          </fieldset>
+      </section>
+
+      <section class="margin-v-10" ng-show="q.is_answered || q.is_crowdfunding_deadline">
+              <p ng-if="!q.is_answered">No response</p>
+              <p ng-if="q.is_answered" class="info-message">
+                  <strong>Thank You! Your Receipt:</strong><br>
+                  ${{ q.answer_entity.current_payment_amount }} - {{ q.answer_entity.option.value }}
+                  <br><br>
+                  <strong ng-if="q.answer_entity.current_payment_amount">Status: </strong>
+                  <span ng-if="q.answer_entity.current_payment_amount">
+                      <span ng-if="charge.get('status') === 'succeeded'">
+                          You were charged ${{ (charge.get('amount') / 100) | number: 2 }} on {{ charge.get('created') | date:'medium' }}
+                              since this campaign reached its goal. Thanks!
+                      </span>
+                      <span ng-if="charge.has('status') && charge.get('status') !== 'succeeded'">
+                          {{ charge.get('status') }}
+                      </span>
+                      <span ng-if="!charge.has('status') && q.is_crowdfunding_completed">
+                          This campaign did not reach its goal. You were not charged.
+                      </span>
+                      <span ng-if="!charge.has('status') && !q.is_crowdfunding_completed">
+                          You will be charged ${{ q.answer_entity.current_payment_amount }}
+                               on {{ q.crowdfunding_deadline | date:'medium' }} only if this campaign reaches its goal. Check back soon!
+                      </span>
+                  </span>
+
+              </p>
+              <p ng-if="charge.has('status')">
+                <strong ng-show="charge.has('receipt_number')">Receipt Number:</strong> {{ charge.get('receipt_number')}}<br>
+                <strong ng-show="charge.has('created')">Transaction Date:</strong> {{ charge.get('created') | date:'medium' }}
+              </p>
+      </section>
+      <ng-include src="'templates/widget/share.html'" ng-if="q.is_allow_outsiders"></ng-include>
+  </section>
+
+  <section ng-show="data.showAnswerForm">
+      <div class="popup-overflow">
+          <fieldset class="popup">
+              <a class="text-close" ng-click="data.showAnswerForm = false;data.option = null;">Cancel</a>
+              <p class="section-title">
+                  <strong>Submit?</strong>
+                  <span>{{ data.option.value }}{{ data.option.is_user_amount ? '' : ' for $' + data.option.payment_amount }}</span>
+              </p>
+              <div class="text-field-2" ng-if="data.option.is_user_amount">
+                  <input type="number" ng-model="data.payment_amount" required name="payment_amount" placeholder="Enter custom amount here (number only)" />
+              </div>
+              <div class="text-field-2">
+                  <textarea ng-model="data.comment" placeholder="(Optional) You can add your comment here" maxlength="500"></textarea>
+              </div>
+              <p class="margin-10" ng-show="data.option.payment_amount">You will only be charged if this campaign reaches its goal.</p>
+              <div class="margin-10">
+                  <div class="checkbox-privacy" ng-class="{checked: data.privacy}" ng-click="data.privacy = data.privacy ? 0 : 1" guide="privacy-option">
+                      <i></i>
+                      {{ data.privacy ? 'Username hidden' : 'Username visible'  }}
+                  </div>
+              </div>
+              <div class="section-footer">
+                  <span ng-bind="500 - data.comment.length"></span>
+                  <a class="btn-text" ng-click="pay()">
+                      {{ data.option.payment_amount || data.option.is_user_amount ? 'Pledge' : 'Submit' }}
+                      <i class="icon-send"></i>
+                  </a>
+              </div>
+          </fieldset>
+      </div>
+
     </section>
-    <ng-include src="'templates/widget/share.html'" ng-if="q.is_allow_outsiders"></ng-include>
-</section>
 
-<section ng-show="data.showAnswerForm">
-    <div class="popup-overflow">
-        <fieldset class="popup">
-            <a class="text-close" ng-click="data.showAnswerForm = false;data.option = null;">Cancel</a>
-            <p class="section-title">
-                <strong>Submit?</strong>
-                <span>{{ data.option.value }}{{ data.option.is_user_amount ? '' : ' for $' + data.option.payment_amount }}</span>
-            </p>
-            <div class="text-field-2" ng-if="data.option.is_user_amount">
-                <input type="number" ng-model="data.payment_amount" required name="payment_amount" placeholder="Enter custom amount here (number only)" />
-            </div>
-            <div class="text-field-2">
-                <textarea ng-model="data.comment" placeholder="(Optional) You can add your comment here" maxlength="500"></textarea>
-            </div>
-            <p class="margin-10" ng-show="data.option.payment_amount">You will only be charged if this campaign reaches its goal.</p>
-            <div class="margin-10">
-                <div class="checkbox-privacy" ng-class="{checked: data.privacy}" ng-click="data.privacy = data.privacy ? 0 : 1" guide="privacy-option">
-                    <i></i>
-                    {{ data.privacy ? 'Username hidden' : 'Username visible'  }}
-                </div>
-            </div>
-            <div class="section-footer">
-                <span ng-bind="500 - data.comment.length"></span>
-                <a class="btn-text" ng-click="pay()">
-                    {{ data.option.payment_amount || data.option.is_user_amount ? 'Pledge' : 'Submit' }}
-                    <i class="icon-send"></i>
-                </a>
-            </div>
-        </fieldset>
-    </div>
+    <cards ng-if="data.showCardsInfo" cancel="data.showCardsInfo=false" completed="data.showCardsInfo = false;data.showAnswerForm = true"></cards>
 
-    <div class="wrap-center wrap-dark" ng-show="answerLoading"><spinner></spinner></div>
-</section>
+    <tab-panel>
+      <ul class="header">
+          <li ng-click="open($event)">Discussion</li>
+          <li ng-click="open($event)">More</li>
+      </ul>
+      <tabs>
+          <tab><discussions id="q.id" entity="'poll'"></discussions></tab>
+          <tab><ng-include src="'templates/question/educational-context.html'"></ng-include></tab>
+      </tabs>
+    </tab-panel>
 
-<cards ng-if="data.showCardsInfo" cancel="data.showCardsInfo=false" completed="data.showCardsInfo = false;data.showAnswerForm = true"></cards>
-
-<tab-panel>
-    <ul class="header">
-        <li ng-click="open($event)">Discussion</li>
-        <li ng-click="open($event)">More</li>
-    </ul>
-    <tabs>
-        <tab><discussions id="q.id" entity="'poll'"></discussions></tab>
-        <tab><ng-include src="'templates/question/educational-context.html'"></ng-include></tab>
-    </tabs>
-</tab-panel>
-
-<div class="wrap-center" ng-show="loading"><spinner></spinner></div>
+  </ion-content>
+</ion-view>

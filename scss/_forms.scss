@@ -152,7 +152,7 @@
     width: 30px;
     height: 30px;
     position: absolute;
-    top: 0;
+    top: 2px;
     right: 0;
     z-index: 1;
     &.ng-click-active {
@@ -403,10 +403,12 @@ checkbox {
     background: transparent;
   }
 
-  .icon-magnifier {
+  .icon {
     position: absolute;
     right: 8px;
-    top: 11px;
+    top: 12px;
+    font-size: 28px;
+    color: #fff;
   }
 }
 

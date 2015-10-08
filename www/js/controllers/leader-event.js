@@ -1,33 +1,31 @@
 angular.module('app.controllers')
-  .controller('question.leader-event', function ($scope, topBar, $routeParams, questions, activity, flurry,
-                                                 homeCtrlParams, $route, layout) {
-    topBar
-      .reset()
-      .set('back', true)
-      .set('title', 'EVENT')
-    ;
-
+  .controller('question.leader-event', function ($scope, topBar, $stateParams, questions, activity, flurry,
+                                                 homeCtrlParams, $state, layout) {
+    
     $scope.data = {
       comment: '',
       privacy: 0
     };
 
-    flurry.log('leader event', {id: Number($routeParams.id)});
+    flurry.log('leader event', {id: Number($stateParams.id)});
 
-    activity.setEntityRead({id: Number($routeParams.id), type: 'leader-event'});
+    activity.setEntityRead({id: Number($stateParams.id), type: 'leader-event'});
 
-    $scope.loading = true;
-    questions.load($routeParams.id).then(function (question) {
-      $scope.loading = false;
+    $scope.$emit('showSpinner');
+    questions.load($stateParams.id).then(function (question) {
+      $scope.$emit('hideSpinnerr');
       $scope.q = question;
 
       $scope.shareTitle = question.title;
       $scope.shareBody = question.subject;
       //$scope.shareLink = serverConfig.shareLink + '/payment-request/' + question.id;
       $scope.shareImage = question.share_picture;
-      layout.focus($routeParams.focus);
+      layout.focus($stateParams.focus);
 
-    }, $scope.back);
+    }, function(){
+      $scope.$emit('hideSpinner');
+      $scope.back();
+    });
 
     $scope.select = function (option) {
       $scope.data.option = option;
@@ -47,13 +45,13 @@ angular.module('app.controllers')
         payment_amount: $scope.data.payment_amount
       }).then(function () {
         homeCtrlParams.loaded = false;
-        flurry.log('answer to event', {id: Number($routeParams.id)});
+        flurry.log('answer to event', {id: Number($stateParams.id)});
         $scope.addToCalendar();
-        $route.reload();
+        $state.reload();
       }, function (error) {
         $scope.answerLoading = false;
         $scope.alert(error, function () {
-          $route.reload();
+          $state.reload();
         }, 'Error', 'OK');
       });
     };

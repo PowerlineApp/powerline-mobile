@@ -1,40 +1,41 @@
-<section class="q-header margin-10">
-    <div class="avatar" ng-click="navigateTo('owner-profile', q.user)">
-        <img ng-src="{{ q.user.avatar_file_path }}"/>
-    </div>
-    <div class="q-info two-sections">
-        <div>
-            <i class="icon-calendar"></i> Created <br>
-            <time ng-bind="q.published_at_date | date:'M.d.yy'"></time>
-        </div>
-        <div>
-            Discussion <br>
-            <i class="icon-discussion"></i>
-        </div>
-    </div>
-</section>
+<ion-view view-title="NEWS">
+  <ion-content class="content">
+    <section class="q-header margin-10">
+      <div class="avatar" ng-click="navigateTo('owner-profile', q.user)">
+          <img ng-src="{{ q.user.avatar_file_path }}"/>
+      </div>
+      <div class="q-info two-sections">
+          <div>
+              <i class="icon-calendar"></i> Created <br>
+              <time ng-bind="q.published_at_date | date:'M.d.yy'"></time>
+          </div>
+          <div>
+              Discussion <br>
+              <i class="icon-discussion"></i>
+          </div>
+      </div>
+    </section>
 
-<section class="q-content">
-    <div class="title">
-        <strong ng-bind="q.user.official_title + ' ' + q.user.first_name +  ' '  +  q.user.last_name" ng-click="navigateTo('owner-profile', q.user)"></strong>
-    </div>
+    <section class="q-content">
+      <div class="title">
+          <strong ng-bind="q.user.official_title + ' ' + q.user.first_name +  ' '  +  q.user.last_name" ng-click="navigateTo('owner-profile', q.user)"></strong>
+      </div>
 
-    <p ng-bind-html="q.subject_parsed" i-open-system-links></p>
+      <p ng-bind-html="q.subject_parsed" i-open-system-links></p>
 
-    <ng-include src="'templates/widget/share.html'"></ng-include>
-</section>
-
-
-<tab-panel>
-    <ul class="header">
-        <li ng-click="open($event)">Discussion</li>
-        <li ng-click="open($event)">More</li>
-    </ul>
-    <tabs>
-        <tab><discussions id="q.id" entity="'poll'"></discussions></tab>
-        <tab><ng-include src="'templates/question/educational-context.html'"></ng-include></tab>
-    </tabs>
-</tab-panel>
+      <ng-include src="'templates/widget/share.html'"></ng-include>
+    </section>
 
 
-<div class="wrap-center" ng-show="loading"><spinner></spinner></div>
+    <tab-panel>
+      <ul class="header">
+          <li ng-click="open($event)">Discussion</li>
+          <li ng-click="open($event)">More</li>
+      </ul>
+      <tabs>
+          <tab><discussions id="q.id" entity="'poll'"></discussions></tab>
+          <tab><ng-include src="'templates/question/educational-context.html'"></ng-include></tab>
+      </tabs>
+    </tab-panel>
+  </ion-content>
+</ion-view>

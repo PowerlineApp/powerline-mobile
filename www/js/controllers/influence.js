@@ -1,5 +1,5 @@
 angular.module('app.controllers').controller('influence.profile',
-  function ($scope, topBar, users, follows, $routeParams, loaded, $route,
+  function ($scope, topBar, users, follows, $stateParams, loaded, $state,
             profile, flurry, activity) {
 
   topBar
@@ -8,7 +8,7 @@ angular.module('app.controllers').controller('influence.profile',
     .set('title', 'User Profile')
   ;
 
-  var id = parseInt($routeParams.id, 10);
+  var id = parseInt($stateParams.id, 10);
 
   flurry.log('user profile', {id: id});
 
@@ -27,11 +27,11 @@ angular.module('app.controllers').controller('influence.profile',
   $scope.changeStatus = function (status) {
     if ('unfollow' === status) {
       $scope.confirmAction('Are you sure?').then(function () {
-        $scope.follow[status]().then($route.reload, $route.reload);
+        $scope.follow[status]().then($state.reload, $state.reload);
         flurry.log('unfollow user', {id: id});
       });
     } else {
-      $scope.follow[status]().then($route.reload, $route.reload);
+      $scope.follow[status]().then($state.reload, $state.reload);
       flurry.log('follow user', {id: id});
     }
   };

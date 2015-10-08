@@ -36,6 +36,7 @@ angular.module('app', [
   $rootScope.checkURLState = function (stateName) {
     return $state.includes('app.' + stateName);
   };
+  
 
   var $body = $document.find('body');
   $document.bind('scroll', function () {
@@ -67,6 +68,14 @@ angular.module('app', [
       wrapperClasses.push('news-feed');
     }
     $rootScope.wrapperClass = wrapperClasses.join(' ');
+  });
+  
+  //receive event for show/hide spinners
+  $rootScope.$on('showSpinner', function(){
+    $rootScope.isSpinnerShow = true;
+  });
+  $rootScope.$on('hideSpinner', function(){
+    $rootScope.isSpinnerShow = false;
   });
 
 }).config(function ($compileProvider) {

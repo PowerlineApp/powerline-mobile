@@ -1,6 +1,5 @@
 angular.module('app.controllers').controller('search', function ($scope, topBar, search, layout, $cacheFactory, flurry) {
-  topBar.setHomeBar();
-  topBar.set('right', null);
+  
   var cache = $cacheFactory.get('searchController');
 
   flurry.log('search');

@@ -1,27 +1,19 @@
-angular.module('app.controllers').controller('discussion',function ($scope, topBar, discussion, $routeParams, $cacheFactory, flurry) {
+angular.module('app.controllers').controller('discussion',function ($scope, topBar, discussion, $stateParams, $cacheFactory, flurry) {
 
   var isWidget = !/^\/discussion/.test($scope.path());
-  if (!isWidget) {
-    topBar
-      .reset()
-      .set('back', true)
-      .set('title', 'Discussion')
-    ;
-  }
-
+  
   $scope.view = {};
-  $scope.id = $scope.id || $routeParams.id;
-  $scope.entity = $scope.entity || $routeParams.entity;
+  $scope.id = $scope.id || $stateParams.id;
+  $scope.entity = $scope.entity || $stateParams.entity;
 
   var cache = $cacheFactory.get('discussionController');
 
-  var commentId = $routeParams.comment ? $routeParams.comment : 0;
+  var commentId = $stateParams.comment ? $stateParams.comment : 0;
   $scope.showForm = Boolean(commentId);
 
   $scope.comment = getComment();
-  $scope.loading = false;
 
-  if (!$routeParams.comment || !$scope.comment) {
+  if (!$stateParams.comment || !$scope.comment) {
     loadComments();
   }
 
@@ -38,14 +30,10 @@ angular.module('app.controllers').controller('discussion',function ($scope, topB
   });
 
   $scope.$on('discussion.comment-added', function () {
-    if (!isWidget) {
+    //if (!isWidget) {
       loadComments();
-    }
+    //}
   });
-
-  $scope.loaded = function () {
-    $scope.loading = false;
-  };
 
   $scope.getRateClass = function (val) {
     return val ? (val > 0 ? 'green' : 'red') : '';
@@ -82,15 +70,17 @@ angular.module('app.controllers').controller('discussion',function ($scope, topB
     }
   };
 
-  function loadComments() {
-    $scope.loading = true;
+  function loadComments(scrollToBottom) {
+    $scope.$emit('showSpinner');
     discussion.loadTree($scope.entity, $scope.id).then(function (data) {
-      $scope.loaded();
+      $scope.$emit('hideSpinner');
       cache.put($scope.id, data);
-    }, $scope.loaded);
+    }, function(){
+      $scope.$emit('hideSpinner');
+    });
   }
 
-}).controller('discussion.comment-form',function ($scope, discussion, $route, homeCtrlParams, flurry) {
+}).controller('discussion.comment-form',function ($scope, discussion, $state, homeCtrlParams, flurry) {
 
   $scope.data = {
     comment: '',
@@ -100,18 +90,20 @@ angular.module('app.controllers').controller('discussion',function ($scope, topB
     if (!$scope.data.comment) {
       return;
     }
-    $scope.$parent.loading = true;
     var data = {
       parent_comment: $scope.comment.id,
       comment_body: $scope.data.comment,
       privacy: $scope.data.privacy
     };
+    $scope.$emit('showSpinner');
     homeCtrlParams.loaded = false;
     discussion.createComment($scope.entity, $scope.id, data).then(function () {
       flurry.log('comment added', {id: $scope.id});
       $scope.$emit('discussion.comment-added');
-      $route.reload();
-    }, $scope.loaded);
+      $scope.data.comment = '';
+    }, function(){
+      $scope.$emit('hideSpinner');
+    });
   };
 
 });

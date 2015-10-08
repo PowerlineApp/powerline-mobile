@@ -1,4 +1,4 @@
-angular.module('app.controllers').controller('settings', function ($scope, topBar, profile, facebook, $route, $timeout, flurry, cards, $q) {
+angular.module('app.controllers').controller('settings', function ($scope, topBar, profile, facebook, $state, $timeout, flurry, cards, $q) {
 
   topBar
     .reset()
@@ -28,8 +28,8 @@ angular.module('app.controllers').controller('settings', function ($scope, topBa
     _($scope.profile).extend($scope.data);
     $scope.profile.$save({action: 'settings'}, function () {
       flurry.log('settings saved');
-      $route.reload();
-    }, $route.reload);
+      $state.reload();
+    }, $state.reload);
   }
 
   $scope.linkToFacebook = function () {
@@ -44,7 +44,7 @@ angular.module('app.controllers').controller('settings', function ($scope, topBa
         data.action = 'link-to-facebook';
         $scope.profile.$save(data).then(function () {
           flurry.log('facebook linked');
-          $route.reload();
+          $state.reload();
         }, function (response) {
           $scope.loading = false;
           if (response.data.errors.length) {
@@ -66,12 +66,12 @@ angular.module('app.controllers').controller('settings', function ($scope, topBa
     setFormData();
   }
 
-  $scope.reload = $route.reload;
+  $scope.reload = $state.reload;
 
   $scope.remove = function (card) {
     $scope.confirmAction('Are you sure?').then(function () {
       $scope.loading = true;
-      cards.remove(card).then($route.reload, $route.reload);
+      cards.remove(card).then($state.reload, $state.reload);
     });
   };
 
