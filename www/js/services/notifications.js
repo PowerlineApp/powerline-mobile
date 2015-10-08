@@ -91,7 +91,7 @@ angular.module('app.services').factory('notifications', function ($window, devic
           function leaderNews(redirect, entity) {
             loadBadgeData();
             if (redirect && entity) {
-              $rootScope.path('/questions/news/' + entity.id);
+              $rootScope.path('/question/news/' + entity.id);
             }
           }
 

@@ -2,22 +2,16 @@ angular.module('app.controllers').controller('influence.profile',
   function ($scope, topBar, users, follows, $stateParams, loaded, $state,
             profile, flurry, activity) {
 
-  topBar
-    .reset()
-    .set('back', true)
-    .set('title', 'User Profile')
-  ;
-
   var id = parseInt($stateParams.id, 10);
 
   flurry.log('user profile', {id: id});
 
-  $scope.loading = true;
+  $scope.$emit('showSpinner');
   users.load(id).then(function (data) {
     $scope.data = data;
-    $scope.loading = false;
+    $scope.$emit('hideSpinner');
   }, function () {
-    $scope.loading = false;
+    $scope.$emit('hideSpinner');
   });
 
   if (profile.get() && profile.get().id !== id) {

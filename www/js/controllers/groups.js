@@ -101,18 +101,13 @@ angular.module('app.controllers').controller('groups',function ($scope, groups, 
     $scope.newItems = newValue;
   });
 }).controller('groups.profile',function ($scope, topBar, groups, $stateParams, $state, activity, invites, influence, homeCtrlParams, flurry) {
-  topBar
-    .reset()
-    .set('back', true)
-    .set('title', 'Group Profile')
-  ;
+  
   influence.loadFollowers();
 
   var id = parseInt($stateParams.id, 10);
 
   flurry.log('group profile', {id: id});
 
-  $scope.loading = false;
   $scope.data = groups.get(id);
   $scope.isChangeAvailable = function () {
     return $scope.data && $scope.data.group_type === 0;
@@ -125,9 +120,9 @@ angular.module('app.controllers').controller('groups',function ($scope, groups, 
         return memo;
       }, []);
       $scope.showPostWindow = false;
-      $scope.loading = true;
+      $scope.$emit('showSpinner');
       invites.invite(id, followers).finally(function () {
-        $scope.loading = false;
+        $scope.$emit('hideSpinner');
         flurry.log('invite to group', {id: id});
       });
     });
@@ -141,36 +136,29 @@ angular.module('app.controllers').controller('groups',function ($scope, groups, 
   $scope.unjoin = function () {
     $scope.confirmAction('Are you sure?').then(function () {
       homeCtrlParams.loaded = false;
-      $scope.loading = true;
+      $scope.$emit('showSpinner');
       groups.unjoin($scope.data.id).then(function () {
         groups.load();
         groups.resetInfo($scope.data.id);
-        $scope.loading = false;
+        $scope.$emit('hideSpinner');
         flurry.log('unjoin', {id: id});
         $state.reload();
       }, function () {
-        $scope.loading = false;
+        $scope.$emit('hideSpinner');
         $state.reload();
       });
     });
   };
 
   function loaded() {
-    $scope.loading = false;
-    var group = groups.get(id);
-    if (group && group.group_type === 0 && group.joined) {
-      topBar.set('right', {
-        btnClass: 'btn-text',
-        title: 'Invite',
-        click: function () {
-          $scope.showPostWindow = !$scope.showPostWindow;
-          $scope.execApply();
-        }
-      });
-    }
-
+    $scope.$emit('hideSpinner');
     return checkPermissions();
   }
+  
+  $scope.togglePostWindow = function(){
+    $scope.showPostWindow = !$scope.showPostWindow;
+    $scope.execApply();
+  };
 
   function checkPermissions() {
     var group = groups.get(id);
@@ -191,7 +179,7 @@ angular.module('app.controllers').controller('groups',function ($scope, groups, 
     }
   }
 
-  $scope.loading = true;
+  $scope.$emit('showSpinner');
   groups.loadInfo(id).then(loaded, loaded);
 
   $scope.$watch('data', function () {

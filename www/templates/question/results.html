@@ -1,15 +1,14 @@
 <p class="info-message" ng-bind="answer_message"></p>
 
 <div class="chart">
-
-    <p class="info-message">Current  Results</p>
-    <ul>
-        <li ng-repeat="option in q.options">
-            <h4>{{ option.title }}</h4>
-            <div>
-                <figure><i ng-style="{'background-color': option.color, width: option.width + '%'}"> <span>{{ option.percent | number:0 }}%</span></i></figure>
-            </div>
-            <p class="value">{{ option.value }}</p>
-        </li>
-    </ul>
+  <p class="info-message">Current  Results</p>
+  <ul>
+    <li ng-repeat="option in q.options">
+      <h4>{{ option.title}}</h4>
+      <div>
+        <figure><i ng-style="{'background-color': option.color, width: option.width + '%'}"> <span>{{ option.percent | number:0 }}%</span></i></figure>
+      </div>
+      <p class="value">{{ option.value}}</p>
+    </li>
+  </ul>
 </div>

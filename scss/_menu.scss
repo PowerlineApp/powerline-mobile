@@ -73,7 +73,7 @@ $menuBorderBottomColor: #31316e;
   width: 230px;
   position: fixed;
   z-index: 11;
-  top: 45px;
+  top: -10px;
   right: 10px;
   padding-top: 9px;
   background: url('../images/v2/cut/top-corner.png') 204px top no-repeat;
@@ -104,6 +104,10 @@ $menuBorderBottomColor: #31316e;
       &.petition {
         background-position: -30px 9px;
       }
+    }
+    .text{
+      display: inline-block;
+      margin-left: 15px;
     }
     &.ng-click-active {background-color: #ddd;}
   }

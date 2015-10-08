@@ -22,10 +22,6 @@
     "angular-mocks": "~1.4.7"
   },
   "resolutions": {
-    "angular": "1.4.3",
-    "angular-route": "~1.4.7",
-    "angular-touch": "~1.4.7",
-    "angular-mocks": "~1.4.7",
-    "angular-scenario": "~1.4.7"
+    "angular": "1.4.3"
   }
 }

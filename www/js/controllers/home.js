@@ -1,22 +1,7 @@
 angular.module('app.controllers').controller('home', function ($scope, topBar, socialActivity, homeCtrlParams,
-                                                               profile, activity, groups, flurry, layout) {
+                                                               profile, activity, groups, flurry, $ionicScrollDelegate) {
  
   flurry.log('news feed');
-
-  $scope.togglePostWindow = function(){
-    $scope.showPostWindow = !$scope.showPostWindow;
-    $scope.execApply();
-  };
-
-  $scope.newPost = function (type) {
-    var types = {
-      1: 'long petition',
-      2: 'quorum'
-    };
-    $scope.path('/micro-petitions/add/' + types[type] + '/' +
-      (homeCtrlParams.filter.selectedGroup ? homeCtrlParams.filter.selectedGroup.id : ''));
-  };
-
   
   $scope.filter = homeCtrlParams.filter;
 
@@ -51,29 +36,33 @@ angular.module('app.controllers').controller('home', function ($scope, topBar, s
 
     getActivities();
     $scope.loading = false;
+    $ionicScrollDelegate.resize();
 
     activity.saveRead();
   }
+  
+  function loadActivities() {
+    activity.load().then(function () {
+      prepare();
+      $scope.$emit('home.activities-reloaded');
+      $scope.$broadcast('scroll.refreshComplete');
+    }, prepare).finally(socialActivity.load);
+  }
 
-  $scope.$watch('filter.selectedGroup', getActivities);
-  $scope.$watch('filter.selectedGroup', function (value) {
-    topBar.set('title', value ? value.getTitle() + ' Powerline' : 'Powerline');
-  });
-  $scope.$watch('loading', function(){
-    if($scope.loading){
-      $scope.$emit('showSpinner');
-    } else if($scope.loading === false) {
-      $scope.$emit('hideSpinner');
-    }
-  });
 
-  $scope.$on('notification.received', function () {
-    activity.load().then(prepare, prepare);
-  });
+  $scope.togglePostWindow = function(){
+    $scope.showPostWindow = !$scope.showPostWindow;
+    $scope.execApply();
+  };
 
-  $scope.$on('activity.reload', function () {
-    activity.load().then(prepare, prepare);
-  });
+  $scope.newPost = function (type) {
+    var types = {
+      1: 'long petition',
+      2: 'quorum'
+    };
+    $scope.path('/micro-petitions/add/' + types[type] + '/' +
+      (homeCtrlParams.filter.selectedGroup ? homeCtrlParams.filter.selectedGroup.id : ''));
+  };
 
   $scope.filterLineStep = function () {
     return 5;
@@ -94,22 +83,48 @@ angular.module('app.controllers').controller('home', function ($scope, topBar, s
     return steps;
   };
   
+  $scope.pullToRefresh = function(){
+    loadActivities();
+  };
+
+  $scope.$watch('filter.selectedGroup', getActivities);
+  $scope.$watch('filter.selectedGroup', function (value) {
+    topBar.set('title', value ? value.getTitle() + ' Powerline' : 'Powerline');
+  });
+  $scope.$watch('loading', function(){
+    if($scope.loading){
+      $scope.$emit('showSpinner');
+    } else if($scope.loading === false) {
+      $scope.$emit('hideSpinner');
+    }
+  });
+
+  $scope.$on('notification.received', function () {
+    activity.load().then(prepare, prepare);
+  });
+
+  $scope.$on('activity.reload', function () {
+    activity.load().then(prepare, prepare);
+  });
+  
+  //move scroll to top when filter is changed
+  $scope.$watch('filter.selectedGroup', function(nVal){
+    if(typeof(nVal) !== undefined){
+      $ionicScrollDelegate.resize();
+      $ionicScrollDelegate.scrollTop();
+    }
+  });
+  
   
   //call this when this view is loaded because this view is cached
   $scope.$on('$ionicView.enter', function(){
-    console.log(homeCtrlParams.loaded)
     if (!profile.get()) {
       profile.load();
     }
   
-    getActivities();
-  
     if (!homeCtrlParams.loaded) {
       $scope.loading = true;
-      activity.load().then(function () {
-        prepare();
-        $scope.$emit('home.activities-reloaded');
-      }, prepare).finally(socialActivity.load);
+      loadActivities();
     } else {
       prepare();
     }

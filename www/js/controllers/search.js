@@ -1,4 +1,4 @@
-angular.module('app.controllers').controller('search', function ($scope, topBar, search, layout, $cacheFactory, flurry) {
+angular.module('app.controllers').controller('search', function ($scope, $ionicScrollDelegate, search, layout, $cacheFactory, flurry) {
   
   var cache = $cacheFactory.get('searchController');
 
@@ -8,15 +8,17 @@ angular.module('app.controllers').controller('search', function ($scope, topBar,
   $scope.data = cache.get('data');
 
   $scope.search = function (query) {
-    $scope.loading = true;
     $scope.data = null;
+    $scope.$emit('showSpinner');;
     search.load(query).then(function (data) {
       $scope.data = data;
-      $scope.loading = false;
+      $scope.$emit('hideSpinner');;
       cache.put('query', query);
       cache.put('data', data);
+      $ionicScrollDelegate.resize();
+      $ionicScrollDelegate.scrollTop(true);
     }, function () {
-      $scope.loading = false;
+      $scope.$emit('hideSpinner');;
     });
   };
 

@@ -78,11 +78,17 @@ angular.module('app.controllers').controller('question',function ($scope, $locat
       $state.reload();
     });
   };
+  
 }).controller('question.influences',function ($scope, $stateParams, questions, questionCache, loaded, flurry) {
   $scope.q = questionCache.get($stateParams.id);
-  questions.loadAnswers($stateParams.id).then(loaded($scope, function (answers) {
+  $scope.$emit('showSpinner');
+  questions.loadAnswers($stateParams.id).then(function (answers) {
+    $scope.$emit('hideSpinner');
     $scope.answers = answers;
-  }), loaded($scope));
+  }, function(){
+    $scope.$emit('hideSpinner');
+  });
+  
 }).controller('question.news',function ($scope, $location, $stateParams, questions, iJoinFilter, activity, flurry, layout) {
   
   flurry.log('leader news', {id: $stateParams.id});

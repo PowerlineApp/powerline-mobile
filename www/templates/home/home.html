@@ -5,14 +5,14 @@
   <ion-nav-buttons side="right">
     <button class="button button-icon ion-compose button-clear" ng-click="togglePostWindow()"></button>
   </ion-nav-buttons>
-  
+
   <!-- fixed header content -->
   <section ng-show="showPostWindow" class="new-post-window" ng-click="$event.stopPropagation()">
     <a ng-click="newPost(2)"><i class="micropetition"></i>New Post</a>
     <a ng-click="newPost(1)"><i class="petition"></i>New Petition</a>
   </section>
   <section ng-include="'templates/notifications.html'"></section>
-  <section ng-hide="loading" class="groups-filter-panel">
+  <section class="groups-filter-panel">
     <div class="article-list-filter">
       <div ng-click="filter.selectedGroup = null" ng-class="{selected: !filter.selectedGroup}">
         <figure>
@@ -30,6 +30,7 @@
         <span ng-bind="group.getTitle()"></span>
       </div>
       <div ng-click="filter.filter_full_view = !filter.filter_full_view" class="more"
+           ng-show="filter.groups.length > 3"
            ng-class="{selected: filter.selectedGroup.group_type === 0, open: filter.filter_full_view}">
         <figure>
           <img src="images/v2/icons/more.png" />
@@ -61,16 +62,17 @@
     </div>
   </section>
   <!-- fixed header content -->
-  
-  <ion-content class="page-home content">
 
+  <ion-content class="page-home content">
+    <ion-refresher
+      pulling-text="Pull to refresh..."
+      on-refresh="pullToRefresh()">
+    </ion-refresher>
     <p class="info-message" ng-show="!loading && !activities.length && !filter.selectedGroup">
       Hmm - Your newsfeed is empty! Looks like a great opportunity to take a stand, start a discussion,
       or improve your community by creating a post or petition. Use the button in the upper-right corner of the screen!
     </p>
-    <section ng-show="!loading"
-             ng-style="{'height': (minContentHeight - 134)}"
-             class="activity-list-wrap" ng-include=" 'templates/home/activities.html'"></section>
+    <section dng-show="!loading" class="activity-list-wrap" ng-include=" 'templates/home/activities.html'"></section>
 
     <br>
   </ion-content>

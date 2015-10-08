@@ -1,11 +1,16 @@
-<ion-view view-title="Powerline">
-  <ion-content class="page-search content">
-    <section>
-      <form class="filter" ng-submit="search(query)">
-        <input type="text" ng-model="query" placeholder="Search" />
-        <i class="icon ion-ios-search" ng-click="search(query)"></i>
-      </form>
-    </section>
+<ion-view view-title="Powerline" hide-back-button="true">
+  <ion-nav-buttons side="left">
+    <button menu-toggle="left" class="button button-icon icon ion-navicon"></button>
+  </ion-nav-buttons>
+  
+  <div class="bar bar-subheader">
+    <form class="filter" ng-submit="search(query)">
+      <input type="text" ng-model="query" placeholder="Search" />
+      <i class="icon ion-ios-search" ng-click="search(query)"></i>
+    </form>
+  </div>
+  
+  <ion-content class="content has-subheader" scroll-sista="subheader">
 
     <p class="info-message" ng-hide="!data || data.users.length || data.groups.length || data.representatives.length || data.petitions.length">
       That's strange. Looks like we couldn't find anything for <strong>{{ query}}</strong>
@@ -78,5 +83,4 @@
       </article>
     </div>
   </ion-content>
-  <div class="wrap-center" ng-show="loading"><spinner></spinner></div>
 </ion-view>

@@ -1812,7 +1812,7 @@ select.choice-filter {
   width: 230px;
   position: fixed;
   z-index: 11;
-  top: 45px;
+  top: -10px;
   right: 10px;
   padding-top: 9px;
   background: url('../images/v2/cut/top-corner.png') 204px top no-repeat;
@@ -1843,6 +1843,9 @@ select.choice-filter {
         background-position: -71px -41px; }
       .new-post-window a i.petition {
         background-position: -30px 9px; }
+    .new-post-window a .text {
+      display: inline-block;
+      margin-left: 15px; }
     .new-post-window a.ng-click-active {
       background-color: #ddd; }
 
@@ -3338,6 +3341,9 @@ tab-panel {
 .wrap-dark .spinner > div {
   background-color: #fff; }
 
+.spinner-wrap {
+  background-color: rgba(0, 0, 0, 0.1); }
+
 .spinner .bounce1 {
   -webkit-animation-delay: -0.32s;
   animation-delay: -0.32s; }
@@ -3411,19 +3417,19 @@ tab-panel {
     margin: 10px 0;
     text-indent: 20px; }
 
-.guide .content {
+.wrap-guide .content {
   padding-top: 0; }
-.guide .guide-content {
+.wrap-guide .guide-content {
   margin: auto;
   position: relative;
   max-width: 600px; }
-  .guide .guide-content header {
+  .wrap-guide .guide-content header {
     height: 40px;
     line-height: 40px;
     color: #575757;
     font-size: 15px;
     padding: 0 15px; }
-    .guide .guide-content header .btn-close {
+    .wrap-guide .guide-content header .btn-close {
       background: url("../images/v2/icons/x-40.png") center center no-repeat;
       background-size: 20px;
       width: 40px;
@@ -3431,13 +3437,13 @@ tab-panel {
       position: absolute;
       top: 0;
       right: 5px; }
-  .guide .guide-content ion-slide {
+  .wrap-guide .guide-content ion-slide {
     box-sizing: border-box;
     display: block;
     overflow: hidden;
     overflow-y: scroll;
     padding: 0 15px; }
-    .guide .guide-content ion-slide img {
+    .wrap-guide .guide-content ion-slide img {
       width: 100%; }
 
 .news-feed .notifications {
@@ -3450,4 +3456,12 @@ tab-panel {
   top: 82px;
   z-index: 9; }
 .news-feed .content {
-  padding-top: 88px; }
+  top: 132px; }
+
+.wrap-search .bar-subheader {
+  padding: 0px; }
+  .wrap-search .bar-subheader .filter {
+    padding-top: 13px;
+    padding-bottom: 12px; }
+    .wrap-search .bar-subheader .filter .icon {
+      top: 9px; }

@@ -24,25 +24,23 @@ angular.module('app.controllers').controller('representatives',function ($scope,
   });
 
 }).controller('representatives.profile', function ($scope, representatives, topBar, $stateParams, $location, loaded, activity, flurry) {
-  topBar
-    .reset()
-    .set('back', true)
-    .set('title', 'Rep Profile')
-  ;
+  
   var id = parseInt($stateParams.id, 10),
-    storageId = parseInt($stateParams.storageId, 10)
-    ;
+    storageId = parseInt($stateParams.storageId, 10);
 
   flurry.log('representative profile', {id: $stateParams.id, storage_id: $stateParams.storageId});
 
-  $scope.loading = false;
   $scope.data = representatives.get(id, storageId);
 
   if ($scope.data) {
     representatives.updateInfo(id);
   } else {
-    $scope.loading = true;
-    representatives.loadInfo(id, storageId).then(loaded($scope), loaded($scope));
+    $scope.$emit('showSpinner');
+    representatives.loadInfo(id, storageId).then(function(){
+      $scope.$emit('hideSpinner');
+    }, function(){
+      $scope.$emit('hideSpinner');
+    });
   }
 
   $scope.$watch(function () {
@@ -57,29 +55,29 @@ angular.module('app.controllers').controller('representatives',function ($scope,
   });
 
   $scope.loadCommittees = function () {
-    $scope.loading = true;
+    $scope.$emit('showSpinner');
     representatives.loadCommittees($scope.data.storage_id).then(
       function (committees) {
-        $scope.loading = false;
+        $scope.$emit('hideSpinner');
         $scope.committees = committees;
         $scope.committeesLoaded = true;
         flurry.log('committees loaded', {storage_id: $scope.data.storage_id});
       }, function () {
-        $scope.loading = false;
+        $scope.$emit('hideSpinner');
       }
     );
   };
 
   $scope.loadSponsoredBills = function () {
-    $scope.loading = true;
+    $scope.$emit('showSpinner');
     representatives.loadSponsoredBills($scope.data.storage_id).then(
       function (sponsoredBills) {
-        $scope.loading = false;
+        $scope.$emit('hideSpinner');
         $scope.sponsoredBills = sponsoredBills;
         $scope.sponsoredBillsLoaded = true;
         flurry.log('sponsored bills loaded', {storage_id: $scope.data.storage_id});
       }, function () {
-        $scope.loading = false;
+        $scope.$emit('hideSpinner');
       }
     );
   };

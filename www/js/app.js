@@ -10,15 +10,14 @@ angular.module('app', [
   'ngAnimate',
   'JsCollection',
   'pasvaz.bindonce',
-  'uiGmapgoogle-maps'
+  'uiGmapgoogle-maps',
+  'jett.ionic.scroll.sista'
 ]).config(function ($locationProvider, $httpProvider) {
 
   $httpProvider.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
-  //$httpProvider.responseInterceptors.push('authInterceptor');
   $httpProvider.interceptors.push('authInterceptor');
 
   //$locationProvider.html5Mode(false);
-
 
 }).run(function ($location, layout, $document, $rootScope, $window, iStorageMemory, $state, $ionicPlatform) {
 
@@ -61,12 +60,10 @@ angular.module('app', [
     if (lightClassStates.indexOf(stateKey) !== -1) {
       wrapperClasses.push('light');
     }
-    if (['guide'].indexOf(stateKey) !== -1) {
-      wrapperClasses.push('guide');
-    }
     if (['main', 'newActivities'].indexOf(stateKey) !== -1) {
       wrapperClasses.push('news-feed');
     }
+    wrapperClasses.push('wrap-' + stateKey);
     $rootScope.wrapperClass = wrapperClasses.join(' ');
   });
   
