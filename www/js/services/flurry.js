@@ -31,7 +31,7 @@ angular.module('app.services')
           }
         });
 
-        $rootScope.$on('$routeChangeSuccess', function () {
+        $rootScope.$on('$stateChangeSuccess', function () {
           flurry.logPageView();
         });
       },

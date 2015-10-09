@@ -136,7 +136,7 @@ angular.module('app.services').factory('topBar',function ($location) {
     }
   };
 
-  $rootScope.$on('$routeChangeSuccess', function () {
+  $rootScope.$on('$stateChangeSuccess', function () {
     $rootScope.containerClass = '';
     $rootScope.bodyClass = '';
   });

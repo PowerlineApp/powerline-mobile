@@ -4,8 +4,7 @@
 
 angular.module('app.controllers', [
   'app.filters',
-  'app.services',
-  'ngRoute'
+  'app.services'
 ]).run(function ($cacheFactory, $rootScope, navigateTo, groupsInvites, announcements, $window, $location, $q, invites, follows, socialActivity) {
   var isMenuClosed = true;
   var isFirstHomeLoaded = true;

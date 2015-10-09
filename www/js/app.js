@@ -5,7 +5,6 @@ angular.module('app', [
   'app.directives',
   'app.filters',
   'app.services',
-  'ngTouch',
   'ngSanitize',
   'ngAnimate',
   'JsCollection',
