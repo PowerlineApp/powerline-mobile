@@ -7,13 +7,7 @@ Version 1.2
 Author: Kim Maida | http://kim-maida.com
 Updated: 12-9-2012
 */
-html, body, div, span, h1, h2, h3, h4, h5, h6, p, blockquote, pre,
-a, abbr, acronym, address, big, cite, code, del, dfn, em, img, ins,
-kbd, q, s, samp, small, strike, strong, tt, var, dl, dt,
-dd, ol, ul, li, fieldset, form, input, textarea, label, legend, table, caption,
-tbody, tfoot, thead, tr, th, td,
-article, aside, canvas, details, figcaption, figure,
-footer, header, hgroup, menu, nav, section, button {
+html, body, div, span, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, img, ins, kbd, q, s, samp, small, strike, strong, tt, var, dl, dt, dd, ol, ul, li, fieldset, form, input, textarea, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, figcaption, figure, footer, header, hgroup, menu, nav, section, button {
   margin: 0;
   padding: 0;
   border: 0;
@@ -36,11 +30,7 @@ img, input, select {
 ol, ul {
   list-style: none; }
 
-a,
-label,
-input[type=button],
-input[type=submit],
-button {
+a, label, input[type=button], input[type=submit], button {
   cursor: pointer; }
 
 input, select, textarea {
@@ -74,8 +64,7 @@ b, strong {
 q:lang(en) {
   quotes: '&#8220;' '&#8221;' '&#8216;' '&#8217;'; }
 
-article, aside, canvas, details, figcaption, figure,
-footer, header, hgroup, menu, nav, section {
+article, aside, canvas, details, figcaption, figure, footer, header, hgroup, menu, nav, section {
   display: block; }
 
 del {
@@ -104,8 +93,7 @@ html {
 * {
   -webkit-appearance: none; }
 
-fieldset .item,
-form .item {
+fieldset .item, form .item {
   border-color: #ddd;
   background-color: #fff;
   color: #444;
@@ -297,7 +285,6 @@ html, body {
 body ion-view ion-content {
   background: url("../images/v2/bg-body.png");
   background-size: 8px auto; }
-
 body .light ion-view ion-content {
   background: #fff;
   background-size: auto;
@@ -523,8 +510,7 @@ hr {
     float: right;
     font-size: 12px; }
 
-.slider-field,
-.text-field {
+.slider-field, .text-field {
   background: #fff;
   border-bottom: solid 1px #ddd;
   border-top: solid 1px #f7f7f7;
@@ -532,10 +518,7 @@ hr {
   color: #393839;
   line-height: 55px;
   padding: 0 10px; }
-  .slider-field select,
-  .slider-field input,
-  .slider-field textarea,
-  .text-field select, .text-field input, .text-field textarea {
+  .slider-field select, .slider-field input, .slider-field textarea, .text-field select, .text-field input, .text-field textarea {
     border: 0;
     margin: 0;
     outline: none;
@@ -543,65 +526,48 @@ hr {
     font-size: 16px;
     height: 20px;
     width: 93%; }
-    .slider-field select::-webkit-input-placeholder,
-    .slider-field input::-webkit-input-placeholder,
-    .slider-field textarea::-webkit-input-placeholder,
-    .text-field select::-webkit-input-placeholder, .text-field input::-webkit-input-placeholder, .text-field textarea::-webkit-input-placeholder {
+    .slider-field select::-webkit-input-placeholder, .slider-field input::-webkit-input-placeholder, .slider-field textarea::-webkit-input-placeholder, .text-field select::-webkit-input-placeholder, .text-field input::-webkit-input-placeholder, .text-field textarea::-webkit-input-placeholder {
       color: #9d9d9d; }
-    .slider-field select.i-placeholder-active,
-    .slider-field input.i-placeholder-active,
-    .slider-field textarea.i-placeholder-active,
-    .text-field select.i-placeholder-active, .text-field input.i-placeholder-active, .text-field textarea.i-placeholder-active {
+    .slider-field select.i-placeholder-active, .slider-field input.i-placeholder-active, .slider-field textarea.i-placeholder-active, .text-field select.i-placeholder-active, .text-field input.i-placeholder-active, .text-field textarea.i-placeholder-active {
       color: #9d9d9d; }
-  .slider-field select.ng-invalid.ng-pristine,
-  .text-field select.ng-invalid.ng-pristine {
+  .slider-field select.ng-invalid.ng-pristine, .text-field select.ng-invalid.ng-pristine {
     color: #9d9d9d; }
-  .slider-field input,
-  .text-field input {
+  .slider-field input, .text-field input {
     word-break: normal; }
-  .slider-field.large,
-  .text-field.large {
+  .slider-field.large, .text-field.large {
     color: #313438;
     font-size: 16px;
     padding: 15px;
     height: 160px;
     background: #f3f3f3; }
-    .slider-field.large textarea,
-    .text-field.large textarea {
+    .slider-field.large textarea, .text-field.large textarea {
       width: 100%;
       height: 100%; }
-  .slider-field.avatar-field,
-  .text-field.avatar-field {
+  .slider-field.avatar-field, .text-field.avatar-field {
     -webkit-box-sizing: border-box;
     position: relative;
     height: 120px;
     padding: 10px 10px 40px 55px;
     border-bottom-color: #ddd; }
-    .slider-field.avatar-field textarea,
-    .slider-field.avatar-field input,
-    .text-field.avatar-field textarea, .text-field.avatar-field input {
+    .slider-field.avatar-field textarea, .slider-field.avatar-field input, .text-field.avatar-field textarea, .text-field.avatar-field input {
       width: 100%;
       height: 100%;
       font-size: 13px; }
-    .slider-field.avatar-field input,
-    .text-field.avatar-field input {
+    .slider-field.avatar-field input, .text-field.avatar-field input {
       height: 30px;
       vertical-align: top; }
-    .slider-field.avatar-field img,
-    .text-field.avatar-field img {
+    .slider-field.avatar-field img, .text-field.avatar-field img {
       width: 30px;
       height: 35px;
       position: absolute;
       top: 10px;
       left: 10px; }
-  .slider-field.link,
-  .text-field.link {
+  .slider-field.link, .text-field.link {
     background-image: url("../images/arrows/gray-light-right.png");
     background-repeat: no-repeat;
     background-position: 95% center;
     background-size: 9px auto; }
-  .slider-field.completed,
-  .text-field.completed {
+  .slider-field.completed, .text-field.completed {
     background-image: url("../images/icons/tick.png");
     background-size: 11px auto;
     background-repeat: no-repeat;
@@ -663,7 +629,7 @@ hr {
     background: transparent;
     width: 90%; }
   .text-field-2 .btn-input-send {
-    background: url("../images/v2/icons/comment-menu-sprite.png") no-repeat;
+    background: url('../images/v2/icons/comment-menu-sprite.png') no-repeat;
     background-size: 304px auto;
     background-position: -138px 0;
     width: 30px;
@@ -762,8 +728,7 @@ switch {
       border-radius: 8.5px;
       transition: 0.2s linear;
       box-shadow: 0px 2px 1px rgba(81, 81, 81, 0.5); }
-      switch .switch-control i.switch-right,
-      switch .switch-control i.switch-right-add.switch-right-add-active {
+      switch .switch-control i.switch-right, switch .switch-control i.switch-right-add.switch-right-add-active {
         -webkit-transform: translateX(25px); }
       switch .switch-control i.switch-right-remove.switch-right-remove-active {
         -webkit-transform: translateX(0px); }
@@ -792,21 +757,18 @@ checkbox {
   checkbox.slider-on {
     background-position-y: -47px; }
 
-.checkbox-field-long,
-.checkbox-field {
+.checkbox-field-long, .checkbox-field {
   background: #fff;
   border-bottom: solid 1px #dbdddc;
   position: relative;
   padding: 10px 10px 10px 45px;
   box-sizing: border-box; }
-  .checkbox-field-long p,
-  .checkbox-field p {
+  .checkbox-field-long p, .checkbox-field p {
     font-size: 13px;
     color: #636363;
     line-height: 19px;
     vertical-align: middle; }
-  .checkbox-field-long span,
-  .checkbox-field span {
+  .checkbox-field-long span, .checkbox-field span {
     position: absolute;
     width: 24px;
     height: 100%;
@@ -816,17 +778,13 @@ checkbox {
     top: 0;
     left: 10px;
     box-sizing: border-box; }
-  .checkbox-field-long.active,
-  .checkbox-field.active {
+  .checkbox-field-long.active, .checkbox-field.active {
     background: #f1f7f9; }
-    .checkbox-field-long.active p,
-    .checkbox-field.active p {
+    .checkbox-field-long.active p, .checkbox-field.active p {
       color: #54c5ff; }
-    .checkbox-field-long.active span,
-    .checkbox-field.active span {
+    .checkbox-field-long.active span, .checkbox-field.active span {
       background-position-x: -39px; }
-  .checkbox-field-long.ng-click-active,
-  .checkbox-field.ng-click-active {
+  .checkbox-field-long.ng-click-active, .checkbox-field.ng-click-active {
     background: #f1f7f9; }
 
 .switch {
@@ -855,7 +813,6 @@ checkbox {
 
 .switch-btn-group .switch {
   float: right; }
-
 .switch-btn-group .btn-large {
   width: 60%; }
 
@@ -1013,7 +970,7 @@ select.choice-filter {
     line-height: 35px;
     height: 35px;
     width: 100%;
-    background: #0c0c54 url("../images/v2/cut/group-select-bg.png") left center no-repeat;
+    background: #0c0c54 url('../images/v2/cut/group-select-bg.png') left center no-repeat;
     background-size: auto 35px;
     text-overflow: ellipsis;
     overflow: hidden;
@@ -1070,7 +1027,7 @@ select.choice-filter {
         height: 48px;
         line-height: 48px;
         border-bottom: solid 1px #717377;
-        background: url("../images/v2/cut/select-arrow-sprite.png") right 14px no-repeat;
+        background: url('../images/v2/cut/select-arrow-sprite.png') right 14px no-repeat;
         background-size: 22px auto;
         font-size: 12px;
         color: #fff;
@@ -1118,8 +1075,7 @@ select.choice-filter {
   .i-errors p {
     line-height: 1.3; }
 
-.btn-larger,
-.btn-large {
+.btn-larger, .btn-large {
   height: 45px;
   width: 100%;
   display: block;
@@ -1128,11 +1084,9 @@ select.choice-filter {
   line-height: 45px;
   text-align: center;
   border-radius: 6px; }
-  .btn-larger.btn-link,
-  .btn-large.btn-link {
+  .btn-larger.btn-link, .btn-large.btn-link {
     text-indent: 16px; }
-  .btn-larger a,
-  .btn-large a {
+  .btn-larger a, .btn-large a {
     color: #fff; }
 
 .btn-larger {
@@ -1222,13 +1176,11 @@ select.choice-filter {
   .btn-dark-simple.ng-click-active {
     background-color: #4a4c52; }
 
-.btn-red1,
-.btn-red {
+.btn-red1, .btn-red {
   background: #762026;
   color: #fff;
   font-weight: bold; }
-  .btn-red1.ng-click-active,
-  .btn-red.ng-click-active {
+  .btn-red1.ng-click-active, .btn-red.ng-click-active {
     background-color: #803137; }
 
 .btn-red1 {
@@ -1271,7 +1223,7 @@ select.choice-filter {
     display: inline-block;
     width: 24px;
     height: 23px;
-    background: url("../images/v2/icons/share-sprite.png") 0 center no-repeat;
+    background: url('../images/v2/icons/share-sprite.png') 0 center no-repeat;
     background-size: 86px 23px;
     vertical-align: middle; }
     .share-section > share.btn-share-fb {
@@ -1288,9 +1240,7 @@ select.choice-filter {
     color: #798ca6;
     font-size: 10px; }
 
-.btn-plus-1,
-.btn-remove,
-.btn-add {
+.btn-plus-1, .btn-remove, .btn-add {
   display: inline-block;
   width: 30px;
   height: 23px;
@@ -1310,7 +1260,6 @@ select.choice-filter {
 .h-buttons-2 .btn-large, .h-buttons-2 .btn-medium {
   width: 50%;
   float: left; }
-
 .h-buttons-2:after {
   clear: both;
   visibility: hidden;
@@ -1404,7 +1353,7 @@ select.choice-filter {
       display: inline-block;
       height: 100%;
       width: 60px;
-      background: url("../images/v2/icons/notification-icons-sprite.png") no-repeat;
+      background: url('../images/v2/icons/notification-icons-sprite.png') no-repeat;
       background-size: 128px auto;
       background-position-y: -3px; }
     .notifications li.news i {
@@ -1617,7 +1566,7 @@ select.choice-filter {
       vertical-align: top;
       width: 14px;
       height: 14px;
-      background: url("../images/v2/icons/q-info-sprite.png") no-repeat;
+      background: url('../images/v2/icons/q-info-sprite.png') no-repeat;
       background-size: 74px 17px;
       background-position: 0 -3px; }
       .q-header .q-info .icon-responses.icon-time, .q-header .q-info .icon-time.icon-time, .q-header .q-info .icon-calendar.icon-time {
@@ -1629,7 +1578,7 @@ select.choice-filter {
       width: 25px;
       height: 20px;
       margin: auto;
-      background: url("../images/v2/icons/post-icons.png") no-repeat;
+      background: url('../images/v2/icons/post-icons.png') no-repeat;
       background-size: 100px auto; }
       .q-header .q-info .icon-fundraiser.icon-poll, .q-header .q-info .icon-event.icon-poll, .q-header .q-info .icon-petition.icon-poll, .q-header .q-info .icon-discussion.icon-poll, .q-header .q-info .icon-poll.icon-poll, .q-header .q-info .icon-post.icon-poll {
         background-position: -2px -6px; }
@@ -1674,8 +1623,7 @@ select.choice-filter {
     font-size: 9px;
     font-family: Lato; }
 
-.profile-header-2,
-.profile-header {
+.profile-header-2, .profile-header {
   box-shadow: 1px 1px 1px #e3e4e8;
   box-sizing: border-box;
   border-radius: 3px;
@@ -1685,20 +1633,16 @@ select.choice-filter {
   position: relative;
   padding: 19px 15px 15px;
   min-height: 120px; }
-  .profile-header-2 .title,
-  .profile-header .title {
+  .profile-header-2 .title, .profile-header .title {
     font-size: 14px;
     color: #030366;
     font-family: "Lato Bold"; }
-  .profile-header-2 .slogan,
-  .profile-header .slogan {
+  .profile-header-2 .slogan, .profile-header .slogan {
     font-style: italic;
     margin: 15px auto; }
-  .profile-header-2 p,
-  .profile-header p {
+  .profile-header-2 p, .profile-header p {
     line-height: 1.4; }
-  .profile-header-2 .avatar,
-  .profile-header .avatar {
+  .profile-header-2 .avatar, .profile-header .avatar {
     display: block;
     width: 63px;
     height: 63px;
@@ -1709,37 +1653,29 @@ select.choice-filter {
     margin: -2px 11px 14px -2px;
     position: relative;
     background: #eaf1f4; }
-    .profile-header-2 .avatar img,
-    .profile-header .avatar img {
+    .profile-header-2 .avatar img, .profile-header .avatar img {
       width: 100%; }
-    .profile-header-2 .avatar .icon-photo,
-    .profile-header .avatar .icon-photo {
+    .profile-header-2 .avatar .icon-photo, .profile-header .avatar .icon-photo {
       position: absolute;
       z-index: 1;
       top: 2px;
       right: 2px; }
-  .profile-header-2 .editable-field,
-  .profile-header .editable-field {
+  .profile-header-2 .editable-field, .profile-header .editable-field {
     margin: 2px auto; }
-    .profile-header-2 .editable-field textarea,
-    .profile-header-2 .editable-field input,
-    .profile-header .editable-field textarea, .profile-header .editable-field input {
+    .profile-header-2 .editable-field textarea, .profile-header-2 .editable-field input, .profile-header .editable-field textarea, .profile-header .editable-field input {
       padding: 8px;
       box-sizing: border-box;
       background: none;
       width: 100%;
       max-width: 200px;
       background: #eaf1f4; }
-    .profile-header-2 .editable-field textarea,
-    .profile-header .editable-field textarea {
+    .profile-header-2 .editable-field textarea, .profile-header .editable-field textarea {
       min-height: 40px; }
-  .profile-header-2 .completion-fill,
-  .profile-header .completion-fill {
+  .profile-header-2 .completion-fill, .profile-header .completion-fill {
     margin-top: 10px;
     width: 100%;
     clear: both; }
-    .profile-header-2 .completion-fill .process-wrap,
-    .profile-header .completion-fill .process-wrap {
+    .profile-header-2 .completion-fill .process-wrap, .profile-header .completion-fill .process-wrap {
       height: 5px;
       display: inline-block;
       margin-left: 15px;
@@ -1747,12 +1683,10 @@ select.choice-filter {
       top: -1px;
       border-radius: 5px;
       max-width: 200px; }
-      .profile-header-2 .completion-fill .process-wrap .process,
-      .profile-header .completion-fill .process-wrap .process {
+      .profile-header-2 .completion-fill .process-wrap .process, .profile-header .completion-fill .process-wrap .process {
         height: 5px;
         border-radius: 5px; }
-  .profile-header-2 strong,
-  .profile-header strong {
+  .profile-header-2 strong, .profile-header strong {
     font-family: "Lato Bold"; }
 
 .profile-header-2 {
@@ -1856,8 +1790,7 @@ select.choice-filter {
     background-position-y: -443px; }
   .nav li.share-item i {
     background-position-y: -493px; }
-  .nav li.active,
-  .nav li.ng-click-active {
+  .nav li.active, .nav li.ng-click-active {
     background-color: #54c5ff;
     color: #fff; }
   .nav .search-item {
@@ -1882,7 +1815,7 @@ select.choice-filter {
   top: -10px;
   right: 10px;
   padding-top: 9px;
-  background: url("../images/v2/cut/top-corner.png") 204px top no-repeat;
+  background: url('../images/v2/cut/top-corner.png') 204px top no-repeat;
   background-size: 19px auto;
   box-shadow: -1px 5px 10px rgba(0, 0, 0, 0.2); }
   .new-post-window a {
@@ -1903,7 +1836,7 @@ select.choice-filter {
       width: 55px;
       height: 50px;
       display: inline-block;
-      background: url("../images/v2/icons/post-icons.png") no-repeat;
+      background: url('../images/v2/icons/post-icons.png') no-repeat;
       background-size: 115px auto;
       vertical-align: middle; }
       .new-post-window a i.micropetition {
@@ -1948,8 +1881,7 @@ h3 {
 h4 {
   font-size: 13px; }
 
-.gray-content h3,
-.white-content h3 {
+.gray-content h3, .white-content h3 {
   color: #7eae33;
   text-align: left;
   padding: 30px 10px 0 10px; }
@@ -1964,14 +1896,11 @@ h4 {
   font-family: Lato;
   color: #030366; }
 
-.text-white,
-.text-white-50 {
+.text-white, .text-white-50 {
   color: #fff; }
-  .text-white a,
-  .text-white-50 a {
+  .text-white a, .text-white-50 a {
     color: #8a8a8a; }
-    .text-white a.ng-click-active,
-    .text-white-50 a.ng-click-active {
+    .text-white a.ng-click-active, .text-white-50 a.ng-click-active {
       color: #fff; }
 
 .text-gray-light {
@@ -2050,12 +1979,10 @@ h4 {
   .q-content p {
     margin: 15px 8px;
     line-height: 1.4; }
-    .q-content p[i-open-system-links] a,
-    .q-content p hash-tag {
+    .q-content p[i-open-system-links] a, .q-content p hash-tag {
       font-family: "Lato Bold";
       color: #030366; }
-      .q-content p[i-open-system-links] a.ng-click-active,
-      .q-content p hash-tag.ng-click-active {
+      .q-content p[i-open-system-links] a.ng-click-active, .q-content p hash-tag.ng-click-active {
         opacity: 0.7; }
     .q-content p strong {
       font-family: Lato; }
@@ -2301,14 +2228,10 @@ asterisk {
       -webkit-box-orient: vertical;
       display: -webkit-box; }
 
-.profiles-list-two,
-.profiles-list,
-.info-list {
+.profiles-list-two, .profiles-list, .info-list {
   box-shadow: 1px 1px 1px #e3e4e8;
   margin: 15px 8px; }
-  .profiles-list-two li,
-  .profiles-list li,
-  .info-list li {
+  .profiles-list-two li, .profiles-list li, .info-list li {
     display: block;
     width: 100%;
     border-bottom: solid 1px #e2e2e2;
@@ -2319,28 +2242,18 @@ asterisk {
     box-sizing: border-box;
     padding: 20px 50px;
     position: relative; }
-    .profiles-list-two li:last-child,
-    .profiles-list li:last-child,
-    .info-list li:last-child {
+    .profiles-list-two li:last-child, .profiles-list li:last-child, .info-list li:last-child {
       border-bottom: none; }
-    .profiles-list-two li[ng-click],
-    .profiles-list li[ng-click],
-    .info-list li[ng-click] {
+    .profiles-list-two li[ng-click], .profiles-list li[ng-click], .info-list li[ng-click] {
       background-image: url("../images/v2/cut/arrow-right-gray.png"); }
-    .profiles-list-two li.ng-click-active,
-    .profiles-list li.ng-click-active,
-    .info-list li.ng-click-active {
+    .profiles-list-two li.ng-click-active, .profiles-list li.ng-click-active, .info-list li.ng-click-active {
       background-color: #e2e2e2; }
-    .profiles-list-two li.title,
-    .profiles-list li.title,
-    .info-list li.title {
+    .profiles-list-two li.title, .profiles-list li.title, .info-list li.title {
       color: #798ca6;
       font-size: 15px;
       background: #f1f7f9;
       padding: 15px 25px; }
-    .profiles-list-two li p,
-    .profiles-list li p,
-    .info-list li p {
+    .profiles-list-two li p, .profiles-list li p, .info-list li p {
       text-overflow: ellipsis;
       overflow: hidden;
       -webkit-line-clamp: 1;
@@ -2350,28 +2263,18 @@ asterisk {
       color: #030366;
       font-size: 15px;
       font-family: Lato; }
-      .profiles-list-two li p span,
-      .profiles-list li p span,
-      .info-list li p span {
+      .profiles-list-two li p span, .profiles-list li p span, .info-list li p span {
         color: #313438;
         opacity: 0.5;
         font-size: 9px; }
-    .profiles-list-two li.control,
-    .profiles-list li.control,
-    .info-list li.control {
+    .profiles-list-two li.control, .profiles-list li.control, .info-list li.control {
       padding-left: 20px;
       padding-right: 20px; }
-      .profiles-list-two li.control .item-toggle .toggle,
-      .profiles-list li.control .item-toggle .toggle,
-      .info-list li.control .item-toggle .toggle {
+      .profiles-list-two li.control .item-toggle .toggle, .profiles-list li.control .item-toggle .toggle, .info-list li.control .item-toggle .toggle {
         top: 13.5px; }
-      .profiles-list-two li.control time-picker time,
-      .profiles-list li.control time-picker time,
-      .info-list li.control time-picker time {
+      .profiles-list-two li.control time-picker time, .profiles-list li.control time-picker time, .info-list li.control time-picker time {
         margin-right: 10px; }
-      .profiles-list-two li.control .icon-time,
-      .profiles-list li.control .icon-time,
-      .info-list li.control .icon-time {
+      .profiles-list-two li.control .icon-time, .profiles-list li.control .icon-time, .info-list li.control .icon-time {
         position: relative;
         left: 0;
         top: -1px;
@@ -2379,35 +2282,23 @@ asterisk {
         vertical-align: middle;
         width: 14px;
         height: 14px;
-        background: url("../images/v2/icons/q-info-sprite.png") no-repeat;
+        background: url('../images/v2/icons/q-info-sprite.png') no-repeat;
         background-size: auto 17px;
         background-position: -30px -2px; }
-    .profiles-list-two li.shaded,
-    .profiles-list li.shaded,
-    .info-list li.shaded {
+    .profiles-list-two li.shaded, .profiles-list li.shaded, .info-list li.shaded {
       background-color: #f1f7f9;
       color: #798ca6; }
-    .profiles-list-two li .btn-remove,
-    .profiles-list-two li .btn-add,
-    .profiles-list-two li .btn-plus-1,
-    .profiles-list li .btn-remove,
-    .profiles-list li .btn-add,
-    .profiles-list li .btn-plus-1,
-    .info-list li .btn-remove, .info-list li .btn-add, .info-list li .btn-plus-1 {
+    .profiles-list-two li .btn-remove, .profiles-list-two li .btn-add, .profiles-list-two li .btn-plus-1, .profiles-list li .btn-remove, .profiles-list li .btn-add, .profiles-list li .btn-plus-1, .info-list li .btn-remove, .info-list li .btn-add, .info-list li .btn-plus-1 {
       position: absolute;
       right: 14px;
       top: 18px; }
-    .profiles-list-two li .section,
-    .profiles-list li .section,
-    .info-list li .section {
+    .profiles-list-two li .section, .profiles-list li .section, .info-list li .section {
       display: inline-block;
       padding-right: 17px;
       margin-right: 17px;
       border-right: solid 1px #dcdede;
       font-size: inherit; }
-  .profiles-list-two.info-list p,
-  .profiles-list.info-list p,
-  .info-list.info-list p {
+  .profiles-list-two.info-list p, .profiles-list.info-list p, .info-list.info-list p {
     color: #636363; }
 
 .info-list li i {
@@ -2432,35 +2323,27 @@ asterisk {
   .info-list li i.icon-website {
     background-position-y: -220px; }
 
-.profiles-list-two li,
-.profiles-list li {
+.profiles-list-two li, .profiles-list li {
   padding-left: 70px;
   padding-right: 50px;
   padding-top: 27px;
   position: relative; }
-  .profiles-list-two li.title,
-  .profiles-list li.title {
+  .profiles-list-two li.title, .profiles-list li.title {
     padding-left: 15px; }
-  .profiles-list-two li figure,
-  .profiles-list li figure {
+  .profiles-list-two li figure, .profiles-list li figure {
     position: absolute;
     left: 10px;
     top: 10px;
     width: 50px;
     height: 50px;
     overflow: hidden; }
-    .profiles-list-two li figure img,
-    .profiles-list li figure img {
+    .profiles-list-two li figure img, .profiles-list li figure img {
       width: 50px; }
-  .profiles-list-two li .btn-remove,
-  .profiles-list-two li .btn-add,
-  .profiles-list-two li .btn-plus-1,
-  .profiles-list li .btn-remove, .profiles-list li .btn-add, .profiles-list li .btn-plus-1 {
+  .profiles-list-two li .btn-remove, .profiles-list-two li .btn-add, .profiles-list-two li .btn-plus-1, .profiles-list li .btn-remove, .profiles-list li .btn-add, .profiles-list li .btn-plus-1 {
     position: absolute;
     right: 5px;
     top: 25px; }
-  .profiles-list-two li .pending-message,
-  .profiles-list li .pending-message {
+  .profiles-list-two li .pending-message, .profiles-list li .pending-message {
     font-size: 12px;
     color: #b6b6b7; }
 
@@ -2506,33 +2389,25 @@ asterisk {
   .request-list li.active .controls {
     display: block; }
 
-.articles-list-tree li,
-.articles-list li {
+.articles-list-tree li, .articles-list li {
   padding: 20px 10px;
   border-top: solid 1px rgba(255, 255, 255, 0.1); }
-  .articles-list-tree li div,
-  .articles-list li div {
+  .articles-list-tree li div, .articles-list li div {
     clear: both; }
-    .articles-list-tree li div:first-child,
-    .articles-list li div:first-child {
+    .articles-list-tree li div:first-child, .articles-list li div:first-child {
       margin-bottom: 10px; }
-    .articles-list-tree li div figure,
-    .articles-list li div figure {
+    .articles-list-tree li div figure, .articles-list li div figure {
       width: 45px;
       float: left; }
-      .articles-list-tree li div figure img,
-      .articles-list li div figure img {
+      .articles-list-tree li div figure img, .articles-list li div figure img {
         width: 35px; }
-  .articles-list-tree li .header,
-  .articles-list li .header {
+  .articles-list-tree li .header, .articles-list li .header {
     line-height: 18px; }
-    .articles-list-tree li .header strong,
-    .articles-list li .header strong {
+    .articles-list-tree li .header strong, .articles-list li .header strong {
       color: #7eae33;
       font-size: 15px;
       font-weight: normal; }
-    .articles-list-tree li .header time,
-    .articles-list li .header time {
+    .articles-list-tree li .header time, .articles-list li .header time {
       font-size: 9px;
       color: #6f6f6f; }
 
@@ -2590,7 +2465,7 @@ asterisk {
       display: block;
       width: auto;
       padding-top: 2px;
-      background: url("../images/v2/icons/time.png") left 1px no-repeat;
+      background: url('../images/v2/icons/time.png') left 1px no-repeat;
       background-size: 12px;
       text-indent: 15px;
       position: absolute;
@@ -2642,7 +2517,7 @@ asterisk {
         color: #030366; }
     .comments .item .item-content .icon-up-mini, .comments .item .item-content .icon-down-mini {
       display: inline-block;
-      background: url("../images/v2/icons/rate-sprite.png") no-repeat;
+      background: url('../images/v2/icons/rate-sprite.png') no-repeat;
       background-size: 31px auto;
       width: 13px;
       height: 13px;
@@ -2660,7 +2535,6 @@ asterisk {
       text-align: right; }
       .comments .item .item-content .rates .active {
         color: #54c5ff; }
-
 .comments .comment-menu {
   height: 33px;
   width: 100%;
@@ -2678,7 +2552,7 @@ asterisk {
     .comments .comment-menu p.ng-click-active {
       background: #dae3e6; }
     .comments .comment-menu p i {
-      background: url("../images/v2/icons/comment-menu-sprite.png") no-repeat;
+      background: url('../images/v2/icons/comment-menu-sprite.png') no-repeat;
       background-size: 304px 64px;
       display: inline-block;
       height: 100%;
@@ -2790,7 +2664,7 @@ asterisk {
       display: inline-block;
       width: 15px;
       height: 12px;
-      background: url("../images/v2/icons/post-icons.png") no-repeat;
+      background: url('../images/v2/icons/post-icons.png') no-repeat;
       background-size: 76px auto;
       position: relative;
       top: 1px;
@@ -2815,7 +2689,7 @@ asterisk {
       width: auto;
       padding-top: 2px;
       font-size: 10px;
-      background: url("../images/v2/icons/time.png") left center no-repeat;
+      background: url('../images/v2/icons/time.png') left center no-repeat;
       background-size: 12px;
       text-indent: 15px; }
   .activities-list .item .item-footer {
@@ -2834,7 +2708,7 @@ asterisk {
       margin-left: auto;
       min-width: 20px;
       height: 40px;
-      background: url("../images/v2/icons/responses.png") center center no-repeat;
+      background: url('../images/v2/icons/responses.png') center center no-repeat;
       background-size: 22px auto;
       text-align: center;
       line-height: 40px; }
@@ -2903,7 +2777,7 @@ asterisk {
       padding-left: 12px;
       display: inline-block;
       margin-top: 4px;
-      background: url("../images/v2/icons/sa-icons.png") left 0px no-repeat;
+      background: url('../images/v2/icons/sa-icons.png') left 0px no-repeat;
       background-size: 12px 95px; }
       .sa-items .item .item-content .sa-type.sa-icon-request-1 {
         background-position-y: 0px; }
@@ -2949,7 +2823,6 @@ asterisk {
       font-size: 10px;
       width: 100%;
       margin-bottom: 10px; }
-
 .sa-items .no-results {
   text-align: center;
   font-style: italic;
@@ -3097,8 +2970,7 @@ asterisk {
   height: 4px;
   background: #d9dfe4;
   overflow: hidden; }
-  .completion-fill .process-wrap .process-completed,
-  .completion-fill .process-wrap .process {
+  .completion-fill .process-wrap .process-completed, .completion-fill .process-wrap .process {
     height: 4px;
     border-radius: 1px;
     width: 0;
@@ -3420,7 +3292,7 @@ tab-panel {
   display: inline-block;
   width: 40px;
   height: 40px;
-  background: url("../images/v2/icons/activity-controls.png") 0 4px no-repeat;
+  background: url('../images/v2/icons/activity-controls.png') 0 4px no-repeat;
   background-size: 485px 30px;
   vertical-align: top; }
   .activity-control.double-up {
@@ -3483,6 +3355,7 @@ tab-panel {
 @-webkit-keyframes bouncedelay {
   0%, 80%, 100% {
     -webkit-transform: scale(0); }
+
   40% {
     -webkit-transform: scale(1); } }
 
@@ -3490,6 +3363,7 @@ tab-panel {
   0%, 80%, 100% {
     transform: scale(0);
     -webkit-transform: scale(0); }
+
   40% {
     transform: scale(1);
     -webkit-transform: scale(1); } }
@@ -3497,7 +3371,6 @@ tab-panel {
 .activities-list .control .spinner {
   margin-top: 9px;
   width: auto; }
-
 .activities-list .control .spinner > div {
   margin-right: 3px;
   width: 5px;
@@ -3546,7 +3419,6 @@ tab-panel {
 
 .wrap-guide .content {
   padding-top: 0; }
-
 .wrap-guide .guide-content {
   margin: auto;
   position: relative;
@@ -3577,21 +3449,19 @@ tab-panel {
 .news-feed .notifications {
   position: fixed;
   top: 44px; }
-
 .news-feed .groups-filter-panel {
   position: fixed;
   width: 100%;
   left: 0;
   top: 82px;
   z-index: 9; }
-
 .news-feed .content {
   top: 132px; }
 
-.wrap-search .bar-subheader {
+.bar-search-page-filter {
   padding: 0px; }
-  .wrap-search .bar-subheader .filter {
+  .bar-search-page-filter .filter {
     padding-top: 13px;
     padding-bottom: 12px; }
-    .wrap-search .bar-subheader .filter .icon {
+    .bar-search-page-filter .filter .icon {
       top: 9px; }

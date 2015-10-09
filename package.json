@@ -44,7 +44,7 @@
     "android.support.v4"
   ],
   "cordovaPlatforms": [
-    "android",
-    "ios"
+    "ios",
+    "android"
   ]
 }

@@ -1,8 +1,10 @@
-angular.module('app.controllers').controller('session.login',function ($scope, $location, session, facebook, $timeout, flurry, $ionicSideMenuDelegate, $ionicHistory) {
+angular.module('app.controllers').controller('session.login',function ($scope, homeCtrlParams, session, facebook, $timeout, flurry, $ionicSideMenuDelegate, $ionicHistory) {
   $ionicSideMenuDelegate.canDragContent(false);
   
   $scope.keepLogged = true;
   $scope.data = {};
+
+  $scope.$emit('hideSpinner');
 
   flurry.log('login');
   
@@ -12,12 +14,14 @@ angular.module('app.controllers').controller('session.login',function ($scope, $
       $scope.alert('All fields required', null, 'Error', 'OK');
       return;
     }
-    $scope.loading = true;
+    $scope.$emit('showSpinner');
     session.login($scope.data, $scope.keepLogged).then(
       function () {
+        $scope.$emit('hideSpinner');
         //clear cache and history
         $ionicHistory.clearCache();
         $ionicHistory.clearHistory();
+        homeCtrlParams.loaded = false;
         flurry.log('logged in');
         if (!session.is_registration_complete) {
           $scope.path('/profile');
@@ -26,7 +30,7 @@ angular.module('app.controllers').controller('session.login',function ($scope, $
         }
       },
       function (status) {
-        $scope.loading = false;
+        $scope.$emit('hideSpinner');
         if (!status) {
           $scope.alert('Check your connection', null, 'Error', 'OK');
         } else {
@@ -77,20 +81,5 @@ angular.module('app.controllers').controller('session.login',function ($scope, $
 
 }).controller('session.logout', function ($scope, $location, session, $window, flurry) {
   flurry.log('logout');
-
-  if (!session.getToken()) {
-    if($window.navigator.app){
-      $window.navigator.app.exitApp();
-    }else{
-      $location.path('/login');
-    }
-    return;
-  }
-
   session.logout();
-  if ($window.device && $window.device.platform === 'Android') {
-    $window.navigator.app.loadUrl('file:///android_asset/www/index.html');
-  } else {
-    $window.location.reload();
-  }
 });

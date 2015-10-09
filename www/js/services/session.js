@@ -1,4 +1,4 @@
-angular.module('app.services').factory('session', function (serverConfig, $http, $q, iStorage, $rootScope) {
+angular.module('app.services').factory('session', function (serverConfig, $http, $q, iStorage, $rootScope, $location, $window) {
 
   var session = {
     login: function (data, keepLogged) {
@@ -73,6 +73,19 @@ angular.module('app.services').factory('session', function (serverConfig, $http,
       session.token = null;
       session.user_id = null;
       session.is_registration_complete = null;
+      
+      $location.path('/login');
+      
+      /*if($window.navigator.app){
+        $window.navigator.app.exitApp();
+      }
+      
+      if ($window.device && $window.device.platform === 'Android') {
+        $window.navigator.app.loadUrl('file:///android_asset/www/index.html');
+      } else {
+        $window.location.reload();
+      }*/
+      
     }
   };
 
@@ -312,8 +325,9 @@ angular.module('app.services').factory('session', function (serverConfig, $http,
 }).factory('authInterceptor', function ($q, $location) {
   return {
     responseError: function (response) {
-      if (response.status === 401) {
-       $location.path('/login');
+      var path = $location.path();
+      if (response.status === 401 && path !== '/login' && path !== '/logout') {
+        $location.path('/logout');
       }
       return $q.reject(response);
     }
