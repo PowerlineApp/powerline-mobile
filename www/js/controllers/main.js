@@ -21,12 +21,6 @@ angular.module('app.controllers', []).controller('AppCtrl', function($scope, mai
     $cacheFactory.get('searchController').removeAll();
   };
 
-  $scope.$watch($rootScope.isMenuClosed, function (value) {
-    if (!value) {
-      $scope.$broadcast('scroll-content-changed');
-    }
-  });
-
   $scope.getWrapperClass = function () {
     var obj = {};
     obj[$rootScope.wrapperClass || ''] = true;

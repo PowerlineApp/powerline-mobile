@@ -13,13 +13,6 @@ angular.module('app').run(function ($location, layout, $document, $rootScope,
     }
   });
 
-  var $body = $document.find('body');
-  $document.bind('scroll', function () {
-    if ($document.height() <= $document.scrollTop() + $body.height()) {
-      $rootScope.$broadcast('scrollEnd');
-    }
-  });
-
   $rootScope.checkURLState = function (stateName) {
     return $state.includes('app.' + stateName);
   };
