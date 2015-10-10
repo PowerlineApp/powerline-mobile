@@ -74,8 +74,6 @@ angular.module('app', [
     $rootScope.isSpinnerShow = false;
   });
 
-}).config(function ($compileProvider) {
-//    $compileProvider.urlSanitizationWhitelist(/^\s*(https?|ftp|mailto|tel):/);
 }).config(['uiGmapGoogleMapApiProvider', function (GoogleMapApi) {
   GoogleMapApi.configure({
     //    key: 'your api key',

@@ -16,7 +16,8 @@ angular.module('app.services', [
 
         if ($window.device.platform === 'iOS') {
           service.isIOS = true;
-          $window.StatusBar.hide();
+          //$window.StatusBar.hide();
+          ionic.Platform.fullScreen(true);
         }
         if ($window.device.name) {
           var name = $window.device.name.toUpperCase();
