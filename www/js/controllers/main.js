@@ -36,7 +36,7 @@ angular.module('app.controllers', []).controller('AppCtrl', function($scope, mai
   $scope.$watch(function () {
     return mainMenu.items;
   }, function (items) {
-    $scope.items = items;
+    $scope.menuItems = items;
   });
 
 }).value('loaded', function (scope, callback) {

@@ -36,6 +36,10 @@ angular.module('app.controllers').controller('notifications', function ($scope, 
   $scope.getClass = function (path) {
     return $scope.getActiveClass(path, $location.path());
   };
+  
+  $scope.getActiveClass = function (a, b) {
+    return a === b ? 'active' : '';
+  };
 
   function getMessagesCount() {
     return groupsInvites.get().length + announcements.getNumberOfNew() + invites.get().size();

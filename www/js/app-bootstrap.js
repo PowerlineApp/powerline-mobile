@@ -24,7 +24,6 @@ angular.module('app').run(function ($location, layout, $document, $rootScope,
     return $state.includes('app.' + stateName);
   };
 
-
   angular.element($window).bind('resize', function () {
     $rootScope.$broadcast('resize');
   });
@@ -68,10 +67,6 @@ angular.module('app').run(function ($location, layout, $document, $rootScope,
     searchCache.put('query', tag);
     searchCache.put('data', null);
     $rootScope.path('/search');
-  };
-  
-  $rootScope.getActiveClass = function (a, b) {
-    return a === b ? 'active' : '';
   };
 
   $rootScope.invalidClass = function (isInvalid) {
