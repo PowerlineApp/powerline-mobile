@@ -1,48 +1,54 @@
-<section ng-include="'templates/notifications.html'"></section>
+<ion-view view-title="Group Search" class="has-notifications-bar">
+  <ion-nav-buttons side="right">
+    <a class="button button-clear" href="#/groups/create">Create</a>
+  </ion-nav-buttons>
 
-<section>
+  <section ng-include="'templates/notifications.html'"></section>
+
+  <div class="bar bar-subheader bar-search">
     <div class="filter">
-        <input type="text" placeholder="Search for Groups" ng-model="data.search" />
-        <i class="icon ion-ios-search"></i>
+      <input type="text" placeholder="Search for Groups" ng-model="data.search" />
+      <i class="icon ion-ios-search"></i>
     </div>
-</section>
+  </div>
+  <ion-content class="content has-subheader">
 
-<div ng-controller="groups.search.join-groups" ng-show="!isSearchActive" class="margin-10">
+    <div ng-controller="groups.search.join-groups" ng-show="!isSearchActive" class="margin-10">
 
-    <ul ng-show="popularItems.length" class="profiles-list margin-v-10">
+      <ul ng-show="popularItems.length" class="profiles-list margin-v-10">
         <li class="title">Popular Groups</li>
         <li ng-repeat="item in popularItems">
-            <figure ng-click="navigateTo('group-profile', item)">
-                <img ng-src="{{ item.avatar_file_path }}">
-            </figure>
-            <p ng-click="navigateTo('group-profile', item)">{{ item.official_title }}</p>
-            <p class="btn-add" ng-click="navigateTo('group-join', item)"></p>
+          <figure ng-click="navigateTo('group-profile', item)">
+            <img ng-src="{{ item.avatar_file_path}}">
+          </figure>
+          <p ng-click="navigateTo('group-profile', item)">{{ item.official_title}}</p>
+          <p class="btn-add" ng-click="navigateTo('group-join', item)"></p>
         </li>
-    </ul>
+      </ul>
 
-    <ul ng-show="newItems.length" class="profiles-list margin-v-10">
+      <ul ng-show="newItems.length" class="profiles-list margin-v-10">
         <li class="title">New Groups</li>
         <li ng-repeat="item in newItems">
-            <figure ng-click="navigateTo('group-profile', item)">
-                <img ng-src="{{ item.avatar_file_path }}">
-            </figure>
-            <p ng-click="navigateTo('group-profile', item)">{{ item.official_title }}</p>
-            <p class="btn-add" ng-click="navigateTo('group-join', item)"></p>
+          <figure ng-click="navigateTo('group-profile', item)">
+            <img ng-src="{{ item.avatar_file_path}}">
+          </figure>
+          <p ng-click="navigateTo('group-profile', item)">{{ item.official_title}}</p>
+          <p class="btn-add" ng-click="navigateTo('group-join', item)"></p>
         </li>
-    </ul>
-</div>
+      </ul>
+    </div>
 
-<ul ng-show="isSearchActive" class="profiles-list margin-10">
-    <li class="title">Results</li>
-    <li ng-repeat="item in searchItems">
+    <ul ng-show="isSearchActive" class="profiles-list margin-10">
+      <li class="title">Results</li>
+      <li ng-repeat="item in searchItems">
         <figure ng-click="navigateTo('group-profile', item)">
-            <img ng-src="{{ item.avatar_file_path }}">
+          <img ng-src="{{ item.avatar_file_path}}">
         </figure>
-        <p ng-click="navigateTo('group-profile', item)">{{ item.official_title }}</p>
+        <p ng-click="navigateTo('group-profile', item)">{{ item.official_title}}</p>
         <p ng-if="item.joined === 0" class="btn-add" ng-click="navigateTo('group-join', item)"></p>
         <p ng-if="item.status === 1" class="btn-remove" ng-click="unjoin(item)"></p>
         <p ng-if="item.status === 0" class="pending-message">pending approval</p>
-    </li>
-</ul>
-<br><br>
-<div class="wrap-center" ng-show="loading"><spinner></spinner></div>
+      </li>
+    </ul>
+  </ion-content>
+</ion-view>

@@ -1,28 +1,40 @@
-angular.module('app.controllers').controller('representatives',function ($scope, representatives, iStorageMemory, topBar, flurry) {
+angular.module('app.controllers').controller('representatives',function ($scope, representatives, flurry, $rootScope) {
 
-  $scope.loading = false;
-  $scope.items = representatives.getRepresentativesGroups();
+  flurry.log('my representatives');
+  
+  $scope.items = [];
+
+  function loadRepresentatives(showSpinner){
+    $scope.items = representatives.getRepresentativesGroups();
+    
+    if (showSpinner) {
+      $scope.$emit('showSpinner');
+    }
+    
+    representatives.load().finally(function () {
+      $scope.items = representatives.getRepresentativesGroups();
+      if (showSpinner) {
+        $scope.$emit('hideSpinner');
+      }
+      $scope.$broadcast('scroll.refreshComplete');
+    });
+  }
+  
   $scope.navigateToProfile = function (item) {
     $scope.path('/representative/' + (item.representative ? item.representative.id : 0) + '/' + item.storage_id);
   };
 
-  topBar
-    .reset()
-    .set('menu', true)
-    .set('title', 'My Representatives')
-  ;
-
-  flurry.log('my representatives');
-
-  if (!$scope.items.length) {
-    $scope.loading = true;
-  }
-
-  representatives.load().finally(function () {
-    $scope.items = representatives.getRepresentativesGroups();
-    $scope.loading = false;
+  $scope.pullToRefresh = function(){
+    loadRepresentatives();
+  };
+  
+  //if this page is opened from menu or there is not data, we should refresh data
+  $scope.$on('$ionicView.enter', function(){
+    if($scope.items.length === 0 || $rootScope.menuClicked){
+      loadRepresentatives(true);
+    }
   });
-
+  
 }).controller('representatives.profile', function ($scope, representatives, topBar, $stateParams, $location, loaded, activity, flurry) {
   
   var id = parseInt($stateParams.id, 10),

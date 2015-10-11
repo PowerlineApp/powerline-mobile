@@ -389,7 +389,7 @@
     }
     .button{
       color: #fff;
-      opacity: 0.7;
+      opacity: 0.8;
       .back-text{
         display: none;
       }
@@ -397,6 +397,10 @@
     .buttons-right{
       .button-icon:before{
         font-size: 28px;
+      }
+      .fa{
+        font-size: 20px;
+        width: 30px;
       }
     }
   }

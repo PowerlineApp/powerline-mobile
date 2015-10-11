@@ -36,6 +36,7 @@ angular.module('app.controllers', []).controller('AppCtrl', function($scope, mai
 }).value('loaded', function (scope, callback) {
   return function () {
     scope.loading = false;
+    scope.$emit('hideSpinner');
     if (_.isFunction(callback)) {
       callback.apply(this, arguments);
     }

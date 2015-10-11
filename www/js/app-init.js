@@ -34,7 +34,8 @@ angular.module('app').run(function ($location, layout, $document, $rootScope,
   $rootScope.$on('$stateChangeSuccess', function (event, toState, toParams, fromState, fromParams) {
     var stateKey = toState.name.substr(4);
     var wrapperClasses = [];
-    var lightClassStates = ['terms', 'forgotPassword', 'registration', 'registrationStep2', 'registrationStep3', 'guide', 'guideConfirm'];
+    var lightClassStates = ['terms', 'forgotPassword', 'registration', 'registrationStep2', 'registrationStep3', 
+              'guide', 'guideConfirm', 'profile2', 'profile3'];
     if (lightClassStates.indexOf(stateKey) !== -1) {
       wrapperClasses.push('light');
     }
@@ -100,19 +101,29 @@ angular.module('app').run(function ($location, layout, $document, $rootScope,
       $window.navigator.notification.alert.apply(null, arguments);
     } else {
       alert(arguments[0]);
+      if(arguments[1]){
+        arguments[1]();
+      }
     }
   };
 
   $rootScope.confirmAction = function (message, title, buttonLabels) {
     var deferred = $q.defer();
-    $window.navigator.notification.confirm(message, function (btn) {
-      if (1 === btn) {
-        deferred.resolve(btn);
-      } else {
-        deferred.reject(btn);
+    if($window.navigator.notification){
+      $window.navigator.notification.confirm(message, function (btn) {
+        if (1 === btn) {
+          deferred.resolve(btn);
+        } else {
+          deferred.reject(btn);
+        }
+        $rootScope.execApply();
+      }, title, buttonLabels);
+    } else {
+      if (confirm(message)) {
+        deferred.resolve();
+        $rootScope.execApply();
       }
-      $rootScope.execApply();
-    }, title, buttonLabels);
+    }
     return deferred.promise;
   };
 

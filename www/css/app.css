@@ -598,7 +598,8 @@ hr {
     padding: 0 0 0 1px;
     top: 9px;
     display: inline-block;
-    width: auto; }
+    width: auto;
+    white-space: nowrap; }
     .text-field-1.item-floating-label .input-label.has-input {
       top: 0;
       font-size: 9px; }
@@ -853,6 +854,14 @@ checkbox {
     top: 12px;
     font-size: 28px;
     color: #fff; }
+
+.bar.bar-search {
+  padding: 0px; }
+  .bar.bar-search .filter {
+    padding-top: 13px;
+    padding-bottom: 12px; }
+    .bar.bar-search .filter .icon {
+      top: 9px; }
 
 .search {
   width: 100%;
@@ -1391,6 +1400,18 @@ select.choice-filter {
       .notifications li.active.news span {
         background-color: #ef2517; }
 
+.has-notifications-bar .notifications {
+  position: fixed;
+  top: 44px; }
+.has-notifications-bar .content {
+  top: 82px; }
+  .has-notifications-bar .content .scroll-refresher {
+    height: 50px; }
+  .has-notifications-bar .content.has-subheader {
+    top: 126px; }
+.has-notifications-bar .bar-subheader {
+  top: 82px; }
+
 /*.top-bar {
 
   position: fixed;
@@ -1732,11 +1753,14 @@ select.choice-filter {
     font-weight: bold; }
   .nav-bar-container .bar-header .button {
     color: #fff;
-    opacity: 0.7; }
+    opacity: 0.8; }
     .nav-bar-container .bar-header .button .back-text {
       display: none; }
   .nav-bar-container .bar-header .buttons-right .button-icon:before {
     font-size: 28px; }
+  .nav-bar-container .bar-header .buttons-right .fa {
+    font-size: 20px;
+    width: 30px; }
 
 .light .nav-bar-container .bar-header {
   background: transparent;
@@ -2913,7 +2937,8 @@ asterisk {
   margin-bottom: 8px;
   width: 100%;
   background: #fff;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3); }
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+  padding: 0px; }
   .tab a {
     display: block;
     width: 50%;
@@ -3458,10 +3483,6 @@ tab-panel {
 .news-feed .content {
   top: 132px; }
 
-.bar-search-page-filter {
-  padding: 0px; }
-  .bar-search-page-filter .filter {
-    padding-top: 13px;
-    padding-bottom: 12px; }
-    .bar-search-page-filter .filter .icon {
-      top: 9px; }
+.button.button-profile-nav {
+  position: absolute;
+  right: 0px; }

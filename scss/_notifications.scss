@@ -1,5 +1,5 @@
 .notifications {
-  height: 38px;
+  height: $notificationsTabHeight;
   width: 100%;
   position: relative;
   z-index: 9;
@@ -82,5 +82,24 @@
       &.news span {background-color: $red;}
     }
 
+  }
+}
+
+.has-notifications-bar{
+  .notifications{
+    position: fixed;
+    top: $mainHeaderHeight;
+  }
+  .content{
+    top: $notificationsTabHeight + $mainHeaderHeight;
+    .scroll-refresher{
+      height: 50px;
+    }
+    &.has-subheader{
+      top: $notificationsTabHeight + $mainHeaderHeight*2;
+    }
+  }
+  .bar-subheader{
+    top: $notificationsTabHeight + $mainHeaderHeight;
   }
 }

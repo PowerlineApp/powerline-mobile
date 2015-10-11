@@ -1,109 +1,114 @@
-<section class="margin-8">
+<ion-view view-title="Powerline" hide-nav-bar="true">
 
-  <section class="profile-header-2">
-    <div class="completion-fill">
-      <i class="icon-user-account"></i>
-      <span>Your profile completeness is: </span> <strong ng-bind="(percent | number) + '%'" style="color: #030366;"></strong>
+  <ion-content class="content has-footer">
+    <section class="margin-8">
+
+      <section class="profile-header-2">
+        <div class="completion-fill">
+          <i class="icon-user-account"></i>
+          <span>Your profile completeness is: </span> <strong ng-bind="(percent | number) + '%'" style="color: #030366;"></strong>
+          <br>
+          <div class="process-wrap">
+            <div class="process" ng-style="{width: (percent | number) + '%' }"></div>
+          </div>
+        </div>
+      </section>
+      <br><br>
+      <h1>Tell us more about yourself.</h1>
       <br>
-      <div class="process-wrap">
-        <div class="process" ng-style="{width: (percent | number) + '%' }"></div>
-      </div>
-    </div>
+      <p class="margin-v-10" style="text-align: center">Information provided is used for anonymous reporting purposes</p>
+      <br>
+      <form name="profileForm" novalidate autocomplete="off">
+        <fieldset class="margin-v-8">
+          <div class="item-floating-label text-field-1"
+               ng-show="view.editMode || data.sex"
+               ng-class="{invalid: profileForm.sex.$invalid && profileForm.$filled}">
+            <span class="input-label">Are you male or female?</span>
+            <i class="icon-field icon-gender"></i>
+            <select ng-model="data.sex" name="sex" ng-options="sex for sex in profileManager.sex" ng-disabled="!view.editMode">
+              <option value=""></option>
+            </select>
+          </div>
+          <div class="item-floating-label text-field-1"
+               ng-show="view.editMode || data.race"
+               ng-class="{invalid: profileForm.race.$invalid && profileForm.$filled}">
+            <span class="input-label">What's your race?</span>
+            <i class="icon-field icon-race"></i>
+            <select ng-model="data.race" name="race" ng-options="race for race in profileManager.races" ng-disabled="!view.editMode">
+              <option value=""></option>
+            </select>
+          </div>
+          <div class="item-floating-label text-field-1"
+               ng-show="view.editMode || data.marital_status"
+               ng-class="{invalid: profileForm.marital_status.$invalid && profileForm.$filled}">
+            <span class="input-label">Are you married?</span>
+            <i class="icon-field icon-married"></i>
+            <select ng-model="data.marital_status" name="marital_status" ng-options="status for status in profileManager.maritalStatuses" ng-disabled="!view.editMode">
+              <option value=""></option>
+            </select>
+          </div>
+        </fieldset>
+        <fieldset class="margin-v-8">
+          <div class="item-floating-label text-field-1"
+               ng-show="view.editMode || data.employment_status"
+               ng-class="{invalid: profileForm.employment_status.$invalid && profileForm.$filled}">
+            <span class="input-label">Are you employed?</span>
+            <i class="icon-field icon-employed"></i>
+            <select ng-model="data.employment_status" name="employment_status" ng-options="employment_status for employment_status in profileManager.employmentStatuses" ng-disabled="!view.editMode">
+              <option value=""></option>
+            </select>
+          </div>
+        </fieldset>
+        <fieldset class="margin-v-8">
+          <div class="item-floating-label text-field-1"
+               ng-show="view.editMode || data.philosophy"
+               ng-class="{invalid: profileForm.philosophy.$invalid && profileForm.$filled}">
+            <span class="input-label">What's your political philosophy?</span>
+            <i class="icon-field icon-philosophy"></i>
+            <select ng-model="data.philosophy" name="philosophy" ng-options="philosophy for philosophy in profileManager.philosophies" ng-disabled="!view.editMode">
+              <option value=""></option>
+            </select>
+          </div>
+          <div class="item-floating-label text-field-1"
+               ng-show="view.editMode || data.party"
+               ng-class="{invalid: profileForm.party.$invalid && profileForm.$filled}">
+            <span class="input-label">What's your political party?</span>
+            <i class="icon-field icon-party"></i>
+            <select ng-model="data.party" name="party" ng-options="party for party in profileManager.parties" ng-disabled="!view.editMode">
+              <option value=""></option>
+            </select>
+          </div>
+          <div class="item-floating-label text-field-1"
+               ng-show="view.editMode || data.donor"
+               ng-class="{invalid: profileForm.donor.$invalid && profileForm.$filled}">
+            <span class="input-label">Have you donated to campaigns or causes before?</span>
+            <i class="icon-field icon-donor"></i>
+            <select ng-model="data.donor" name="donor" ng-options="donor for donor in profileManager.donors" ng-disabled="!view.editMode">
+              <option value=""></option>
+            </select>
+          </div>
+          <div class="item-floating-label text-field-1"
+               ng-show="view.editMode || data.registration"
+               ng-class="{invalid: profileForm.registration.$invalid && profileForm.$filled}">
+            <span class="input-label">Are you a registered voter?</span>
+            <i class="icon-field icon-vote"></i>
+            <select ng-model="data.registration" name="registration" ng-options="registration for registration in profileManager.registrations" ng-disabled="!view.editMode">
+              <option value=""></option>
+            </select>
+          </div>
+        </fieldset>
+        <input type="button" ng-click="send(profileForm)" id="submitter" class="ng-hide">
+      </form>
+    </section>
+
+    <section class="screen-process">
+      <i class="step active"></i>
+      <i class="step"></i>
+    </section>
+
+  </ion-content>
+  
+  <section class="footer-fixed" style="text-align: center">
+    <button onclick="angular.element('form[name=profileForm] #submitter').trigger('click')" class="btn-text-footer">Continue</button>
   </section>
-  <br><br>
-  <h1>Tell us more about yourself.</h1>
-  <br>
-  <p class="margin-v-10" style="text-align: center">Information provided is used for anonymous reporting purposes</p>
-  <br>
-  <form name="profileForm" novalidate autocomplete="off">
-    <fieldset class="margin-v-8">
-      <div class="item-floating-label text-field-1"
-           ng-show="view.editMode || data.sex"
-           ng-class="{invalid: profileForm.sex.$invalid && profileForm.$filled}">
-        <span class="input-label">Are you male or female?</span>
-        <i class="icon-field icon-gender"></i>
-        <select ng-model="data.sex" name="sex" ng-options="sex for sex in profileManager.sex" ng-disabled="!view.editMode">
-          <option value=""></option>
-        </select>
-      </div>
-      <div class="item-floating-label text-field-1"
-           ng-show="view.editMode || data.race"
-           ng-class="{invalid: profileForm.race.$invalid && profileForm.$filled}">
-        <span class="input-label">What's your race?</span>
-        <i class="icon-field icon-race"></i>
-        <select ng-model="data.race" name="race" ng-options="race for race in profileManager.races" ng-disabled="!view.editMode">
-          <option value=""></option>
-        </select>
-      </div>
-      <div class="item-floating-label text-field-1"
-           ng-show="view.editMode || data.marital_status"
-           ng-class="{invalid: profileForm.marital_status.$invalid && profileForm.$filled}">
-        <span class="input-label">Are you married?</span>
-        <i class="icon-field icon-married"></i>
-        <select ng-model="data.marital_status" name="marital_status" ng-options="status for status in profileManager.maritalStatuses" ng-disabled="!view.editMode">
-          <option value=""></option>
-        </select>
-      </div>
-    </fieldset>
-    <fieldset class="margin-v-8">
-      <div class="item-floating-label text-field-1"
-           ng-show="view.editMode || data.employment_status"
-           ng-class="{invalid: profileForm.employment_status.$invalid && profileForm.$filled}">
-        <span class="input-label">Are you employed?</span>
-        <i class="icon-field icon-employed"></i>
-        <select ng-model="data.employment_status" name="employment_status" ng-options="employment_status for employment_status in profileManager.employmentStatuses" ng-disabled="!view.editMode">
-          <option value=""></option>
-        </select>
-      </div>
-    </fieldset>
-    <fieldset class="margin-v-8">
-      <div class="item-floating-label text-field-1"
-           ng-show="view.editMode || data.philosophy"
-           ng-class="{invalid: profileForm.philosophy.$invalid && profileForm.$filled}">
-        <span class="input-label">What's your political philosophy?</span>
-        <i class="icon-field icon-philosophy"></i>
-        <select ng-model="data.philosophy" name="philosophy" ng-options="philosophy for philosophy in profileManager.philosophies" ng-disabled="!view.editMode">
-          <option value=""></option>
-        </select>
-      </div>
-      <div class="item-floating-label text-field-1"
-           ng-show="view.editMode || data.party"
-           ng-class="{invalid: profileForm.party.$invalid && profileForm.$filled}">
-        <span class="input-label">What's your political party?</span>
-        <i class="icon-field icon-party"></i>
-        <select ng-model="data.party" name="party" ng-options="party for party in profileManager.parties" ng-disabled="!view.editMode">
-          <option value=""></option>
-        </select>
-      </div>
-      <div class="item-floating-label text-field-1"
-           ng-show="view.editMode || data.donor"
-           ng-class="{invalid: profileForm.donor.$invalid && profileForm.$filled}">
-        <span class="input-label">Have you donated to campaigns or causes before?</span>
-        <i class="icon-field icon-donor"></i>
-        <select ng-model="data.donor" name="donor" ng-options="donor for donor in profileManager.donors" ng-disabled="!view.editMode">
-          <option value=""></option>
-        </select>
-      </div>
-      <div class="item-floating-label text-field-1"
-           ng-show="view.editMode || data.registration"
-           ng-class="{invalid: profileForm.registration.$invalid && profileForm.$filled}">
-        <span class="input-label">Are you a registered voter?</span>
-        <i class="icon-field icon-vote"></i>
-        <select ng-model="data.registration" name="registration" ng-options="registration for registration in profileManager.registrations" ng-disabled="!view.editMode">
-          <option value=""></option>
-        </select>
-      </div>
-    </fieldset>
-  </form>
-</section>
-
-<section class="screen-process" style="margin-bottom: 60px;">
-  <i class="step active"></i>
-  <i class="step"></i>
-</section>
-
-<section class="footer-fixed" style="text-align: center">
-  <button ng-click="send()" class="btn-text-footer">Continue</button>
-</section>
-
-<div class="wrap-center wrap-dark" ng-show="loading"><spinner></spinner></div>
+</ion-view>

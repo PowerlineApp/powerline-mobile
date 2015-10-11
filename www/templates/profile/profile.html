@@ -1,21 +1,31 @@
-<section class="margin-8">
-    <form name="profileForm" novalidate ng-class="{'hide-labels': !view.editMode}" autocomplete="off">
+<ion-view view-title="Profile" hide-back-button="true">
+  <ion-nav-buttons side="left">
+    <button menu-toggle="left" class="button button-icon icon ion-navicon ng-hide" ng-show="profile.is_registration_complete"></button>
+  </ion-nav-buttons>
+  <ion-nav-buttons side="right">
+    <button class="button button-clear button-profile-nav" ng-if="!view.editMode" ng-click="view.editMode = true;"><i class="fa fa-pencil"></i></button>
+    <button class="button button-clear button-profile-nav" ng-if="view.editMode" 
+            onclick="angular.element('form[name=profileForm] #submitter').trigger('click')"><i class="fa fa-save"></i></button>
+  </ion-nav-buttons>
+
+  <ion-content class="content">
+    <section class="margin-8">
+      <form name="profileForm" novalidate ng-class="{'hide-labels': !view.editMode}" autocomplete="off">
         <section class="profile-header">
           <div class="avatar" ng-click="view.editMode ? pickPicture() : null">
             <i class="icon-photo"></i>
-            <img ng-src="{{ profile.avatar_src_prefix }}{{ profile.avatar_file_name }}" ng-show="profile.avatar_file_name"/>
+            <img ng-src="{{ profile.avatar_src_prefix}}{{ profile.avatar_file_name}}" ng-show="profile.avatar_file_name"/>
           </div>
-          <p class="title">{{ data.first_name }} {{ data.last_name }}</p>
+          <p class="title">{{ data.first_name}} {{ data.last_name}}</p>
 
           <p class="slogan" ng-bind="data.slogan" ng-hide="view.editMode"></p>
-          <p ng-hide="view.editMode" style="clear: both;"><strong ng-show="data.bio">Bio:</strong> {{ data.bio }}</p>
+          <p ng-hide="view.editMode" style="clear: both;"><strong ng-show="data.bio">Bio:</strong> {{ data.bio}}</p>
 
           <div class="editable-field" ng-show="view.editMode">
             <textarea name="slogan"
                       placeholder="Slogan"
                       ng-model="data.slogan"
-                      ng-show="view.editMode || data.slogan"
-                      ></textarea>
+                      ng-show="view.editMode || data.slogan"></textarea>
           </div>
 
           <div class="editable-field" ng-show="view.editMode">
@@ -32,37 +42,37 @@
 
         <section ng-show="!loading" class="margin-v-8">
 
-        <fieldset class="groups-2">
-          <div class="group-2" i-groups="0">
-            <h3 ng-click="toggle()" >
-              Interests
-              <i class="icon-group icon-interests"></i>
-              <i class="control"></i>
-            </h3>
-            <div i-toggle-elem style="display: none; margin-top: 0;">
-              <div class="interests active" ng-show="data.interests.length">
-                <span ng-repeat="item in data.interests" class="active"
-                      ng-click="view.editMode ? removeInterest(item) : null">
-                  {{ item }}
-                  <i class="remove" ng-show="view.editMode"></i>
-                </span>
-                <input type="hidden" ng-model="data.interests" name="interests">
-              </div>
-              <div class="interests" ng-show="view.editMode">
-                <span ng-repeat="item in profileManager.interests | filter: nonSelectedInterests"
-                      ng-click="data.interests.push(item)">{{ item }}</span>
+          <fieldset class="groups-2">
+            <div class="group-2" i-groups="0">
+              <h3 ng-click="toggle()" >
+                Interests
+                <i class="icon-group icon-interests"></i>
+                <i class="control"></i>
+              </h3>
+              <div i-toggle-elem style="display: none; margin-top: 0;">
+                <div class="interests active" ng-show="data.interests.length">
+                  <span ng-repeat="item in data.interests" class="active"
+                        ng-click="view.editMode ? removeInterest(item) : null">
+                    {{ item}}
+                    <i class="remove" ng-show="view.editMode"></i>
+                  </span>
+                  <input type="hidden" ng-model="data.interests" name="interests">
+                </div>
+                <div class="interests" ng-show="view.editMode">
+                  <span ng-repeat="item in profileManager.interests| filter: nonSelectedInterests"
+                        ng-click="data.interests.push(item)">{{ item}}</span>
+                </div>
               </div>
             </div>
-          </div>
-        </fieldset>
-        <fieldset class="groups-2">
-          <div class="group-2" i-groups="0">
-            <h3 ng-click="toggle()" >
-              Account Details
-              <i class="icon-group icon-account"></i>
-              <i class="control"></i>
-            </h3>
-            <div i-toggle-elem style="display: none">
+          </fieldset>
+          <fieldset class="groups-2">
+            <div class="group-2" i-groups="0">
+              <h3 ng-click="toggle()" >
+                Account Details
+                <i class="icon-group icon-account"></i>
+                <i class="control"></i>
+              </h3>
+              <div i-toggle-elem style="display: none">
                 <div class="item-floating-label text-field-1"
                      ng-show="view.editMode || data.first_name"
                      ng-class="{invalid: profileForm.first_name.$invalid && profileForm.$filled}">
@@ -98,192 +108,194 @@
                   <i class="icon-field icon-protected"></i>
                   <input type="password"  class="password" ng-model="data.confirm" i-repeat="plain_password" name="confirm" ng-disabled="!view.editMode"/>
                 </div>
+              </div>
             </div>
-          </div>
-        </fieldset>
+          </fieldset>
 
 
-      <fieldset class="groups-2">
-        <div class="group-2" i-groups="0">
-          <h3 ng-click="toggle()" >
-            Contact
-            <i class="icon-group icon-contact"></i>
-            <i class="control"></i>
-          </h3>
-          <div i-toggle-elem style="display: none">
-            <div class="item-floating-label text-field-1"
-                 ng-show="view.editMode || data.address1"
-                 ng-class="{invalid: profileForm.address1.$invalid && profileForm.$filled}">
-              <span class="input-label">Street Address<asterisk>*</asterisk></span>
-              <input type="text" ng-model="data.address1" required name="address1" i-address="geocode" placeholder="" ng-disabled="!view.editMode"/>
+          <fieldset class="groups-2">
+            <div class="group-2" i-groups="0">
+              <h3 ng-click="toggle()" >
+                Contact
+                <i class="icon-group icon-contact"></i>
+                <i class="control"></i>
+              </h3>
+              <div i-toggle-elem style="display: none">
+                <div class="item-floating-label text-field-1"
+                     ng-show="view.editMode || data.address1"
+                     ng-class="{invalid: profileForm.address1.$invalid && profileForm.$filled}">
+                  <span class="input-label">Street Address<asterisk>*</asterisk></span>
+                  <input type="text" ng-model="data.address1" required name="address1" i-address="geocode" placeholder="" ng-disabled="!view.editMode"/>
+                </div>
+                <div class="item-floating-label text-field-1"
+                     ng-show="view.editMode || data.address2"
+                     ng-class="{invalid: profileForm.address2.$invalid && profileForm.$filled}">
+                  <span class="input-label">Apt/Suite #</span>
+                  <input type="text" ng-model="data.address2" name="address2" ng-disabled="!view.editMode"/>
+                </div>
+                <div class="item-floating-label text-field-1"
+                     ng-show="view.editMode || data.zip"
+                     ng-class="{invalid: profileForm.zip.$invalid && profileForm.$filled}">
+                  <span class="input-label">Zipcode<asterisk>*</asterisk></span>
+                  <input type="text" ng-model="data.zip" required name="zip" ng-disabled="!view.editMode"/>
+                </div>
+                <div class="item-floating-label text-field-1"
+                     ng-show="view.editMode || data.city"
+                     ng-class="{invalid: profileForm.city.$invalid && profileForm.$filled}">
+                  <span class="input-label">City<asterisk>*</asterisk></span>
+                  <input type="text"  ng-model="data.city" required name="city" i-address="(cities)" placeholder="" ng-disabled="!view.editMode"/>
+                </div>
+                <div class="item-floating-label text-field-1"
+                     ng-show="view.editMode || data.state"
+                     ng-class="{invalid: profileForm.state.$invalid && profileForm.$filled}">
+                  <span class="input-label">State<asterisk>*</asterisk></span>
+                  <input type="text" ng-model="data.state" name="state" required i-address="(regions)" placeholder="" ng-disabled="!view.editMode">
+                </div>
+                <div class="item-floating-label text-field-1"
+                     ng-show="view.editMode || data.country"
+                     ng-class="{invalid: profileForm.country.$invalid && profileForm.$filled}">
+                  <span class="input-label">Country<asterisk>*</asterisk></span>
+                  <input type="text" ng-model="data.country" name="country" required ng-disabled="!view.editMode">
+                </div>
+                <div class="item-floating-label text-field-1"
+                     ng-show="view.editMode || data.email"
+                     ng-class="{invalid: profileForm.email.$invalid && profileForm.$filled}">
+                  <span class="input-label">Email<asterisk>*</asterisk></span>
+                  <i class="icon-field icon-email"></i>
+                  <input type="email" ng-model="data.email" name="email" required ng-disabled="!view.editMode"/>
+                </div>
+                <div class="item-floating-label text-field-1"
+                     ng-show="view.editMode || data.phone"
+                     ng-class="{invalid: profileForm.phone.$invalid && profileForm.$filled}">
+                  <span class="input-label">Phone<asterisk>*</asterisk></span>
+                  <i class="icon-field icon-phone"></i>
+                  <input type="text" ng-model="data.phone" name="phone" required ng-disabled="!view.editMode"/>
+                </div>
+                <p class="comment-message">
+                  All information collected below is used for anonymous, aggregate reporting purposes. Leaders never get your identity linked with any of this information when they do see reports.
+                </p>
+              </div>
             </div>
-            <div class="item-floating-label text-field-1"
-                 ng-show="view.editMode || data.address2"
-                 ng-class="{invalid: profileForm.address2.$invalid && profileForm.$filled}">
-              <span class="input-label">Apt/Suite #</span>
-              <input type="text" ng-model="data.address2" name="address2" ng-disabled="!view.editMode"/>
-            </div>
-            <div class="item-floating-label text-field-1"
-                 ng-show="view.editMode || data.zip"
-                 ng-class="{invalid: profileForm.zip.$invalid && profileForm.$filled}">
-              <span class="input-label">Zipcode<asterisk>*</asterisk></span>
-              <input type="text" ng-model="data.zip" required name="zip" ng-disabled="!view.editMode"/>
-            </div>
-            <div class="item-floating-label text-field-1"
-                 ng-show="view.editMode || data.city"
-                 ng-class="{invalid: profileForm.city.$invalid && profileForm.$filled}">
-              <span class="input-label">City<asterisk>*</asterisk></span>
-              <input type="text"  ng-model="data.city" required name="city" i-address="(cities)" placeholder="" ng-disabled="!view.editMode"/>
-            </div>
-            <div class="item-floating-label text-field-1"
-                 ng-show="view.editMode || data.state"
-                 ng-class="{invalid: profileForm.state.$invalid && profileForm.$filled}">
-              <span class="input-label">State<asterisk>*</asterisk></span>
-              <input type="text" ng-model="data.state" name="state" required i-address="(regions)" placeholder="" ng-disabled="!view.editMode">
-            </div>
-            <div class="item-floating-label text-field-1"
-                 ng-show="view.editMode || data.country"
-                 ng-class="{invalid: profileForm.country.$invalid && profileForm.$filled}">
-              <span class="input-label">Country<asterisk>*</asterisk></span>
-              <input type="text" ng-model="data.country" name="country" required ng-disabled="!view.editMode">
-            </div>
-            <div class="item-floating-label text-field-1"
-                 ng-show="view.editMode || data.email"
-                 ng-class="{invalid: profileForm.email.$invalid && profileForm.$filled}">
-              <span class="input-label">Email<asterisk>*</asterisk></span>
-              <i class="icon-field icon-email"></i>
-              <input type="email" ng-model="data.email" name="email" required ng-disabled="!view.editMode"/>
-            </div>
-            <div class="item-floating-label text-field-1"
-                 ng-show="view.editMode || data.phone"
-                 ng-class="{invalid: profileForm.phone.$invalid && profileForm.$filled}">
-              <span class="input-label">Phone<asterisk>*</asterisk></span>
-              <i class="icon-field icon-phone"></i>
-              <input type="text" ng-model="data.phone" name="phone" required ng-disabled="!view.editMode"/>
-            </div>
-            <p class="comment-message">
-              All information collected below is used for anonymous, aggregate reporting purposes. Leaders never get your identity linked with any of this information when they do see reports.
-            </p>
-          </div>
-        </div>
-      </fieldset>
+          </fieldset>
 
-      <fieldset class="groups-2">
-        <div class="group-2" i-groups="0">
-          <h3 ng-click="toggle()" >
-            Personal
-            <i class="icon-group icon-personal"></i>
-            <i class="control"></i>
-          </h3>
-          <div i-toggle-elem style="display: none">
-            <div class="item-floating-label text-field-1"
-                 ng-show="view.editMode || data.birth"
-                 ng-class="{invalid: profileForm.birth.$invalid && profileForm.$filled}">
-              <span class="input-label" ng-class="{'has-input': data.birth}">When were you born?</span>
-              <i class="icon-field icon-date"></i>
-              <input type="idate" ng-model="data.birth" i-date name="birth" ng-disabled="!view.editMode"/>
+          <fieldset class="groups-2">
+            <div class="group-2" i-groups="0">
+              <h3 ng-click="toggle()" >
+                Personal
+                <i class="icon-group icon-personal"></i>
+                <i class="control"></i>
+              </h3>
+              <div i-toggle-elem style="display: none">
+                <div class="item-floating-label text-field-1"
+                     ng-show="view.editMode || data.birth"
+                     ng-class="{invalid: profileForm.birth.$invalid && profileForm.$filled}">
+                  <span class="input-label" ng-class="{'has-input': data.birth}">When were you born?</span>
+                  <i class="icon-field icon-date"></i>
+                  <input type="idate" ng-model="data.birth" i-date name="birth" ng-disabled="!view.editMode"/>
+                </div>
+                <div class="item-floating-label text-field-1"
+                     ng-show="view.editMode || data.sex"
+                     ng-class="{invalid: profileForm.sex.$invalid && profileForm.$filled}">
+                  <span class="input-label">Are you male or female?</span>
+                  <i class="icon-field icon-gender"></i>
+                  <select ng-model="data.sex" name="sex" ng-options="sex for sex in profileManager.sex" ng-disabled="!view.editMode">
+                    <option value=""></option>
+                  </select>
+                </div>
+                <div class="item-floating-label text-field-1"
+                     ng-show="view.editMode || data.race"
+                     ng-class="{invalid: profileForm.race.$invalid && profileForm.$filled}">
+                  <span class="input-label">What's your race?</span>
+                  <i class="icon-field icon-race"></i>
+                  <select ng-model="data.race" name="race" ng-options="race for race in profileManager.races" ng-disabled="!view.editMode">
+                    <option value=""></option>
+                  </select>
+                </div>
+                <div class="item-floating-label text-field-1"
+                     ng-show="view.editMode || data.marital_status"
+                     ng-class="{invalid: profileForm.marital_status.$invalid && profileForm.$filled}">
+                  <span class="input-label">Are you married?</span>
+                  <i class="icon-field icon-married"></i>
+                  <select ng-model="data.marital_status" name="marital_status" ng-options="status for status in profileManager.maritalStatuses" ng-disabled="!view.editMode">
+                    <option value=""></option>
+                  </select>
+                </div>
+              </div>
             </div>
-            <div class="item-floating-label text-field-1"
-                 ng-show="view.editMode || data.sex"
-                 ng-class="{invalid: profileForm.sex.$invalid && profileForm.$filled}">
-              <span class="input-label">Are you male or female?</span>
-              <i class="icon-field icon-gender"></i>
-              <select ng-model="data.sex" name="sex" ng-options="sex for sex in profileManager.sex" ng-disabled="!view.editMode">
-                <option value=""></option>
-              </select>
-            </div>
-            <div class="item-floating-label text-field-1"
-                 ng-show="view.editMode || data.race"
-                 ng-class="{invalid: profileForm.race.$invalid && profileForm.$filled}">
-              <span class="input-label">What's your race?</span>
-              <i class="icon-field icon-race"></i>
-              <select ng-model="data.race" name="race" ng-options="race for race in profileManager.races" ng-disabled="!view.editMode">
-                <option value=""></option>
-              </select>
-            </div>
-            <div class="item-floating-label text-field-1"
-                 ng-show="view.editMode || data.marital_status"
-                 ng-class="{invalid: profileForm.marital_status.$invalid && profileForm.$filled}">
-              <span class="input-label">Are you married?</span>
-              <i class="icon-field icon-married"></i>
-              <select ng-model="data.marital_status" name="marital_status" ng-options="status for status in profileManager.maritalStatuses" ng-disabled="!view.editMode">
-                <option value=""></option>
-              </select>
-            </div>
-          </div>
-        </div>
-      </fieldset>
+          </fieldset>
 
-      <fieldset class="groups-2">
-        <div class="group-2" i-groups="0">
-          <h3 ng-click="toggle()" >
-            Employment & Education
-            <i class="icon-group icon-employment"></i>
-            <i class="control"></i>
-          </h3>
-          <div i-toggle-elem style="display: none">
-            <div class="item-floating-label text-field-1"
-                 ng-show="view.editMode || data.employment_status"
-                 ng-class="{invalid: profileForm.employment_status.$invalid && profileForm.$filled}">
-              <span class="input-label">Are you employed?</span>
-              <i class="icon-field icon-employed"></i>
-              <select ng-model="data.employment_status" name="employment_status" ng-options="employment_status for employment_status in profileManager.employmentStatuses" ng-disabled="!view.editMode">
-                <option value=""></option>
-              </select>
+          <fieldset class="groups-2">
+            <div class="group-2" i-groups="0">
+              <h3 ng-click="toggle()" >
+                Employment & Education
+                <i class="icon-group icon-employment"></i>
+                <i class="control"></i>
+              </h3>
+              <div i-toggle-elem style="display: none">
+                <div class="item-floating-label text-field-1"
+                     ng-show="view.editMode || data.employment_status"
+                     ng-class="{invalid: profileForm.employment_status.$invalid && profileForm.$filled}">
+                  <span class="input-label">Are you employed?</span>
+                  <i class="icon-field icon-employed"></i>
+                  <select ng-model="data.employment_status" name="employment_status" ng-options="employment_status for employment_status in profileManager.employmentStatuses" ng-disabled="!view.editMode">
+                    <option value=""></option>
+                  </select>
+                </div>
+              </div>
             </div>
-          </div>
-        </div>
-      </fieldset>
+          </fieldset>
 
-      <fieldset class="groups-2">
-        <div class="group-2" i-groups="0">
-          <h3 ng-click="toggle()" >
-            Cultural Background
-            <i class="icon-group icon-cultural"></i>
-            <i class="control"></i>
-          </h3>
-          <div i-toggle-elem style="display: none">
-            <div class="item-floating-label text-field-1"
-                 ng-show="view.editMode || data.philosophy"
-                 ng-class="{invalid: profileForm.philosophy.$invalid && profileForm.$filled}">
-              <span class="input-label">What's your political philosophy?</span>
-              <i class="icon-field icon-philosophy"></i>
-              <select ng-model="data.philosophy" name="philosophy" ng-options="philosophy for philosophy in profileManager.philosophies" ng-disabled="!view.editMode">
-                <option value=""></option>
-              </select>
+          <fieldset class="groups-2">
+            <div class="group-2" i-groups="0">
+              <h3 ng-click="toggle()" >
+                Cultural Background
+                <i class="icon-group icon-cultural"></i>
+                <i class="control"></i>
+              </h3>
+              <div i-toggle-elem style="display: none">
+                <div class="item-floating-label text-field-1"
+                     ng-show="view.editMode || data.philosophy"
+                     ng-class="{invalid: profileForm.philosophy.$invalid && profileForm.$filled}">
+                  <span class="input-label">What's your political philosophy?</span>
+                  <i class="icon-field icon-philosophy"></i>
+                  <select ng-model="data.philosophy" name="philosophy" ng-options="philosophy for philosophy in profileManager.philosophies" ng-disabled="!view.editMode">
+                    <option value=""></option>
+                  </select>
+                </div>
+                <div class="item-floating-label text-field-1"
+                     ng-show="view.editMode || data.party"
+                     ng-class="{invalid: profileForm.party.$invalid && profileForm.$filled}">
+                  <span class="input-label">What's your political party?</span>
+                  <i class="icon-field icon-party"></i>
+                  <select ng-model="data.party" name="party" ng-options="party for party in profileManager.parties" ng-disabled="!view.editMode">
+                    <option value=""></option>
+                  </select>
+                </div>
+                <div class="item-floating-label text-field-1"
+                     ng-show="view.editMode || data.donor"
+                     ng-class="{invalid: profileForm.donor.$invalid && profileForm.$filled}">
+                  <span class="input-label">Have you donated to campaigns or causes before?</span>
+                  <i class="icon-field icon-donor"></i>
+                  <select ng-model="data.donor" name="donor" ng-options="donor for donor in profileManager.donors" ng-disabled="!view.editMode">
+                    <option value=""></option>
+                  </select>
+                </div>
+                <div class="item-floating-label text-field-1"
+                     ng-show="view.editMode || data.registration"
+                     ng-class="{invalid: profileForm.registration.$invalid && profileForm.$filled}">
+                  <span class="input-label">Are you a registered voter?</span>
+                  <i class="icon-field icon-vote"></i>
+                  <select ng-model="data.registration" name="registration" ng-options="registration for registration in profileManager.registrations" ng-disabled="!view.editMode">
+                    <option value=""></option>
+                  </select>
+                </div>
+              </div>
             </div>
-            <div class="item-floating-label text-field-1"
-                 ng-show="view.editMode || data.party"
-                 ng-class="{invalid: profileForm.party.$invalid && profileForm.$filled}">
-              <span class="input-label">What's your political party?</span>
-              <i class="icon-field icon-party"></i>
-              <select ng-model="data.party" name="party" ng-options="party for party in profileManager.parties" ng-disabled="!view.editMode">
-                <option value=""></option>
-              </select>
-            </div>
-            <div class="item-floating-label text-field-1"
-                 ng-show="view.editMode || data.donor"
-                 ng-class="{invalid: profileForm.donor.$invalid && profileForm.$filled}">
-              <span class="input-label">Have you donated to campaigns or causes before?</span>
-              <i class="icon-field icon-donor"></i>
-              <select ng-model="data.donor" name="donor" ng-options="donor for donor in profileManager.donors" ng-disabled="!view.editMode">
-                <option value=""></option>
-              </select>
-            </div>
-            <div class="item-floating-label text-field-1"
-                 ng-show="view.editMode || data.registration"
-                 ng-class="{invalid: profileForm.registration.$invalid && profileForm.$filled}">
-              <span class="input-label">Are you a registered voter?</span>
-              <i class="icon-field icon-vote"></i>
-              <select ng-model="data.registration" name="registration" ng-options="registration for registration in profileManager.registrations" ng-disabled="!view.editMode">
-                <option value=""></option>
-              </select>
-            </div>
-          </div>
-        </div>
-      </fieldset>
-      </section>
-    </form>
-</section>
+          </fieldset>
+        </section>
+        <input type="button" ng-click="send(profileForm)" id="submitter" class="ng-hide">
+      </form>
+    </section>
 
-<div class="wrap-center wrap-dark" ng-show="loading"><spinner></spinner></div>
+  </ion-content>
+</ion-view>

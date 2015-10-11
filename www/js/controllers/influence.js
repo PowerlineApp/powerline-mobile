@@ -1,6 +1,5 @@
 angular.module('app.controllers').controller('influence.profile',
-  function ($scope, topBar, users, follows, $stateParams, loaded, $state,
-            profile, flurry, activity) {
+  function ($scope, users, follows, $stateParams, $state, profile, flurry, activity, $rootScope) {
 
   var id = parseInt($stateParams.id, 10);
 
@@ -21,11 +20,18 @@ angular.module('app.controllers').controller('influence.profile',
   $scope.changeStatus = function (status) {
     if ('unfollow' === status) {
       $scope.confirmAction('Are you sure?').then(function () {
-        $scope.follow[status]().then($state.reload, $state.reload);
+        $scope.follow[status]().then(function(){
+        $rootScope.$broadcast('influences-updated');
+        $state.reload();
+      }, $state.reload);
         flurry.log('unfollow user', {id: id});
+        $rootScope.$broadcast('influences-updated');
       });
     } else {
-      $scope.follow[status]().then($state.reload, $state.reload);
+      $scope.follow[status]().then(function(){
+        $rootScope.$broadcast('influences-updated');
+        $state.reload();
+      }, $state.reload);
       flurry.log('follow user', {id: id});
     }
   };
@@ -36,41 +42,54 @@ angular.module('app.controllers').controller('influence.profile',
     });
   }
 
-}).controller('influences',function ($scope, topBar, $location, influencesCD, follows, flurry) {
-
-  topBar
-    .reset()
-    .set('menu', true)
-    .set('title', 'My Influences')
-    .set('right', {
-      btnClass: 'btn-plus',
-      click: function () {
-        $location.path('/influences/add');
-      }
-    })
-  ;
+}).controller('influences',function ($scope, $location, influencesCD, follows, flurry, $rootScope) {
 
   flurry.log('my influences');
 
+  function loadInfluences(showSpinner){
+    if(showSpinner){
+      $scope.$emit('showSpinner');
+    }
+    follows.load().then(function () {
+      $scope.$broadcast('follows-loaded');
+      $scope.$broadcast('scroll.refreshComplete');
+      if(showSpinner){
+        $scope.$emit('hideSpinner');
+      }
+    }, function () {
+      $scope.$broadcast('scroll.refreshComplete');
+      if(showSpinner){
+        $scope.$emit('hideSpinner');
+      }
+    });
+  }
+
   $scope.view = influencesCD.view;
   $scope.isEmpty = function () {
-    return !$scope.loading && !follows.size();
+    return !follows.size();
   };
 
-  $scope.loading = true;
-  follows.load().then(function () {
-    $scope.$broadcast('follows-loaded');
-    $scope.loading = false;
-  }, function () {
-    $scope.loading = false;
-  });
+  $scope.pullToRefresh = function(){
+    loadInfluences();
+  };
 
   $scope.$watch(function () {
     return influencesCD.view;
   }, function () {
     $scope.view = influencesCD.view;
   });
-
+  
+  $rootScope.$on('influences-updated', function(){
+    loadInfluences(true);
+  });
+  
+  //if this page is opened from menu or there is not data, we should refresh data
+  $scope.$on('$ionicView.enter', function(){
+    if($scope.isEmpty() || $rootScope.menuClicked){
+      loadInfluences(true);
+    }
+  });
+  
 }).controller('influences.tabs',function ($scope, influencesCD, facebook, profile) {
 
   var user = profile.get();
@@ -122,23 +141,17 @@ angular.module('app.controllers').controller('influence.profile',
     });
   };
 
-}).controller('influences.search',function ($scope, topBar, influence, facebook, profile, influencesCD, flurry) {
+}).controller('influences.search',function ($scope, influence, facebook, profile, influencesCD, flurry, $rootScope) {
 
-  topBar
-    .reset()
-    .set('back', true)
-    .set('title', 'My Influences')
-  ;
   var user = profile.get();
-  $scope.loading = false;
-
+  
   if (user && user.facebook_id && facebook.getFriends().length) {
-    $scope.loading = true;
+    $scope.$emit('showSpinner');
     influence.loadSuggested(facebook.getFriends()).then(function (suggested) {
-      $scope.loading = false;
+      $scope.$emit('hideSpinner');
       $scope.suggested = suggested;
     }, function () {
-      $scope.loading = false;
+      $scope.$emit('hideSpinner');
     });
   }
 
@@ -162,46 +175,52 @@ angular.module('app.controllers').controller('influence.profile',
   };
 
   $scope.follow = function (item) {
-    $scope.loading = true;
+    $scope.$emit('showSpinner');
     item.$changeStatus({status: 'follow'}, loaded, loaded);
     $scope.results = _($scope.results).without(item);
     flurry.log('follow user', {id: item.id});
   };
 
   $scope.facebookFollow = function (item) {
-    $scope.loading = true;
+    $scope.$emit('showSpinner');
     item.$changeStatus({status: 'follow'}, function () {
       influence.loadSuggested(facebook.getFriends()).then(function (suggested) {
-        $scope.loading = false;
+        $scope.$emit('hideSpinner');
         $scope.suggested = suggested;
       }, loaded);
     }, loaded);
   };
 
   function load() {
-    $scope.loading = true;
+    $scope.$emit('showSpinner');
     influence.search($scope.data.query, $scope.data.page, $scope.data.max_count).then(function (results) {
       _(results).each(function (item) {
         $scope.results.push(item);
       });
-      $scope.loading = false;
+      $scope.$emit('hideSpinner');
     }, loaded);
   }
 
   function loaded() {
-    $scope.loading = false;
+    $scope.$emit('hideSpinner');
     influencesCD.view = 'following';
+    $rootScope.$broadcast('influences-updated');
     $scope.path('/influences');
   }
 
-}).controller('influences.notifications', function ($scope, follows, topBar, layout, flurry, $q, socialActivity, socialActivityTabManager, socialActivityHandler) {
-
-  topBar.setHomeBar();
-  layout.setContainerClass('followers-notifications');
+}).controller('influences.notifications', function ($scope, $state, layout, flurry, $q, socialActivity, socialActivityTabManager, socialActivityHandler) {
 
   flurry.log('social feed');
+  
+  function loadNotifications(){
+    socialActivityTabManager.getCurrentTab().setShownAt();
+    socialActivityTabManager.getState().reload = false;
+    socialActivity.load().finally(function(){
+      $scope.$emit('hideSpinner');
+      $scope.$broadcast('scroll.refreshComplete');
+    });
+  }
 
-  $scope.loading = true;
   $scope.tabYou = socialActivityTabManager.getTab(0);
   $scope.tabFollowing = socialActivityTabManager.getTab(1);
   $scope.socialActivityHandler = socialActivityHandler;
@@ -211,25 +230,19 @@ angular.module('app.controllers').controller('influence.profile',
     socialActivityTabManager.getState().setup();
   };
 
-  var promises = [];
 
   if (socialActivityTabManager.getState().reload) {
-    socialActivityTabManager.getCurrentTab().setShownAt();
-    socialActivityTabManager.getState().reload = false;
-    promises.push(socialActivity.load());
+    $scope.$emit('showSpinner');
+    loadNotifications();
   }
 
   $scope.currentTab = socialActivityTabManager.getCurrentTab();
 
-  $q.all(promises).finally(function () {
-    $scope.loading = false;
-  });
-
   $scope.send = function (promise) {
     if(promise) {
-      $scope.loading = true;
+      $scope.$emit('showSpinner');
       promise.finally(function () {
-        $scope.loading = false;
+        $scope.$emit('hideSpinner');
         socialActivityTabManager.getCurrentTab().setShownAt();
         socialActivityTabManager.getState().setup();
       });
@@ -237,6 +250,11 @@ angular.module('app.controllers').controller('influence.profile',
       socialActivityTabManager.getCurrentTab().setShownAt();
       socialActivityTabManager.getState().setup();
     }
+  };
+  
+  $scope.pullToRefresh = function(){
+    socialActivityTabManager.getState().reload = true;
+    loadNotifications();
   };
 
 }).directive('saItem', function () {

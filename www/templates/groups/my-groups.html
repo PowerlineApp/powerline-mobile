@@ -1,21 +1,35 @@
-<section ng-include="'templates/notifications.html'"></section>
+<ion-view view-title="My Groups" hide-back-button="true" class="has-notifications-bar">
+  <ion-nav-buttons side="left">
+    <button menu-toggle="left" class="button button-icon icon ion-navicon"></button>
+  </ion-nav-buttons>
+  <ion-nav-buttons side="right">
+    <a class="button button-icon ion-android-add-circle button-clear" href="#/groups/search"></a>
+  </ion-nav-buttons>
 
-<section class="margin-8" style="padding-bottom: 50px;">
-    <ul ng-repeat="group in items" class="profiles-list">
-        <li class="title">{{ group.letter }}</li>
+  <section ng-include="'templates/notifications.html'"></section>
+
+  <ion-content class="content">
+    <ion-refresher
+      pulling-text="Pull to refresh..."
+      on-refresh="pullToRefresh()">
+    </ion-refresher>
+
+    <section class="margin-8">
+      <ul ng-repeat="group in items" class="profiles-list">
+        <li class="title">{{ group.letter}}</li>
         <li ng-repeat="item in group.items">
-            <figure ng-click="navigateTo('group-profile', item)">
-                <img ng-src="{{ item.avatar_file_path }}">
-            </figure>
-            <p ng-click="navigateTo('group-profile', item)">{{ item.official_title }}</p>
-            <p ng-if="item.status === 1" class="btn-remove" ng-click="unjoin(item)"></p>
-            <p ng-if="item.status === 0" class="pending-message">pending approval</p>
+          <figure ng-click="navigateTo('group-profile', item)">
+            <img ng-src="{{ item.avatar_file_path}}">
+          </figure>
+          <p ng-click="navigateTo('group-profile', item)">{{ item.official_title}}</p>
+          <p ng-if="item.status === 1" class="btn-remove" ng-click="unjoin(item)"></p>
+          <p ng-if="item.status === 0" class="pending-message">pending approval</p>
         </li>
-    </ul>
-    <br><br>
-</section>
-<section ng-show="!items.length" class="margin-10">
-    <p class="info-message" ng-show="!loading">Looks like you haven't joined any groups yet! Join or create one to make Powerline work for you!</p>
-</section>
+      </ul>
+    </section>
+    <section ng-show="!items.length" class="margin-10">
+      <p class="info-message" ng-show="!loading">Looks like you haven't joined any groups yet! Join or create one to make Powerline work for you!</p>
+    </section>
 
-<div class="wrap-center" ng-show="loading"><spinner></spinner></div>
+  </ion-content>
+</ion-view>

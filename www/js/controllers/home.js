@@ -1,4 +1,4 @@
-angular.module('app.controllers').controller('home', function ($scope, topBar, socialActivity, homeCtrlParams,
+angular.module('app.controllers').controller('home', function ($scope, $timeout, socialActivity, homeCtrlParams,
                                                                profile, activity, groups, flurry, $ionicScrollDelegate) {
  
   flurry.log('news feed');
@@ -88,9 +88,6 @@ angular.module('app.controllers').controller('home', function ($scope, topBar, s
   };
 
   $scope.$watch('filter.selectedGroup', getActivities);
-  $scope.$watch('filter.selectedGroup', function (value) {
-    topBar.set('title', value ? value.getTitle() + ' Powerline' : 'Powerline');
-  });
   $scope.$watch('loading', function(){
     if($scope.loading){
       $scope.$emit('showSpinner');
@@ -110,8 +107,10 @@ angular.module('app.controllers').controller('home', function ($scope, topBar, s
   //move scroll to top when filter is changed
   $scope.$watch('filter.selectedGroup', function(nVal){
     if(typeof(nVal) !== undefined){
-      $ionicScrollDelegate.resize();
-      $ionicScrollDelegate.scrollTop();
+      $timeout(function(){
+        $ionicScrollDelegate.resize();
+        $ionicScrollDelegate.scrollTop();
+      });
     }
   });
   

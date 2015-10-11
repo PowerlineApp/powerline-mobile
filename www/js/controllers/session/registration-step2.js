@@ -1,5 +1,5 @@
 angular.module('app.controllers').controller('session.registration-step2',
-  function ($scope, topBar, session, $location, $window, iStorageMemory, profile, layout, flurry, $ionicSideMenuDelegate) {
+  function ($scope, session, $location, $window, iStorageMemory, profile, layout, flurry, $ionicSideMenuDelegate) {
     $ionicSideMenuDelegate.canDragContent(false);
 
     $scope.states = profile.states;

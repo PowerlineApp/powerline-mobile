@@ -1,70 +1,80 @@
-<section class="margin-8 form-style-1" ng-show="!loading">
-    <ul class="info-list">
+<ion-view view-title="Settings" hide-back-button="true">
+  <ion-nav-buttons side="left">
+    <button menu-toggle="left" class="button button-icon icon ion-navicon"></button>
+  </ion-nav-buttons>
+  <ion-nav-buttons side="right">
+    <button class="button button-clear" ng-click="save()">Save</button>
+  </ion-nav-buttons>
+
+  <ion-content class="content">
+    <section class="margin-8 form-style-1" ng-show="!loading">
+      <ul class="info-list">
         <li class="title">Notifications</li>
         <li class="control">
-            <!--<p>Do Not Disturb</p>-->
-            <ion-toggle-custom ng-model="data.do_not_disturb" toggle-class="toggle-calm"><p>Do Not Disturb</p></ion-toggle-custom>
+          <!--<p>Do Not Disturb</p>-->
+        <ion-toggle-custom ng-model="data.do_not_disturb" toggle-class="toggle-calm"><p>Do Not Disturb</p></ion-toggle-custom>
         </li>
         <li ng-show="data.do_not_disturb" class="control">
-            <ion-toggle-custom ng-model="data.is_notif_scheduled" toggle-class="toggle-calm"><p>Scheduled</p></ion-toggle-custom>
+        <ion-toggle-custom ng-model="data.is_notif_scheduled" toggle-class="toggle-calm"><p>Scheduled</p></ion-toggle-custom>
         </li>
         <li ng-show="data.is_notif_scheduled && data.do_not_disturb" ng-click class="control shaded">
-            <time-picker ng-model="data.scheduled_from_date" name="scheduled_from_date" ng-click="pick()">
-                <i class="icon-time"></i> From
-                <time ng-bind="data.scheduled_from_date | date:'shortTime'"></time>
-            </time-picker>
+        <time-picker ng-model="data.scheduled_from_date" name="scheduled_from_date" ng-click="pick()">
+          <i class="icon-time"></i> From
+          <time ng-bind="data.scheduled_from_date | date:'shortTime'"></time>
+        </time-picker>
         </li>
         <li ng-show="data.is_notif_scheduled && data.do_not_disturb" ng-click class="control shaded">
-            <time-picker ng-model="data.scheduled_to_date" name="scheduled_to_date" ng-click="pick()">
-                <i class="icon-time"></i> To
-                <time ng-bind="data.scheduled_to_date | date:'shortTime'"></time>
-            </time-picker>
+        <time-picker ng-model="data.scheduled_to_date" name="scheduled_to_date" ng-click="pick()">
+          <i class="icon-time"></i> To
+          <time ng-bind="data.scheduled_to_date | date:'shortTime'"></time>
+        </time-picker>
         </li>
-    </ul>
+      </ul>
 
-    <ul class="info-list">
+      <ul class="info-list">
         <li class="control">
-            <checkbox slider ng-model="data.is_notif_questions" class="checkbox"
-                    ng-click="data.is_notif_questions=!data.is_notif_questions">New Polls and Petitions</checkbox>
+        <checkbox slider ng-model="data.is_notif_questions" class="checkbox"
+                  ng-click="data.is_notif_questions = !data.is_notif_questions">New Polls and Petitions</checkbox>
         </li>
         <li class="control">
-            <checkbox slider ng-model="data.is_notif_discussions" class="checkbox"
-                    ng-click="data.is_notif_discussions=!data.is_notif_discussions">New Discussions</checkbox>
+        <checkbox slider ng-model="data.is_notif_discussions" class="checkbox"
+                  ng-click="data.is_notif_discussions = !data.is_notif_discussions">New Discussions</checkbox>
         </li>
         <li class="control">
-            <checkbox slider ng-model="data.is_notif_messages" class="checkbox"
-                    ng-click="data.is_notif_messages=!data.is_notif_messages">New Announcements</checkbox>
+        <checkbox slider ng-model="data.is_notif_messages" class="checkbox"
+                  ng-click="data.is_notif_messages = !data.is_notif_messages">New Announcements</checkbox>
         </li>
         <li class="control">
-            <checkbox slider ng-model="data.is_notif_micro_following" class="checkbox"
-                    ng-click="data.is_notif_micro_following=!data.is_notif_micro_following">New Posts by Followed Influences</checkbox>
+        <checkbox slider ng-model="data.is_notif_micro_following" class="checkbox"
+                  ng-click="data.is_notif_micro_following = !data.is_notif_micro_following">New Posts by Followed Influences</checkbox>
         </li>
         <li class="control">
-            <checkbox slider ng-model="data.is_notif_micro_group" class="checkbox"
-                    ng-click="data.is_notif_micro_group=!data.is_notif_micro_group">Auto-Boosted Posts</checkbox>
+        <checkbox slider ng-model="data.is_notif_micro_group" class="checkbox"
+                  ng-click="data.is_notif_micro_group = !data.is_notif_micro_group">Auto-Boosted Posts</checkbox>
         </li>
-    </ul>
+      </ul>
 
-    <ul class="info-list">
-      <li class="title">Credit Card <button class="btn-plus-1" ng-click="view.showCardForm = true;" style="top: 12px;"></button></li>
-      <li ng-repeat="card in cardCollection.models" class="control">
-        <p>
-          <span class="section">{{ card.get('last4') }}</span>
-          {{ card.get('brand') }}
-        </p>
-        <button class="btn-remove" ng-click="remove(card)"></button>
-      </li>
-    </ul>
+      <ul class="info-list">
+        <li class="title">Credit Card <button class="btn-plus-1" ng-click="view.showCardForm = true;" style="top: 12px;"></button></li>
+        <li ng-repeat="card in cardCollection.models" class="control">
+          <p>
+            <span class="section">{{ card.get('last4')}}</span>
+            {{ card.get('brand')}}
+          </p>
+          <button class="btn-remove" ng-click="remove(card)"></button>
+        </li>
+      </ul>
 
-    <p class="btn-large btn-blue btn-icons margin-v-20 ng-hide" ng-show="profile.facebook_id" style="color:#93a4c6;"><i class="facebook-btn-icon" style="border: none;"></i>&nbsp; Profile linked to Facebook</p>
-    <p class="btn-large btn-blue btn-icons margin-v-20 ng-hide" ng-click="linkToFacebook()" ng-show="!profile.facebook_id"><i class="facebook-btn-icon" style="border: none;"></i>&nbsp; Link my profile to Facebook</p>
+      <p class="btn-large btn-blue btn-icons margin-v-20 ng-hide" ng-show="profile.facebook_id" style="color:#93a4c6;"><i class="facebook-btn-icon" style="border: none;"></i>&nbsp; Profile linked to Facebook</p>
+      <p class="btn-large btn-blue btn-icons margin-v-20 ng-hide" ng-click="linkToFacebook()" ng-show="!profile.facebook_id"><i class="facebook-btn-icon" style="border: none;"></i>&nbsp; Link my profile to Facebook</p>
 
-  <p class="screen-link padding-10">
-    Powerline will not post to Facebook without your permission
-  </p>
-</section>
-<card-form ng-show="view.showCardForm"
-           cancel="view.showCardForm=false"
-           completed="view.showCardForm = false;data.showAnswerForm = true;reload();"></card-form>
-<br><br>
-<div class="wrap-center wrap-dark" ng-show="loading"><spinner></spinner></div>
+      <p class="screen-link padding-10">
+        Powerline will not post to Facebook without your permission
+      </p>
+    </section>
+    <card-form ng-show="view.showCardForm"
+               cancel="view.showCardForm=false"
+               completed="view.showCardForm = false;data.showAnswerForm = true;reload();"></card-form>
+
+  </ion-content>
+</ion-view>

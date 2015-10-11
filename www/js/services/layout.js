@@ -53,7 +53,7 @@ angular.module('app.services').factory('topBar',function ($location) {
   };
 
   return model;
-}).factory('mainMenu',function ($location, $window) {
+}).factory('mainMenu',function ($location, $window, $rootScope, $timeout) {
 
   var MenuItem = function (name, path, htmlClass, action) {
     var self = this;
@@ -64,6 +64,10 @@ angular.module('app.services').factory('topBar',function ($location) {
   };
 
   MenuItem.prototype.navigate = function() {
+    $rootScope.menuClicked = true;
+    $timeout(function(){
+      $rootScope.menuClicked = false;
+    }, 1000); //clear variable after 1 sec
     if (this.path) {
       $location.path(this.path);
     } else if (this.action) {

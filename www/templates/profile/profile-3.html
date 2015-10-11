@@ -1,48 +1,53 @@
-<section class="margin-8">
+<ion-view view-title="Powerline" hide-nav-bar="true">
 
-  <section class="profile-header-2">
-    <div class="completion-fill">
-      <i class="icon-user-account"></i>
-      <span>Your profile completeness is: </span> <strong ng-bind="(percent | number) + '%'" style="color: #030366;"></strong>
+  <ion-content class="content has-footer">
+    <section class="margin-8">
+
+      <section class="profile-header-2">
+        <div class="completion-fill">
+          <i class="icon-user-account"></i>
+          <span>Your profile completeness is: </span> <strong ng-bind="(percent | number) + '%'" style="color: #030366;"></strong>
+          <br>
+          <div class="process-wrap">
+            <div class="process" ng-style="{width: (percent | number) + '%' }"></div>
+          </div>
+        </div>
+      </section>
+      <br><br>
+      <h1>Tap on interests you like.</h1>
       <br>
-      <div class="process-wrap">
-        <div class="process" ng-style="{width: (percent | number) + '%' }"></div>
-      </div>
-    </div>
+      <p class="margin-v-10" style="text-align: center">
+        Information provided is used for anonymous reporting purposes and to help make suggestions on people to follow and groups to join.
+      </p>
+      <br>
+      <form name="profileForm" novalidate autocomplete="off">
+        <fieldset class="margin-v-8">
+          <div class="interests active" ng-show="data.interests.length">
+            <span ng-repeat="item in data.interests" class="active"
+                  ng-click="view.editMode ? removeInterest(item) : null">
+              {{ item}}
+              <i class="remove" ng-show="view.editMode"></i>
+            </span>
+            <input type="hidden" ng-model="data.interests" name="interests">
+          </div>
+          <div class="interests" ng-show="view.editMode">
+            <span ng-repeat="item in profileManager.interests| filter: nonSelectedInterests"
+                  ng-click="data.interests.push(item)">{{ item}}</span>
+          </div>
+        </fieldset>
+        <input type="button" ng-click="send(profileForm)" id="submitter" class="ng-hide">
+      </form>
+    </section>
+
+    <section class="screen-process">
+      <i class="step"></i>
+      <i class="step active"></i>
+    </section>
+
+  </ion-content>
+
+  <section class="footer-fixed">
+    <button ng-click="back()" class="btn-text-footer">Back</button>
+    <button onclick="angular.element('form[name=profileForm] #submitter').trigger('click')" class="btn-text-footer">Next</button>
   </section>
-  <br><br>
-  <h1>Tap on interests you like.</h1>
-  <br>
-  <p class="margin-v-10" style="text-align: center">
-    Information provided is used for anonymous reporting purposes and to help make suggestions on people to follow and groups to join.
-  </p>
-  <br>
-  <form name="profileForm" novalidate autocomplete="off">
-    <fieldset class="margin-v-8">
-      <div class="interests active" ng-show="data.interests.length">
-        <span ng-repeat="item in data.interests" class="active"
-              ng-click="view.editMode ? removeInterest(item) : null">
-          {{ item }}
-          <i class="remove" ng-show="view.editMode"></i>
-        </span>
-        <input type="hidden" ng-model="data.interests" name="interests">
-      </div>
-      <div class="interests" ng-show="view.editMode">
-        <span ng-repeat="item in profileManager.interests | filter: nonSelectedInterests"
-              ng-click="data.interests.push(item)">{{ item }}</span>
-      </div>
-    </fieldset>
-  </form>
-</section>
-
-<section class="screen-process" style="margin-bottom: 60px;">
-  <i class="step"></i>
-  <i class="step active"></i>
-</section>
-
-<section class="footer-fixed">
-  <button ng-click="back()" class="btn-text-footer">Back</button>
-  <button ng-click="send()" class="btn-text-footer">Next</button>
-</section>
-
-<div class="wrap-center wrap-dark" ng-show="loading"><spinner></spinner></div>
+</ion-view>

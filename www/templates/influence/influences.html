@@ -1,8 +1,23 @@
-<section class="tab two" ng-controller="influences.tabs" ng-show="!isEmpty()">
+<ion-view view-title="My Influences" hide-back-button="true">
+  <ion-nav-buttons side="left">
+    <button menu-toggle="left" class="button button-icon icon ion-navicon"></button>
+  </ion-nav-buttons>
+  <ion-nav-buttons side="right">
+    <a class="button button-icon ion-android-add-circle button-clear" href="#/influences/add"></a>
+  </ion-nav-buttons>
+  
+  <section class="tab two bar bar-subheader" ng-controller="influences.tabs" ng-show="!isEmpty()">
     <a ng-click="switchView('following')" ng-class="tabLinkClass('following')">Following</a>
     <a ng-click="switchView('followers')" ng-class="tabLinkClass('followers')">Followers</a>
-</section>
+  </section>
 
-<ng-include src="'templates/influence/' + view + '.html'" ng-hide="loading"></ng-include>
+  <ion-content class="content has-subheader">
+    <ion-refresher
+      pulling-text="Pull to refresh..."
+      on-refresh="pullToRefresh()">
+    </ion-refresher>
+    
+    <ng-include src="'templates/influence/' + view + '.html'" ng-hide="loading"></ng-include>
 
-<div class="wrap-center" ng-show="loading"><spinner></spinner></div>
+  </ion-content>
+</ion-view>

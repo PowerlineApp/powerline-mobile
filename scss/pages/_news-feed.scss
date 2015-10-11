@@ -8,11 +8,11 @@
     position: fixed;
     width: 100%;
     left: 0;
-    top: $mainHeaderHeight+38px;
+    top: $mainHeaderHeight + $notificationsTabHeight;
     z-index: 9;
   }
 
   .content {
-    top: $mainHeaderHeight+38px+50px;
+    top: $mainHeaderHeight + $notificationsTabHeight + 50px;
   }
 }

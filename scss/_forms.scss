@@ -104,6 +104,7 @@
       top: 9px;
       display: inline-block;
       width: auto;
+      white-space: nowrap;
       &.has-input {
         top: 0;
         font-size: 9px;
@@ -409,6 +410,16 @@ checkbox {
     top: 12px;
     font-size: 28px;
     color: #fff;
+  }
+}
+.bar.bar-search{
+  padding: 0px;
+  .filter{
+    padding-top: 13px;
+    padding-bottom: 12px;
+    .icon{
+      top: 9px;
+    }
   }
 }
 

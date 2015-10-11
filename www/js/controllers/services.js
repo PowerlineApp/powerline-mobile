@@ -1,8 +1,4 @@
-angular.module('app.controllers').controller('services',function ($scope, topBar, flurry) {
-  topBar.reset()
-    .set('menu', true)
-    .set('title', 'Services')
-  ;
+angular.module('app.controllers').controller('services',function ($scope, flurry) {
 
   flurry.log('services');
 

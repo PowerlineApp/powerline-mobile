@@ -145,6 +145,7 @@ angular.module('app')
             }, {
               name: 'influences',
               url: '/influences',
+              cache: true,
               templateUrl: 'templates/influence/influences.html',
               controller: 'influences'
             }, {
@@ -156,6 +157,7 @@ angular.module('app')
             }, {
               name: 'influencesAdd',
               url: '/influences/add',
+              cache: true,
               templateUrl: 'templates/influence/search.html',
               controller: 'influences.search'
             }, {
@@ -166,6 +168,7 @@ angular.module('app')
             }, {
               name: 'representatives',
               url: '/representatives',
+              cache: true,
               templateUrl: 'templates/representatives/list.html',
               controller: 'representatives'
             }, {
@@ -176,6 +179,7 @@ angular.module('app')
             }, {
               name: 'groups',
               url: '/groups',
+              cache: true,
               templateUrl: 'templates/groups/my-groups.html',
               controller: 'groups'
             }, {
@@ -198,6 +202,31 @@ angular.module('app')
               url: '/group/:id/join/:publicStatus/:isFieldRequired',
               templateUrl: 'templates/groups/join.html',
               controller: 'groups.join'
+            }, {
+              name: 'services',
+              url: '/other-services',
+              templateUrl: 'templates/services/index.html',
+              controller: 'services'
+            }, {
+              name: 'profile',
+              url: '/profile',
+              templateUrl: 'templates/profile/profile.html',
+              controller: 'profile'
+            }, {
+              name: 'profile2',
+              url: '/profile-2',
+              templateUrl: 'templates/profile/profile-2.html',
+              controller: 'profile-step2'
+            }, {
+              name: 'profile3',
+              url: '/profile-3',
+              templateUrl: 'templates/profile/profile-3.html',
+              controller: 'profile-step3'
+            }, {
+              name: 'settings',
+              url: '/settings',
+              templateUrl: 'templates/profile/settings.html',
+              controller: 'settings'
             }, {
             }];
 
