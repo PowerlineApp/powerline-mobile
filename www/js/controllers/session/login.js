@@ -81,5 +81,6 @@ angular.module('app.controllers').controller('session.login',function ($scope, h
 
 }).controller('session.logout', function ($scope, $location, session, $window, flurry) {
   flurry.log('logout');
+  $scope.$emit('showSpinner');
   session.logout();
 });

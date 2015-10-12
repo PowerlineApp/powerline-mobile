@@ -37,7 +37,7 @@ angular.module('app.controllers')
     };
 
     $scope.submit = function () {
-      $scope.answerLoading = true;
+      $scope.$emit('showSpinner');
       $scope.q.answer({
         option_id: $scope.data.option.id,
         comment: $scope.data.comment,
@@ -49,7 +49,7 @@ angular.module('app.controllers')
         $scope.addToCalendar();
         $state.reload();
       }, function (error) {
-        $scope.answerLoading = false;
+        $scope.$emit('hideSpinner');
         $scope.alert(error, function () {
           $state.reload();
         }, 'Error', 'OK');
