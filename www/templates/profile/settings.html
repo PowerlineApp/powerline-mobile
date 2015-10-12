@@ -6,7 +6,7 @@
     <button class="button button-clear" ng-click="save()">Save</button>
   </ion-nav-buttons>
 
-  <ion-content class="content">
+  <ion-content class="content" has-bouncing="false">
     <section class="margin-8 form-style-1" ng-show="!loading">
       <ul class="info-list">
         <li class="title">Notifications</li>
@@ -55,7 +55,7 @@
       </ul>
 
       <ul class="info-list">
-        <li class="title">Credit Card <button class="btn-plus-1" ng-click="view.showCardForm = true;" style="top: 12px;"></button></li>
+        <li class="title">Credit Card <button class="btn-plus-1" ng-click="openCardForm()" style="top: 12px;"></button></li>
         <li ng-repeat="card in cardCollection.models" class="control">
           <p>
             <span class="section">{{ card.get('last4')}}</span>
@@ -74,7 +74,7 @@
     </section>
     <card-form ng-show="view.showCardForm"
                cancel="view.showCardForm=false"
-               completed="view.showCardForm = false;data.showAnswerForm = true;reload();"></card-form>
+               completed="view.showCardForm=false;data.showAnswerForm=true;reload();"></card-form>
 
   </ion-content>
 </ion-view>

@@ -1,4 +1,4 @@
-angular.module('app.controllers').controller('settings', function ($scope, topBar, profile, facebook, $state, $timeout, flurry, cards, $q) {
+angular.module('app.controllers').controller('settings', function ($scope, $ionicScrollDelegate, profile, facebook, $state, $timeout, flurry, cards, $q) {
 
   flurry.log('settings');
 
@@ -19,7 +19,7 @@ angular.module('app.controllers').controller('settings', function ($scope, topBa
       flurry.log('settings saved');
       $state.reload();
     }, $state.reload);
-  }
+  };
 
   $scope.linkToFacebook = function () {
     var promise = $timeout(function () {
@@ -57,6 +57,11 @@ angular.module('app.controllers').controller('settings', function ($scope, topBa
 
   $scope.reload = $state.reload;
 
+  $scope.openCardForm = function(){
+    $scope.view.showCardForm = true;
+    $ionicScrollDelegate.scrollTo(0, 80, true);
+  };
+  
   $scope.remove = function (card) {
     $scope.confirmAction('Are you sure?').then(function () {
       $scope.showSpinner();
