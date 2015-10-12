@@ -1,4 +1,4 @@
-angular.module('app').run(function ($location, layout, $document, $rootScope,
+angular.module('app').run(function ($location, layout, spinnerIndicator, $rootScope,
         $window, iStorageMemory, $cacheFactory, $state, $ionicPlatform, navigateTo, $q,
         groupsInvites, announcements, invites, follows) {
 
@@ -49,10 +49,14 @@ angular.module('app').run(function ($location, layout, $document, $rootScope,
   $rootScope.navigateTo = navigateTo;
   
   // show/hide spinner globally
-  $rootScope.showSpinner = function () {
+  $rootScope.showSpinner = function (indicator) {
+    spinnerIndicator.show(indicator);
+    //console.log('SHOW INDICATOR', indicator);
     $rootScope.isSpinnerShow = true;
   };
-  $rootScope.hideSpinner = function () {
+  $rootScope.hideSpinner = function (indicator) {
+    spinnerIndicator.hide(indicator);
+    //console.log('HIDE INDICATOR', indicator);
     $rootScope.isSpinnerShow = false;
   };
 

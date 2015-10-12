@@ -2,10 +2,11 @@
   <ion-nav-buttons side="right">
     <button class="button button-clear" ng-click="togglePostWindow()" ng-show="data.group_type === 0 && data.joined">Invite</button>
   </ion-nav-buttons>
+  
+  <section ng-show="showPostWindow" class="new-post-window" ng-click="$event.stopPropagation()">
+    <a ng-click="invite()" class="micropetition"><span class="text">Invite Followers to Group</span></a>
+  </section>
   <ion-content class="content">
-    <section ng-show="showPostWindow" class="new-post-window" ng-click="$event.stopPropagation()">
-      <a ng-click="invite()" class="micropetition"><span class="text">Invite Followers to Group</span></a>
-    </section>
 
     <section class="p-header">
       <div class="avatar">
