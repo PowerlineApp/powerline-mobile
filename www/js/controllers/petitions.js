@@ -1,18 +1,10 @@
 angular.module('app.controllers').controller('petitions.add',
-function ($scope, topBar, petitions, PetitionsResource, groups, $stateParams, errorFormMessage, getFormData,
+function ($scope,  petitions, PetitionsResource, groups, $stateParams, errorFormMessage, getFormData,
             camelcase2underscore, profile, homeCtrlParams, $document, session, flurry) {
-  topBar.reset()
-    .set('back', true)
-    .set('title', $stateParams.type === 'quorum' ? 'New Post' : 'New Petition')
-    .set('right', {
-      btnClass: 'btn-text btn-send',
-      title: 'Send',
-      click: create
-    })
-  ;
-
+  
   flurry.log('new micro petition form');
-
+  
+  $scope.type = $stateParams.type;
   $scope.groups = groups.getGroupsOptions();
   var form_templates = {
     quorum: 'templates/petitions/forms/micro-petition.html',
@@ -39,7 +31,7 @@ function ($scope, topBar, petitions, PetitionsResource, groups, $stateParams, er
   ];
   $scope.data = {
     is_outsiders_sign: false,
-    type: $stateParams.type
+    type: $scope.type
   };
 
   if ($stateParams.group_id) {
@@ -59,18 +51,18 @@ function ($scope, topBar, petitions, PetitionsResource, groups, $stateParams, er
     $scope.form_template = form_templates[$scope.data.type];
   });
 
-  function create() {
-    if ($scope.petitionForm.$invalid) {
+  $scope.create = function(petitionForm) {
+    if (petitionForm.$invalid) {
       $scope.formClass = 'error';
-      if ($scope.petitionForm.petition_body.$error.required) {
+      if (petitionForm.petition_body.$error.required) {
         $scope.alert('No message entered', null, 'Error', 'OK');
-      } else if ($scope.petitionForm.group.$error.required) {
+      } else if (petitionForm.group.$error.required) {
         $scope.alert('No group selected', null, 'Error', 'OK');
       } else {
-        $scope.alert(errorFormMessage($scope.petitionForm)[0], null, 'Error', 'OK');
+        $scope.alert(errorFormMessage(petitionForm)[0], null, 'Error', 'OK');
       }
     } else {
-      var petition = new PetitionsResource(getFormData($scope.petitionForm, {
+      var petition = new PetitionsResource(getFormData(petitionForm, {
         group: ['group_id', function (group) {
           return group.id;
         }],
@@ -78,7 +70,7 @@ function ($scope, topBar, petitions, PetitionsResource, groups, $stateParams, er
           return item.value;
         }
       }));
-      $scope.loading = true;
+      $scope.$emit('showSpinner');
       petition.$save(function () {
         homeCtrlParams.loaded = false;
         flurry.log('micro petition created');
@@ -88,7 +80,7 @@ function ($scope, topBar, petitions, PetitionsResource, groups, $stateParams, er
           $scope.back();
         }
       }, function (response) {
-        $scope.loading = false;
+        $scope.$emit('hideSpinner');
         if (response.status === 406) {
           $scope.alert('Your limit of petitions per month is reached for this group', null, 'Error', 'OK');
           return;
@@ -96,8 +88,8 @@ function ($scope, topBar, petitions, PetitionsResource, groups, $stateParams, er
         if (response.data && response.data.errors) {
           _(response.data.errors).each(function (error) {
             var property = camelcase2underscore(error.property);
-            if ($scope.petitionForm[property]) {
-              $scope.petitionForm[property].$setValidity('required', false);
+            if (petitionForm[property]) {
+              petitionForm[property].$setValidity('required', false);
             }
           });
           if (response.data.errors.length) {
@@ -182,7 +174,7 @@ function ($scope, topBar, petitions, PetitionsResource, groups, $stateParams, er
   });
 
   $scope.unsign = function () {
-    $scope.loading = true;
+    $scope.$emit('showSpinner');
     $scope.petition.$unsign($state.reload, $state.reload);
     homeCtrlParams.loaded = false;
   };

@@ -1,42 +1,52 @@
-<section class="dropdown-1">
-    <div class="title" ng-click="data.openChoices=!data.openChoices">
+<ion-view view-title="{{type === 'quorum' ? 'New Post' : 'New Petition'}}">
+  <ion-nav-buttons side="right">
+    <button class="button button-clear" onclick="angular.element('form[name=petitionForm] #submitter').trigger('click')">Send</button>
+  </ion-nav-buttons>
+
+  <ion-content class="content has-footer" has-bouncing="false">
+    <section class="dropdown-1">
+      <div class="title" ng-click="data.openChoices = !data.openChoices">
         <fieldset class="profile-avatar">
-            <img ng-src="{{ profile.avatar_file_name }}" />
+          <img ng-src="{{ profile.avatar_file_name}}" />
         </fieldset>
         <span>
-            <fieldset class="avatar" ng-show="data.group">
-                <img ng-src="{{ data.group.getIconWhite() }}" />
-            </fieldset>
-            {{ data.group ? data.group.official_title : 'Select a community' }}
+          <fieldset class="avatar" ng-show="data.group">
+            <img ng-src="{{ data.group.getIconWhite()}}" />
+          </fieldset>
+          {{ data.group ? data.group.official_title : 'Select a community' }}
         </span>
         <i class="icon-post"></i>
-    </div>
-    <ul class="choices" ng-show="data.openChoices">
-        <li ng-repeat="item in groups" ng-click="data.group=item;data.openChoices=false;">
-            <span>
-                <fieldset class="avatar">
-                    <img ng-src="{{ item.getIconWhite() }}" />
-                </fieldset>
-                {{ item.official_title }}
-            </span>
+      </div>
+      <ul class="choices" ng-show="data.openChoices">
+        <li ng-repeat="item in groups" ng-click="data.group = item;
+            data.openChoices = false;">
+          <span>
+            <fieldset class="avatar">
+              <img ng-src="{{ item.getIconWhite()}}" />
+            </fieldset>
+            {{ item.official_title}}
+          </span>
         </li>
-    </ul>
-</section>
-
-<form name="petitionForm" novalidate ng-class="formClass" autocomplete="off">
-    <ng-include src=" form_template " ></ng-include>
-    <section class="footer-fixed" style="padding: 18px 12px;">
-        <strong class="right" ng-bind="data.chars_left"></strong>
-        <span ng-show="data.group && data.group.available !== undefined">
-            You have (<strong>{{ data.group.available }}</strong>) petitions left in this group
-        </span>
+      </ul>
     </section>
 
-    <section class="ng-hide">
+    <form name="petitionForm" novalidate ng-class="formClass" autocomplete="off">
+      <ng-include src=" form_template " ></ng-include>
+
+      <section class="ng-hide">
         <input type="hidden" ng-model="data.group" name="group">
         <input type="hidden" ng-model="user_expire_interval" name="user_expire_interval">
         <input type="hidden" ng-model="data.type" name="type">
-    </section>
-</form>
+      </section>
+      <input type="button" ng-click="create(petitionForm)" id="submitter" class="ng-hide">
+    </form>
 
-<div class="wrap-center wrap-dark" ng-show="loading"><spinner></spinner></div>
+  </ion-content>
+  
+  <section class="footer-fixed" style="padding: 18px 12px;">
+    <strong class="right" ng-bind="data.chars_left"></strong>
+    <span ng-show="data.group && data.group.available !== undefined">
+      You have (<strong>{{ data.group.available}}</strong>) petitions left in this group
+    </span>
+  </section>
+</ion-view>

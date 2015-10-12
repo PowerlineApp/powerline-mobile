@@ -1,54 +1,66 @@
-<section ng-include="'templates/notifications.html'"></section>
+<ion-view view-title="Powerline" hide-back-button="true" class="has-notifications-bar">
+  <ion-nav-buttons side="left">
+    <button menu-toggle="left" class="button button-icon icon ion-navicon"></button>
+  </ion-nav-buttons>
 
-<hr>
+  <section ng-include="'templates/notifications.html'"></section>
+  
+  <ion-content class="content">
+    <ion-refresher
+      pulling-text="Pull to refresh..."
+      on-refresh="pullToRefresh()">
+    </ion-refresher>
+    <hr>
 
-<h2 class="section-title margin-v-10" ng-show="items.length">Group Invites</h2>
+    <h2 class="section-title margin-v-10" ng-show="items.length">Group Invites</h2>
 
-<ul class="request-list" i-radio-list-class="'active'">
-    <li ng-repeat="item in items" i-radio-list-item>
+    <ul class="request-list" i-radio-list-class="'active'">
+      <li ng-repeat="item in items" i-radio-list-item>
         <figure>
-            <img ng-src="{{ item.avatar_file_path }}">
+          <img ng-src="{{ item.avatar_file_path}}">
         </figure>
-        <p><span>{{ item.official_title }}</span> group</p>
+        <p><span>{{ item.official_title}}</span> group</p>
         <p>invite you to join</p>
         <div class="controls">
-            <button class="btn-medium btn-dark-simple" ng-click="reject(item)">Ignore</button>
-            <button class="btn-medium btn-red" ng-click="navigateTo('group-join', item)">Join</button>
+          <button class="btn-medium btn-dark-simple" ng-click="reject(item)">Ignore</button>
+          <button class="btn-medium btn-red" ng-click="navigateTo('group-join', item)">Join</button>
         </div>
-    </li>
-    <li ng-repeat="item in invites.models" i-radio-list-item>
+      </li>
+      <li ng-repeat="item in invites.models" i-radio-list-item>
         <figure>
-            <img ng-src="{{ item.get('inviter').avatar_file_name }}">
+          <img ng-src="{{ item.get('inviter').avatar_file_name}}">
         </figure>
-        <p><span>{{ item.get('inviter').first_name }} {{ item.get('inviter').last_name }}</span> invite you to join</p>
-        <p><span>{{ item.get('group').official_title }}</span> group</p>
+        <p><span>{{ item.get('inviter').first_name}} {{ item.get('inviter').last_name}}</span> invite you to join</p>
+        <p><span>{{ item.get('group').official_title}}</span> group</p>
         <div class="controls">
-            <button class="btn-medium btn-dark-simple" ng-click="ignoreInvite(item)">Ignore</button>
-            <button class="btn-medium btn-red" ng-click="navigateTo('group-join', item.get('group'))">Join</button>
+          <button class="btn-medium btn-dark-simple" ng-click="ignoreInvite(item)">Ignore</button>
+          <button class="btn-medium btn-red" ng-click="navigateTo('group-join', item.get('group'))">Join</button>
         </div>
-    </li>
-</ul>
+      </li>
+    </ul>
 
-<h2 class="section-title margin-v-10" ng-show="announcements.length">Announcements</h2>
+    <h2 class="section-title margin-v-10" ng-show="announcements.length">Announcements</h2>
 
-<ul class="activities-list">
-    <li ng-repeat="announcement in announcements" class="item read">
+    <ul class="activities-list">
+      <li ng-repeat="announcement in announcements" class="item read">
         <figure ng-click="navigateTo('owner-profile', announcement.user)">
-            <img ng-src="{{ announcement.user.avatar_file_path }}" width="35">
+          <img ng-src="{{ announcement.user.avatar_file_path}}" width="35">
         </figure>
         <div class="item-title">
           <strong
-              ng-bind="announcement.user.type === 'group' ? announcement.user.official_title : announcement.user.first_name + ' ' + announcement.user.last_name"
-              ng-click="navigateTo('owner-profile', announcement.user)"></strong>
+            ng-bind="announcement.user.type === 'group' ? announcement.user.official_title : announcement.user.first_name + ' ' + announcement.user.last_name"
+            ng-click="navigateTo('owner-profile', announcement.user)"></strong>
           <i class="time"><time ng-bind="(announcement.published_at | elapsed) + ' ago'"></time></i>
         </div>
         <div class="item-content">
-            <p ng-bind-html="announcement.content_parsed" i-open-system-links style="-webkit-line-clamp:inherit;"></p>
+          <p ng-bind-html="announcement.content_parsed" i-open-system-links style="-webkit-line-clamp:inherit;"></p>
         </div>
         <div
-            ng-init="shareBody = announcement.content_parsed;shareImage = announcement.share_picture"
-            ng-include="'templates/widget/share.html'" class="margin-8"></div>
-    </li>
-</ul>
+          ng-init="shareBody = announcement.content_parsed;
+                      shareImage = announcement.share_picture"
+          ng-include="'templates/widget/share.html'" class="margin-8"></div>
+      </li>
+    </ul>
 
-<div class="wrap-center" ng-show="loading"><spinner></spinner></div>
+  </ion-content>
+</ion-view>
