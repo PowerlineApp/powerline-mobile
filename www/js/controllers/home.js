@@ -62,6 +62,7 @@ angular.module('app.controllers').controller('home', function ($scope, $timeout,
     };
     $scope.path('/micro-petitions/add/' + types[type] + '/' +
       (homeCtrlParams.filter.selectedGroup ? homeCtrlParams.filter.selectedGroup.id : ''));
+    $scope.showPostWindow = false;
   };
 
   $scope.filterLineStep = function () {

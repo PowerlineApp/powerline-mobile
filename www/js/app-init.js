@@ -46,6 +46,8 @@ angular.module('app').run(function ($location, layout, $document, $rootScope,
     $rootScope.wrapperClass = wrapperClasses.join(' ');
   });
 
+  $rootScope.navigateTo = navigateTo;
+  
   // show/hide spinner globally
   $rootScope.showSpinner = function () {
     $rootScope.isSpinnerShow = true;
@@ -55,7 +57,6 @@ angular.module('app').run(function ($location, layout, $document, $rootScope,
   };
 
   var isFirstHomeLoaded = true;
-  $rootScope.navigateTo = navigateTo;
 
   $rootScope.openTag = function (tag) {
     searchCache.put('query', tag);
