@@ -8,13 +8,13 @@ angular.module('app.controllers').controller('representatives',function ($scope,
     $scope.items = representatives.getRepresentativesGroups();
     
     if (showSpinner) {
-      $scope.$emit('showSpinner');
+      $scope.showSpinner();
     }
     
     representatives.load().finally(function () {
       $scope.items = representatives.getRepresentativesGroups();
       if (showSpinner) {
-        $scope.$emit('hideSpinner');
+        $scope.hideSpinner();
       }
       $scope.$broadcast('scroll.refreshComplete');
     });
@@ -47,11 +47,11 @@ angular.module('app.controllers').controller('representatives',function ($scope,
   if ($scope.data) {
     representatives.updateInfo(id);
   } else {
-    $scope.$emit('showSpinner');
+    $scope.showSpinner();
     representatives.loadInfo(id, storageId).then(function(){
-      $scope.$emit('hideSpinner');
+      $scope.hideSpinner();
     }, function(){
-      $scope.$emit('hideSpinner');
+      $scope.hideSpinner();
     });
   }
 
@@ -67,29 +67,29 @@ angular.module('app.controllers').controller('representatives',function ($scope,
   });
 
   $scope.loadCommittees = function () {
-    $scope.$emit('showSpinner');
+    $scope.showSpinner();
     representatives.loadCommittees($scope.data.storage_id).then(
       function (committees) {
-        $scope.$emit('hideSpinner');
+        $scope.hideSpinner();
         $scope.committees = committees;
         $scope.committeesLoaded = true;
         flurry.log('committees loaded', {storage_id: $scope.data.storage_id});
       }, function () {
-        $scope.$emit('hideSpinner');
+        $scope.hideSpinner();
       }
     );
   };
 
   $scope.loadSponsoredBills = function () {
-    $scope.$emit('showSpinner');
+    $scope.showSpinner();
     representatives.loadSponsoredBills($scope.data.storage_id).then(
       function (sponsoredBills) {
-        $scope.$emit('hideSpinner');
+        $scope.hideSpinner();
         $scope.sponsoredBills = sponsoredBills;
         $scope.sponsoredBillsLoaded = true;
         flurry.log('sponsored bills loaded', {storage_id: $scope.data.storage_id});
       }, function () {
-        $scope.$emit('hideSpinner');
+        $scope.hideSpinner();
       }
     );
   };

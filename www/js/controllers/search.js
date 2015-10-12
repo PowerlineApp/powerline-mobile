@@ -9,16 +9,16 @@ angular.module('app.controllers').controller('search', function ($scope, $ionicS
 
   $scope.search = function (query) {
     $scope.data = null;
-    $scope.$emit('showSpinner');;
+    $scope.showSpinner();;
     search.load(query).then(function (data) {
       $scope.data = data;
-      $scope.$emit('hideSpinner');;
+      $scope.hideSpinner();;
       cache.put('query', query);
       cache.put('data', data);
       $ionicScrollDelegate.resize();
       $ionicScrollDelegate.scrollTop(true);
     }, function () {
-      $scope.$emit('hideSpinner');;
+      $scope.hideSpinner();;
     });
   };
 

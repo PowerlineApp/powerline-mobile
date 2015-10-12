@@ -5,13 +5,13 @@ angular.module('app.controllers').controller('settings', function ($scope, topBa
   $scope.profile = profile.get();
   $scope.data = {};
   $scope.view = {};
-  $scope.$emit('showSpinner');
+  $scope.showSpinner();
   $q.all([profile.load(), cards.load().then(function (cardCollection) {
     $scope.cardCollection = cardCollection;
   })]).then(loaded, loaded);
 
   $scope.save = function() {
-    $scope.$emit('showSpinner');
+    $scope.showSpinner();
     $scope.data.scheduled_from = $scope.data.scheduled_from_date.toUTCString();
     $scope.data.scheduled_to = $scope.data.scheduled_to_date.toUTCString();
     _($scope.profile).extend($scope.data);
@@ -23,34 +23,34 @@ angular.module('app.controllers').controller('settings', function ($scope, topBa
 
   $scope.linkToFacebook = function () {
     var promise = $timeout(function () {
-      $scope.$emit('hideSpinner');
+      $scope.hideSpinner();
     }, 2000);
-    $scope.$emit('showSpinner');
+    $scope.showSpinner();
     facebook.login().then(function (params) {
       $timeout.cancel(promise);
-      $scope.$emit('showSpinner');
+      $scope.showSpinner();
       facebook.loadProfile(params).then(function(data) {
         data.action = 'link-to-facebook';
         $scope.profile.$save(data).then(function () {
           flurry.log('facebook linked');
           $state.reload();
         }, function (response) {
-          $scope.$emit('hideSpinner');
+          $scope.hideSpinner();
           if (response.data.errors.length) {
             $scope.alert(response.data.errors[0].message, null, 'Error', 'OK');
           }
         });
       }, function() {
-        $scope.$emit('hideSpinner');
+        $scope.hideSpinner();
       });
     }, function (error) {
       $scope.alert(error, null, 'Error', 'OK');
-      $scope.$emit('hideSpinner');
+      $scope.hideSpinner();
     });
   };
 
   function loaded() {
-    $scope.$emit('hideSpinner');
+    $scope.hideSpinner();
     $scope.profile = profile.get();
     setFormData();
   }
@@ -59,7 +59,7 @@ angular.module('app.controllers').controller('settings', function ($scope, topBa
 
   $scope.remove = function (card) {
     $scope.confirmAction('Are you sure?').then(function () {
-      $scope.$emit('showSpinner');
+      $scope.showSpinner();
       cards.remove(card).then($state.reload, $state.reload);
     });
   };

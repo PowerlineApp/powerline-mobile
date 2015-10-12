@@ -5,9 +5,9 @@ angular.module('app.controllers').controller('groups',function ($scope, groups, 
   $scope.items = [];
 
   function loadGroups(showSpinner){
-    if(showSpinner) $scope.$emit('showSpinner');
+    if(showSpinner) $scope.showSpinner();
     groups.load().finally(function () {
-      if(showSpinner) $scope.$emit('hideSpinner');
+      if(showSpinner) $scope.hideSpinner();
       $scope.$broadcast('scroll.refreshComplete');
       $scope.items = groups.getLettersGroups();
     });
@@ -15,12 +15,12 @@ angular.module('app.controllers').controller('groups',function ($scope, groups, 
 
   $scope.unjoin = function (item) {
     $scope.confirmAction('Are you sure?').then(function () {
-      $scope.$emit('showSpinner');
+      $scope.showSpinner();
       groups.unjoin(item.id).then(function () {
-        $scope.$emit('hideSpinner');
+        $scope.hideSpinner();
         loadGroups(true);
       }, function () {
-        $scope.$emit('hideSpinner');
+        $scope.hideSpinner();
       });
     });
   };
@@ -67,18 +67,18 @@ angular.module('app.controllers').controller('groups',function ($scope, groups, 
 
   $scope.unjoin = function (item) {
     $scope.confirmAction('Are you sure?').then(function () {
-      $scope.$emit('showSpinner');
+      $scope.showSpinner();
       groups.unjoin(item.id).then(groups.load, groups.load).finally(function () {
         $rootScope.$broadcast('groups-updated');
-        $scope.$emit('hideSpinner');
+        $scope.hideSpinner();
       });
     });
   };
 
   if (!groups.getPopularGroups().length) {
-    $scope.$emit('showSpinner');
+    $scope.showSpinner();
     groups.loadSuggested().finally(function () {
-      $scope.$emit('hideSpinner');
+      $scope.hideSpinner();
     });
   }
 
@@ -113,9 +113,9 @@ angular.module('app.controllers').controller('groups',function ($scope, groups, 
         return memo;
       }, []);
       $scope.showPostWindow = false;
-      $scope.$emit('showSpinner');
+      $scope.showSpinner();
       invites.invite(id, followers).finally(function () {
-        $scope.$emit('hideSpinner');
+        $scope.hideSpinner();
         flurry.log('invite to group', {id: id});
       });
     });
@@ -129,15 +129,15 @@ angular.module('app.controllers').controller('groups',function ($scope, groups, 
   $scope.unjoin = function () {
     $scope.confirmAction('Are you sure?').then(function () {
       homeCtrlParams.loaded = false;
-      $scope.$emit('showSpinner');
+      $scope.showSpinner();
       groups.unjoin($scope.data.id).then(function () {
         $rootScope.$broadcast('groups-updated');
         groups.resetInfo($scope.data.id);
-        $scope.$emit('hideSpinner');
+        $scope.hideSpinner();
         flurry.log('unjoin', {id: id});
         $state.reload();
       }, function () {
-        $scope.$emit('hideSpinner');
+        $scope.hideSpinner();
         $rootScope.$broadcast('groups-updated');
         $state.reload();
       });
@@ -145,7 +145,7 @@ angular.module('app.controllers').controller('groups',function ($scope, groups, 
   };
 
   function loaded() {
-    $scope.$emit('hideSpinner');
+    $scope.hideSpinner();
     return checkPermissions();
   }
   
@@ -173,7 +173,7 @@ angular.module('app.controllers').controller('groups',function ($scope, groups, 
     }
   }
 
-  $scope.$emit('showSpinner');
+  $scope.showSpinner();
   groups.loadInfo(id).then(loaded, loaded);
 
   $scope.$watch('data', function () {
@@ -189,7 +189,7 @@ angular.module('app.controllers').controller('groups',function ($scope, groups, 
   });
 }).controller('groups.join', function ($scope, $stateParams, groups, groupsInvites, homeCtrlParams, $rootScope, flurry) {
 
-  $scope.$emit('showSpinner');
+  $scope.showSpinner();
   $scope.data = {};
   $scope.isFieldRequired = Number($stateParams.isFieldRequired);
   var id = Number($stateParams.id);
@@ -197,15 +197,15 @@ angular.module('app.controllers').controller('groups',function ($scope, groups, 
   $scope.isPasscodeRequired = !groupsInvites.hasInvite(id) && 2 === $scope.publicStatus;
 
   groups.loadInfo(id).then(function () {
-    $scope.$emit('hideSpinner');
+    $scope.hideSpinner();
     if (!$scope.isFieldRequired && ((0 === $scope.publicStatus || 1 === $scope.publicStatus) || groupsInvites.hasInvite(id))) {
       $scope.join();
     }
 
     if ($scope.isFieldRequired) {
-      $scope.$emit('showSpinner');
+      $scope.showSpinner();
       groups.loadFields(id).then(function (fields) {
-        $scope.$emit('hideSpinner');
+        $scope.hideSpinner();
         $scope.data.fields = [];
         _(fields).each(function (field) {
           $scope.data.fields.push(
@@ -216,7 +216,7 @@ angular.module('app.controllers').controller('groups',function ($scope, groups, 
           );
         });
       }, function () {
-        $scope.$emit('hideSpinner');
+        $scope.hideSpinner();
         $scope.alert('Error occurred');
       });
     }
@@ -246,14 +246,14 @@ angular.module('app.controllers').controller('groups',function ($scope, groups, 
 
   function join() {
     $scope.formClass = '';
-    $scope.$emit('showSpinner');
+    $scope.showSpinner();
     groups.join(id, $scope.data).then(function (status) {
       $scope.showApproveMessage = !status;
       success();
       flurry.log('join to group', {id: id});
     }, function (response) {
       $scope.formClass = 'error';
-      $scope.$emit('hideSpinner');
+      $scope.hideSpinner();
       if (403 === response.status) {
         if (response.data && response.data.error) {
           $scope.alert(response.data.error);
@@ -272,7 +272,7 @@ angular.module('app.controllers').controller('groups',function ($scope, groups, 
   function success() {
     homeCtrlParams.loaded = false;
     $rootScope.$broadcast('groups-updated');
-    $scope.$emit('hideSpinner');
+    $scope.hideSpinner();
     groups.resetInfo(id);
     if (!$scope.showApproveMessage) {
       $scope.path('/groups');
@@ -309,14 +309,14 @@ angular.module('app.controllers').controller('groups',function ($scope, groups, 
     if (createGroupForm.$invalid) {
       $scope.formClass = 'error';
     } else {
-      $scope.$emit('showSpinner');
+      $scope.showSpinner();
       groups.create($scope.data).then(function (group) {
         $scope.alert('Way to go! You\'ve created a new Powerline group. Invite your followers from the next screen or login via our website for group management features. Check your e-mail for more information.', function () {
           $scope.path('/group/' + group.id);
           $scope.execApply();
         });
       }, function (response) {
-        $scope.$emit('hideSpinner');
+        $scope.hideSpinner();
         if (response.data && response.data.errors) {
           _(response.data.errors).each(function (error) {
             if (createGroupForm[error.property]) {

@@ -90,9 +90,9 @@ angular.module('app.controllers').controller('home', function ($scope, $timeout,
   $scope.$watch('filter.selectedGroup', getActivities);
   $scope.$watch('loading', function(){
     if($scope.loading){
-      $scope.$emit('showSpinner');
+      $scope.showSpinner();
     } else if($scope.loading === false) {
-      $scope.$emit('hideSpinner');
+      $scope.hideSpinner();
     }
   });
 

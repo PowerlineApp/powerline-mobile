@@ -70,7 +70,7 @@ function ($scope,  petitions, PetitionsResource, groups, $stateParams, errorForm
           return item.value;
         }
       }));
-      $scope.$emit('showSpinner');
+      $scope.showSpinner();
       petition.$save(function () {
         homeCtrlParams.loaded = false;
         flurry.log('micro petition created');
@@ -80,7 +80,7 @@ function ($scope,  petitions, PetitionsResource, groups, $stateParams, errorForm
           $scope.back();
         }
       }, function (response) {
-        $scope.$emit('hideSpinner');
+        $scope.hideSpinner();
         if (response.status === 406) {
           $scope.alert('Your limit of petitions per month is reached for this group', null, 'Error', 'OK');
           return;
@@ -136,7 +136,7 @@ function ($scope,  petitions, PetitionsResource, groups, $stateParams, errorForm
   flurry.log('micro petition', {id: Number($stateParams.id)});
 
   if (!$scope.petition) {
-    $scope.$emit('showSpinner');
+    $scope.showSpinner();
   }
 
   $scope.select = function (option) {
@@ -144,7 +144,7 @@ function ($scope,  petitions, PetitionsResource, groups, $stateParams, errorForm
   };
 
   petitions.load($stateParams.id).then(function (petition) {
-    $scope.$emit('hideSpinner');
+    $scope.hideSpinner();
     $scope.petition = petition;
     if (petition.answer_id) {
       $scope.answer_message = 'Your response “' + petition.getOptionLabel(petition.answer_id) + '” was sent to “' + petition.group.official_title + '” group';
@@ -152,7 +152,7 @@ function ($scope,  petitions, PetitionsResource, groups, $stateParams, errorForm
     cache.put($stateParams.id, petition);
     layout.focus($stateParams.focus);
   }, function(){
-    $scope.$emit('hideSpinner');
+    $scope.hideSpinner();
   });
 
   $scope.$watch('petition', function (petition) {
@@ -174,7 +174,7 @@ function ($scope,  petitions, PetitionsResource, groups, $stateParams, errorForm
   });
 
   $scope.unsign = function () {
-    $scope.$emit('showSpinner');
+    $scope.showSpinner();
     $scope.petition.$unsign($state.reload, $state.reload);
     homeCtrlParams.loaded = false;
   };
@@ -182,14 +182,14 @@ function ($scope,  petitions, PetitionsResource, groups, $stateParams, errorForm
 }).controller('petition.answer-form', function ($scope, $state, homeCtrlParams, flurry) {
 
   $scope.submit = function () {
-    $scope.$emit('showSpinner');
+    $scope.showSpinner();
     $scope.$parent.petition.$answer({option_id: $scope.$parent.current.id}, function () {
-      $scope.$emit('hideSpinner');
+      $scope.hideSpinner();
       flurry.log('answer to micro petition', {id: $scope.$parent.petition.id});
       homeCtrlParams.loaded = false;
       $state.reload();
     }, function () {
-      $scope.$emit('hideSpinner');
+      $scope.hideSpinner();
       $state.reload();
     });
   };

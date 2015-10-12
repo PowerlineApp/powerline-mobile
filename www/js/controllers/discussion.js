@@ -71,12 +71,12 @@ angular.module('app.controllers').controller('discussion',function ($scope, topB
   };
 
   function loadComments(scrollToBottom) {
-    $scope.$emit('showSpinner');
+    $scope.showSpinner();
     discussion.loadTree($scope.entity, $scope.id).then(function (data) {
-      $scope.$emit('hideSpinner');
+      $scope.hideSpinner();
       cache.put($scope.id, data);
     }, function(){
-      $scope.$emit('hideSpinner');
+      $scope.hideSpinner();
     });
   }
 
@@ -95,14 +95,14 @@ angular.module('app.controllers').controller('discussion',function ($scope, topB
       comment_body: $scope.data.comment,
       privacy: $scope.data.privacy
     };
-    $scope.$emit('showSpinner');
+    $scope.showSpinner();
     homeCtrlParams.loaded = false;
     discussion.createComment($scope.entity, $scope.id, data).then(function () {
       flurry.log('comment added', {id: $scope.id});
       $scope.$emit('discussion.comment-added');
       $scope.data.comment = '';
     }, function(){
-      $scope.$emit('hideSpinner');
+      $scope.hideSpinner();
     });
   };
 

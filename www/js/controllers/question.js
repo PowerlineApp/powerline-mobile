@@ -53,20 +53,20 @@ angular.module('app.controllers').controller('question',function ($scope, $locat
   
   $scope.$watch('loading', function(){
     if($scope.loading){
-      $scope.$emit('showSpinner');
+      $scope.showSpinner();
     } else if($scope.loading === false) {
-      $scope.$emit('hideSpinner');
+      $scope.hideSpinner();
     }
   });
 }).controller('question.answer-form',function ($scope, $state, iStorageMemory, homeCtrlParams, flurry) {
 
   $scope.answer = function () {
 
-    $scope.$emit('showSpinner');
+    $scope.showSpinner();
     $scope.$parent.q.answer($scope.data).then(function () {
       homeCtrlParams.loaded = false;
       flurry.log('answer to question', {id: $scope.$parent.q.id});
-      $scope.$emit('hideSpinner');
+      $scope.hideSpinner();
       if ($scope.q.recipients) {
         iStorageMemory.put('question-answered-' + $scope.$parent.q.id, 'Your response “' + $scope.$parent.current.title + '” was sent to ' +
           $scope.$parent.q.recipients);
@@ -74,19 +74,19 @@ angular.module('app.controllers').controller('question',function ($scope, $locat
       $state.reload();
 
     }, function () {
-      $scope.$emit('hideSpinner');
+      $scope.hideSpinner();
       $state.reload();
     });
   };
   
 }).controller('question.influences',function ($scope, $stateParams, questions, questionCache, loaded, flurry) {
   $scope.q = questionCache.get($stateParams.id);
-  $scope.$emit('showSpinner');
+  $scope.showSpinner();
   questions.loadAnswers($stateParams.id).then(function (answers) {
-    $scope.$emit('hideSpinner');
+    $scope.hideSpinner();
     $scope.answers = answers;
   }, function(){
-    $scope.$emit('hideSpinner');
+    $scope.hideSpinner();
   });
   
 }).controller('question.news',function ($scope, $location, $stateParams, questions, iJoinFilter, activity, flurry, layout) {
@@ -94,15 +94,15 @@ angular.module('app.controllers').controller('question',function ($scope, $locat
   flurry.log('leader news', {id: $stateParams.id});
   activity.setEntityRead({id: Number($stateParams.id), type: 'leader-news'});
 
-  $scope.$emit('showSpinner');
+  $scope.showSpinner();
   questions.load($stateParams.id).then(function (question) {
-    $scope.$emit('hideSpinner');
+    $scope.hideSpinner();
     $scope.q = question;
     $scope.shareBody = question.subject;
     $scope.shareImage = question.share_picture;
     layout.focus($location.search().focus);
   }, function(){
-    $scope.$emit('hideSpinner');
+    $scope.hideSpinner();
     $scope.back();
   });
 
@@ -117,9 +117,9 @@ angular.module('app.controllers').controller('question',function ($scope, $locat
   };
   activity.setEntityRead({id: Number($stateParams.id), type: 'petition'});
 
-  $scope.$emit('showSpinner');
+  $scope.showSpinner();
   questions.load($stateParams.id).then(function (question) {
-    $scope.$emit('hideSpinner');
+    $scope.hideSpinner();
     $scope.q = question;
     $scope.data.option_id = question.options[0].id;
 
@@ -129,12 +129,12 @@ angular.module('app.controllers').controller('question',function ($scope, $locat
     $scope.shareImage = question.share_picture;
     layout.focus($stateParams.focus);
   }, function(){
-    $scope.$emit('hideSpinner');  
+    $scope.hideSpinner();  
     $scope.back();
   });
 
   $scope.answer = function () {
-    $scope.$emit('showSpinner');
+    $scope.showSpinner();
     $scope.q.answer($scope.data).then(function () {
       homeCtrlParams.loaded = false;
       flurry.log('answer to leader petition', {id: $scope.q.id});
@@ -145,7 +145,7 @@ angular.module('app.controllers').controller('question',function ($scope, $locat
   };
 
   $scope.unsign = function () {
-    $scope.$emit('showSpinner');
+    $scope.showSpinner();
     questions.unsignFromPetition($scope.q.id, $scope.q.options[0].id).then($state.reload, $state.reload);
     flurry.log('unsign petition', {id: $scope.q.id});
     homeCtrlParams.loaded = false;

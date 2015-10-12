@@ -46,13 +46,13 @@ angular.module('app').run(function ($location, layout, $document, $rootScope,
     $rootScope.wrapperClass = wrapperClasses.join(' ');
   });
 
-  //receive event for show/hide spinners
-  $rootScope.$on('showSpinner', function () {
+  // show/hide spinner globally
+  $rootScope.showSpinner = function () {
     $rootScope.isSpinnerShow = true;
-  });
-  $rootScope.$on('hideSpinner', function () {
+  };
+  $rootScope.hideSpinner = function () {
     $rootScope.isSpinnerShow = false;
-  });
+  };
 
   var isFirstHomeLoaded = true;
   $rootScope.navigateTo = navigateTo;

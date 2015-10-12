@@ -12,9 +12,9 @@ angular.module('app.controllers')
     activity.setEntityRead({id: Number($stateParams.id), type: 'payment-request'});
     activity.setEntityRead({id: Number($stateParams.id), type: 'crowdfunding-payment-request'});
 
-    $scope.$emit('showSpinner');
+    $scope.showSpinner();
     questions.load($stateParams.id).then(function (question) {
-      $scope.$emit('hideSpinner');
+      $scope.hideSpinner();
       $scope.q = question;
 
       $scope.shareTitle = question.title;
@@ -29,7 +29,7 @@ angular.module('app.controllers')
       }
       layout.focus($stateParams.focus);
     }, function(){
-      $scope.$emit('hideSpinner');
+      $scope.hideSpinner();
       $scope.back();
     });
 
@@ -47,7 +47,7 @@ angular.module('app.controllers')
         $scope.alert('Payment amount cannot be blank');
         return;
       }
-      $scope.$emit('showSpinner');
+      $scope.showSpinner();
       $scope.q.answer({
         option_id: $scope.data.option.id,
         comment: $scope.data.comment,
@@ -58,7 +58,7 @@ angular.module('app.controllers')
         flurry.log('answer to payment request', {id: Number($stateParams.id)});
         $state.reload();
       }, function (error) {
-        $scope.$emit('hideSpinner');
+        $scope.hideSpinner();
         $scope.alert(error, function () {
           $state.reload();
         }, 'Error', 'OK');

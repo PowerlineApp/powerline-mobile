@@ -19,16 +19,16 @@ angular.module('app.controllers').controller('session.registration-step2',
         if ((new Date()).getFullYear() - (new Date($scope.data.birth)).getFullYear() < 13) {
           return $scope.alert('Sorry - you must be 13 or older in order to use Powerline!', null, '', 'OK');
         }
-        $scope.$emit('showSpinner');
+        $scope.showSpinner();
         session.registration($scope.data).then(
           function () {
             flurry.log('registered');
-            $scope.$emit('hideSpinner');
+            $scope.hideSpinner();
             iStorageMemory.remove('registration-form-data');
             $location.path('/guide');
           },
           function (response) {
-            $scope.$emit('hideSpinner');
+            $scope.hideSpinner();
             if (response.data && response.data.errors) {
               _(response.data.errors).each(function (error) {
                 if (registrationForm[error.property]) {

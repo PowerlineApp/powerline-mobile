@@ -11,9 +11,9 @@ angular.module('app.controllers')
 
     activity.setEntityRead({id: Number($stateParams.id), type: 'leader-event'});
 
-    $scope.$emit('showSpinner');
+    $scope.showSpinner();
     questions.load($stateParams.id).then(function (question) {
-      $scope.$emit('hideSpinner');
+      $scope.hideSpinner();
       $scope.q = question;
 
       $scope.shareTitle = question.title;
@@ -23,7 +23,7 @@ angular.module('app.controllers')
       layout.focus($stateParams.focus);
 
     }, function(){
-      $scope.$emit('hideSpinner');
+      $scope.hideSpinner();
       $scope.back();
     });
 
@@ -37,7 +37,7 @@ angular.module('app.controllers')
     };
 
     $scope.submit = function () {
-      $scope.$emit('showSpinner');
+      $scope.showSpinner();
       $scope.q.answer({
         option_id: $scope.data.option.id,
         comment: $scope.data.comment,
@@ -49,7 +49,7 @@ angular.module('app.controllers')
         $scope.addToCalendar();
         $state.reload();
       }, function (error) {
-        $scope.$emit('hideSpinner');
+        $scope.hideSpinner();
         $scope.alert(error, function () {
           $state.reload();
         }, 'Error', 'OK');

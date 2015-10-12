@@ -4,7 +4,7 @@ angular.module('app.controllers').controller('session.login',function ($scope, h
   $scope.keepLogged = true;
   $scope.data = {};
 
-  $scope.$emit('hideSpinner');
+  $scope.hideSpinner();
 
   flurry.log('login');
   
@@ -14,10 +14,10 @@ angular.module('app.controllers').controller('session.login',function ($scope, h
       $scope.alert('All fields required', null, 'Error', 'OK');
       return;
     }
-    $scope.$emit('showSpinner');
+    $scope.showSpinner();
     session.login($scope.data, $scope.keepLogged).then(
       function () {
-        $scope.$emit('hideSpinner');
+        $scope.hideSpinner();
         //clear cache and history
         $ionicHistory.clearCache();
         $ionicHistory.clearHistory();
@@ -30,7 +30,7 @@ angular.module('app.controllers').controller('session.login',function ($scope, h
         }
       },
       function (status) {
-        $scope.$emit('hideSpinner');
+        $scope.hideSpinner();
         if (!status) {
           $scope.alert('Check your connection', null, 'Error', 'OK');
         } else {
@@ -81,6 +81,6 @@ angular.module('app.controllers').controller('session.login',function ($scope, h
 
 }).controller('session.logout', function ($scope, $location, session, $window, flurry) {
   flurry.log('logout');
-  $scope.$emit('showSpinner');
+  $scope.showSpinner();
   session.logout();
 });

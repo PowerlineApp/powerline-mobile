@@ -4,7 +4,7 @@ angular.module('app.controllers').controller('messages', function ($scope, group
   
   function loadData(showSpinner){
     if(showSpinner){
-      $scope.$emit('showSpinner');
+      $scope.showSpinner();
     }
     
     groupsInvites.load().finally(loaded($scope));
@@ -17,7 +17,7 @@ angular.module('app.controllers').controller('messages', function ($scope, group
 
 
   $scope.reject = function (item) {
-    $scope.$emit('showSpinner');
+    $scope.showSpinner();
     item.$reject(function () {
       groupsInvites.load().then(loaded($scope), loaded($scope));
     }, loaded($scope));
@@ -25,7 +25,7 @@ angular.module('app.controllers').controller('messages', function ($scope, group
   };
 
   $scope.ignoreInvite = function (invite) {
-    $scope.$emit('showSpinner');
+    $scope.showSpinner();
     invites.remove(invite).then(loaded($scope), loaded($scope));
     flurry.log('ignore invite');
   };

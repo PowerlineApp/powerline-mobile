@@ -8,7 +8,7 @@ angular.module('app.directives')
       },
       templateUrl: 'templates/profile/cards.html',
       controller: function ($scope, profile, cards, $rootScope, flurry) {
-        $scope.$emit('showSpinner');
+        $scope.showSpinner();
         cards.load()
           .then(function (collection) {
             if (collection.size()) {
@@ -16,7 +16,7 @@ angular.module('app.directives')
             }
           })
           .finally(function () {
-            $scope.$emit('hideSpinner');
+            $scope.hideSpinner();
           })
         ;
         var user = profile.get() || {};
@@ -37,7 +37,7 @@ angular.module('app.directives')
         };
 
         $scope.submit = function () {
-          $scope.$emit('showSpinner');
+          $scope.showSpinner();
           cards.create($scope.data)
             .then(function () {
               flurry.log('card added');
@@ -47,7 +47,7 @@ angular.module('app.directives')
               $rootScope.alert(error);
             })
             .finally(function () {
-              $scope.$emit('hideSpinner');
+              $scope.hideSpinner();
             })
           ;
         };
@@ -81,7 +81,7 @@ angular.module('app.directives')
         };
 
         $scope.submit = function () {
-          $scope.$emit('showSpinner');
+          $scope.showSpinner();
           cards.create($scope.data)
             .then(function (card) {
               flurry.log('card added');
@@ -91,7 +91,7 @@ angular.module('app.directives')
               $rootScope.alert(error);
             })
             .finally(function () {
-              $scope.$emit('hideSpinner');
+              $scope.hideSpinner();
             })
           ;
         };

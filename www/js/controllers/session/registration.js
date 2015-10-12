@@ -24,7 +24,7 @@ angular.module('app.controllers').controller('session.registration',
       if (registrationForm.$invalid) {
         $scope.alert('Correct the errors and try again', null, 'Error', 'OK');
       } else {
-        $scope.$emit('showSpinner');
+        $scope.showSpinner();
         users.findByUsername($scope.data.username).then(function(users) {
           if (users.length) {
             $scope.alert('The username is already being used', null, 'Error', 'OK');
@@ -32,7 +32,7 @@ angular.module('app.controllers').controller('session.registration',
             $scope.path('/registration-step2');
           }
         }).finally(function() {
-          $scope.$emit('hideSpinner');
+          $scope.hideSpinner();
         });
       }
     };

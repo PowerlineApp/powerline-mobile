@@ -5,12 +5,12 @@ angular.module('app.controllers').controller('influence.profile',
 
   flurry.log('user profile', {id: id});
 
-  $scope.$emit('showSpinner');
+  $scope.showSpinner();
   users.load(id).then(function (data) {
     $scope.data = data;
-    $scope.$emit('hideSpinner');
+    $scope.hideSpinner();
   }, function () {
-    $scope.$emit('hideSpinner');
+    $scope.hideSpinner();
   });
 
   if (profile.get() && profile.get().id !== id) {
@@ -48,18 +48,18 @@ angular.module('app.controllers').controller('influence.profile',
 
   function loadInfluences(showSpinner){
     if(showSpinner){
-      $scope.$emit('showSpinner');
+      $scope.showSpinner();
     }
     follows.load().then(function () {
       $scope.$broadcast('follows-loaded');
       $scope.$broadcast('scroll.refreshComplete');
       if(showSpinner){
-        $scope.$emit('hideSpinner');
+        $scope.hideSpinner();
       }
     }, function () {
       $scope.$broadcast('scroll.refreshComplete');
       if(showSpinner){
-        $scope.$emit('hideSpinner');
+        $scope.hideSpinner();
       }
     });
   }
@@ -146,12 +146,12 @@ angular.module('app.controllers').controller('influence.profile',
   var user = profile.get();
   
   if (user && user.facebook_id && facebook.getFriends().length) {
-    $scope.$emit('showSpinner');
+    $scope.showSpinner();
     influence.loadSuggested(facebook.getFriends()).then(function (suggested) {
-      $scope.$emit('hideSpinner');
+      $scope.hideSpinner();
       $scope.suggested = suggested;
     }, function () {
-      $scope.$emit('hideSpinner');
+      $scope.hideSpinner();
     });
   }
 
@@ -175,34 +175,34 @@ angular.module('app.controllers').controller('influence.profile',
   };
 
   $scope.follow = function (item) {
-    $scope.$emit('showSpinner');
+    $scope.showSpinner();
     item.$changeStatus({status: 'follow'}, loaded, loaded);
     $scope.results = _($scope.results).without(item);
     flurry.log('follow user', {id: item.id});
   };
 
   $scope.facebookFollow = function (item) {
-    $scope.$emit('showSpinner');
+    $scope.showSpinner();
     item.$changeStatus({status: 'follow'}, function () {
       influence.loadSuggested(facebook.getFriends()).then(function (suggested) {
-        $scope.$emit('hideSpinner');
+        $scope.hideSpinner();
         $scope.suggested = suggested;
       }, loaded);
     }, loaded);
   };
 
   function load() {
-    $scope.$emit('showSpinner');
+    $scope.showSpinner();
     influence.search($scope.data.query, $scope.data.page, $scope.data.max_count).then(function (results) {
       _(results).each(function (item) {
         $scope.results.push(item);
       });
-      $scope.$emit('hideSpinner');
+      $scope.hideSpinner();
     }, loaded);
   }
 
   function loaded() {
-    $scope.$emit('hideSpinner');
+    $scope.hideSpinner();
     influencesCD.view = 'following';
     $rootScope.$broadcast('influences-updated');
     $scope.path('/influences');
@@ -216,7 +216,7 @@ angular.module('app.controllers').controller('influence.profile',
     socialActivityTabManager.getCurrentTab().setShownAt();
     socialActivityTabManager.getState().reload = false;
     socialActivity.load().finally(function(){
-      $scope.$emit('hideSpinner');
+      $scope.hideSpinner();
       $scope.$broadcast('scroll.refreshComplete');
     });
   }
@@ -232,7 +232,7 @@ angular.module('app.controllers').controller('influence.profile',
 
 
   if (socialActivityTabManager.getState().reload) {
-    $scope.$emit('showSpinner');
+    $scope.showSpinner();
     loadNotifications();
   }
 
@@ -240,9 +240,9 @@ angular.module('app.controllers').controller('influence.profile',
 
   $scope.send = function (promise) {
     if(promise) {
-      $scope.$emit('showSpinner');
+      $scope.showSpinner();
       promise.finally(function () {
-        $scope.$emit('hideSpinner');
+        $scope.hideSpinner();
         socialActivityTabManager.getCurrentTab().setShownAt();
         socialActivityTabManager.getState().setup();
       });

@@ -15,11 +15,11 @@ angular.module('app.controllers').controller('profile', function ($scope, profil
     $scope.percent = newValue;
   });
 
-  $scope.$emit('showSpinner');
+  $scope.showSpinner();
   profile.load().then(loaded, loaded);
 
   function loaded() {
-    $scope.$emit('hideSpinner');
+    $scope.hideSpinner();
     $scope.profile = profile.get();
 
     if (!$scope.profile.is_registration_complete) {
@@ -51,13 +51,13 @@ angular.module('app.controllers').controller('profile', function ($scope, profil
         }
       });
 
-      $scope.$emit('showSpinner');
+      $scope.showSpinner();
       $scope.profile.$save({
         action: 'update',
         step: 0
       }, function () {
         groups.loadUserGroups().finally(function () {
-          $scope.$emit('hideSpinner');
+          $scope.hideSpinner();
           homeCtrlParams.loaded = false;
         });
         $scope.profile.avatar_src_prefix = null;
@@ -70,7 +70,7 @@ angular.module('app.controllers').controller('profile', function ($scope, profil
         $scope.view.editMode = false;
       }, function (response) {
         var data = response.data;
-        $scope.$emit('hideSpinner');
+        $scope.hideSpinner();
         if (data && data.errors) {
           _(data.errors).each(function (error) {
             if (profileForm[error.property]) {
@@ -140,16 +140,16 @@ angular.module('app.controllers').controller('profile', function ($scope, profil
         }
       });
 
-      $scope.$emit('showSpinner');
+      $scope.showSpinner();
       $scope.profile.$save({
         action: 'update',
         step: 0
       }, function () {
-        $scope.$emit('hideSpinner');
+        $scope.hideSpinner();
         $location.path('/profile-3');
       }, function (response) {
         var data = response.data;
-        $scope.$emit('hideSpinner');
+        $scope.hideSpinner();
         if (data && data.errors) {
           _(data.errors).each(function (error) {
             if (profileForm[error.property]) {
@@ -190,15 +190,15 @@ angular.module('app.controllers').controller('profile', function ($scope, profil
         }
       });
 
-      $scope.$emit('showSpinner');
+      $scope.showSpinner();
       $scope.profile.$save({
         action: 'update',
         step: 0
       }, function () {
-        $scope.$emit('hideSpinner');
+        $scope.hideSpinner();
         $location.path('/guide');
       }, function () {
-        $scope.$emit('hideSpinner');
+        $scope.hideSpinner();
       });
     }
   };
