@@ -1,9 +1,10 @@
 angular.module('app.services').factory('activity',
   function ($http, serverConfig, iStorage, JsModel, JsCollection, $q, representatives, groups, session, follows) {
 
-    var ACTIVITIES_CACHE_ID = 'last-activities';
+    var ACTIVITIES_CACHE_ID = 'last-activity-items';
     var read = iStorage.get('read-activities') || [];
     var deferredRead = [];
+    var defaultLimit = 20;
 
     var ActivityModel = JsModel.extend({
       labels: {
@@ -99,13 +100,13 @@ angular.module('app.services').factory('activity',
         ;
       },
       getSortMultiplier: function () {
-        if (this.get('closed')) {
+        /*if (this.get('closed')) {
           return 0;
         }
 
         if (this.isInPriorityZone()) {
           return 9;
-        }
+        }*/
 
         return 1;
       }
@@ -134,12 +135,16 @@ angular.module('app.services').factory('activity',
       }
     });
 
-    var activities = new ActivityCollection([], {
+    var initialItems = iStorage.get(ACTIVITIES_CACHE_ID) || [];
+    
+    var activities = new ActivityCollection(initialItems, {
       model: ActivityModel,
       comparator: function (activity) {
         return -activity.get('sent_at').getTime() * activity.getSortMultiplier();
       }
     });
+    
+    
     activities.setAnsweredQuestions = function (answers) {
       var types = _(['petition', 'question', 'payment-request', 'crowdfunding-payment-request', 'leader-event']);
       var answerById = {};
@@ -209,20 +214,45 @@ angular.module('app.services').factory('activity',
       return this;
     };
 
-    function load() {
-      return $http.get(serverConfig.url + '/api/activities/').then(function (response) {
-        return activities.add(response.data);
+    function load(offset, limit) {
+      offset = (offset === null || typeof(offset) === 'undefined') ? activities.size() : offset;
+      limit = limit || -1;
+      console.log(offset + '===' + limit);
+      return $http.get(serverConfig.url + '/api/activities/?offset=' + offset + 
+              '&limit=' + limit + '&sort=priority').then(function (response) {
+        activities = activities.add(response.data);
+        return activities;
       });
     }
 
     return {
 
-      load: function () {
+      /**
+       * loadType
+       *    - all (default value, load all activities after clear)
+       *    - append
+       *    - refresh
+       *    - clearAndLoad
+       */
+      load: function (loadType) {
+        loadType = loadType || 'all';
 
-        activities.reset();
-
-        var promises = [load()];
-
+        var originalSize = activities.size();
+        if (loadType !== 'append') {
+          activities.reset();
+        }
+        var promises = [];
+        
+        if(loadType === 'refresh'){
+          promises.push(load(0, originalSize));
+        } else if(loadType === 'clearAndLoad'){
+          promises.push(load(0, defaultLimit));
+        } else if(loadType === 'append') {
+          promises.push(load(null, defaultLimit));
+        } else {
+          promises.push(load());
+        }
+        
         if (!groups.getUserGroups().length) {
           promises.push(groups.loadUserGroups());
         }
@@ -232,10 +262,15 @@ angular.module('app.services').factory('activity',
         if (!follows.size()) {
           promises.push(follows.load());
         }
-
+        
+        var that = this;
         return $q.all(promises).then(function () {
-          iStorage.set(ACTIVITIES_CACHE_ID, activities.toJSON());
-          return $q.all([
+          return that.setAnswers();
+        });
+      },
+      
+      setAnswers: function(){
+        return $q.all([
             $http.get(serverConfig.url + '/api/poll/answers/').then(function (response) {
               activities.setAnsweredQuestions(response.data);
             }),
@@ -253,9 +288,10 @@ angular.module('app.services').factory('activity',
             });
 
             activities.remove(remove);
-            return activities.sort();
+            activities.sort();
+            iStorage.set(ACTIVITIES_CACHE_ID, activities.toArray().slice(0, defaultLimit)); //store only 20 items to cache
+            return activities;
           });
-        });
       },
 
       fetchFollowingActivities: function(id) {
@@ -308,6 +344,10 @@ angular.module('app.services').factory('activity',
 
       getActivities: function () {
         return activities;
+      },
+      
+      getDefaultLimit: function(){
+        return defaultLimit;
       }
     };
   });

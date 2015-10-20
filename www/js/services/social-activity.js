@@ -173,18 +173,20 @@ angular.module('app.services').factory('socialActivity', function ($http, server
 
   var tabs = [new Tab({}, {label: 'You', key: 0}), new Tab({}, {label: 'Following', key: 1})];
   var state = {
-    requestCount: 0,
-    hasNew: false,
+    requestCount: iStorage.get('request-count') || 0,
+    hasNew: iStorage.get('has-new') || false,
     setup: function () {
       state.hasNew = tabs[0].get('number_of_new') || tabs[1].get('number_of_new');
       state.requestCount = tabs[0].get('number_of_active_requests') + tabs[1].get('number_of_active_requests');
+      iStorage.set('has-new', state.hasNew);
+      iStorage.set('request-count', state.requestCount);
     }
   };
   var currentTab = tabs[0];
 
   function reset() {
-    state.requestCount = 0;
-    state.hasNew = false;
+    //state.requestCount = 0;
+    //state.hasNew = false;
     tabs[0].reset();
     tabs[1].reset();
   }

@@ -4,6 +4,8 @@ angular.module('app.controllers').controller('home', function ($scope, $timeout,
   flurry.log('news feed');
   
   $scope.filter = homeCtrlParams.filter;
+  
+  $scope.isLoadMore = false;
 
   var activities = activity.getActivities();
 
@@ -17,10 +19,8 @@ angular.module('app.controllers').controller('home', function ($scope, $timeout,
       return (activity.get('answered') || activity.get('closed') || activity.get('ignore_count')) ? memo : ++memo;
     }, 0);
   }
-
-  function prepare() {
-    homeCtrlParams.loaded = true;
-    activities.setDeferredRead().sort();
+  
+  function setFiltersData(){
     homeCtrlParams.filter.groups = groups.getGroupsOptions();
     _(homeCtrlParams.filter.groups).each(function (group) {
       group.activities = activities.getFilteredModels(group);
@@ -33,6 +33,12 @@ angular.module('app.controllers').controller('home', function ($scope, $timeout,
       }
     });
     homeCtrlParams.filter.unansweredCount = getUnansweredCount(activities.getFilteredModels());
+  }
+
+  function prepare() {
+    homeCtrlParams.loaded = true;
+    activities.setDeferredRead().sort();
+    setFiltersData();
 
     getActivities();
     $scope.loading = false;
@@ -41,11 +47,18 @@ angular.module('app.controllers').controller('home', function ($scope, $timeout,
     activity.saveRead();
   }
   
-  function loadActivities() {
-    activity.load().then(function () {
+  function loadActivities(loadType) {
+    var prevSize = activities.size();
+    activity.load(loadType).then(function () {
+      if(loadType === 'append' && prevSize === activities.size()){
+        $scope.isLoadMore = false;
+      } else {
+        $scope.isLoadMore = true;
+      }
       prepare();
       $scope.$emit('home.activities-reloaded');
       $scope.$broadcast('scroll.refreshComplete');
+      $scope.$broadcast('scroll.infiniteScrollComplete');
     }, prepare).finally(socialActivity.load);
   }
 
@@ -84,8 +97,12 @@ angular.module('app.controllers').controller('home', function ($scope, $timeout,
     return steps;
   };
   
+  $scope.loadMoreActivities = function(){
+    loadActivities('append');
+  };
+  
   $scope.pullToRefresh = function(){
-    loadActivities();
+    loadActivities('clearAndLoad');
   };
 
   $scope.$watch('filter.selectedGroup', getActivities);
@@ -98,11 +115,11 @@ angular.module('app.controllers').controller('home', function ($scope, $timeout,
   });
 
   $scope.$on('notification.received', function () {
-    activity.load().then(prepare, prepare);
+    loadActivities('refresh');
   });
 
   $scope.$on('activity.reload', function () {
-    activity.load().then(prepare, prepare);
+    loadActivities('refresh');
   });
   
   //move scroll to top when filter is changed
@@ -121,14 +138,21 @@ angular.module('app.controllers').controller('home', function ($scope, $timeout,
     if (!profile.get()) {
       profile.load();
     }
-  
+    
     if (!homeCtrlParams.loaded) {
-      $scope.loading = true;
-      loadActivities();
+      if(activities.size() === 0){
+        $scope.isLoadMore = true;
+      }else{
+        loadActivities('refresh');
+      }
     } else {
       prepare();
     }
   });
+  
+  //call this because cache may be loaded
+  setFiltersData();
+  getActivities();
 });
 
 angular.module('app.controllers').run(function(homeCtrlParams, $document, $rootScope) {

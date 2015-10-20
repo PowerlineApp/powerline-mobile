@@ -72,8 +72,11 @@
       Hmm - Your newsfeed is empty! Looks like a great opportunity to take a stand, start a discussion,
       or improve your community by creating a post or petition. Use the button in the upper-right corner of the screen!
     </p>
-    <section dng-show="!loading" class="activity-list-wrap" ng-include=" 'templates/home/activities.html'"></section>
-
-    <br>
+    <section class="activity-list-wrap" ng-include=" 'templates/home/activities.html'"></section>
+    
+    <ion-infinite-scroll
+      ng-if="isLoadMore"
+      on-infinite="loadMoreActivities()">
+    </ion-infinite-scroll>
   </ion-content>
 </ion-view>

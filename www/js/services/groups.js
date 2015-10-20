@@ -1,5 +1,7 @@
-angular.module('app.services').factory('groups',function ($resource, serverConfig, $q, $http, PermissionsModel) {
+angular.module('app.services').factory('groups',function ($resource, serverConfig, $q, $http, PermissionsModel, iStorage) {
 
+  var GROUPS_CACHE_ID = 'group-items';
+  var USER_GROUPS_CACHE_ID = 'user-group-items';
   var GROUP_TYPE_COMMON = 0
 //        GROUP_TYPE_COUNTRY = 1,
 //        GROUP_TYPE_STATE = 2,
@@ -29,7 +31,7 @@ angular.module('app.services').factory('groups',function ($resource, serverConfi
   var popularGroups = [];
   var newGroups = [];
   var groupsInfo = {};
-  var userGroups = [];
+  var userGroups = iStorage.get(USER_GROUPS_CACHE_ID) || [];
   var userGroupsIds = _([]);
   var userGroupsByGroupId = {};
 
@@ -297,10 +299,13 @@ angular.module('app.services').factory('groups',function ($resource, serverConfi
   function loadUserGroups() {
     return $http.get(serverConfig.url + '/api/groups/user-groups/').then(function (response) {
       userGroups = response.data;
+      iStorage.set(USER_GROUPS_CACHE_ID, userGroups);
       updateStatus();
     });
   }
 
+  //call this function initially because cache may be loaded
+  updateStatus();
 
   return service;
 }).factory('groupsInvites',function (GroupsInvitesResource, $q) {
