@@ -101,5 +101,6 @@
   }
   .bar-subheader{
     top: $notificationsTabHeight + $mainHeaderHeight;
+    border-top: 0px solid;
   }
 }

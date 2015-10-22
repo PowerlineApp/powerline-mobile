@@ -17,7 +17,7 @@
     <ul class="request-list" i-radio-list-class="'active'">
       <li ng-repeat="item in items" i-radio-list-item>
         <figure>
-          <img ng-src="{{ item.avatar_file_path}}">
+          <avatar-img img="item.avatar_file_name" text="item.official_title"></avatar-img>
         </figure>
         <p><span>{{ item.official_title}}</span> group</p>
         <p>invite you to join</p>
@@ -28,7 +28,7 @@
       </li>
       <li ng-repeat="item in invites.models" i-radio-list-item>
         <figure>
-          <img ng-src="{{ item.get('inviter').avatar_file_name}}">
+          <avatar-img img="item.get('inviter').avatar_file_name" text="item.get('inviter').first_name"></avatar-img>
         </figure>
         <p><span>{{ item.get('inviter').first_name}} {{ item.get('inviter').last_name}}</span> invite you to join</p>
         <p><span>{{ item.get('group').official_title}}</span> group</p>
@@ -44,7 +44,7 @@
     <ul class="activities-list">
       <li ng-repeat="announcement in announcements" class="item read">
         <figure ng-click="navigateTo('owner-profile', announcement.user)">
-          <img ng-src="{{ announcement.user.avatar_file_path}}" width="35">
+          <avatar-img img="announcement.user.avatar_file_path" text="announcement.user.type === 'group' ? announcement.user.official_title : announcement.user.first_name"></avatar-img>
         </figure>
         <div class="item-title">
           <strong

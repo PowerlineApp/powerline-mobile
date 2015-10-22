@@ -1410,7 +1410,8 @@ select.choice-filter {
   .has-notifications-bar .content.has-subheader {
     top: 126px; }
 .has-notifications-bar .bar-subheader {
-  top: 82px; }
+  top: 82px;
+  border-top: 0px solid; }
 
 /*.top-bar {
 

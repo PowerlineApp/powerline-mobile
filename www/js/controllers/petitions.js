@@ -132,7 +132,6 @@ function ($scope,  petitions, PetitionsResource, groups, $stateParams, errorForm
   var cache = $cacheFactory.get('petitionController');
   $scope.petition = cache.get($stateParams.id);
   activity.setEntityRead({id: Number($stateParams.id), type: 'micro-petition'});
-
   flurry.log('micro petition', {id: Number($stateParams.id)});
 
   if (!$scope.petition) {

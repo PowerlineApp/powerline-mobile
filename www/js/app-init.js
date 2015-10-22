@@ -136,4 +136,9 @@ angular.module('app').run(function ($location, layout, spinnerIndicator, $rootSc
     $window.navigator.notification.confirm.apply(null, arguments);
   };
 
+  $rootScope.isDefaultAvatar = function(avatarUrl){
+    return !avatarUrl || avatarUrl.indexOf('default_user.png') !== -1 
+            || avatarUrl.indexOf('default_group.png') !== -1
+            || avatarUrl.indexOf('default_representative.png') !== -1;
+  };
 });

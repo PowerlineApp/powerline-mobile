@@ -1,7 +1,7 @@
 <div class="item">
   <div class="avatar">
     <figure ng-click="socialActivityHandler.navigateToOwner(item);$event.stopPropagation();">
-      <img ng-src="{{ item.get('avatar') }}">
+      <avatar-img img="item.get('avatar')" text="item.get('following').full_name"></avatar-img>
     </figure>
   </div>
   <div class="item-content">

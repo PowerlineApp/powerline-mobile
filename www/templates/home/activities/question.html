@@ -1,7 +1,8 @@
 <article class="item">
 
   <figure ng-click="navigateTo('owner-profile', activity.get('owner'));$event.stopPropagation();">
-    <img bo-show="avatar_file_path" bo-src="avatar_file_path">
+    <img bo-show="avatar_file_path" bo-src="avatar_file_path" ng-if="!isDefaultAvatar">
+    <ng-letter-avatar data="{{(full_name| trim) || (official_title| trim)}}" ng-if="isDefaultAvatar"></ng-letter-avatar>
     <span ng-show="activity.isInPriorityZone()"></span>
   </figure>
 
