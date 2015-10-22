@@ -37,6 +37,12 @@
       <a ng-click="unsign()">undo</a>
     </div>
     <div class="control"><a ng-click="navigateToActivity(activity, 'add-comment')" class="activity-control reply"></a></div>
+    <div class="control" ng-show="followable && !isMine && isFollowShow">
+      <a ng-click="followOwner()"><i class="icon ion-person-add"></i></a>
+    </div>
+    <div class="control" ng-show="!followable && !isMine && isFollowShow">
+      <span><i class="icon ion-checkmark"></i></span>
+    </div>
     <div class="responses" bo-bind="responses_count"></div>
   </div>
 </article>

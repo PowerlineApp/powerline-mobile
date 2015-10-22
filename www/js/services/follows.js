@@ -58,6 +58,8 @@ angular.module('app.services').factory('follows', function ($http, JsCollection,
 
   follows.load = function () {
     return $http.get(serverConfig.url + '/api/follow/').then(function (response) {
+      follows.loaded = true;
+      console.log(follows.loaded);
       return follows.set(response.data);
     });
   };

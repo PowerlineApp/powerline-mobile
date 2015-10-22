@@ -5,7 +5,7 @@
     </figure>
   </div>
   <div class="item-content">
-    <div ng-bind-html="item.get('html_message')"></div>
+    <div ng-bind-html="item.getHtmlMessage()"></div>
     <i ng-class="['sa-type', item.get('sa-icon')]"><time>{{ item.get('created_at') | elapsed }}</time> ago</i>
   </div>
   <div class="follow-request">
