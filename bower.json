@@ -16,7 +16,8 @@
     "js-collection": "https://github.com/intellectsoft-uk/js-collection.git#~0.0.2",
     "bluebird": "~2.10.2",
     "angular-resource": "~1.4.7",
-    "font-awesome": "~4.4.0"
+    "font-awesome": "~4.4.0",
+    "ng-letter-avatar": "ngletteravatar#~3.0.1"
   },
   "devDependencies": {
     "angular-scenario": "~1.4.7",

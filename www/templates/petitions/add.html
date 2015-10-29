@@ -7,7 +7,7 @@
     <section class="dropdown-1">
       <div class="title" ng-click="data.openChoices = !data.openChoices">
         <fieldset class="profile-avatar">
-          <img ng-src="{{ profile.avatar_file_name}}" />
+          <avatar-img img="profile.avatar_file_name" text="profile.first_name"></avatar-img>
         </fieldset>
         <span>
           <fieldset class="avatar" ng-show="data.group">
@@ -19,7 +19,7 @@
       </div>
       <ul class="choices" ng-show="data.openChoices">
         <li ng-repeat="item in groups" ng-click="data.group = item;
-            data.openChoices = false;">
+                data.openChoices = false;">
           <span>
             <fieldset class="avatar">
               <img ng-src="{{ item.getIconWhite()}}" />
@@ -42,7 +42,7 @@
     </form>
 
   </ion-content>
-  
+
   <section class="footer-fixed" style="padding: 18px 12px;">
     <strong class="right" ng-bind="data.chars_left"></strong>
     <span ng-show="data.group && data.group.available !== undefined">

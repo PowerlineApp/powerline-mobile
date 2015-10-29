@@ -19,7 +19,7 @@
         <li class="title">Popular Groups</li>
         <li ng-repeat="item in popularItems">
           <figure ng-click="navigateTo('group-profile', item)">
-            <img ng-src="{{ item.avatar_file_path}}">
+            <avatar-img img="item.avatar_file_path" text="item.official_title"></avatar-img>
           </figure>
           <p ng-click="navigateTo('group-profile', item)">{{ item.official_title}}</p>
           <p class="btn-add" ng-click="navigateTo('group-join', item)"></p>
@@ -30,7 +30,7 @@
         <li class="title">New Groups</li>
         <li ng-repeat="item in newItems">
           <figure ng-click="navigateTo('group-profile', item)">
-            <img ng-src="{{ item.avatar_file_path}}">
+            <avatar-img img="item.avatar_file_path" text="item.official_title"></avatar-img>
           </figure>
           <p ng-click="navigateTo('group-profile', item)">{{ item.official_title}}</p>
           <p class="btn-add" ng-click="navigateTo('group-join', item)"></p>
@@ -42,7 +42,7 @@
       <li class="title">Results</li>
       <li ng-repeat="item in searchItems">
         <figure ng-click="navigateTo('group-profile', item)">
-          <img ng-src="{{ item.avatar_file_path}}">
+          <avatar-img img="item.avatar_file_path" text="item.official_title"></avatar-img>
         </figure>
         <p ng-click="navigateTo('group-profile', item)">{{ item.official_title}}</p>
         <p ng-if="item.joined === 0" class="btn-add" ng-click="navigateTo('group-join', item)"></p>

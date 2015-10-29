@@ -85,7 +85,7 @@ angular.module('app.controllers').controller('influence.profile',
   
   //if this page is opened from menu or there is not data, we should refresh data
   $scope.$on('$ionicView.enter', function(){
-    if($scope.isEmpty() || $rootScope.menuClicked){
+    if($scope.isEmpty()/* || $rootScope.menuClicked*/){
       loadInfluences(true);
     }
   });

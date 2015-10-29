@@ -1410,7 +1410,8 @@ select.choice-filter {
   .has-notifications-bar .content.has-subheader {
     top: 126px; }
 .has-notifications-bar .bar-subheader {
-  top: 82px; }
+  top: 82px;
+  border-top: 0px solid; }
 
 /*.top-bar {
 
@@ -2741,10 +2742,12 @@ asterisk {
       min-width: 50px;
       text-align: center;
       font-size: 13px; }
-      .activities-list .item .item-footer .control a {
+      .activities-list .item .item-footer .control a, .activities-list .item .item-footer .control span {
         font-size: 13px;
         font-family: 'Lato Bold';
         text-transform: uppercase; }
+      .activities-list .item .item-footer .control .icon {
+        font-size: 20px; }
   .activities-list .item > figure {
     display: block;
     position: absolute;
@@ -2792,7 +2795,8 @@ asterisk {
     .sa-items .item .item-content p {
       font-size: 13px;
       color: #798ca6;
-      line-height: 1.3em; }
+      line-height: 1.3em;
+      white-space: normal; }
       .sa-items .item .item-content p strong {
         font-family: "Lato Bold"; }
     .sa-items .item .item-content .sa-type {

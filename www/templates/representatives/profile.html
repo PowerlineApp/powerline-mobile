@@ -2,7 +2,7 @@
   <ion-content class="content">
     <section class="p-header">
       <div class="avatar">
-          <img ng-src="{{ data.avatar_file_path }}"/>
+          <avatar-img img="data.avatar_file_path" text="data.first_name"></avatar-img>
       </div>
       <h3 ng-bind="data.first_name +  ' '  +  data.last_name"></h3>
       <p class="text-gray-light" ng-bind="data.official_title"></p>

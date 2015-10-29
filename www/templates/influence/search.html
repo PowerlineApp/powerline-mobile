@@ -13,7 +13,7 @@
       <ul class="profiles-list-two">
         <li ng-repeat="item in results">
           <figure ng-click="navigateTo('path', 'influence/profile', item.id)">
-            <img ng-src="{{ item.avatar_file_name}}">
+            <avatar-img img="item.avatar_file_name" text="item.first_name"></avatar-img>
           </figure>
           <p ng-click="navigateTo('path', 'influence/profile', item.id)">{{ item.username}}</p>
           <p><span>{{ item.first_name}} {{ item.last_name}}</span></p>
@@ -28,7 +28,7 @@
         <li class="title">Suggested from Facebook</li>
         <li ng-repeat="item in suggested">
           <figure ng-click="navigateTo('path', 'influence/profile', item.id)">
-            <img ng-src="{{ item.avatar_file_name}}">
+            <avatar-img img="item.avatar_file_name" text="item.first_name"></avatar-img>
           </figure>
           <p ng-click="navigateTo('path', 'influence/profile', item.id)">{{ item.username}}</p>
           <p><span>{{ item.first_name}} {{ item.last_name}}</span></p>

@@ -814,10 +814,13 @@
         text-align: center;
         font-size: 13px;
 
-        a {
+        a, span {
           font-size: 13px;
           font-family: 'Lato Bold';
           text-transform: uppercase;
+        }
+        .icon{
+          font-size: 20px;
         }
       }
     }
@@ -885,6 +888,7 @@
         color: #798ca6;
         line-height: 1.3em;
         strong {font-family: "Lato Bold";}
+        white-space: normal;
       }
       .sa-type {
         color: #c3c3c3;

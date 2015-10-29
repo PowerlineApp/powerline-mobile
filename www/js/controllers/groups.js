@@ -35,7 +35,7 @@ angular.module('app.controllers').controller('groups',function ($scope, groups, 
   
   //if this page is opened from menu or there is not data, we should refresh data
   $scope.$on('$ionicView.enter', function(){
-    if($scope.items.length === 0 || $rootScope.menuClicked){
+    if($scope.items.length === 0/* || $rootScope.menuClicked*/){
       loadGroups(true);
       groups.loadSuggested();
     }

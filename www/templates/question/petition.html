@@ -3,7 +3,7 @@
   <ion-content class="content">
     <section class="q-header margin-10">
       <div class="avatar" ng-click="navigateTo('owner-profile', q.user)">
-          <img ng-src="{{ q.user.avatar_file_path }}"/>
+        <avatar-img img="q.user.avatar_file_path" text="q.user.official_title || q.user.first_name"></avatar-img>
       </div>
       <div class="q-info three-sections">
           <div>

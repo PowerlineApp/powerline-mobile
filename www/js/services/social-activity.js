@@ -49,6 +49,24 @@ angular.module('app.services').factory('socialActivity', function ($http, server
     getWidgetType: function () {
       return this.isFollowRequest() ? 'follow-request' : 'link';
     },
+    getHtmlMessage: function(){
+      if(this.getWidgetType() !== 'follow-request'){
+        return this.get('html_message');
+      }
+      //when being shown to owner
+      if(this.get('userFollow').get('id') === this.get('target').id){
+        if(!this.get('userFollow').isApproved() && !this.get('ignore')){
+          return '<p><strong>' + this.get('userFollow').get('follower').full_name + '</strong> requested to follow you.</p>';
+        }
+        if(this.get('userFollow').isApproved() && !this.get('userFollow').isFollow()){
+          return '<p><strong>' + this.get('userFollow').get('follower').full_name + '</strong> is now following you. Follow back?</p>';
+        }
+        if(this.get('userFollow').isApproved() && this.get('userFollow').isFollow()){
+          return '<p><strong>' + this.get('userFollow').get('follower').full_name + '</strong> and you are now following each other.</p>';
+        }
+      }
+      return this.get('html_message');
+    },
     ignore: function () {
       this.set('ignore', true);
       $http.put(serverConfig.url + '/api/social-activities/' + this.get('id'), {ignore: 1});

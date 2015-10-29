@@ -180,7 +180,7 @@ angular.module('app.controllers').controller('preload', function (topBar, sessio
   }
 });
 
-angular.module('app.controllers').directive('iActivity', function($rootScope, questions, petitions, discussion, elapsedFilter) {
+angular.module('app.controllers').directive('iActivity', function($rootScope, questions, petitions, discussion, elapsedFilter, follows, session) {
 
   function eventCtrl($scope) {
     $scope.templateSrc = 'templates/home/activities/event.html';
@@ -209,6 +209,9 @@ angular.module('app.controllers').directive('iActivity', function($rootScope, qu
   function postCtrl($scope) {
     $scope.templateSrc = 'templates/home/activities/post.html';
     $scope.booster = (85 * ($scope.activity.get('owner').type === 'group' ? 100 : $scope.activity.getQuorumCompletedPercent())) / 100;
+    var follow = follows.getByUserId($scope.activity.get('owner').id);
+    $scope.followable = !follow.isFollow();
+    $scope.isFollowShow = follows.loaded && follow.get('user').id !== session.user_id;
     $scope.sign = function(optionId) {
       $scope.sending = true;
       petitions.answer($scope.activity.get('entity').id, optionId).then(function(answer) {
@@ -220,6 +223,13 @@ angular.module('app.controllers').directive('iActivity', function($rootScope, qu
       $scope.sending = true;
       petitions.unsign($scope.activity.get('entity').id, $scope.activity.get('answer').option_id).then(function() {
         $scope.activity.set('answered', false).set('answer', null);
+        $scope.sending = false;
+      });
+    };
+    $scope.followOwner = function(){
+      $scope.sending = true;
+      follow.follow().then(function(){
+        $scope.activity.followable = false;
         $scope.sending = false;
       });
     };
@@ -295,6 +305,7 @@ angular.module('app.controllers').directive('iActivity', function($rootScope, qu
       $scope.owner_info_1 = $scope.activity.get('owner_info_1');
       $scope.sent_at_elapsed = elapsedFilter($scope.activity.get('sent_at'));
       $scope.responses_count = $scope.activity.get('responses_count');
+      $scope.isDefaultAvatar = $rootScope.isDefaultAvatar($scope.avatar_file_path);
 
       var entity = $scope.activity.get('entity');
 

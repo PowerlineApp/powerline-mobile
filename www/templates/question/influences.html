@@ -4,7 +4,7 @@
     <div class="item" ng-repeat="item in answers" style="margin: 0;">
         <div class="wrap">
             <figure ng-click="navigateTo('influence-profile', item.user.id)">
-                <img ng-src="{{ item.user.avatar_file_name }}" width="35">
+              <avatar-img img="item.user.avatar_file_name" text="item.user.username"></avatar-img>
             </figure>
             <div class="header">
                 <strong ng-class="{gray: !item.user.id}">{{ item.user.username }}</strong> <span>said <span class="marked">{{ q.getOptionLabel(item.option_id) }}</span> </span><br><br>

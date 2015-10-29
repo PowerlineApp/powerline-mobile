@@ -20,7 +20,7 @@
       <li class="title">Users</li>
       <li ng-repeat="item in data.users" ng-click="navigateTo('owner-profile', item)">
         <figure>
-          <img ng-src="{{ item.avatar_file_name}}">
+          <avatar-img img="item.avatar_file_name" text="item.first_name"></avatar-img>
         </figure>
         <p>{{ item.username}}</p>
         <p><span>{{ item.first_name}} {{ item.last_name}}</span></p>
@@ -31,7 +31,7 @@
       <li class="title">Groups</li>
       <li ng-repeat="item in data.groups" ng-click="navigateTo('owner-profile', item)">
         <figure>
-          <img ng-src="{{ item.avatar_file_path}}">
+          <avatar-img img="item.avatar_file_path" text="item.official_title"></avatar-img>
         </figure>
         <p>{{ item.official_title}}</p>
       </li>
@@ -41,7 +41,7 @@
       <li class="title">Representatives</li>
       <li ng-repeat="item in data.representatives" ng-click="navigateTo('owner-profile', item)">
         <figure>
-          <img ng-show="item.avatar_file_path" ng-src="{{ item.avatar_file_path}}">
+          <avatar-img img="item.avatar_file_path" text="item.first_name"></avatar-img>
         </figure>
         <p>{{ item.first_name}} {{ item.last_name}}</p>
         <p><span>{{ item.official_title}}</span></p>
@@ -52,7 +52,7 @@
       <article class="item" ng-repeat="item in data.petitions" ng-click="navigateTo('path', 'petition', item.id)">
         <div class="item-title">
           <figure ng-click="navigateTo('owner-profile', item.owner)">
-            <img ng-show="item.owner.avatar" ng-src="{{ item.owner.avatar}}">
+            <avatar-img img="item.owner.avatar" text="item.owner.name"></avatar-img>
           </figure>
           <div ng-class="item.owner.type">
             <p ng-bind="item.owner.name"></p>
