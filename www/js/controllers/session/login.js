@@ -17,17 +17,19 @@ angular.module('app.controllers').controller('session.login',function ($scope, h
     $scope.showSpinner();
     session.login($scope.data, $scope.keepLogged).then(
       function () {
-        $scope.hideSpinner();
         //clear cache and history
         $ionicHistory.clearCache();
         $ionicHistory.clearHistory();
         homeCtrlParams.loaded = false;
         flurry.log('logged in');
-        if (!session.is_registration_complete) {
-          $scope.path('/profile');
-        } else {
-          $scope.path('/main');
-        }
+        $timeout(function(){
+          $scope.hideSpinner();
+          if (!session.is_registration_complete) {
+            $scope.path('/profile');
+          } else {
+            $scope.path('/main');
+          }
+        }, 500);
       },
       function (status) {
         $scope.hideSpinner();

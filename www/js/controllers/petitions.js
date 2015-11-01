@@ -160,11 +160,11 @@ function ($scope,  petitions, PetitionsResource, groups, $stateParams, errorForm
       $scope.shareTitle = petition.title;
       $scope.shareImage = petition.share_picture;
 
-      if ((petition.answer_id && petition.answer_id !== 3) || petition.expired || session.user_id === petition.user.id) {
-        $scope.subview = 'templates/petitions/results.html';
-      } else {
+      //if ((petition.answer_id && petition.answer_id !== 3) || petition.expired || session.user_id === petition.user.id) {
+      //  $scope.subview = 'templates/petitions/results.html';
+      //} else {
         $scope.subview = 'templates/petitions/options.html';
-      }
+      //}
 
       if (petition.answer_id && petition.answer_id === 3) {
         $scope.current = petition.options[2];

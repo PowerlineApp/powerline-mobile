@@ -101,6 +101,10 @@ angular.module('app').run(function ($location, layout, spinnerIndicator, $rootSc
     }
   };
 
+  $rootScope.getActiveClass = function (a, b) {
+    return a === b ? 'active' : '';
+  };
+  
   $rootScope.alert = function () {
     if ($window.navigator.notification) {
       $window.navigator.notification.alert.apply(null, arguments);
