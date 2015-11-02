@@ -2663,7 +2663,7 @@ asterisk {
     .activities-list .item .item-content .completion-fill-vertical {
       position: absolute;
       right: 4px;
-      top: -10px; }
+      top: -30px; }
   .activities-list .item .item-title {
     padding: 21px 76px 0 58px;
     font-size: 12px;
