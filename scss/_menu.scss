@@ -47,7 +47,8 @@ $menuBorderBottomColor: #31316e;
   li.share-item i {background-position-y: -493px;}
 
   li.active,
-  li.ng-click-active {
+  li.ng-click-active,
+  li.activated{
     background-color: $menuBgColorActive;
     color: $menuColorActive;
   }
