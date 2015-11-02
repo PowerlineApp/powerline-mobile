@@ -211,6 +211,9 @@ angular.module('app.controllers').directive('iActivity', function($rootScope, qu
     $scope.booster = (85 * ($scope.activity.get('owner').type === 'group' ? 100 : $scope.activity.getQuorumCompletedPercent())) / 100;
     var follow = follows.getByUserId($scope.activity.get('owner').id);
     $scope.followable = !follow.isFollow();
+    if($scope.followable && follow.isApproved()){
+      $scope.isFollowApproved = true;
+    }
     $scope.isFollowShow = follows.loaded && follow.get('user').id !== session.user_id;
     $scope.sign = function(optionId) {
       $scope.sending = true;
