@@ -34,8 +34,8 @@ angular.module('app').run(function ($location, layout, spinnerIndicator, $rootSc
   $rootScope.$on('$stateChangeSuccess', function (event, toState, toParams, fromState, fromParams) {
     var stateKey = toState.name.substr(4);
     var wrapperClasses = [];
-    var lightClassStates = ['terms', 'forgotPassword', 'registration', 'registrationStep2', 'registrationStep3', 
-              'guide', 'guideConfirm', 'profile2', 'profile3'];
+    var lightClassStates = ['terms', 'forgotPassword', 'registration', 'registrationStep2', 'registrationStep3',
+      'guide', 'guideConfirm', 'profile2', 'profile3'];
     if (lightClassStates.indexOf(stateKey) !== -1) {
       wrapperClasses.push('light');
     }
@@ -47,7 +47,7 @@ angular.module('app').run(function ($location, layout, spinnerIndicator, $rootSc
   });
 
   $rootScope.navigateTo = navigateTo;
-  
+
   // show/hide spinner globally
   $rootScope.showSpinner = function (indicator) {
     spinnerIndicator.show(indicator);
@@ -104,13 +104,13 @@ angular.module('app').run(function ($location, layout, spinnerIndicator, $rootSc
   $rootScope.getActiveClass = function (a, b) {
     return a === b ? 'active' : '';
   };
-  
+
   $rootScope.alert = function () {
     if ($window.navigator.notification) {
       $window.navigator.notification.alert.apply(null, arguments);
     } else {
       alert(arguments[0]);
-      if(arguments[1]){
+      if (arguments[1]) {
         arguments[1]();
       }
     }
@@ -118,7 +118,7 @@ angular.module('app').run(function ($location, layout, spinnerIndicator, $rootSc
 
   $rootScope.confirmAction = function (message, title, buttonLabels) {
     var deferred = $q.defer();
-    if($window.navigator.notification){
+    if ($window.navigator.notification) {
       $window.navigator.notification.confirm(message, function (btn) {
         if (1 === btn) {
           deferred.resolve(btn);
@@ -140,8 +140,8 @@ angular.module('app').run(function ($location, layout, spinnerIndicator, $rootSc
     $window.navigator.notification.confirm.apply(null, arguments);
   };
 
-  $rootScope.isDefaultAvatar = function(avatarUrl){
-    return !avatarUrl || avatarUrl.indexOf('default_user.png') !== -1 
+  $rootScope.isDefaultAvatar = function (avatarUrl) {
+    return !avatarUrl || avatarUrl.indexOf('default_user.png') !== -1
             || avatarUrl.indexOf('default_group.png') !== -1
             || avatarUrl.indexOf('default_representative.png') !== -1;
   };

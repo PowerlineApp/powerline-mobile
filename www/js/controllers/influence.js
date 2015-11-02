@@ -215,6 +215,7 @@ angular.module('app.controllers').controller('influence.profile',
   function loadNotifications(){
     socialActivityTabManager.getCurrentTab().setShownAt();
     socialActivityTabManager.getState().reload = false;
+    $scope.showSpinner();
     socialActivity.load().finally(function(){
       $scope.hideSpinner();
       $scope.$broadcast('scroll.refreshComplete');
@@ -230,11 +231,6 @@ angular.module('app.controllers').controller('influence.profile',
     socialActivityTabManager.getState().setup();
   };
 
-
-  if (socialActivityTabManager.getState().reload) {
-    $scope.showSpinner();
-    loadNotifications();
-  }
 
   $scope.currentTab = socialActivityTabManager.getCurrentTab();
 
@@ -256,6 +252,13 @@ angular.module('app.controllers').controller('influence.profile',
     socialActivityTabManager.getState().reload = true;
     loadNotifications();
   };
+  
+  $scope.$on('$ionicView.enter', function(){
+    if (socialActivityTabManager.getState().reload) {
+      loadNotifications();
+    }
+  });
+  
 
 }).directive('saItem', function () {
   return {

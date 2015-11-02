@@ -19,6 +19,7 @@ angular.module('app', [
   $httpProvider.interceptors.push('authInterceptor');
   
   $ionicConfigProvider.views.transition('android');
+  //$ionicConfigProvider.scrolling.jsScrolling(false);
 
   //$locationProvider.html5Mode(false);
 

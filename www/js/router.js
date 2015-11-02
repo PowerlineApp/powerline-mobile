@@ -161,6 +161,7 @@ angular.module('app')
       templateUrl: 'templates/influence/search.html',
       controller: 'influences.search'
     }, {
+      cache: true,
       name: 'influencesNotification',
       url: '/influences/notifications',
       templateUrl: 'templates/influence/notifications.html',
