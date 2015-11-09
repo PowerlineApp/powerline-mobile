@@ -2862,13 +2862,18 @@ asterisk {
     order: 3;
     text-align: center;
     margin-left: auto;
-    padding: 0 8px;
-    min-width: 58px; }
+    margin-top: -5px;
+    padding: 0 8px 0px 3px; }
     .sa-items .item .follow-request button {
       display: block;
       font-size: 10px;
       width: 100%;
-      margin-bottom: 10px; }
+      margin-bottom: 10px;
+      padding: 5px 3px;
+      min-width: 60px;
+      font-size: 13px; }
+      .sa-items .item .follow-request button:last-child {
+        margin-bottom: 0px; }
 .sa-items .no-results {
   text-align: center;
   font-style: italic;
