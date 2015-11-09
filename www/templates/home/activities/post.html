@@ -7,22 +7,18 @@
   </figure>
 
   <div class="item-title">
-    <i bo-class="iconClass"></i>
-    <strong bo-bind="full_name"></strong>
-    <strong bo-bind="official_title"></strong>
-    <span bo-if="owner_info_1" bo-bind="owner_info_1"></span>
+    <p class="first-line">
+      <i bo-class="iconClass"></i>
+      <strong bo-bind="full_name"></strong>
+      <strong bo-bind="official_title"></strong>
+      <span bo-if="owner_info_1" bo-bind="owner_info_1"></span>
+    </p>
+    <p ng-class="{unanswered: activity.isUnanswered()}" bo-if="title" bo-bind="title"></p>
     <i class="time"><time>{{ sent_at_elapsed }}</time></i>
   </div>
   <div class="item-content" ng-click="navigateToActivity(activity)">
     <p bo-if="activity.get('image_src')" class="picture"><img bo-src="activity.get('image_src')"/></p>
-    <p ng-class="{unanswered: activity.isUnanswered()}" bo-if="title" bo-bind="title"></p>
     <p ng-class="{unanswered: activity.isUnanswered() && !title}" bo-bind="description"></p>
-
-    <div class="completion-fill-vertical">
-      <div class="process-wrap">
-        <div class="process" ng-style="{height: booster + 'px' }"></div>
-      </div>
-    </div>
   </div>
   <div class="item-footer">
     <div class="control" ng-show="sending">
@@ -46,5 +42,10 @@
       <span ng-show="!isFollowApproved" ng-click="showToast('Waiting for user to approve...')"><i class="icon ion-person"></i></span>
     </div>
     <div class="responses" bo-bind="responses_count"></div>
+  </div>
+  <div class="completion-fill-vertical">
+    <div class="process-wrap">
+      <div class="process" ng-style="{height: booster + '%' }"></div>
+    </div>
   </div>
 </article>

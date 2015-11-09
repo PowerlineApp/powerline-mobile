@@ -2635,10 +2635,18 @@ asterisk {
   white-space: normal;
   border-width: 0px;
   color: inherit; }
+  .activities-list .item .completion-fill-vertical {
+    position: absolute;
+    right: 4px;
+    top: 2px;
+    bottom: 42px;
+    height: auto; }
+    .activities-list .item .completion-fill-vertical .process-wrap {
+      height: 100%;
+      min-height: 0; }
   .activities-list .item .item-content {
-    padding: 7px 10px 15px 58px;
+    padding: 10px 5px 7px 5px;
     font-size: 14px;
-    min-height: 60px;
     position: relative;
     white-space: normal;
     overflow: visible; }
@@ -2651,7 +2659,9 @@ asterisk {
       -webkit-box-orient: vertical;
       display: -webkit-box;
       line-height: 1.4em;
-      white-space: normal; }
+      white-space: normal;
+      font-size: 16px;
+      margin-bottom: 0px !important; }
       .activities-list .item .item-content p.unanswered {
         font-family: "Lato"; }
       .activities-list .item .item-content p:first-child {
@@ -2662,16 +2672,13 @@ asterisk {
           opacity: 0.7; }
     .activities-list .item .item-content .picture img {
       width: 100%; }
-    .activities-list .item .item-content .completion-fill-vertical {
-      position: absolute;
-      right: 4px;
-      top: -30px; }
   .activities-list .item .item-title {
-    padding: 21px 76px 0 58px;
+    padding: 10px 10px 0px 50px;
     font-size: 12px;
     color: #798ca6;
     font-family: "Lato";
     line-height: 12px;
+    min-height: 45px;
     box-sizing: border-box;
     text-overflow: ellipsis;
     overflow: hidden;
@@ -2711,14 +2718,20 @@ asterisk {
     .activities-list .item .item-title i.time {
       display: block;
       position: absolute;
-      top: 21px;
-      right: 16px;
+      top: 10px;
+      right: 10px;
       width: auto;
       padding-top: 2px;
       font-size: 10px;
       background: url('../images/v2/icons/time.png') left center no-repeat;
       background-size: 12px;
       text-indent: 15px; }
+    .activities-list .item .item-title p {
+      margin-top: 5px;
+      margin-bottom: 0px; }
+      .activities-list .item .item-title p.first-line {
+        padding-right: 60px;
+        margin-top: 0px; }
   .activities-list .item .item-footer {
     font-size: 9px;
     border-top: solid 1px #dae3e6;
@@ -2753,17 +2766,20 @@ asterisk {
   .activities-list .item > figure {
     display: block;
     position: absolute;
-    top: 21px;
-    left: 16px; }
+    top: 5px;
+    left: 5px;
+    width: 40px;
+    height: 40px; }
     .activities-list .item > figure img {
       display: block;
-      width: 33px;
+      width: 40px;
+      height: 40px;
       border-radius: 3px; }
     .activities-list .item > figure span {
       display: block;
       width: 10px;
       height: 10px;
-      margin: 5px auto;
+      margin: 2px auto;
       background-color: #ef2517;
       border-radius: 100%; }
 
