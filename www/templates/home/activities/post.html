@@ -42,8 +42,8 @@
       <a ng-click="followOwner()"><i class="icon ion-person-add"></i></a>
     </div>
     <div class="control" ng-show="!followable && isFollowShow">
-      <span ng-show="isFollowApproved"><i class="icon ion-person-stalker"></i></span>
-      <span ng-show="!isFollowApproved"><i class="icon ion-person"></i></span>
+      <span ng-show="isFollowApproved" ng-click="showToast('You are following this user')"><i class="icon ion-person-stalker"></i></span>
+      <span ng-show="!isFollowApproved" ng-click="showToast('Waiting for user to approve...')"><i class="icon ion-person"></i></span>
     </div>
     <div class="responses" bo-bind="responses_count"></div>
   </div>

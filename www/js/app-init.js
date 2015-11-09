@@ -1,6 +1,6 @@
 angular.module('app').run(function ($location, layout, spinnerIndicator, $rootScope,
         $window, iStorageMemory, $cacheFactory, $state, $ionicPlatform, navigateTo, $q,
-        groupsInvites, announcements, invites, follows) {
+        groupsInvites, announcements, invites, follows, ionicToast) {
 
   $ionicPlatform.ready(function () {
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
@@ -138,6 +138,10 @@ angular.module('app').run(function ($location, layout, spinnerIndicator, $rootSc
 
   $rootScope.confirm = function () {
     $window.navigator.notification.confirm.apply(null, arguments);
+  };
+  
+  $rootScope.showToast = function(message){
+    ionicToast.show(message, 'middle', false, 2500);
   };
 
   $rootScope.isDefaultAvatar = function (avatarUrl) {

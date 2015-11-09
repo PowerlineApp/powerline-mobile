@@ -234,8 +234,10 @@ angular.module('app.controllers').directive('iActivity', function($rootScope, qu
       follow.follow().then(function(){
         $scope.activity.followable = false;
         $scope.sending = false;
+        $scope.showToast('Follow request sent!');
       });
     };
+    $scope.showToast = $rootScope.showToast;
   }
 
   function petitionCtrl($scope) {
