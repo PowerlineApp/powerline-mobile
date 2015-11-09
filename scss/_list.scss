@@ -741,6 +741,7 @@
       }
 
       .picture {
+        padding-top: 3px;
         img {
           width: 100%;
         }
@@ -748,12 +749,12 @@
     }
 
     .item-title {
-      padding: 10px 10px 0px 50px;
+      padding: 15px 10px 5px 60px;
       font-size: 12px;
       color: #798ca6;
       font-family: "Lato";
       line-height: 12px;
-      min-height: 45px;
+      min-height: 55px;
       strong {
         color: #030366;
         font-family: "Lato Bold";
@@ -854,13 +855,13 @@
       position: absolute;
       top: 5px; 
       left: 5px;
-      width: 40px;
-      height: 40px;
+      width: 50px;
+      height: 50px;
 
       img {
         display: block;
-        width: 40px;
-        height: 40px;
+        width: 50px;
+        height: 50px;
         border-radius: 3px;
       }
 

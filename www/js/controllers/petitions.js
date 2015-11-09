@@ -178,7 +178,7 @@ function ($scope,  petitions, PetitionsResource, groups, $stateParams, errorForm
     homeCtrlParams.loaded = false;
   };
 
-}).controller('petition.answer-form', function ($scope, $state, homeCtrlParams, flurry) {
+}).controller('petition.answer-form', function ($scope, $state, homeCtrlParams, flurry, $rootScope) {
 
   $scope.submit = function () {
     $scope.showSpinner();
@@ -186,6 +186,7 @@ function ($scope,  petitions, PetitionsResource, groups, $stateParams, errorForm
       $scope.hideSpinner();
       flurry.log('answer to micro petition', {id: $scope.$parent.petition.id});
       homeCtrlParams.loaded = false;
+      $rootScope.showToast('Sent!');
       $state.reload();
     }, function () {
       $scope.hideSpinner();
