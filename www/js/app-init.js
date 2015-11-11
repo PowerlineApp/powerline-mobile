@@ -141,7 +141,7 @@ angular.module('app').run(function ($location, layout, spinnerIndicator, $rootSc
   };
   
   $rootScope.showToast = function(message){
-    ionicToast.show(message, 'top', false, 2500);
+    ionicToast.show(message, 'bottom', false, 2500);
   };
 
   $rootScope.isDefaultAvatar = function (avatarUrl) {
