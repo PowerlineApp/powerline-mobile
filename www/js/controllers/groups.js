@@ -227,8 +227,8 @@ angular.module('app.controllers').controller('groups',function ($scope, groups, 
   });
 
 
-  $scope.join = function () {
-    if ($scope.joinFrom && $scope.joinFrom.$invalid) {
+  $scope.join = function (joinForm) {
+    if (joinForm && joinForm.$invalid) {
       $scope.formClass = 'error';
     } else {
       var group = groups.get(id);
@@ -237,14 +237,16 @@ angular.module('app.controllers').controller('groups',function ($scope, groups, 
         _(group.required_permissions).each(function (key) {
           message += '\n ' + groups.permissionsLabels[key];
         });
-        $scope.confirmAction(message, 'Permissions', 'OK,Cancel').then(join);
+        $scope.confirmAction(message, 'Permissions', 'OK,Cancel').then(function(){
+          join(joinForm);
+        });
       } else {
-        join();
+        join(joinForm);
       }
     }
   };
 
-  function join() {
+  function join(joinForm) {
     $scope.formClass = '';
     $scope.showSpinner();
     groups.join(id, $scope.data).then(function (status) {
@@ -255,12 +257,12 @@ angular.module('app.controllers').controller('groups',function ($scope, groups, 
       $scope.formClass = 'error';
       $scope.hideSpinner();
       if (403 === response.status) {
-        if (response.data && response.data.error) {
+        /*if (response.data && response.data.error) {
           $scope.alert(response.data.error);
-        } else {
-          $scope.joinFrom.passcode.$setValidity('required', false);
+        } else {*/
+          joinForm.passcode.$setValidity('required', false);
           $scope.alert('Incorrect passcode');
-        }
+        //}
       } else if (400 === response.status) {
         $scope.alert('Invalid data');
       } else {

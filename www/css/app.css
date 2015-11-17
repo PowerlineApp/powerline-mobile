@@ -1815,7 +1815,7 @@ select.choice-filter {
     background-position-y: -443px; }
   .nav li.share-item i {
     background-position-y: -493px; }
-  .nav li.active, .nav li.ng-click-active {
+  .nav li.active, .nav li.ng-click-active, .nav li.activated {
     background-color: #54c5ff;
     color: #fff; }
   .nav .search-item {
@@ -2642,6 +2642,8 @@ asterisk {
     position: relative;
     white-space: normal;
     overflow: visible; }
+    .activities-list .item .item-content.activated {
+      background-color: transparent !important; }
     .activities-list .item .item-content p {
       text-overflow: ellipsis;
       overflow: hidden;
@@ -2663,7 +2665,7 @@ asterisk {
     .activities-list .item .item-content .completion-fill-vertical {
       position: absolute;
       right: 4px;
-      top: -10px; }
+      top: -30px; }
   .activities-list .item .item-title {
     padding: 21px 76px 0 58px;
     font-size: 12px;

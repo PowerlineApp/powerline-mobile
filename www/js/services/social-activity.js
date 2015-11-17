@@ -22,12 +22,16 @@ angular.module('app.services').factory('socialActivity', function ($http, server
     },
     build: function () {
       var avatar;
+      var avatarTitle;
       if (this.get('following')) {
         avatar = this.get('following').avatar_file_name;
+        avatarTitle = this.get('following').full_name;
       } else if (this.get('group')) {
         avatar = this.get('group').avatar_file_path;
+        avatarTitle = this.get('group').official_title;
       }
       this.set('avatar', avatar);
+      this.set('avatar_title', avatarTitle);
       var icon = typeToIcons[this.get('type')];
       this.set('sa-icon', typeof icon === 'function' ? icon(this) : icon);
       if (this.isFollowRequest()) {

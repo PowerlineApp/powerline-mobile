@@ -289,7 +289,7 @@ angular.module('app.services').factory('activity',
 
             activities.remove(remove);
             activities.sort();
-            iStorage.set(ACTIVITIES_CACHE_ID, activities.toArray()); //store only 20 items to cache
+            iStorage.set(ACTIVITIES_CACHE_ID, activities.toArray()); //we may need to store only 20 items to cache
             return activities;
           });
       },

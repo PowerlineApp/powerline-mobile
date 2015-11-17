@@ -705,6 +705,10 @@
       position: relative;
       white-space: normal;
       overflow: visible;
+      //ignore tap activated styles
+      &.activated{
+        background-color: transparent!important;
+      } 
       p {
         @include ellipsisRows(3);
         line-height: 1.4em;
@@ -729,7 +733,8 @@
 
       .completion-fill-vertical {
         position: absolute;
-        right: 4px; top: -10px;
+        right: 4px; 
+        top: -30px;
       }
     }
 
