@@ -2652,6 +2652,9 @@ asterisk {
     overflow: visible; }
     .activities-list .item .item-content.activated {
       background-color: transparent !important; }
+    .activities-list .item .item-content hash-tag {
+      font-family: "Lato Bold";
+      color: #030366; }
     .activities-list .item .item-content p {
       text-overflow: ellipsis;
       overflow: hidden;

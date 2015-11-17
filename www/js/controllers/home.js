@@ -180,7 +180,7 @@ angular.module('app.controllers').controller('preload', function (topBar, sessio
   }
 });
 
-angular.module('app.controllers').directive('iActivity', function ($rootScope, questions, petitions, discussion, elapsedFilter, follows, session) {
+angular.module('app.controllers').directive('iActivity', function ($rootScope, questions, petitions, discussion, elapsedFilter, follows, session, iParse, $sce) {
 
   function eventCtrl($scope) {
     $scope.templateSrc = 'templates/home/activities/event.html';
@@ -306,13 +306,17 @@ angular.module('app.controllers').directive('iActivity', function ($rootScope, q
     template: '<ng-include src="templateSrc"></ng-include>',
     controller: function ($scope) {
       $scope.navigateTo = $rootScope.navigateTo;
-      $scope.navigateToActivity = function (activity, focus) {
+      $scope.navigateToActivity = function (activity, focus, e) {
         activity.setRead();
-        $rootScope.navigateTo('activity', activity, focus);
+        if (e && e.target.tagName.toLowerCase() === 'hash-tag') {
+          $rootScope.openTag(angular.element(e.target).text());
+        } else {
+          $rootScope.navigateTo('activity', activity, focus);
+        }
       };
 
       $scope.title = $scope.activity.get('title');
-      $scope.description = $scope.activity.get('description');
+      $scope.description = $sce.trustAsHtml(iParse.wrapHashTags($scope.activity.get('description')));
       $scope.avatar_file_path = $scope.activity.get('owner').avatar_file_path;
       $scope.iconClass = $scope.activity.getIcon();
       $scope.official_title = $scope.activity.get('owner').official_title;

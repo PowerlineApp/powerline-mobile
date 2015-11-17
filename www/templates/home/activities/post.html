@@ -16,9 +16,9 @@
     <p ng-class="{unanswered: activity.isUnanswered()}" bo-if="title" bo-bind="title"></p>
     <i class="time"><time>{{ sent_at_elapsed }}</time></i>
   </div>
-  <div class="item-content" ng-click="navigateToActivity(activity)">
+  <div class="item-content" ng-click="navigateToActivity(activity, null, $event)">
     <p bo-if="activity.get('image_src')" class="picture"><img bo-src="activity.get('image_src')"/></p>
-    <p ng-class="{unanswered: activity.isUnanswered() && !title}" bo-bind="description"></p>
+    <p ng-class="{unanswered: activity.isUnanswered() && !title}" ng-bind-html="description"></p>
   </div>
   <div class="item-footer">
     <div class="control" ng-show="sending">

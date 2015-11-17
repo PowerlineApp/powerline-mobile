@@ -722,6 +722,10 @@
       &.activated{
         background-color: transparent!important;
       } 
+      hash-tag{
+        font-family: "Lato Bold";
+        color: #030366;
+      }
       p {
         @include ellipsisRows(3);
         line-height: 1.4em;
