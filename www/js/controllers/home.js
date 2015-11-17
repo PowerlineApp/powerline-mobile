@@ -1,17 +1,17 @@
 angular.module('app.controllers').controller('home', function ($scope, $timeout, socialActivity, homeCtrlParams,
-                                                               profile, activity, groups, flurry, $ionicScrollDelegate) {
- 
+        profile, activity, groups, flurry, $ionicScrollDelegate) {
+
   flurry.log('news feed');
-  
+
   $scope.filter = homeCtrlParams.filter;
-  
+
   $scope.isLoadMore = false;
 
   var activities = activity.getActivities();
 
   function getActivities() {
     $scope.activities = homeCtrlParams.filter.selectedGroup ? homeCtrlParams.filter.selectedGroup.activities
-      : activities.getFilteredModels();
+            : activities.getFilteredModels();
   }
 
   function getUnansweredCount(activities) {
@@ -19,8 +19,8 @@ angular.module('app.controllers').controller('home', function ($scope, $timeout,
       return (activity.get('answered') || activity.get('closed') || activity.get('ignore_count')) ? memo : ++memo;
     }, 0);
   }
-  
-  function setFiltersData(){
+
+  function setFiltersData() {
     homeCtrlParams.filter.groups = groups.getGroupsOptions();
     _(homeCtrlParams.filter.groups).each(function (group) {
       group.activities = activities.getFilteredModels(group);
@@ -46,11 +46,11 @@ angular.module('app.controllers').controller('home', function ($scope, $timeout,
 
     activity.saveRead();
   }
-  
+
   function loadActivities(loadType) {
     var prevSize = activities.size();
     activity.load(loadType).then(function () {
-      if(loadType === 'append' && prevSize === activities.size()){
+      if (loadType === 'append' && prevSize === activities.size()) {
         $scope.isLoadMore = false;
       } else {
         $scope.isLoadMore = true;
@@ -63,7 +63,7 @@ angular.module('app.controllers').controller('home', function ($scope, $timeout,
   }
 
 
-  $scope.togglePostWindow = function(){
+  $scope.togglePostWindow = function () {
     $scope.showPostWindow = !$scope.showPostWindow;
     $scope.execApply();
   };
@@ -74,7 +74,7 @@ angular.module('app.controllers').controller('home', function ($scope, $timeout,
       2: 'quorum'
     };
     $scope.path('/micro-petitions/add/' + types[type] + '/' +
-      (homeCtrlParams.filter.selectedGroup ? homeCtrlParams.filter.selectedGroup.id : ''));
+            (homeCtrlParams.filter.selectedGroup ? homeCtrlParams.filter.selectedGroup.id : ''));
     $scope.showPostWindow = false;
   };
 
@@ -92,24 +92,24 @@ angular.module('app.controllers').controller('home', function ($scope, $timeout,
       steps.push(i * step + 3);
     }
     if (items && 0 === items % step) {
-      steps.push(steps[steps.length-1] + step);
+      steps.push(steps[steps.length - 1] + step);
     }
     return steps;
   };
-  
-  $scope.loadMoreActivities = function(){
+
+  $scope.loadMoreActivities = function () {
     loadActivities('append');
   };
-  
-  $scope.pullToRefresh = function(){
+
+  $scope.pullToRefresh = function () {
     loadActivities('clearAndLoad');
   };
 
   $scope.$watch('filter.selectedGroup', getActivities);
-  $scope.$watch('loading', function(){
-    if($scope.loading){
+  $scope.$watch('loading', function () {
+    if ($scope.loading) {
       $scope.showSpinner();
-    } else if($scope.loading === false) {
+    } else if ($scope.loading === false) {
       $scope.hideSpinner();
     }
   });
@@ -121,42 +121,42 @@ angular.module('app.controllers').controller('home', function ($scope, $timeout,
   $scope.$on('activity.reload', function () {
     loadActivities('refresh');
   });
-  
+
   //move scroll to top when filter is changed
-  $scope.$watch('filter.selectedGroup', function(nVal){
-    if(typeof(nVal) !== undefined){
-      $timeout(function(){
+  $scope.$watch('filter.selectedGroup', function (nVal) {
+    if (typeof (nVal) !== undefined) {
+      $timeout(function () {
         $ionicScrollDelegate.resize();
         $ionicScrollDelegate.scrollTop();
       });
     }
   });
-  
-  
+
+
   //call this when this view is loaded because this view is cached
-  $scope.$on('$ionicView.enter', function(){
+  $scope.$on('$ionicView.enter', function () {
     if (!profile.get()) {
       profile.load();
     }
-    
+
     if (!homeCtrlParams.loaded) {
-      if(activities.size() === 0){
+      if (activities.size() === 0) {
         $scope.isLoadMore = true;
-      }else{
+      } else {
         loadActivities('refresh');
       }
     } else {
       prepare();
     }
   });
-  
+
   //call this because cache may be loaded
   setFiltersData();
   getActivities();
 });
 
-angular.module('app.controllers').run(function(homeCtrlParams, $document, $rootScope) {
-  $document.bind('resume', function() {
+angular.module('app.controllers').run(function (homeCtrlParams, $document, $rootScope) {
+  $document.bind('resume', function () {
     homeCtrlParams.loaded = false;
     $rootScope.$broadcast('activity.reload');
     $rootScope.execApply();
@@ -180,7 +180,7 @@ angular.module('app.controllers').controller('preload', function (topBar, sessio
   }
 });
 
-angular.module('app.controllers').directive('iActivity', function($rootScope, questions, petitions, discussion, elapsedFilter, follows, session) {
+angular.module('app.controllers').directive('iActivity', function ($rootScope, questions, petitions, discussion, elapsedFilter, follows, session, iParse, $sce) {
 
   function eventCtrl($scope) {
     $scope.templateSrc = 'templates/home/activities/event.html';
@@ -189,13 +189,13 @@ angular.module('app.controllers').directive('iActivity', function($rootScope, qu
   function newsCtrl($scope) {
     $scope.templateSrc = 'templates/home/activities/news.html';
     $scope.entity = $scope.activity.get('entity');
-    $scope.rate = function(action) {
+    $scope.rate = function (action) {
       $scope.sending = true;
-      discussion.loadRoot('poll', $scope.entity.id).then(function(comment) {
-        discussion.rate(comment, action).then(function(comment) {
+      discussion.loadRoot('poll', $scope.entity.id).then(function (comment) {
+        discussion.rate(comment, action).then(function (comment) {
           $scope.activity.set('rate_up', comment.rate_up).set('rate_down', comment.rate_down);
           $scope.sending = false;
-        }, function() {
+        }, function () {
           $scope.sending = false;
         });
       });
@@ -208,64 +208,76 @@ angular.module('app.controllers').directive('iActivity', function($rootScope, qu
 
   function postCtrl($scope) {
     $scope.templateSrc = 'templates/home/activities/post.html';
-    $scope.booster = (85 * ($scope.activity.get('owner').type === 'group' ? 100 : $scope.activity.getQuorumCompletedPercent())) / 100;
+    $scope.booster = $scope.activity.get('owner').type === 'group' ? 100 : $scope.activity.getQuorumCompletedPercent();
     var follow = follows.getByUserId($scope.activity.get('owner').id);
     $scope.followable = !follow.isFollow();
-    if($scope.followable && follow.isApproved()){
+    if ($scope.followable && follow.isApproved()) {
       $scope.isFollowApproved = true;
     }
     $scope.isFollowShow = follows.loaded && follow.get('user').id !== session.user_id;
-    $scope.sign = function(optionId) {
+    $scope.sign = function (optionId) {
       $scope.sending = true;
-      petitions.answer($scope.activity.get('entity').id, optionId).then(function(answer) {
+      petitions.answer($scope.activity.get('entity').id, optionId).then(function (answer) {
         $scope.activity.set('answer', answer).set('answered', true);
         $scope.sending = false;
+        if (optionId === 1) {
+          $scope.showToast('Post upvoted!');
+        }
+        if (optionId === 2) {
+          $scope.showToast('Post downvoted!');
+        }
       });
     };
-    $scope.unsign = function() {
+    $scope.unsign = function () {
       $scope.sending = true;
-      petitions.unsign($scope.activity.get('entity').id, $scope.activity.get('answer').option_id).then(function() {
+      petitions.unsign($scope.activity.get('entity').id, $scope.activity.get('answer').option_id).then(function () {
         $scope.activity.set('answered', false).set('answer', null);
         $scope.sending = false;
       });
     };
-    $scope.followOwner = function(){
+    $scope.followOwner = function () {
       $scope.sending = true;
-      follow.follow().then(function(){
+      follow.follow().then(function () {
         $scope.activity.followable = false;
         $scope.sending = false;
+        $scope.showToast('Follow request sent!');
       });
     };
+    $scope.showToast = $rootScope.showToast;
   }
 
   function petitionCtrl($scope) {
     $scope.templateSrc = 'templates/home/activities/petition.html';
-    $scope.answer = function() {
+    $scope.answer = function () {
       $scope.sending = true;
-      if ($scope.answerAction === 'sign') { $scope.sign(); } else { $scope.unsign(); }
+      if ($scope.answerAction === 'sign') {
+        $scope.sign();
+      } else {
+        $scope.unsign();
+      }
       $scope.answerAction = '';
     };
-    $scope.$watch(function() {
+    $scope.$watch(function () {
       return $scope.activity.get('answer');
-    }, function(answer) {
+    }, function (answer) {
       $scope.answerAction = answer ? 'unsign' : 'sign';
     });
-    $scope.sign = function() {
-      questions.load($scope.activity.get('entity').id).then(function(question){
+    $scope.sign = function () {
+      questions.load($scope.activity.get('entity').id).then(function (question) {
         question.answer({
           privacy: 0,
           comment: '',
           option_id: question.options[0].id
-        }).then(function(answer) {
+        }).then(function (answer) {
           $scope.activity.set('answer', answer).set('answered', true);
           $scope.sending = false;
         });
       });
     };
-    $scope.unsign = function() {
+    $scope.unsign = function () {
       $scope.answerAction = '';
       var answer = $scope.activity.get('answer');
-      questions.unsignFromPetition(answer.question.id, answer.option_id).then(function() {
+      questions.unsignFromPetition(answer.question.id, answer.option_id).then(function () {
         $scope.activity.set('answer', null).set('answered', false);
         $scope.sending = false;
       });
@@ -292,15 +304,19 @@ angular.module('app.controllers').directive('iActivity', function($rootScope, qu
     },
     restrict: 'E',
     template: '<ng-include src="templateSrc"></ng-include>',
-    controller: function($scope) {
+    controller: function ($scope) {
       $scope.navigateTo = $rootScope.navigateTo;
-      $scope.navigateToActivity = function(activity, focus) {
+      $scope.navigateToActivity = function (activity, focus, e) {
         activity.setRead();
-        $rootScope.navigateTo('activity', activity, focus);
+        if (e && e.target.tagName.toLowerCase() === 'hash-tag') {
+          $rootScope.openTag(angular.element(e.target).text());
+        } else {
+          $rootScope.navigateTo('activity', activity, focus);
+        }
       };
 
       $scope.title = $scope.activity.get('title');
-      $scope.description = $scope.activity.get('description');
+      $scope.description = $sce.trustAsHtml(iParse.wrapHashTags($scope.activity.get('description')));
       $scope.avatar_file_path = $scope.activity.get('owner').avatar_file_path;
       $scope.iconClass = $scope.activity.getIcon();
       $scope.official_title = $scope.activity.get('owner').official_title;

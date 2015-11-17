@@ -12,7 +12,8 @@ angular.module('app', [
   'pasvaz.bindonce',
   'uiGmapgoogle-maps',
   'jett.ionic.scroll.sista',
-  'ngLetterAvatar'
+  'ngLetterAvatar',
+  'ionic-toast'
 ]).config(function ($ionicConfigProvider, $httpProvider) {
 
   $httpProvider.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';

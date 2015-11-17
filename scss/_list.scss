@@ -697,11 +697,24 @@
     white-space: normal;
     border-width: 0px;
     color: inherit;
+    
+    
+
+    .completion-fill-vertical {
+      position: absolute;
+      right: 4px; 
+      top: 2px;
+      bottom: 42px;
+      height: auto;
+      .process-wrap{
+        height: 100%;
+        min-height: 0;
+      }
+    }
 
     .item-content {
-      padding: 7px 10px 15px 58px;
+      padding: 10px 5px 7px 5px;
       font-size: 14px;
-      min-height: 60px;
       position: relative;
       white-space: normal;
       overflow: visible;
@@ -709,10 +722,16 @@
       &.activated{
         background-color: transparent!important;
       } 
+      hash-tag{
+        font-family: "Lato Bold";
+        color: #030366;
+      }
       p {
         @include ellipsisRows(3);
         line-height: 1.4em;
         white-space: normal;
+        font-size: 16px;
+        margin-bottom: 0px!important;
         &.unanswered {
           font-family: "Lato";
         }
@@ -726,24 +745,20 @@
       }
 
       .picture {
+        padding-top: 3px;
         img {
           width: 100%;
         }
       }
-
-      .completion-fill-vertical {
-        position: absolute;
-        right: 4px; 
-        top: -30px;
-      }
     }
 
     .item-title {
-      padding: 21px 76px 0 58px;
+      padding: 15px 10px 5px 60px;
       font-size: 12px;
       color: #798ca6;
       font-family: "Lato";
       line-height: 12px;
+      min-height: 55px;
       strong {
         color: #030366;
         font-family: "Lato Bold";
@@ -777,8 +792,8 @@
       i.time {
         display: block;
         position: absolute;
-        top: 21px;
-        right: 16px;
+        top: 10px;
+        right: 10px;
         width: auto;
         padding-top: 2px;
         font-size: 10px;
@@ -786,11 +801,19 @@
         background-size: 12px;
         text-indent: 15px;
       }
+      
+      p{
+        margin-top: 5px;
+        margin-bottom: 0px;
+        &.first-line{
+          padding-right: 60px;
+          margin-top: 0px;
+        }
+      }
     }
 
     .item-footer {
       font-size: 9px;
-      border-top: solid 1px #dae3e6;
       border-bottom: solid 1px #dae3e6;
       background: #f1f7f9;
       color: #adb7c6;
@@ -833,11 +856,15 @@
     & > figure {
       display: block;
       position: absolute;
-      top: 21px; left: 16px;
+      top: 5px; 
+      left: 5px;
+      width: 50px;
+      height: 50px;
 
       img {
         display: block;
-        width: 33px;
+        width: 50px;
+        height: 50px;
         border-radius: 3px;
       }
 
@@ -845,7 +872,7 @@
         display: block;
         width: 10px;
         height: 10px;
-        margin: 5px auto;
+        margin: 2px auto;
         background-color: $red;
         border-radius: 100%;
       }
@@ -942,14 +969,19 @@
       order: 3;
       text-align: center;
       margin-left: auto;
-      padding: 0 8px;
-      min-width: 58px;
-
+      margin-top: -5px;
+      padding: 0 8px 0px 3px;
       button {
         display: block;
         font-size: 10px;
         width: 100%;
         margin-bottom: 10px;
+        padding: 5px 3px;
+        min-width: 60px;
+        font-size: 13px;
+        &:last-child{
+          margin-bottom: 0px;
+        }
       }
     }
   }

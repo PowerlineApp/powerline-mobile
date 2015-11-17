@@ -1,6 +1,6 @@
 angular.module('app.controllers').controller('petitions.add',
 function ($scope,  petitions, PetitionsResource, groups, $stateParams, errorFormMessage, getFormData,
-            camelcase2underscore, profile, homeCtrlParams, $document, session, flurry) {
+            camelcase2underscore, profile, homeCtrlParams, $document, session, flurry, $rootScope) {
   
   flurry.log('new micro petition form');
   
@@ -50,6 +50,12 @@ function ($scope,  petitions, PetitionsResource, groups, $stateParams, errorForm
   $scope.$watch('data.type', function () {
     $scope.form_template = form_templates[$scope.data.type];
   });
+
+  $scope.back = function(){
+    $scope.hideSpinner();
+    $rootScope.showToast('Sent!');
+    $rootScope.back();
+  };
 
   $scope.create = function(petitionForm) {
     if (petitionForm.$invalid) {
@@ -160,11 +166,11 @@ function ($scope,  petitions, PetitionsResource, groups, $stateParams, errorForm
       $scope.shareTitle = petition.title;
       $scope.shareImage = petition.share_picture;
 
-      //if ((petition.answer_id && petition.answer_id !== 3) || petition.expired || session.user_id === petition.user.id) {
-      //  $scope.subview = 'templates/petitions/results.html';
-      //} else {
+      if ((petition.answer_id && petition.answer_id !== 3) || petition.expired || session.user_id === petition.user.id) {
+        $scope.subview = 'templates/petitions/results.html';
+      } else {
         $scope.subview = 'templates/petitions/options.html';
-      //}
+      }
 
       if (petition.answer_id && petition.answer_id === 3) {
         $scope.current = petition.options[2];
@@ -178,7 +184,7 @@ function ($scope,  petitions, PetitionsResource, groups, $stateParams, errorForm
     homeCtrlParams.loaded = false;
   };
 
-}).controller('petition.answer-form', function ($scope, $state, homeCtrlParams, flurry) {
+}).controller('petition.answer-form', function ($scope, $state, homeCtrlParams, flurry, $rootScope) {
 
   $scope.submit = function () {
     $scope.showSpinner();
