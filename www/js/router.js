@@ -140,13 +140,13 @@ angular.module('app')
     }, {
       name: 'questionInfluences',
       url: '/question/influences/:id',
-      templateUrl: 'templates/question/influences.html',
+      templateUrl: 'templates/question/influences-full.html',
       controller: 'question.influences'
     }, {
       name: 'influences',
       url: '/influences',
       cache: true,
-      templateUrl: 'templates/influence/influences.html',
+      templateUrl: 'templates/influence/influences-full.html',
       controller: 'influences'
     }, {
       name: 'influencesProfile',

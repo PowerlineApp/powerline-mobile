@@ -1048,6 +1048,9 @@ select.choice-filter {
         -webkit-line-clamp: 1;
         -webkit-box-orient: vertical;
         display: -webkit-box; }
+        @media (max-width: 375px) {
+          .dropdown-1 .choices li span {
+            font-size: 14px; } }
       .dropdown-1 .choices li.ng-click-active {
         background-color: #54c5ff; }
         .dropdown-1 .choices li.ng-click-active span {
@@ -2031,6 +2034,9 @@ h4 {
       border-left: solid 1px #798ca6;
       margin: auto 3px;
       padding-left: 3px; }
+  @media (max-width: 375px) {
+    .q-content p, .q-content .title {
+      font-size: 14px; } }
 
 .comment-message {
   text-align: center;
@@ -2455,6 +2461,10 @@ asterisk {
     position: absolute;
     left: 8px;
     top: 20px; }
+  @media (max-width: 375px) {
+    .comment-answer-form textarea {
+      font-size: 16px;
+      min-height: 18px !important; } }
 
 .comments .item {
   margin-top: 7px;
@@ -2540,6 +2550,9 @@ asterisk {
       .comments .item .item-content p a {
         font-family: "Lato Bolder";
         color: #030366; }
+      @media (max-width: 375px) {
+        .comments .item .item-content p {
+          font-size: 16px; } }
     .comments .item .item-content .icon-up-mini, .comments .item .item-content .icon-down-mini {
       display: inline-block;
       background: url('../images/v2/icons/rate-sprite.png') no-repeat;
@@ -2560,6 +2573,9 @@ asterisk {
       text-align: right; }
       .comments .item .item-content .rates .active {
         color: #54c5ff; }
+      @media (max-width: 375px) {
+        .comments .item .item-content .rates {
+          font-size: 11px; } }
 .comments .comment-menu {
   height: 33px;
   width: 100%;

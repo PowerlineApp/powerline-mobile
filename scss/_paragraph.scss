@@ -130,6 +130,12 @@
       padding-left: 3px;
     }
   }
+  
+  @include iphone6AndLower{
+    p, .title{
+      font-size: 14px;
+    }
+  }
 }
 
 .comment-message {

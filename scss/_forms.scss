@@ -625,6 +625,9 @@ select.choice-filter {
         box-sizing: border-box;
         font-family: Lato;
         @include ellipsisRows(1);
+        @include iphone6AndLower{
+          font-size: 14px;
+        }
       }
       &.ng-click-active {
         span {

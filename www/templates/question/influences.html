@@ -1,20 +1,16 @@
-<ion-view view-title="Influences">
-  <ion-content class="content">
 <section class="comments" ng-show="answers.length">
-    <div class="item" ng-repeat="item in answers" style="margin: 0;">
-        <div class="wrap">
-            <figure ng-click="navigateTo('influence-profile', item.user.id)">
-              <avatar-img img="item.user.avatar_file_name" text="item.user.username"></avatar-img>
-            </figure>
-            <div class="header">
-                <strong ng-class="{gray: !item.user.id}">{{ item.user.username }}</strong> <span>said <span class="marked">{{ q.getOptionLabel(item.option_id) }}</span> </span><br><br>
-            </div>
-        </div>
-        <div class="item-content">
-            <p ng-bind-html="item.comment"></p>
-        </div>
+  <div class="item" ng-repeat="item in answers" style="margin: 0;">
+    <div class="wrap">
+      <figure ng-click="navigateTo('influence-profile', item.user.id)">
+        <avatar-img img="item.user.avatar_file_name" text="item.user.username"></avatar-img>
+      </figure>
+      <div class="header">
+        <strong ng-class="{gray: !item.user.id}">{{ item.user.username}}</strong> <span>said <span class="marked">{{ q.getOptionLabel(item.option_id)}}</span> </span><br><br>
+      </div>
     </div>
+    <div class="item-content">
+      <p ng-bind-html="item.comment"></p>
+    </div>
+  </div>
 </section>
 <p ng-show="!answers.length" style="background: #fff;text-align: center;padding: 30px 0;">No results</p>
-  </ion-content>
-</ion-view>

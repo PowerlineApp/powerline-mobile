@@ -481,6 +481,12 @@
     left: 8px;
     top: 20px;
   }
+  textarea{
+    @include iphone6AndLower{
+      font-size: 16px;
+      min-height: 18px!important;
+    }
+  }
 }
 
 .comments {
@@ -579,6 +585,9 @@
           font-family: "Lato Bolder";
           color: #030366;
         }
+        @include iphone6AndLower{
+          font-size: 16px;
+        }
       }
       .icon-up-mini, .icon-down-mini {
         display: inline-block;
@@ -604,6 +613,9 @@
         text-align: right;
         .active {
           color: #54c5ff;
+        }
+        @include iphone6AndLower{
+          font-size: 11px;
         }
       }
     }
