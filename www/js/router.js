@@ -146,7 +146,7 @@ angular.module('app')
       name: 'influences',
       url: '/influences',
       cache: true,
-      templateUrl: 'templates/influence/influences-full.html',
+      templateUrl: 'templates/influence/influences.html',
       controller: 'influences'
     }, {
       name: 'influencesProfile',
