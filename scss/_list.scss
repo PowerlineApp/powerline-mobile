@@ -894,6 +894,15 @@
       background: url("../images/v2/cut/sa-right-icon.png") right 23px no-repeat;
       background-size: 18px 14px;
     }
+    
+    &.follow-request > div{
+      display: table;
+      width: 100%;
+      > div {
+        display: table-cell;
+        vertical-align: top;
+      }
+    }
 
     .avatar {
       order: 1;
@@ -968,7 +977,7 @@
       }
     }
 
-    .follow-request {
+    .buttons {
       order: 3;
       text-align: center;
       margin-left: auto;

@@ -1,24 +1,26 @@
-<div class="item">
-  <div class="avatar">
-    <figure ng-click="socialActivityHandler.navigateToOwner(item);$event.stopPropagation();">
-      <avatar-img img="item.get('avatar')" text="item.get('avatar_title')"></avatar-img>
-    </figure>
-  </div>
-  <div class="item-content">
-    <div ng-bind-html="item.getHtmlMessage()"></div>
-    <i ng-class="['sa-type', item.get('sa-icon')]"><time>{{ item.get('created_at') | elapsed }}</time> ago</i>
-  </div>
-  <div class="follow-request">
-      <button class="btn-text-bordered"
-              ng-if="item.get('userFollow').get('id') === item.get('target').id"
-              ng-click="item.ignore();send(item.get('userFollow').isApproved() ? item.get('userFollow').unapprove() : item.get('userFollow').approve())"
-              ng-class="{'pressed': item.get('userFollow').isApproved()}">{{ item.get('userFollow').isApproved() ? 'Unapprove' : 'Approve'}}</button>
-      <button class="btn-text-bordered"
-            ng-if="item.get('ignore')"
-            ng-click="send(item.get('userFollow').isFollow() ? item.get('userFollow').unfollow() : item.get('userFollow').follow())"
-            ng-class="{'pressed': item.get('userFollow').isFollow()}">{{ item.get('userFollow').isFollow() ? 'Unfollow' : 'Follow'}}</button>
-      <button class="btn-text-bordered"
-              ng-if="!item.get('ignore')"
-              ng-click="item.ignore();send()">Ignore</button>
+<div class="item follow-request">
+  <div>
+    <div class="avatar">
+      <figure ng-click="socialActivityHandler.navigateToOwner(item);$event.stopPropagation();">
+        <avatar-img img="item.get('avatar')" text="item.get('avatar_title')"></avatar-img>
+      </figure>
+    </div>
+    <div class="item-content">
+      <div ng-bind-html="item.getHtmlMessage()"></div>
+      <i ng-class="['sa-type', item.get('sa-icon')]"><time>{{ item.get('created_at') | elapsed }}</time> ago</i>
+    </div>
+    <div class="buttons">
+        <button class="btn-text-bordered"
+                ng-if="item.get('userFollow').get('id') === item.get('target').id"
+                ng-click="item.ignore();send(item.get('userFollow').isApproved() ? item.get('userFollow').unapprove() : item.get('userFollow').approve())"
+                ng-class="{'pressed': item.get('userFollow').isApproved()}">{{ item.get('userFollow').isApproved() ? 'Unapprove' : 'Approve'}}</button>
+        <button class="btn-text-bordered"
+              ng-if="item.get('ignore')"
+              ng-click="send(item.get('userFollow').isFollow() ? item.get('userFollow').unfollow() : item.get('userFollow').follow())"
+              ng-class="{'pressed': item.get('userFollow').isFollow()}">{{ item.get('userFollow').isFollow() ? 'Unfollow' : 'Follow'}}</button>
+        <button class="btn-text-bordered"
+                ng-if="!item.get('ignore')"
+                ng-click="item.ignore();send()">Ignore</button>
+    </div>
   </div>
 </div>

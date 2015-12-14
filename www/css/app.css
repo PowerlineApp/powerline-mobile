@@ -2799,6 +2799,12 @@ asterisk {
     padding-right: 40px;
     background: url("../images/v2/cut/sa-right-icon.png") right 23px no-repeat;
     background-size: 18px 14px; }
+  .sa-items .item.follow-request > div {
+    display: table;
+    width: 100%; }
+    .sa-items .item.follow-request > div > div {
+      display: table-cell;
+      vertical-align: top; }
   .sa-items .item .avatar {
     order: 1;
     padding: 0 8px;
@@ -2865,13 +2871,13 @@ asterisk {
     .sa-items .item .request span {
       color: #798ca6;
       font-size: 10px; }
-  .sa-items .item .follow-request {
+  .sa-items .item .buttons {
     order: 3;
     text-align: center;
     margin-left: auto;
     margin-top: -5px;
     padding: 0 8px 0px 3px; }
-    .sa-items .item .follow-request button {
+    .sa-items .item .buttons button {
       display: block;
       font-size: 10px;
       width: 100%;
@@ -2879,7 +2885,7 @@ asterisk {
       padding: 5px 3px;
       min-width: 60px;
       font-size: 13px; }
-      .sa-items .item .follow-request button:last-child {
+      .sa-items .item .buttons button:last-child {
         margin-bottom: 0px; }
 .sa-items .no-results {
   text-align: center;
