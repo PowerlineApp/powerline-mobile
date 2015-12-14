@@ -1,0 +1,9 @@
+.page-join-group {
+  @include iphone6AndLower{
+    .text-field{
+      input{
+        height: 30px;
+      }
+    }
+  }
+}

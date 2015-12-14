@@ -2654,7 +2654,7 @@ asterisk {
       background-color: transparent !important; }
     .activities-list .item .item-content hash-tag {
       font-family: "Lato Bold";
-      color: #030366; }
+      color: #4c33cc; }
     .activities-list .item .item-content p {
       text-overflow: ellipsis;
       overflow: hidden;
@@ -3517,3 +3517,7 @@ tab-panel {
 .button.button-profile-nav {
   position: absolute;
   right: 0px; }
+
+@media (max-width: 375px) {
+  .page-join-group .text-field input {
+    height: 30px; } }
