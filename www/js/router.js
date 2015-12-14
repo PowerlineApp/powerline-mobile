@@ -200,7 +200,7 @@ angular.module('app')
       controller: 'groups.profile'
     }, {
       name: 'groupsJoin',
-      url: '/group/:id/join/:publicStatus/:isFieldRequired',
+      url: '/group/join/:id',
       templateUrl: 'templates/groups/join.html',
       controller: 'groups.join'
     }, {
