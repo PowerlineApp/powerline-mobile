@@ -140,7 +140,7 @@ angular.module('app')
     }, {
       name: 'questionInfluences',
       url: '/question/influences/:id',
-      templateUrl: 'templates/question/influences.html',
+      templateUrl: 'templates/question/influences-full.html',
       controller: 'question.influences'
     }, {
       name: 'influences',
@@ -200,7 +200,7 @@ angular.module('app')
       controller: 'groups.profile'
     }, {
       name: 'groupsJoin',
-      url: '/group/:id/join/:publicStatus/:isFieldRequired',
+      url: '/group/join/:id',
       templateUrl: 'templates/groups/join.html',
       controller: 'groups.join'
     }, {

@@ -191,13 +191,14 @@ angular.module('app.controllers').controller('groups',function ($scope, groups, 
 
   $scope.showSpinner();
   $scope.data = {};
-  $scope.isFieldRequired = Number($stateParams.isFieldRequired);
   var id = Number($stateParams.id);
-  $scope.publicStatus = Number($stateParams.publicStatus);
-  $scope.isPasscodeRequired = !groupsInvites.hasInvite(id) && 2 === $scope.publicStatus;
 
   groups.loadInfo(id).then(function () {
     $scope.hideSpinner();
+    var group = groups.get(id);
+    $scope.isFieldRequired = group.fill_fields_required;
+    $scope.publicStatus = Number(group.membership_control);
+    $scope.isPasscodeRequired = !groupsInvites.hasInvite(id) && 2 === $scope.publicStatus;
     if (!$scope.isFieldRequired && ((0 === $scope.publicStatus || 1 === $scope.publicStatus) || groupsInvites.hasInvite(id))) {
       $scope.join();
     }

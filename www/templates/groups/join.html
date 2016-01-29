@@ -1,5 +1,5 @@
 <ion-view view-title="Join Group">
-  <ion-content class="content">
+  <ion-content class="content page-join-group">
     <section ng-show="!loading" class="padding-10">
       <form name="joinForm" novalidate ng-class="formClass" autocomplete="off" ng-show="!showApproveMessage">
         <fieldset class="margin-v-10" ng-show="isPasscodeRequired">
@@ -12,8 +12,8 @@
         <fieldset class="padding-v-10" ng-show="isFieldRequired">
           <ng-form name="fields" ng-repeat="item in data.fields">
             <div class="text-field text-field-label" ng-class="invalidClass(fields.value.$invalid)">
-              <label ng-bind="item.field.field_name"></label>
-              <input type="text" name="value" placeholder="Type text here" ng-model="item.field_value" required/>
+              <label ng-bind="item.field.field_name" for="passcode_input_{{$index}}"></label>
+              <input type="text" name="value" placeholder="Type text here" ng-model="item.field_value" id="passcode_input_{{$index}}" required/>
             </div>
           </ng-form>
         </fieldset>

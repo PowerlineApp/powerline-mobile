@@ -8,7 +8,7 @@
 
   <section ng-include="'templates/notifications.html'"></section>
 
-  <ion-content class="content">
+  <ion-content class="content page-my-groups">
     <ion-refresher
       pulling-text="Pull to refresh..."
       on-refresh="pullToRefresh()">
@@ -22,7 +22,7 @@
             <avatar-img img="item.avatar_file_path" text="item.official_title"></avatar-img>
           </figure>
           <p ng-click="navigateTo('group-profile', item)">{{ item.official_title}}</p>
-          <p ng-if="item.status === 1" class="btn-remove" ng-click="unjoin(item)"></p>
+          <button ng-if="item.status === 1" class="button button-clear button-remove" ng-click="unjoin(item)"><i class="icon ion-android-remove-circle"></i></button>
           <p ng-if="item.status === 0" class="pending-message">pending approval</p>
         </li>
       </ul>

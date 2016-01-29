@@ -95,7 +95,7 @@ angular.module('app.services', [
       $location.path('/group/' + group.id);
     },
     'group-join': function (group) {
-      $location.path('/group/' + group.id + '/join/' + group.membership_control + '/' + Number(group.fill_fields_required || 0));
+      $location.path('/group/join/' + group.id);
     },
     'activity': function (activity, focus) {
       var path = activityRoutes[activity.get('entity').type] + activity.get('entity').id;

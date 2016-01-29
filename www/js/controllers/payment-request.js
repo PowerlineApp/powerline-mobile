@@ -59,7 +59,14 @@ angular.module('app.controllers')
         $state.reload();
       }, function (error) {
         $scope.hideSpinner();
-        $scope.alert(error, function () {
+        if(error.data){
+          if(error.data.error){
+            error = error.data.error;
+          }else{
+            error = error.data;
+          }
+        }
+        $scope.alert(JSON.stringify(error), function () {
           $state.reload();
         }, 'Error', 'OK');
 

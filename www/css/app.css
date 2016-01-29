@@ -1048,6 +1048,9 @@ select.choice-filter {
         -webkit-line-clamp: 1;
         -webkit-box-orient: vertical;
         display: -webkit-box; }
+        @media (max-width: 375px) {
+          .dropdown-1 .choices li span {
+            font-size: 14px; } }
       .dropdown-1 .choices li.ng-click-active {
         background-color: #54c5ff; }
         .dropdown-1 .choices li.ng-click-active span {
@@ -2031,6 +2034,9 @@ h4 {
       border-left: solid 1px #798ca6;
       margin: auto 3px;
       padding-left: 3px; }
+  @media (max-width: 375px) {
+    .q-content p, .q-content .title {
+      font-size: 14px; } }
 
 .comment-message {
   text-align: center;
@@ -2455,6 +2461,10 @@ asterisk {
     position: absolute;
     left: 8px;
     top: 20px; }
+  @media (max-width: 375px) {
+    .comment-answer-form textarea {
+      font-size: 16px;
+      min-height: 18px !important; } }
 
 .comments .item {
   margin-top: 7px;
@@ -2540,6 +2550,9 @@ asterisk {
       .comments .item .item-content p a {
         font-family: "Lato Bolder";
         color: #030366; }
+      @media (max-width: 375px) {
+        .comments .item .item-content p {
+          font-size: 16px; } }
     .comments .item .item-content .icon-up-mini, .comments .item .item-content .icon-down-mini {
       display: inline-block;
       background: url('../images/v2/icons/rate-sprite.png') no-repeat;
@@ -2560,6 +2573,9 @@ asterisk {
       text-align: right; }
       .comments .item .item-content .rates .active {
         color: #54c5ff; }
+      @media (max-width: 375px) {
+        .comments .item .item-content .rates {
+          font-size: 11px; } }
 .comments .comment-menu {
   height: 33px;
   width: 100%;
@@ -2654,7 +2670,7 @@ asterisk {
       background-color: transparent !important; }
     .activities-list .item .item-content hash-tag {
       font-family: "Lato Bold";
-      color: #030366; }
+      color: #4c33cc; }
     .activities-list .item .item-content p {
       text-overflow: ellipsis;
       overflow: hidden;
@@ -2746,6 +2762,7 @@ asterisk {
     height: 40px;
     width: 100%;
     display: flex;
+    display: -webkit-flex;
     box-sizing: border-box;
     justify-content: space-between; }
     .activities-list .item .item-footer .responses {
@@ -2790,12 +2807,20 @@ asterisk {
 .sa-items .item {
   padding: 15px 0 12px 0;
   display: flex;
+  display: -webkit-flex;
   flex-direction: row;
+  -webkit-flex-direction: row;
   border-bottom: solid 1px #ededed; }
   .sa-items .item.item-link {
     padding-right: 40px;
     background: url("../images/v2/cut/sa-right-icon.png") right 23px no-repeat;
     background-size: 18px 14px; }
+  .sa-items .item.follow-request > div {
+    display: table;
+    width: 100%; }
+    .sa-items .item.follow-request > div > div {
+      display: table-cell;
+      vertical-align: top; }
   .sa-items .item .avatar {
     order: 1;
     padding: 0 8px;
@@ -2862,13 +2887,13 @@ asterisk {
     .sa-items .item .request span {
       color: #798ca6;
       font-size: 10px; }
-  .sa-items .item .follow-request {
+  .sa-items .item .buttons {
     order: 3;
     text-align: center;
     margin-left: auto;
     margin-top: -5px;
     padding: 0 8px 0px 3px; }
-    .sa-items .item .follow-request button {
+    .sa-items .item .buttons button {
       display: block;
       font-size: 10px;
       width: 100%;
@@ -2876,7 +2901,7 @@ asterisk {
       padding: 5px 3px;
       min-width: 60px;
       font-size: 13px; }
-      .sa-items .item .follow-request button:last-child {
+      .sa-items .item .buttons button:last-child {
         margin-bottom: 0px; }
 .sa-items .no-results {
   text-align: center;
@@ -3517,3 +3542,15 @@ tab-panel {
 .button.button-profile-nav {
   position: absolute;
   right: 0px; }
+
+@media (max-width: 375px) {
+  .page-join-group .text-field input {
+    height: 30px; } }
+
+.page-my-groups .profiles-list .button-remove {
+  position: absolute;
+  right: 0px;
+  top: 10px; }
+  .page-my-groups .profiles-list .button-remove .icon:before {
+    font-size: 28px;
+    color: #762026; }

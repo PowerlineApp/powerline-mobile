@@ -24,3 +24,9 @@
     display: block;
   }
 }
+
+@mixin iphone6AndLower(){
+  @media (max-width: 375px){
+    @content;
+  }
+}

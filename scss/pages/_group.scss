@@ -1,0 +1,23 @@
+.page-join-group {
+  @include iphone6AndLower{
+    .text-field{
+      input{
+        height: 30px;
+      }
+    }
+  }
+}
+
+.page-my-groups{
+  .profiles-list{
+    .button-remove{
+      position: absolute;
+      right: 0px;
+      top: 10px;
+      .icon:before{
+        font-size: 28px;
+        color: #762026;
+      }
+    }
+  }
+}
