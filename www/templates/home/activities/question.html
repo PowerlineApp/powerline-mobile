@@ -17,7 +17,7 @@
     <i class="time"><time>{{ sent_at_elapsed }}</time></i>
   </div>
   <div class="item-content" ng-click="navigateToActivity(activity)">
-    <p bo-if="activity.get('image_src')" class="picture"><img bo-src="activity.get('image_src')"/></p>
+    <p bo-if="activity.get('image_src')" class="picture"><img bo-src="activity.get('image_src')| imgix"/></p>
     <p ng-class="{unanswered: activity.isUnanswered() && !title}" bo-bind="description"></p>
   </div>
   <div class="item-footer">
