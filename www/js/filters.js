@@ -57,4 +57,25 @@ angular.module('app.filters', []).filter('elapsed', function () {
     }
     return input.replace(/^\s*/, '').replace(/\s*$/, '');
   };
+}).filter('imgix', function (serverConfig, $window) {
+  return function (imgURL, options) {
+    options = options || {};
+    if (!options.w && !options.h) {
+      options.w = $window.innerWidth;
+    }
+    var patts = imgURL.replace('http://', '').replace('https://', '').split(/\//g);
+    if (patts[0].indexOf('amazonaws.com') === -1) {
+      return imgURL;
+    }
+    patts.splice(0, 1);
+    var newURL = 'http://powerline-' + serverConfig.env + '.imgix.net/' + patts.join('/');
+    newURL += newURL.indexOf('?') === -1 ? '?' : '&';
+    angular.forEach(options, function (val, key) {
+      newURL += key + '=' + val + '&';
+    });
+    if (newURL.substr(newURL.length - 1) === '&') {
+      newURL = newURL.substr(0, newURL.length - 1);
+    }
+    return newURL;
+  };
 });
