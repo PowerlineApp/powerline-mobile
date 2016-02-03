@@ -16,7 +16,7 @@
       <div class="item" ng-repeat="comment in comment.children| limitTo:commentsLimit" bindonce>
         <div class="wrap">
           <figure ng-click="navigateTo('influence-profile', comment.user.id)">
-            <img bo-src="comment.author_picture" width="35">
+            <img bo-src="comment.author_picture| imgix:{w:35}" width="35">
           </figure>
           <div class="header">
             <strong
