@@ -352,7 +352,6 @@ hr {
   top: 0;
   left: 0; }
   .autocomplete-popup ul {
-    height: 500px;
     display: flex;
     flex-direction: column-reverse;
     overflow: hidden; }

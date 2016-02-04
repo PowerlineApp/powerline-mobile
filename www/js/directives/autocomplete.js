@@ -30,9 +30,8 @@ angular.module('app.directives')
         autocompleteScope.element[0].selectionEnd
       );
       var offset = autocompleteScope.element.offset();
-
       autoCompleteEl.show()
-        .css('top', coordinates.top + offset.top - 500)
+        .css('top', (coordinates.top + offset.top - Math.min(6, autocompleteScope.items.length) * 30))
         .css('left', offset.left + coordinates.left)
       ;
     }
@@ -96,13 +95,17 @@ angular.module('app.directives')
       }
     }
 
+    var textTimer = null;
     return function(scope, element) {
       element.on('input', function(){
-        autocompleteScope.element = element;
-        setQuery();
-        filter();
-        fetch();
-        autocomplete();
+        $timeout.cancel(textTimer);
+        textTimer = $timeout(function(){
+          autocompleteScope.element = element;
+          setQuery();
+          filter();
+          fetch();
+          autocomplete();
+        }, 100);
       });
       element.on('blur', function() {
         $timeout(function() {
