@@ -13,6 +13,7 @@ angular.module('app.directives')
 
     var users = [];
     var usersById = {};
+    var maxQueryLength = 2;
     autocompleteScope.items = [];
 
     autocompleteScope.select = function(item) {
@@ -60,7 +61,7 @@ angular.module('app.directives')
 
 
     function filter() {
-      if (autocompleteScope.query.length > 1 && autocompleteScope.query[0] === '@') {
+      if (autocompleteScope.query.length > maxQueryLength && autocompleteScope.query[0] === '@') {
         var start = autocompleteScope.query.slice(1, autocompleteScope.query.length).toLowerCase();
         autocompleteScope.items = _(users).filter(function(user) {
           return 0 === user.username.toLowerCase().search(start) ||
@@ -74,20 +75,24 @@ angular.module('app.directives')
     }
 
     function fetch() {
-      if (autocompleteScope.query.length > 1 && autocompleteScope.query[0] === '@') {
+      if (autocompleteScope.query.length > maxQueryLength && autocompleteScope.query[0] === '@') {
         search.searchUsers(autocompleteScope.query.slice(1, autocompleteScope.query.length))
           .then(function(data) {
+            var dataAdded = false;
             _(data).each(function(user) {
               if (!usersById[user.id]) {
                 usersById[user.id] = user;
+                dataAdded = true;
                 users.push(user);
                 user.label = '@' + user.username;
                 user.comment = user.first_name + ' ' + user.last_name;
-                filter();
               }
             });
-          })
-        ;
+            if(dataAdded){
+              filter();
+              autocomplete();
+            }
+          });
       }
     }
 
@@ -105,5 +110,4 @@ angular.module('app.directives')
         }, 500, false);
       });
     };
-  })
-;
+  });
