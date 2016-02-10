@@ -1,13 +1,15 @@
-angular.module('app.controllers').controller('groups',function ($scope, groups, $state, $rootScope, flurry) {
-  
+angular.module('app.controllers').controller('groups', function ($scope, groups, $state, $rootScope, flurry) {
+
   flurry.log('my groups');
-  
+
   $scope.items = [];
 
-  function loadGroups(showSpinner){
-    if(showSpinner) $scope.showSpinner();
+  function loadGroups(showSpinner) {
+    if (showSpinner)
+      $scope.showSpinner();
     groups.load().finally(function () {
-      if(showSpinner) $scope.hideSpinner();
+      if (showSpinner)
+        $scope.hideSpinner();
       $scope.$broadcast('scroll.refreshComplete');
       $scope.items = groups.getLettersGroups();
     });
@@ -24,25 +26,25 @@ angular.module('app.controllers').controller('groups',function ($scope, groups, 
       });
     });
   };
-  
-  $scope.pullToRefresh = function(){
+
+  $scope.pullToRefresh = function () {
     loadGroups();
   };
-  
-  $rootScope.$on('groups-updated', function(){
+
+  $rootScope.$on('groups-updated', function () {
     loadGroups(true);
   });
-  
+
   //if this page is opened from menu or there is not data, we should refresh data
-  $scope.$on('$ionicView.enter', function(){
-    if($scope.items.length === 0/* || $rootScope.menuClicked*/){
+  $scope.$on('$ionicView.enter', function () {
+    if ($scope.items.length === 0/* || $rootScope.menuClicked*/) {
       loadGroups(true);
       groups.loadSuggested();
     }
   });
-  
-  
-}).controller('groups.search',function ($scope, groups, flurry, $rootScope) {
+
+
+}).controller('groups.search', function ($scope, groups, flurry, $rootScope) {
 
   flurry.log('group search');
 
@@ -82,7 +84,7 @@ angular.module('app.controllers').controller('groups',function ($scope, groups, 
     });
   }
 
-}).controller('groups.search.join-groups',function ($scope, groups, $rootScope) {
+}).controller('groups.search.join-groups', function ($scope, groups, $rootScope) {
   $scope.popularItems = groups.getPopularGroups();
   $scope.newItems = groups.getNewGroups();
 
@@ -93,8 +95,8 @@ angular.module('app.controllers').controller('groups',function ($scope, groups, 
   $scope.$watch(groups.getNewGroups, function (newValue) {
     $scope.newItems = newValue;
   });
-}).controller('groups.profile',function ($scope, topBar, groups, $stateParams, $state, activity, invites, influence, homeCtrlParams, flurry, $rootScope) {
-  
+}).controller('groups.profile', function ($scope, topBar, groups, $stateParams, $state, activity, invites, influence, homeCtrlParams, flurry, $rootScope) {
+
   influence.loadFollowers();
 
   var id = parseInt($stateParams.id, 10);
@@ -148,8 +150,8 @@ angular.module('app.controllers').controller('groups',function ($scope, groups, 
     $scope.hideSpinner();
     return checkPermissions();
   }
-  
-  $scope.togglePostWindow = function(){
+
+  $scope.togglePostWindow = function () {
     $scope.showPostWindow = !$scope.showPostWindow;
     $scope.execApply();
   };
@@ -210,10 +212,10 @@ angular.module('app.controllers').controller('groups',function ($scope, groups, 
         $scope.data.fields = [];
         _(fields).each(function (field) {
           $scope.data.fields.push(
-            {
-              field: field,
-              field_value: ''
-            }
+                  {
+                    field: field,
+                    field_value: ''
+                  }
           );
         });
       }, function () {
@@ -238,7 +240,7 @@ angular.module('app.controllers').controller('groups',function ($scope, groups, 
         _(group.required_permissions).each(function (key) {
           message += '\n ' + groups.permissionsLabels[key];
         });
-        $scope.confirmAction(message, 'Permissions', 'OK,Cancel').then(function(){
+        $scope.confirmAction(message, 'Permissions', 'OK,Cancel').then(function () {
           join(joinForm);
         });
       } else {
@@ -259,10 +261,10 @@ angular.module('app.controllers').controller('groups',function ($scope, groups, 
       $scope.hideSpinner();
       if (403 === response.status) {
         /*if (response.data && response.data.error) {
-          $scope.alert(response.data.error);
-        } else {*/
-          joinForm.passcode.$setValidity('required', false);
-          $scope.alert('Incorrect passcode');
+         $scope.alert(response.data.error);
+         } else {*/
+        joinForm.passcode.$setValidity('required', false);
+        $scope.alert('Incorrect passcode');
         //}
       } else if (400 === response.status) {
         $scope.alert('Invalid data');
@@ -282,7 +284,7 @@ angular.module('app.controllers').controller('groups',function ($scope, groups, 
     }
   }
 
-}).controller('groups.create',function ($scope, groups, profile, $location) {
+}).controller('groups.create', function ($scope, groups, profile, $location) {
 
   var user = profile.get();
   $scope.data = {
@@ -300,14 +302,14 @@ angular.module('app.controllers').controller('groups',function ($scope, groups, 
     'Cooperative/Union',
     'Other'
   ];
-  
-  $scope.send = function(){
-    setTimeout(function(){
+
+  $scope.send = function () {
+    setTimeout(function () {
       angular.element('form[name=createGroupForm] #submitter').trigger('click');
     });
   };
 
-  $scope.create = function(createGroupForm) {
+  $scope.create = function (createGroupForm) {
     createGroupForm.$filled = true;
     if (createGroupForm.$invalid) {
       $scope.formClass = 'error';
@@ -337,5 +339,47 @@ angular.module('app.controllers').controller('groups',function ($scope, groups, 
         }
       });
     }
+  }
+}).controller('groups.members', function ($scope, $stateParams, serverConfig, $http, follows, session) {
+
+
+  var groupId = $stateParams.id;
+  $scope.members = [];
+
+  $scope.pullToRefresh = function () {
+    loadMembers();
+  };
+
+  function loadMembers() {
+    return $http.get(serverConfig.url + '/api/groups/' + groupId + '/users').success(function (data) {
+      console.log(data);
+      data.forEach(function (item) {
+        item.follow = follows.getByUserId(item.id);
+        item.followable = !item.follow.isFollow();
+        if (item.followable && item.follow.isApproved()) {
+          item.isFollowApproved = true;
+        }
+        item.isFollowShow = follows.loaded && item.follow.get('user').id !== session.user_id;
+      });
+    }).finally(function () {
+      $scope.hideSpinner();
+      $scope.$broadcast('scroll.refreshComplete');
+    });
+  }
+
+  $scope.followOwner = function (item) {
+    item.sending = true;
+    item.follow.follow().then(function () {
+      item.followable = false;
+      item.sending = false;
+      $scope.showToast('Follow request sent!');
+    });
+  };
+
+  $scope.showSpinner();
+  loadMembers();
+
+  if (!follows.size()) {
+    follows.load();
   }
 });

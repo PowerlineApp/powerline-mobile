@@ -46,6 +46,7 @@
         <li ng-show="data.total_members">
           <p><span>Total Members</span></p>
           <p ng-bind="data.total_members"></p>
+          <a class="btn-group-members btn-primary" ui-sref="app.groupsMembers({id:data.id})">Group Members</a>
         </li>
       </ul>
     </section>

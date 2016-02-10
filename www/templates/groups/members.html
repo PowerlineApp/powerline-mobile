@@ -1,0 +1,31 @@
+<ion-view view-title="Group Members">
+  
+  <ion-content class="content has-subheader">
+    <ion-refresher
+      pulling-text="Pull to refresh..."
+      on-refresh="pullToRefresh()">
+    </ion-refresher>
+    
+    <section class="margin-8">
+      <ul class="profiles-list-two">
+        <li ng-repeat="item in members">
+          <figure ng-click="navigateTo('path', 'influence/profile', item.get('follower').id)">
+            <avatar-img img="item.get('follower').avatar_file_name" text="item.get('follower').first_name"></avatar-img>
+          </figure>
+          <p ng-click="navigateTo('path', 'influence/profile', item.get('follower').id)">{{ item.get('follower').username}}</p>
+          <p><span>{{ item.get('follower').first_name}} {{ item.get('follower').last_name}}</span></p>
+          
+          <div class="group-member-control" ng-show="item.followable && item.isFollowShow">
+            <a ng-click="followOwner(item)"><i class="icon ion-person-add"></i></a>
+          </div>
+          <div class="group-member-control" ng-show="!item.followable && item.isFollowShow">
+            <span ng-show="item.isFollowApproved" ng-click="showToast('You are following this user')"><i class="icon ion-person-stalker"></i></span>
+            <span ng-show="!item.isFollowApproved" ng-click="showToast('Waiting for user to approve...')"><i class="icon ion-person"></i></span>
+          </div>
+<!--          <p class="btn-remove" ng-click="remove(item)"></p>-->
+        </li>
+      </ul>
+    </section>
+    
+  </ion-content>
+</ion-view>
