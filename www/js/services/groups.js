@@ -181,7 +181,11 @@ angular.module('app.services').factory('groups',function ($resource, serverConfi
       permissions_name: 'Name',
       permissions_contacts: 'Contact information',
       permissions_responses: 'Responses',
-      permissions_address: 'Address',
+      permissions_address: 'Street Address',
+      permissions_city: 'City',
+      permissions_state: 'State',
+      permissions_country: 'Country',
+      permissions_zip_code: 'Zip Code',
       permissions_email: 'Email',
       permissions_phone: 'Phone Number'
     },
