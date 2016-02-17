@@ -1,4 +1,4 @@
-angular.module('app.services').factory('search', function($http, serverConfig, petitions) {
+angular.module('app.services').factory('search', function ($http, serverConfig, petitions, $q) {
 
   function profileSearch(query) {
     return $http({
@@ -16,16 +16,25 @@ angular.module('app.services').factory('search', function($http, serverConfig, p
     });
   }
 
+  //to prevent continous api calls
+  var _lastUserSearchDefer = null;
+  var _isSearchingUsers = false;
   return {
-    load: function(query) {
+    load: function (query) {
       return (query && '#' === query[0]) ? petitionSearch(query) : profileSearch(query);
     },
-    searchUsers: function(query) {
-      return $http.get(serverConfig.url + '/api/users/', {params: {q: query}})
-        .then(function(resp) {
-          return resp.data;
-        })
-      ;
+    searchUsers: function (query) {
+      if (_isSearchingUsers && _lastUserSearchDefer) {
+        _lastUserSearchDefer.resolve('abort');
+      }
+      var dataDefer = $q.defer();
+      _isSearchingUsers = true;
+      _lastUserSearchDefer = dataDefer;
+      return $http.get(serverConfig.url + '/api/users/', {params: {q: query}, timeout: dataDefer.promise}).then(function (resp) {
+        return resp.data;
+      }).finally(function () {
+        _isSearchingUsers = false;
+      });
     }
   };
 });
