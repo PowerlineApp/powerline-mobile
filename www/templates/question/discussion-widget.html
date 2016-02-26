@@ -13,7 +13,7 @@
   </form>
   <section ng-init="commentsLimit = 10">
     <div class="comments">
-      <div class="item" ng-repeat="comment in comment.children| limitTo:commentsLimit" bindonce>
+      <div class="item" ng-repeat="comment in comment.children| limitTo:commentsLimit track by $index" bindonce>
         <div class="wrap">
           <figure ng-click="navigateTo('influence-profile', comment.user.id)">
             <img bo-src="comment.author_picture| imgix:{w:35}" width="35">
@@ -33,9 +33,15 @@
           </div>
         </div>
         <div class="item-content">
-          <p bo-html="comment.comment_body_html"
+          <p ng-bind-html="comment.comment_body_html"
              i-content-link
-             ng-click="view.selectedId = view.selectedId === comment.id ? null : comment.id"></p>
+             ng-click="view.selectedId = view.selectedId === comment.id ? null : comment.id" ng-hide="editClicked[$index]==true"></p>
+          <textarea ng-model="comment.comment_body" ng-show="editClicked[$index]==true" i-tags i-open-system-links style="border: 1px solid grey;
+            width: 90vw;
+            text-align: left;
+            min-height: 50px">
+          </textarea>  
+
           <p class="rates">
             <span ng-bind="comment.rate_up" ng-class="{active: comment.rate_status === 1}"></span>
             <i class="icon-up-mini"></i>
@@ -64,6 +70,16 @@
           <p bo-show="comment.link" i-open-system="comment.link" ng-click>
             <i class="icon-link"></i>
           </p>
+
+
+<!-- comment edit and trash buttons-->          
+          <p ng-show="isAvailableToDelete(comment)" ng-click="editComment(comment, $index)">
+            <i ng-class="{'ion-edit':editClicked[$index]==false,'ion-checkmark':editClicked[$index]==true}" style="font-size: 22px; padding-top: 6px; color: darkgrey;"></i>
+          </p>
+          <p ng-show="isAvailableToDelete(comment)" ng-click="deleteComment(comment, $index)">
+            <i class="button-assertive icon ion-trash-a" style="font-size: 24px; padding-top: 5px; color: darkgrey;"></i>
+          </p>
+<!-- comment edit and trash buttons-->                    
         </div>
       </div>
     </div>
