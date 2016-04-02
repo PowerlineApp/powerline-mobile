@@ -19,17 +19,17 @@
   <div class="item-content" ng-click="navigateToActivity(activity)">
     <p bo-if="activity.get('image_src')" class="picture"><img bo-src="activity.get('image_src')| imgix"/></p>
     <p ng-class="{unanswered: activity.isUnanswered() && !title}" bo-bind="description"></p>
+    This is default.
   </div>
   <div class="item-footer">
-<!--subscribe button for Bookmark start-->    
+  <!--subscribe button for Bookmark start-->    
     <div class="control" style="padding-top: 3px">
       <a ng-click="onAddBookmark()">
-        <i class="ion-star" style="font-size: 22px;" ng-style="starStyle">
+        <i class="ion-star" style="font-size: 22px;color: yellow;">
         </i>
       </a>
     </div>
 <!--subscribe button for Bookmark end--> 
-  
     <div class="responses" bo-bind="responses_count"></div>
   </div>
 </article>
