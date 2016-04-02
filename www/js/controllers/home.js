@@ -184,6 +184,61 @@ angular.module('app.controllers').directive('iActivity', function ($rootScope, q
 
   function eventCtrl($scope) {
     $scope.templateSrc = 'templates/home/activities/event.html';
+//Subscribe Button enable
+    $scope.subscribe_enable = false;
+    $scope.isOwner = $scope.activity.isOwn();
+
+    if ($scope.isOwner == true){
+      $scope.mutingStyle = {
+            "color":"blue"
+          };
+    }
+    else {
+      $scope.mutingStyle = {
+            "color":"#adb7c6"
+          };
+    }
+
+    $scope.onSubscribeBtnClicked = function(){
+      $scope.subscribe_enable = !$scope.subscribe_enable;
+      if ($scope.subscribe_enable == true){
+        if ($scope.isOwner == true){
+          $scope.showToast("Muting this post");
+          
+          $scope.activity.saveProfileSetting();
+          $scope.mutingStyle = {
+            "color":"#adb7c6"
+          };     
+        }
+        else {
+          var postID = $scope.activity.getPostID();
+          $scope.activity.changeSubscribe(postID);
+          $scope.showToast("Now following this post");
+          $scope.mutingStyle = {
+            "color":"blue"
+          };
+        }
+      }
+      else {
+        if ($scope.isOwner == true){
+          $scope.showToast("Unmuting this post");          
+          $scope.activity.saveProfileSetting();
+          $scope.mutingStyle = {
+            "color":"blue"
+          };
+        }
+        else {
+          var postID = $scope.activity.getPostID();
+          $scope.activity.changeSubscribe(postID);
+          $scope.showToast("Unsubscribed from this post");
+          $scope.mutingStyle = {
+            "color":"#adb7c6"
+          };
+        }
+      }
+    }
+//Subscribe Button enable    
+
   }
 
   function newsCtrl($scope) {
@@ -200,10 +255,118 @@ angular.module('app.controllers').directive('iActivity', function ($rootScope, q
         });
       });
     };
+//Subscribe Button enable
+    $scope.subscribe_enable = false;
+    $scope.isOwner = $scope.activity.isOwn();
+
+    if ($scope.isOwner == true){
+      $scope.mutingStyle = {
+            "color":"blue"
+          };
+    }
+    else {
+      $scope.mutingStyle = {
+            "color":"#adb7c6"
+          };
+    }
+
+    $scope.onSubscribeBtnClicked = function(){
+      $scope.subscribe_enable = !$scope.subscribe_enable;
+      if ($scope.subscribe_enable == true){
+        if ($scope.isOwner == true){
+          $scope.showToast("Muting this post");
+          
+          $scope.activity.saveProfileSetting();
+          $scope.mutingStyle = {
+            "color":"#adb7c6"
+          };     
+        }
+        else {
+          var postID = $scope.activity.getPostID();
+          $scope.activity.changeSubscribe(postID);
+          $scope.showToast("Now following this post");
+          $scope.mutingStyle = {
+            "color":"blue"
+          };
+        }
+      }
+      else {
+        if ($scope.isOwner == true){
+          $scope.showToast("Unmuting this post");          
+          $scope.activity.saveProfileSetting();
+          $scope.mutingStyle = {
+            "color":"blue"
+          };
+        }
+        else {
+          var postID = $scope.activity.getPostID();
+          $scope.activity.changeSubscribe(postID);
+          $scope.showToast("Unsubscribed from this post");
+          $scope.mutingStyle = {
+            "color":"#adb7c6"
+          };
+        }
+      }
+    }
+//Subscribe Button enable    
   }
 
   function paymentCtrl($scope) {
     $scope.templateSrc = 'templates/home/activities/payment.html';
+//Subscribe Button enable
+    $scope.subscribe_enable = false;
+    $scope.isOwner = $scope.activity.isOwn();
+
+    if ($scope.isOwner == true){
+      $scope.mutingStyle = {
+            "color":"blue"
+          };
+    }
+    else {
+      $scope.mutingStyle = {
+            "color":"#adb7c6"
+          };
+    }
+
+    $scope.onSubscribeBtnClicked = function(){
+      $scope.subscribe_enable = !$scope.subscribe_enable;
+      if ($scope.subscribe_enable == true){
+        if ($scope.isOwner == true){
+          $scope.showToast("Muting this post");
+          
+          $scope.activity.saveProfileSetting();
+          $scope.mutingStyle = {
+            "color":"#adb7c6"
+          };     
+        }
+        else {
+          var postID = $scope.activity.getPostID();
+          $scope.activity.changeSubscribe(postID);
+          $scope.showToast("Now following this post");
+          $scope.mutingStyle = {
+            "color":"blue"
+          };
+        }
+      }
+      else {
+        if ($scope.isOwner == true){
+          $scope.showToast("Unmuting this post");          
+          $scope.activity.saveProfileSetting();
+          $scope.mutingStyle = {
+            "color":"blue"
+          };
+        }
+        else {
+          var postID = $scope.activity.getPostID();
+          $scope.activity.changeSubscribe(postID);
+          $scope.showToast("Unsubscribed from this post");
+          $scope.mutingStyle = {
+            "color":"#adb7c6"
+          };
+        }
+      }
+    }
+//Subscribe Button enable    
   }
 
   function postCtrl($scope) {
@@ -244,6 +407,61 @@ angular.module('app.controllers').directive('iActivity', function ($rootScope, q
       });
     };
     $scope.showToast = $rootScope.showToast;
+
+//Subscribe Button enable
+    $scope.subscribe_enable = false;
+    $scope.isOwner = $scope.activity.isOwn();
+
+    if ($scope.isOwner == true){
+      $scope.mutingStyle = {
+            "color":"blue"
+          };
+    }
+    else {
+      $scope.mutingStyle = {
+            "color":"#adb7c6"
+          };
+    }
+
+    $scope.onSubscribeBtnClicked = function(){
+      $scope.subscribe_enable = !$scope.subscribe_enable;
+      if ($scope.subscribe_enable == true){
+        if ($scope.isOwner == true){
+          $scope.showToast("Muting this post");
+          
+          $scope.activity.saveProfileSetting();
+          $scope.mutingStyle = {
+            "color":"#adb7c6"
+          };     
+        }
+        else {
+          var postID = $scope.activity.getPostID();
+          $scope.activity.changeSubscribe(postID);
+          $scope.showToast("Now following this post");
+          $scope.mutingStyle = {
+            "color":"blue"
+          };
+        }
+      }
+      else {
+        if ($scope.isOwner == true){
+          $scope.showToast("Unmuting this post");          
+          $scope.activity.saveProfileSetting();
+          $scope.mutingStyle = {
+            "color":"blue"
+          };
+        }
+        else {
+          var postID = $scope.activity.getPostID();
+          $scope.activity.changeSubscribe(postID);
+          $scope.showToast("Unsubscribed from this post");
+          $scope.mutingStyle = {
+            "color":"#adb7c6"
+          };
+        }
+      }
+    }
+//Subscribe Button enable    
   }
 
   function petitionCtrl($scope) {
@@ -282,10 +500,118 @@ angular.module('app.controllers').directive('iActivity', function ($rootScope, q
         $scope.sending = false;
       });
     };
+//Subscribe Button enable
+    $scope.subscribe_enable = false;
+    $scope.isOwner = $scope.activity.isOwn();
+
+    if ($scope.isOwner == true){
+      $scope.mutingStyle = {
+            "color":"blue"
+          };
+    }
+    else {
+      $scope.mutingStyle = {
+            "color":"#adb7c6"
+          };
+    }
+
+    $scope.onSubscribeBtnClicked = function(){
+      $scope.subscribe_enable = !$scope.subscribe_enable;
+      if ($scope.subscribe_enable == true){
+        if ($scope.isOwner == true){
+          $scope.showToast("Muting this post");
+          
+          $scope.activity.saveProfileSetting();
+          $scope.mutingStyle = {
+            "color":"#adb7c6"
+          };     
+        }
+        else {
+          var postID = $scope.activity.getPostID();
+          $scope.activity.changeSubscribe(postID);
+          $scope.showToast("Now following this post");
+          $scope.mutingStyle = {
+            "color":"blue"
+          };
+        }
+      }
+      else {
+        if ($scope.isOwner == true){
+          $scope.showToast("Unmuting this post");          
+          $scope.activity.saveProfileSetting();
+          $scope.mutingStyle = {
+            "color":"blue"
+          };
+        }
+        else {
+          var postID = $scope.activity.getPostID();
+          $scope.activity.changeSubscribe(postID);
+          $scope.showToast("Unsubscribed from this post");
+          $scope.mutingStyle = {
+            "color":"#adb7c6"
+          };
+        }
+      }
+    }
+//Subscribe Button enable    
   }
 
   function questionCtrl($scope) {
     $scope.templateSrc = 'templates/home/activities/question.html';
+//Subscribe Button enable
+    $scope.subscribe_enable = false;
+    $scope.isOwner = $scope.activity.isOwn();
+
+    if ($scope.isOwner == true){
+      $scope.mutingStyle = {
+            "color":"blue"
+          };
+    }
+    else {
+      $scope.mutingStyle = {
+            "color":"#adb7c6"
+          };
+    }
+
+    $scope.onSubscribeBtnClicked = function(){
+      $scope.subscribe_enable = !$scope.subscribe_enable;
+      if ($scope.subscribe_enable == true){
+        if ($scope.isOwner == true){
+          $scope.showToast("Muting this post");
+          
+          $scope.activity.saveProfileSetting();
+          $scope.mutingStyle = {
+            "color":"#adb7c6"
+          };     
+        }
+        else {
+          var postID = $scope.activity.getPostID();
+          $scope.activity.changeSubscribe(postID);
+          $scope.showToast("Now following this post");
+          $scope.mutingStyle = {
+            "color":"blue"
+          };
+        }
+      }
+      else {
+        if ($scope.isOwner == true){
+          $scope.showToast("Unmuting this post");          
+          $scope.activity.saveProfileSetting();
+          $scope.mutingStyle = {
+            "color":"blue"
+          };
+        }
+        else {
+          var postID = $scope.activity.getPostID();
+          $scope.activity.changeSubscribe(postID);
+          $scope.showToast("Unsubscribed from this post");
+          $scope.mutingStyle = {
+            "color":"#adb7c6"
+          };
+        }
+      }
+    }
+//Subscribe Button enable    
   }
 
   var ctrlByType = {

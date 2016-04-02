@@ -41,6 +41,14 @@
       <span ng-show="isFollowApproved" ng-click="showToast('You are following this user')"><i class="icon ion-person-stalker"></i></span>
       <span ng-show="!isFollowApproved" ng-click="showToast('Waiting for user to approve...')"><i class="icon ion-person"></i></span>
     </div>
+
+<!--subscribe button for Post start-->    
+    <div class="control" style="padding-top: 3px">
+      <a ng-click="onSubscribeBtnClicked()"><i ng-class="'ion-android-notifications'" style="font-size: 22px;" ng-style="mutingStyle"></i></a>
+    </div>
+<!--subscribe button for Post end-->    
+
+
     <div class="responses" bo-bind="responses_count"></div>
   </div>
   <div class="completion-fill-vertical">
