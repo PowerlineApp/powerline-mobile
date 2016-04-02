@@ -41,6 +41,7 @@ angular.module('app.controllers').controller('groups',function ($scope, groups, 
     }
   });
   
+  
 }).controller('groups.search',function ($scope, groups, flurry, $rootScope) {
 
   flurry.log('group search');
@@ -170,10 +171,6 @@ angular.module('app.controllers').controller('groups',function ($scope, groups, 
         }
       });
     }
-  }
-
-  $scope.goToMembers = function(){
-    $scope.path('/followgroup/' + id);
   }
 
   $scope.showSpinner();

@@ -127,8 +127,7 @@ angular.module('app.services').factory('groups',function ($resource, serverConfi
     search: search,
 
     get: function (id) {
-      var data = groupsInfo[id];
-      return data;
+      return groupsInfo[id];
     },
 
     getGroup: function (id) {

@@ -253,16 +253,6 @@ angular.module('app')
       url: '/group-petions/:id',
       templateUrl: 'templates/petitions/group.html',
       controller: 'petitions.group'
-    }, {
-      name: 'followgroup',
-      url: '/followgroup/:id',
-      templateUrl: 'templates/followgroup/followgroup.html',
-      controller: 'followgroup'
-    }, {
-      name: 'followgroupProfile',
-      url: '/followgroup/profile/:id',
-      templateUrl: 'templates/followgroup/profile.html',
-      controller: 'followgroup.profile'
     }];
 
   states.forEach(function (state) {
