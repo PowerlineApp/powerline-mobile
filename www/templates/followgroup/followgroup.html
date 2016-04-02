@@ -1,0 +1,53 @@
+<ion-view view-title="Group Members" hide-back-button="true">
+  <ion-nav-buttons side="left">
+    <button menu-toggle="left" class="button button-icon icon ion-navicon"></button>
+  </ion-nav-buttons>
+
+
+  <section class="tab bar bar-subheader" style="width:100%;text-align:right;margin-top: 4px;">
+      <a style="line-height: 25px;
+                border: solid;
+                border-color: red;
+                color: red;
+                padding-right: 15px;
+                padding-left: 15px;
+                font-weight: 700;
+                border-width: 2px;
+                float: right;
+                height: initial;
+                margin-top: 7px;
+                margin-right: 15px;
+              " 
+              ng-click="followAll()">
+                Follow All Members
+      </a>
+  </section>
+
+  <ion-content class="content has-subheader">
+    <ion-refresher
+      pulling-text="Pull to refresh..."
+      on-refresh="pullToRefresh()">
+    </ion-refresher>
+
+    <section class="margin-8">
+      <ul class="profiles-list-two">
+
+
+        <li ng-repeat="item in data">
+          <figure ng-click="navigateTo('path', 'followgroup/profile', item.id)">
+            <avatar-img img="item.image_name" text="item.first_name"></avatar-img>
+          </figure>
+          <p ng-click="navigateTo('path', 'followgroup/profile', item.id)">{{ item.username}}</p>
+          <p><span>{{ item.first_name}} {{ item.last_name}}</span></p>
+          <p ng-if="item.following" class="ion-person-stalker" ng-click="follow(item)" style="position: absolute; right: 15px; font-size: x-large; top: 25px;"></p>
+          <p ng-if="!(item.following)" class="ion-person-add" ng-click="follow(item)" style="position: absolute; right: 15px; font-size: x-large; top: 25px;"></p>
+        </li>
+      </ul>
+
+      <p class="info-message" ng-hide="data.length">
+        No influences?! Nonsense - follow someone whose opinion you respect to improve your Powerline experience!.
+      </p>
+
+    </section>
+  </ion-content>
+</ion-view>

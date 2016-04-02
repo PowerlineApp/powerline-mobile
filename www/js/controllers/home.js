@@ -1,5 +1,5 @@
 angular.module('app.controllers').controller('home', function ($scope, $timeout, socialActivity, homeCtrlParams,
-        profile, activity, groups, flurry, $ionicScrollDelegate, $http, favorite) {
+        profile, activity, groups, flurry, $ionicScrollDelegate) {
 
   flurry.log('news feed');
 
@@ -7,10 +7,7 @@ angular.module('app.controllers').controller('home', function ($scope, $timeout,
 
   $scope.isLoadMore = false;
 
-  $scope.loadForFavorite = true;
-
-  var activities = activity.getActivities();  
-  var favorites;
+  var activities = activity.getActivities();
 
   function getActivities() {
     $scope.activities = homeCtrlParams.filter.selectedGroup ? homeCtrlParams.filter.selectedGroup.activities
@@ -62,11 +59,6 @@ angular.module('app.controllers').controller('home', function ($scope, $timeout,
       $scope.$emit('home.activities-reloaded');
       $scope.$broadcast('scroll.refreshComplete');
       $scope.$broadcast('scroll.infiniteScrollComplete');
-
-      if (activity.loadForFavorite != false){
-        $scope.$broadcast('load.favorite');
-      }
-
     }, prepare).finally(socialActivity.load);
   }
 
@@ -130,11 +122,6 @@ angular.module('app.controllers').controller('home', function ($scope, $timeout,
     loadActivities('refresh');
   });
 
-  $scope.$on('load.favorite', function(){
-    favorite.load();
-    loadActivities('refresh');
-  });
-
   //move scroll to top when filter is changed
   $scope.$watch('filter.selectedGroup', function (nVal) {
     if (typeof (nVal) !== undefined) {
@@ -193,66 +180,10 @@ angular.module('app.controllers').controller('preload', function (topBar, sessio
   }
 });
 
-angular.module('app.controllers').directive('iActivity', function ($rootScope, questions, petitions, discussion, elapsedFilter, follows, session, iParse, $sce, $http, serverConfig, favorite) {
-
-  favorite.load();
-  var favorites = favorite.getActivities();
+angular.module('app.controllers').directive('iActivity', function ($rootScope, questions, petitions, discussion, elapsedFilter, follows, session, iParse, $sce) {
 
   function eventCtrl($scope) {
     $scope.templateSrc = 'templates/home/activities/event.html';
-//Bookmark Button enable
-    $scope.bookmark_added = false;
-    var type = $scope.activity.attributes.entity.type;
-    var id = $scope.activity.attributes.id;
-
-    var favor = favorite.getActivities();
-
-    for (var i = 0; i < favor.models.length; i++){
-      var model = favorites.models[i];
-      var model_id = model.attributes.id;
-      if (model_id == id){
-        $scope.bookmark_added = true;
-        break;
-      }
-    }
-
-    if ($scope.bookmark_added == true){
-          $scope.starStyle = {
-            "color":"yellow"
-          }
-    }
-    else {
-          $scope.starStyle = {
-            "color":"grey"
-          }
-    }
-
-    $scope.onAddBookmark = function(){
-      $scope.bookmark_added = !$scope.bookmark_added;
-      if ($scope.bookmark_added == true){
-          $scope.showToast("Saved to Favorites.");
-          $scope.starStyle = {
-            "color":"yellow"
-          }
-//$scope.activity.get('entity').id
-// POST api/bookmarks/add/{type}/{itemId}
-//DELETE api/bookmarks/remove/{id}
-        return $http.post(serverConfig.url + '/api/bookmarks/add/' + 'petition' + '/' + id).then(function (response) {
-           
-        });
-      }
-      else{
-        $scope.showToast("Removed from Favorites.");
-        $scope.starStyle = {
-           "color":"#adb7c6"
-        }
-        return $http.post(serverConfig.url + '/api/bookmarks/remove/' + id).then(function (response) {
-          
-        });        
-        
-      }
-    }
-//Bookmark Button enable
   }
 
   function newsCtrl($scope) {
@@ -269,118 +200,10 @@ angular.module('app.controllers').directive('iActivity', function ($rootScope, q
         });
       });
     };
-
-//Bookmark Button enable
-    $scope.bookmark_added = false;
-    var type = $scope.activity.attributes.entity.type;
-    var id = $scope.activity.attributes.id;
-
-    var favor = favorite.getActivities();
-
-    for (var i = 0; i < favor.models.length; i++){
-      var model = favorites.models[i];
-      var model_id = model.attributes.id;
-      if (model_id == id){
-        $scope.bookmark_added = true;
-        break;
-      }
-    }
-
-    if ($scope.bookmark_added == true){
-          $scope.starStyle = {
-            "color":"yellow"
-          }
-    }
-    else {
-          $scope.starStyle = {
-            "color":"#adb7c6"
-          }
-    }
-
-    $scope.onAddBookmark = function(){
-      $scope.bookmark_added = !$scope.bookmark_added;
-      if ($scope.bookmark_added == true){
-          $scope.showToast("Saved to Favorites.");
-          $scope.starStyle = {
-            "color":"yellow"
-          }
-//$scope.activity.get('entity').id
-// POST api/bookmarks/add/{type}/{itemId}
-//DELETE api/bookmarks/remove/{id}
-        return $http.post(serverConfig.url + '/api/bookmarks/add/' + 'petition' + '/' + id).then(function (response) {
-           
-        });
-      }
-      else{
-        $scope.showToast("Removed from Favorites.");
-        $scope.starStyle = {
-           "color":"#adb7c6"
-        }
-        return $http.post(serverConfig.url + '/api/bookmarks/remove/' + id).then(function (response) {
-          
-        });        
-        
-      }
-    }
-//Bookmark Button enable
   }
 
   function paymentCtrl($scope) {
     $scope.templateSrc = 'templates/home/activities/payment.html';
-
-//Bookmark Button enable
-    $scope.bookmark_added = false;
-    var type = $scope.activity.attributes.entity.type;
-    var id = $scope.activity.attributes.id;
-
-    var favor = favorite.getActivities();
-
-    for (var i = 0; i < favor.models.length; i++){
-      var model = favorites.models[i];
-      var model_id = model.attributes.id;
-      if (model_id == id){
-        $scope.bookmark_added = true;
-        break;
-      }
-    }
-
-    if ($scope.bookmark_added == true){
-          $scope.starStyle = {
-            "color":"yellow"
-          }
-    }
-    else {
-          $scope.starStyle = {
-            "color":"#adb7c6"
-          }
-    }
-
-    $scope.onAddBookmark = function(){
-      $scope.bookmark_added = !$scope.bookmark_added;
-      if ($scope.bookmark_added == true){
-          $scope.showToast("Saved to Favorites.");
-          $scope.starStyle = {
-            "color":"yellow"
-          }
-//$scope.activity.get('entity').id
-// POST api/bookmarks/add/{type}/{itemId}
-//DELETE api/bookmarks/remove/{id}
-        return $http.post(serverConfig.url + '/api/bookmarks/add/' + 'petition' + '/' + id).then(function (response) {
-           
-        });
-      }
-      else{
-        $scope.showToast("Removed from Favorites.");
-        $scope.starStyle = {
-           "color":"#adb7c6"
-        }
-        return $http.post(serverConfig.url + '/api/bookmarks/remove/' + id).then(function (response) {
-          
-        });        
-        
-      }
-    }
-//Bookmark Button enable
   }
 
   function postCtrl($scope) {
@@ -421,60 +244,6 @@ angular.module('app.controllers').directive('iActivity', function ($rootScope, q
       });
     };
     $scope.showToast = $rootScope.showToast;
-
-//Bookmark Button enable
-    $scope.bookmark_added = false;
-    var type = $scope.activity.attributes.entity.type;
-    var id = $scope.activity.attributes.id;
-
-    var favor = favorite.getActivities();
-
-    for (var i = 0; i < favor.models.length; i++){
-      var model = favorites.models[i];
-      var model_id = model.attributes.id;
-      if (model_id == id){
-        $scope.bookmark_added = true;
-        break;
-      }
-    }
-
-    if ($scope.bookmark_added == true){
-          $scope.starStyle = {
-            "color":"yellow"
-          }
-    }
-    else {
-          $scope.starStyle = {
-            "color":"#adb7c6"
-          }
-    }
-
-    $scope.onAddBookmark = function(){
-      $scope.bookmark_added = !$scope.bookmark_added;
-      if ($scope.bookmark_added == true){
-          $scope.showToast("Saved to Favorites.");
-          $scope.starStyle = {
-            "color":"yellow"
-          }
-//$scope.activity.get('entity').id
-// POST api/bookmarks/add/{type}/{itemId}
-//DELETE api/bookmarks/remove/{id}
-        return $http.post(serverConfig.url + '/api/bookmarks/add/' + 'petition' + '/' + id).then(function (response) {
-           
-        });
-      }
-      else{
-        $scope.showToast("Removed from Favorites.");
-        $scope.starStyle = {
-           "color":"#adb7c6"
-        }
-        return $http.post(serverConfig.url + '/api/bookmarks/remove/' + id).then(function (response) {
-          
-        });        
-        
-      }
-    }
-//Bookmark Button enable       
   }
 
   function petitionCtrl($scope) {
@@ -513,60 +282,6 @@ angular.module('app.controllers').directive('iActivity', function ($rootScope, q
         $scope.sending = false;
       });
     };
-
-//Bookmark Button enable
-    $scope.bookmark_added = false;
-    var type = $scope.activity.attributes.entity.type;
-    var id = $scope.activity.attributes.id;
-
-    var favor = favorite.getActivities();
-
-    for (var i = 0; i < favor.models.length; i++){
-      var model = favorites.models[i];
-      var model_id = model.attributes.id;
-      if (model_id == id){
-        $scope.bookmark_added = true;
-        break;
-      }
-    }
-
-    if ($scope.bookmark_added == true){
-          $scope.starStyle = {
-            "color":"yellow"
-          }
-    }
-    else {
-          $scope.starStyle = {
-            "color":"#adb7c6"
-          }
-    }
-
-    $scope.onAddBookmark = function(){
-      $scope.bookmark_added = !$scope.bookmark_added;
-      if ($scope.bookmark_added == true){
-          $scope.showToast("Saved to Favorites.");
-          $scope.starStyle = {
-            "color":"yellow"
-          }
-//$scope.activity.get('entity').id
-// POST api/bookmarks/add/{type}/{itemId}
-//DELETE api/bookmarks/remove/{id}
-        return $http.post(serverConfig.url + '/api/bookmarks/add/' + 'petition' + '/' + id).then(function (response) {
-           
-        });
-      }
-      else{
-        $scope.showToast("Removed from Favorites.");
-        $scope.starStyle = {
-           "color":"#adb7c6"
-        }
-        return $http.post(serverConfig.url + '/api/bookmarks/remove/' + id).then(function (response) {
-          
-        });        
-        
-      }
-    }
-//Bookmark Button enable
   }
 
   function questionCtrl($scope) {
