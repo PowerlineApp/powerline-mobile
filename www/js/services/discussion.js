@@ -85,6 +85,14 @@ angular.module('app.services').factory('discussion',function (serverConfig, Comm
         }
         return comment.setup();
       });
+    },
+
+    update: function(entity, id, comment_id){
+      return $http.put(serverConfig.url + '/api/' + entity + '/' + id + '/' + comment_id);
+    },
+
+    delete: function(entity, id, comment_id){
+      return $http.delete(serverConfig.url + '/api/' + entity + '/' + id + '/' + comment_id);
     }
   };
 }).factory('Comment', function () {
