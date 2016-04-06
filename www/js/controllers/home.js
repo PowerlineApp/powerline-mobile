@@ -184,6 +184,16 @@ angular.module('app.controllers').directive('iActivity', function ($rootScope, q
 
   function eventCtrl($scope) {
     $scope.templateSrc = 'templates/home/activities/event.html';
+//Meta Data begin
+
+    $scope.hasMetaData = (typeof $scope.activity.attributes.metadata != 'undefined');
+
+    if ($scope.hasMetaData == true){
+      $scope.title = $scope.activity.attributes.metadata.title;
+      $scope.meta_description = $scope.activity.attributes.metadata.description;
+      $scope.image = $scope.activity.attributes.metadata.image;
+    }
+//Meta Data end
   }
 
   function newsCtrl($scope) {
@@ -200,10 +210,30 @@ angular.module('app.controllers').directive('iActivity', function ($rootScope, q
         });
       });
     };
+//Meta Data begin
+
+    $scope.hasMetaData = (typeof $scope.activity.attributes.metadata != 'undefined');
+
+    if ($scope.hasMetaData == true){
+      $scope.title = $scope.activity.attributes.metadata.title;
+      $scope.meta_description = $scope.activity.attributes.metadata.description;
+      $scope.image = $scope.activity.attributes.metadata.image;
+    }
+//Meta Data end    
   }
 
   function paymentCtrl($scope) {
     $scope.templateSrc = 'templates/home/activities/payment.html';
+//Meta Data begin
+
+    $scope.hasMetaData = (typeof $scope.activity.attributes.metadata != 'undefined');
+
+    if ($scope.hasMetaData == true){
+      $scope.title = $scope.activity.attributes.metadata.title;
+      $scope.meta_description = $scope.activity.attributes.metadata.description;
+      $scope.image = $scope.activity.attributes.metadata.image;
+    }
+//Meta Data end    
   }
 
   function postCtrl($scope) {
@@ -244,6 +274,17 @@ angular.module('app.controllers').directive('iActivity', function ($rootScope, q
       });
     };
     $scope.showToast = $rootScope.showToast;
+
+//Meta Data begin
+
+    $scope.hasMetaData = (typeof $scope.activity.attributes.metadata != 'undefined');
+
+    if ($scope.hasMetaData == true){
+      $scope.title = $scope.activity.attributes.metadata.title;
+      $scope.meta_description = $scope.activity.attributes.metadata.description;
+      $scope.image = $scope.activity.attributes.metadata.image;
+    }
+//Meta Data end
   }
 
   function petitionCtrl($scope) {
@@ -282,10 +323,30 @@ angular.module('app.controllers').directive('iActivity', function ($rootScope, q
         $scope.sending = false;
       });
     };
+//Meta Data begin
+
+    $scope.hasMetaData = (typeof $scope.activity.attributes.metadata != 'undefined');
+
+    if ($scope.hasMetaData == true){
+      $scope.title = $scope.activity.attributes.metadata.title;
+      $scope.meta_description = $scope.activity.attributes.metadata.description;
+      $scope.image = $scope.activity.attributes.metadata.image;
+    }
+//Meta Data end    
   }
 
   function questionCtrl($scope) {
     $scope.templateSrc = 'templates/home/activities/question.html';
+//Meta Data begin
+
+    $scope.hasMetaData = (typeof $scope.activity.attributes.metadata != 'undefined');
+
+    if ($scope.hasMetaData == true){
+      $scope.title = $scope.activity.attributes.metadata.title;
+      $scope.meta_description = $scope.activity.attributes.metadata.description;
+      $scope.image = $scope.activity.attributes.metadata.image;
+    }
+//Meta Data end    
   }
 
   var ctrlByType = {
