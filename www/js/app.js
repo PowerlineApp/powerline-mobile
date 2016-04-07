@@ -13,7 +13,8 @@ angular.module('app', [
   'uiGmapgoogle-maps',
   'jett.ionic.scroll.sista',
   'ngLetterAvatar',
-  'ionic-toast'
+  'ionic-toast',
+  'ionic-zoom-view'
 ]).config(function ($ionicConfigProvider, $httpProvider) {
 
   $httpProvider.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
