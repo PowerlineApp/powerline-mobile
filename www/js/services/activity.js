@@ -109,31 +109,6 @@ angular.module('app.services').factory('activity',
         }*/
 
         return 1;
-      },
-
-      getPostID: function(){
-        return this.attributes.id;
-      },
-
-      saveProfileSetting: function(){
-
-       return $http({
-          method: 'POST',
-          url: serverConfig.url + '/api/profile/settings',
-          data: null
-        }).then(function(resp) {
-          return resp.data;
-        });
-      },
-
-      changeSubscribe: function(id){
-        $http({
-          method: 'POST',
-          url: serverConfig.url + '/api/users/self/subscriptions',
-          data: {"id": id}
-        }).then(function(resp) {
-          return resp.data;
-        });
       }
     });
 
@@ -248,9 +223,7 @@ angular.module('app.services').factory('activity',
         activities = activities.add(response.data);
         return activities;
       });
-    };
-
-    
+    }
 
     return {
 
