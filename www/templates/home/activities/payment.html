@@ -16,27 +16,13 @@
     <p ng-class="{unanswered: activity.isUnanswered()}" bo-if="title" bo-bind="title"></p>
     <i class="time"><time>{{ sent_at_elapsed }}</time></i>
   </div>
-  <div class="item-content" ng-click="navigateToActivity(activity)">
-    <p bo-if="activity.get('image_src')" class="picture"><img bo-src="activity.get('image_src')| imgix"/></p>
-    <p ng-class="{unanswered: activity.isUnanswered() && !title}" bo-bind="description"></p>
-    <div ng-show="hasMetaData" style="margin-top:5px">
-      <img src="{{image}}" style="width: :100%"/>
-      <div style="font-weight:700;font-size:15px;color: #000;line-height:32px;">{{title}}</div>
-      <div style="font-size:14px;color: #666">{{meta_description}}</div>      
-    </div>
+  <div class="item-content">
+    <p bo-if="activity.get('image_src')" class="picture"><img ng-src="{{imagePath}}" zoom-src="{{imagePath}}" zoom-view/></p>
+    <p ng-class="{unanswered: activity.isUnanswered() && !title}" bo-bind="description" ng-click="navigateToActivity(activity, null, $event)"></p>
   </div>
   <div class="item-footer">
     <div class="control"><a ng-click="navigateToActivity(activity)">Pay</a></div>
     <div class="control"><a ng-click="navigateToActivity(activity, 'add-comment')" class="activity-control reply"></a></div>
-<!--subscribe button start-->    
-    <div class="control" style="padding-top: 3px">
-      <a ng-click="onSubscribeBtnClicked()"><i ng-class="'ion-android-notifications'" style="font-size: 22px;" ng-style="mutingStyle"></i></a>
-	  <a ng-click="onAddBookmark()">
-        <i class="ion-star" style="font-size: 22px;" ng-style="starStyle">
-        </i>
-      </a>
-    </div>
-<!--subscribe button end-->    
     </div>
     <div class="responses" bo-bind="responses_count"></div>
   </div>

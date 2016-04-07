@@ -133,7 +133,7 @@ function ($scope,  petitions, PetitionsResource, groups, $stateParams, errorForm
   });
 
 }).controller('petition',function ($scope, topBar, petitions, $stateParams, loaded, $cacheFactory, session, $state,
-                                   homeCtrlParams, activity, flurry, layout, $ionicPopup, $rootScope) {
+                                   homeCtrlParams, activity, flurry, layout) {
                                    
   var cache = $cacheFactory.get('petitionController');
   $scope.petition = cache.get($stateParams.id);
@@ -174,51 +174,6 @@ function ($scope,  petitions, PetitionsResource, groups, $stateParams, errorForm
       }
     }
 /////////////////////////////////////////////////////////////////      
-
-//Edit and Delete Button
-
-  $scope.editClicked = false;
-  $scope.deleteClicked = false;
-
-  $scope.onEditBtnClicked = function(){
-    if ($scope.editClicked == false){
-      $scope.editClicked = true;
-    }
-    else {
-      $scope.editClicked = false;
-      $scope.petition.petition_body_parsed = $scope.petition.petition_body;
-//backend operation.      
-      
-      petitions.update($scope.petition.id);
-      
-    }
-  };
-
-
-  $scope.showConfirm = function() {
-    var confirmPopup = $ionicPopup.confirm({
-      title: 'Delete Post',
-      template: 'Are you sure you want to delete this post?'
-    });
-
-    confirmPopup.then(function(res) {
-      $scope.navigateTo = $rootScope.navigateTo;
-
-      if(res) {
-
-//Backend part...
-        petitions.delete($scope.petition.id);
-        $scope.back();
-      } else {
-        
-      }
-    });
-  };
-
-/////////////////////////////////////////////////////////////////      
-
-
-
 
     if (petition.answer_id) {
       $scope.answer_message = 'Your response “' + petition.getOptionLabel(petition.answer_id) + '” was sent to “' + petition.group.official_title + '” group';
