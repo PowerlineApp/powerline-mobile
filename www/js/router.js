@@ -270,6 +270,16 @@ angular.module('app')
       cache: true,
       templateUrl: 'templates/favorite/home.html',
       controller: 'favorite'
+    }, {
+      name: 'followgroup',
+      url: '/followgroup/:id',
+      templateUrl: 'templates/followgroup/followgroup.html',
+      controller: 'followgroup'
+    }, {
+      name: 'followgroupProfile',
+      url: '/followgroup/profile/:id',
+      templateUrl: 'templates/followgroup/profile.html',
+      controller: 'followgroup.profile'
     }];
 
   states.forEach(function (state) {
