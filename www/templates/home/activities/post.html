@@ -17,8 +17,9 @@
     <i class="time"><time>{{ sent_at_elapsed }}</time></i>
   </div>
   <div class="item-content" ng-click="navigateToActivity(activity, null, $event)">
-    <p bo-if="activity.get('image_src')" class="picture"><img bo-src="activity.get('image_src')| imgix"/></p>
-    <p ng-class="{unanswered: activity.isUnanswered() && !title}" ng-bind-html="description"></p>
+    <p bo-if="activity.get('image_src')" class="picture"><img ng-src="{{imagePath}}" zoom-src="{{imagePath}}" zoom-view/></p>
+    <p ng-class="{unanswered: activity.isUnanswered() && !title}" ng-bind-html="description" ng-click="navigateToActivity(activity, null, $event)"></p>
+
     <div ng-show="hasMetaData" style="margin-top:5px">
       <img src="{{image}}" style="width: :100%"/>
       <div style="font-weight:700;font-size:15px;color: #000;line-height:32px;">{{title}}</div>
