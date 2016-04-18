@@ -17,7 +17,7 @@
     "bluebird": "~2.10.2",
     "angular-resource": "~1.4.7",
     "font-awesome": "~4.4.0",
-    "ng-letter-avatar": "ngletteravatar#~3.0.1"
+    "ng-letter-avatar": "ngletteravatar#~3.0.1",
     "ionic-zoom-view": "^2.0.0"
   },
   "devDependencies": {
