@@ -17,6 +17,8 @@
 #         under the License.
 -->
 
+[![Build Status](https://travis-ci.org/apache/cordova-plugin-inappbrowser.svg?branch=master)](https://travis-ci.org/apache/cordova-plugin-inappbrowser)
+
 # cordova-plugin-inappbrowser
 
 This plugin provides a web browser view that displays when calling `cordova.InAppBrowser.open()`.
@@ -53,6 +55,10 @@ Although `window.open` is in the global scope, InAppBrowser is not available unt
     function onDeviceReady() {
         console.log("window.open works well");
     }
+
+Report issues with this plugin on the [Apache Cordova issue tracker](https://issues.apache.org/jira/issues/?jql=project%20%3D%20CB%20AND%20status%20in%20%28Open%2C%20%22In%20Progress%22%2C%20Reopened%29%20AND%20resolution%20%3D%20Unresolved%20AND%20component%20%3D%20%22Plugin%20InAppBrowser%22%20ORDER%20BY%20priority%20DESC%2C%20summary%20ASC%2C%20updatedDate%20DESC)
+
+
 
 ## Installation
 
@@ -96,6 +102,7 @@ instance, or the system browser.
     - __clearsessioncache__: set to `yes` to have the session cookie cache cleared before the new window is opened
     - __zoom__: set to `yes` to show Android browser's zoom controls, set to `no` to hide them.  Default value is `yes`.
     - __hardwareback__: set to `yes` to use the hardware back button to navigate backwards through the `InAppBrowser`'s history. If there is no previous page, the `InAppBrowser` will close.  The default value is `yes`, so you must set it to `no` if you want the back button to simply close the InAppBrowser.
+    - __mediaPlaybackRequiresUserAction__: Set to `yes` to prevent HTML5 audio or video from autoplaying (defaults to `no`).
 
     iOS only:
 
@@ -106,7 +113,7 @@ instance, or the system browser.
     - __clearsessioncache__: set to `yes` to have the session cookie cache cleared before the new window is opened
     - __toolbar__:  set to `yes` or `no` to turn the toolbar on or off for the InAppBrowser (defaults to `yes`)
     - __enableViewportScale__:  Set to `yes` or `no` to prevent viewport scaling through a meta tag (defaults to `no`).
-    - __mediaPlaybackRequiresUserAction__: Set to `yes` or `no` to prevent HTML5 audio or video from autoplaying (defaults to `no`).
+    - __mediaPlaybackRequiresUserAction__: Set to `yes` to prevent HTML5 audio or video from autoplaying (defaults to `no`).
     - __allowInlineMediaPlayback__: Set to `yes` or `no` to allow in-line HTML5 media playback, displaying within the browser window rather than a device-specific playback interface. The HTML's `video` element must also include the `webkit-playsinline` attribute (defaults to `no`)
     - __keyboardDisplayRequiresUserAction__: Set to `yes` or `no` to open the keyboard when form elements receive focus via JavaScript's `focus()` call (defaults to `yes`).
     - __suppressesIncrementalRendering__: Set to `yes` or `no` to wait until all new view content is received before being rendered (defaults to `no`).
@@ -168,6 +175,10 @@ opened with `target='_blank'`. The rules might look like these
 
 ### Windows Quirks
 
+Windows 8.0, 8.1 and Windows Phone 8.1 don't support remote urls to be opened in the Cordova WebView so remote urls are always showed in the system's web browser if opened with `target='_self'`.
+
+On Windows 10 if the URL is NOT in the white list and is opened with `target='_self'` it will be showed in the system's web browser instead of InAppBrowser popup.
+
 Similar to Firefox OS IAB window visual behaviour can be overridden via `inAppBrowserWrap`/`inAppBrowserWrapFullscreen` CSS classes
 
 ### Browser Quirks
@@ -189,7 +200,7 @@ The object returned from a call to `cordova.InAppBrowser.open`.
 - executeScript
 - insertCSS
 
-## addEventListener
+## InAppBrowser.addEventListener
 
 > Adds a listener for an event from the `InAppBrowser`.
 
@@ -235,7 +246,7 @@ The object returned from a call to `cordova.InAppBrowser.open`.
     var ref = cordova.InAppBrowser.open('http://apache.org', '_blank', 'location=yes');
     ref.addEventListener('loadstart', function(event) { alert(event.url); });
 
-## removeEventListener
+## InAppBrowser.removeEventListener
 
 > Removes a listener for an event from the `InAppBrowser`.
 
@@ -269,7 +280,7 @@ The function is passed an `InAppBrowserEvent` object.
     ref.addEventListener('loadstart', myCallback);
     ref.removeEventListener('loadstart', myCallback);
 
-## close
+## InAppBrowser.close
 
 > Closes the `InAppBrowser` window.
 
@@ -292,7 +303,7 @@ The function is passed an `InAppBrowserEvent` object.
     var ref = cordova.InAppBrowser.open('http://apache.org', '_blank', 'location=yes');
     ref.close();
 
-## show
+## InAppBrowser.show
 
 > Displays an InAppBrowser window that was opened hidden. Calling this has no effect if the InAppBrowser was already visible.
 
@@ -314,7 +325,7 @@ The function is passed an `InAppBrowserEvent` object.
     // some time later...
     ref.show();
 
-## executeScript
+## InAppBrowser.executeScript
 
 > Injects JavaScript code into the `InAppBrowser` window
 
@@ -356,7 +367,7 @@ The function is passed an `InAppBrowserEvent` object.
 
 Due to [MSDN docs](https://msdn.microsoft.com/en-us/library/windows.ui.xaml.controls.webview.invokescriptasync.aspx) the invoked script can return only string values, otherwise the parameter, passed to __callback__ will be `[null]`.
 
-## insertCSS
+## InAppBrowser.insertCSS
 
 > Injects CSS into the `InAppBrowser` window.
 
@@ -383,4 +394,3 @@ Due to [MSDN docs](https://msdn.microsoft.com/en-us/library/windows.ui.xaml.cont
     ref.addEventListener('loadstop', function() {
         ref.insertCSS({file: "mystyles.css"});
     });
-

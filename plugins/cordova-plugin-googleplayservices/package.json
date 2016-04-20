@@ -1,0 +1,39 @@
+{
+  "name": "cordova-plugin-googleplayservices",
+  "version": "19.0.3",
+  "description": "Cordova Plugin to add google-play-services.jar",
+  "cordova": {
+    "id": "cordova-plugin-googleplayservices",
+    "platforms": [
+      "android",
+      "amazon-fireos"
+    ]
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/floatinghotpot/google-play-services.git"
+  },
+  "keywords": [
+    "cordova",
+    "ecosystem:cordova",
+    "google",
+    "play",
+    "services",
+    "googleplay",
+    "playservices"
+  ],
+  "author": {
+    "name": "Google"
+  },
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/floatinghotpot/google-play-services/issues"
+  },
+  "homepage": "https://github.com/floatinghotpot/google-play-services#readme",
+  "maintainers": [
+    {
+      "name": "floatinghotpot",
+      "email": "rjfun.mobile@gmail.com"
+    }
+  ]
+}

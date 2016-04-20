@@ -1,4 +1,15 @@
 {
+    "cordova-plugin-facebook4": {
+        "source": {
+            "type": "registry",
+            "id": "cordova-plugin-facebook4@~1.7.0"
+        },
+        "is_top_level": true,
+        "variables": {
+            "APP_ID": "244141112405524",
+            "APP_NAME": "PowerlineApp"
+        }
+    },
     "cordova-plugin-device": {
         "source": {
             "type": "registry",
@@ -31,43 +42,18 @@
         "is_top_level": true,
         "variables": {}
     },
-    "com.ionic.keyboard": {
+    "ionic-plugin-keyboard": {
         "source": {
             "type": "registry",
-            "id": "com.ionic.keyboard"
+            "id": "ionic-plugin-keyboard"
         },
         "is_top_level": true,
         "variables": {}
     },
-    "com.plugin.datepicker": {
+    "cordova-plugin-googleplayservices": {
         "source": {
             "type": "registry",
-            "id": "com.plugin.datepicker"
-        },
-        "is_top_level": true,
-        "variables": {}
-    },
-    "cordova-plugin-calendar": {
-        "source": {
-            "type": "git",
-            "url": "https://github.com/EddyVerbruggen/Calendar-PhoneGap-Plugin.git",
-            "subdir": "."
-        },
-        "is_top_level": true,
-        "variables": {}
-    },
-    "org.apache.cordova.camera": {
-        "source": {
-            "type": "registry",
-            "id": "org.apache.cordova.camera"
-        },
-        "is_top_level": true,
-        "variables": {}
-    },
-    "org.apache.cordova.device": {
-        "source": {
-            "type": "registry",
-            "id": "org.apache.cordova.device"
+            "id": "cordova-plugin-googleplayservices"
         },
         "is_top_level": true,
         "variables": {}
@@ -97,57 +83,20 @@
         "is_top_level": true,
         "variables": {}
     },
-    "cordova-android-support-v4": {
+    "cordova-plugin-calendar": {
         "source": {
             "type": "registry",
-            "id": "cordova-android-support-v4"
-        },
-        "is_top_level": false,
-        "variables": {}
-    },
-    "cordova-plugin-googleplayservices": {
-        "source": {
-            "type": "registry",
-            "id": "cordova-plugin-googleplayservices"
-        },
-        "is_top_level": false,
-        "variables": {}
-    },
-    "cordova-plugin-x-socialsharing": {
-        "source": {
-            "type": "registry",
-            "id": "cordova-plugin-x-socialsharing"
+            "id": "cordova-plugin-calendar"
         },
         "is_top_level": true,
         "variables": {}
     },
-    "cordova-plugin-camera": {
+    "cordova-plugin-datepicker": {
         "source": {
             "type": "registry",
-            "id": "cordova-plugin-camera"
+            "id": "cordova-plugin-datepicker"
         },
         "is_top_level": true,
         "variables": {}
-    },
-    "phonegap-plugin-push": {
-        "source": {
-            "type": "registry",
-            "id": "phonegap-plugin-push"
-        },
-        "is_top_level": true,
-        "variables": {
-            "SENDER_ID": "354736666363"
-        }
-    },
-    "cordova-plugin-facebook4": {
-        "source": {
-            "type": "registry",
-            "id": "cordova-plugin-facebook4"
-        },
-        "is_top_level": true,
-        "variables": {
-            "APP_ID": "244141112405524",
-            "APP_NAME": "PowerlineApp"
-        }
     }
 }
