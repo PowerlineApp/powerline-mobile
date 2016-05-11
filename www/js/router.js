@@ -253,33 +253,6 @@ angular.module('app')
       url: '/group-petions/:id',
       templateUrl: 'templates/petitions/group.html',
       controller: 'petitions.group'
-    },
-    {
-      name: 'favorite',
-      url: '/favorite',
-      templateUrl: 'templates/favorite/home.html',
-      controller: 'favorite'
-    },{
-      name: 'favorite-preload',
-      url: '/favorite-preload',
-      templateUrl: 'templates/favorite/preload.html',
-      controller: 'preload'
-    }, {
-      name: 'favorite-main',
-      url: '/favorite-main',
-      cache: true,
-      templateUrl: 'templates/favorite/home.html',
-      controller: 'favorite'
-    }, {
-      name: 'followgroup',
-      url: '/followgroup/:id',
-      templateUrl: 'templates/followgroup/followgroup.html',
-      controller: 'followgroup'
-    }, {
-      name: 'followgroupProfile',
-      url: '/followgroup/profile/:id',
-      templateUrl: 'templates/followgroup/profile.html',
-      controller: 'followgroup.profile'
     }];
 
   states.forEach(function (state) {

@@ -134,18 +134,6 @@ angular.module('app.services').factory('petitions',function ($q, PetitionsResour
     },
     unsign: function(id, optionId) {
       return $http['delete'](serverConfig.url + '/api/micro-petitions/' + id + '/answers/' + optionId);
-    },
-
-    update: function(id) {
-      return $http.put(serverConfig.url + '/api/micro-petitions/' + id).then(function(resp) {
-        return resp.data;
-      });
-    },
-
-    delete: function(id){
-      return $http.delete(serverConfig.url + '/api/micro-petitions/' + id).then(function(resp) {
-        return resp.data;
-      });
     }
   };
 
@@ -165,16 +153,6 @@ angular.module('app.services').factory('petitions',function ($q, PetitionsResour
       method: 'DELETE',
       params: {id: '@id', answer_id: '@answer_id'},
       url: serverConfig.url + '/api/micro-petitions/:id/answers/:answer_id'
-    },
-    update: {
-      method: 'PUT',
-      params: {id: '@id'},
-      url: serverConfig.url + '/api/micro-petitions/:id'
-    },
-    update: {
-      method: 'DELETE',
-      params: {id: '@id'},
-      url: serverConfig.url + '/api/micro-petitions/:id'
     }
   });
 });

@@ -16,7 +16,7 @@
 
     <section class="margin-8">
       <ul ng-repeat="group in items" class="profiles-list">
-        <li class="title">{{ group.letter}}</li>
+        <li class="title">{{ group.upper_title}}</li>
         <li ng-repeat="item in group.items">
           <figure ng-click="navigateTo('group-profile', item)">
             <avatar-img img="item.avatar_file_path" text="item.official_title"></avatar-img>
@@ -27,7 +27,7 @@
         </li>
       </ul>
     </section>
-    <section ng-show="!items.length" class="margin-10">
+    <section ng-show="items.length" class="margin-10">
       <p class="info-message" ng-show="!loading">Looks like you haven't joined any groups yet! Join or create one to make Powerline work for you!</p>
     </section>
 

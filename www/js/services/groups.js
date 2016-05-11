@@ -8,13 +8,7 @@ angular.module('app.services').factory('groups',function ($resource, serverConfi
 //        GROUP_TYPE_LOCAL = 3
     ;
 
-  var Groups = $resource(serverConfig.url + '/api/groups\\', null, {
-    get: {
-      method: 'GET',
-      isArray: false,
-      url: serverConfig.url + '/api/groups/info/:id'
-    },
-
+  var Groups = $resource(serverConfig.url + '/api/groups/', null, {
     getActivities: {
       method: 'GET',
       isArray: true,
@@ -52,6 +46,12 @@ angular.module('app.services').factory('groups',function ($resource, serverConfi
       return $q.all([loadUserGroups(), deferred.promise]).then(function () {
         createCollections(results);
       });
+
+      // return $http.get(serverConfig.url + '/api/groups/user-groups/').then(function (response) {
+      //   userGroups = response.data;
+      //   console.log(JSON.stringify(userGroups))
+      //   createCollections(userGroups);
+      // });
     },
 
     loadUserGroups:loadUserGroups,
@@ -207,15 +207,15 @@ angular.module('app.services').factory('groups',function ($resource, serverConfi
   function updateStatus() {
     var ids = [];
     _(userGroups).each(function (userGroup) {
-      userGroupsByGroupId[userGroup.group.id] = userGroup;
+      userGroupsByGroupId[userGroup.id] = userGroup;
       var group = _.find(groups, function (item) {
-        return item.id === userGroup.group.id;
+        return item.id === userGroup.id;
       });
       if (group) {
         group.status = userGroup.status;
       }
-      if (userGroup.group.joined) {
-        ids.push(userGroup.group.id);
+      if (userGroup.joined) {
+        ids.push(userGroup.id);
       }
     });
     userGroupsIds = _(ids);

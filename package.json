@@ -19,17 +19,32 @@
     "cordova-plugin-console",
     "cordova-plugin-whitelist",
     "cordova-plugin-splashscreen",
-    "ionic-plugin-keyboard",
+    "com.ionic.keyboard",
     "com.google.playservices",
+    "com.phonegap.plugins.facebookconnect",
+    {
+      "locator": "https://github.com/jfpsf/flurry-phonegap-plugin.git",
+      "id": "com.phonegap.plugins.Flurry"
+    },
+    "com.plugin.datepicker",
+    {
+      "locator": "https://github.com/EddyVerbruggen/Calendar-PhoneGap-Plugin.git",
+      "id": "cordova-plugin-calendar"
+    },
+    "nl.x-services.plugins.socialsharing",
+    "org.apache.cordova.camera",
+    "org.apache.cordova.device",
     "cordova-plugin-dialogs",
     {
       "locator": "https://git-wip-us.apache.org/repos/asf/cordova-plugin-inappbrowser.git",
       "id": "cordova-plugin-inappbrowser"
     },
-    "cordova-plugin-statusbar"
+    "cordova-plugin-statusbar",
+    "phonegap-plugin-push",
+    "android.support.v4"
   ],
   "cordovaPlatforms": [
-    "ios",
-    "android"
+    "android",
+    "ios"
   ]
 }

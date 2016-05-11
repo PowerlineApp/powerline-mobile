@@ -1,5 +1,4 @@
 angular.module('app.services').factory('announcements',function ($q, AnnouncementsResource, iStorage) {
-
   var announcements = [],
     LAST_VIEWED_ANNOUNCEMENTS_KEY = 'announcements_viewed_date',
     start = new Date(Date.now() - 86400000),
@@ -30,9 +29,13 @@ angular.module('app.services').factory('announcements',function ($q, Announcemen
     load: function () {
       var deferred = $q.defer();
       start.setTime(Date.now() - 7776000000 * 2);
-      AnnouncementsResource.query({start: start.toUTCString()}, function (data) {
+      AnnouncementsResource.query(function (data) {
+        var data = $.map(data, function(value, index) {
+          return [value];
+        });
         prepare(data);
         announcements = data;
+        // console.log(JSON.stringify(announcements));
         deferred.resolve(announcements);
       }, function () {
         deferred.reject();
@@ -59,6 +62,17 @@ angular.module('app.services').factory('announcements',function ($q, Announcemen
     }
   };
 
-}).factory('AnnouncementsResource', function ($resource, serverConfig) {
-  return $resource(serverConfig.url + '/api/announcements');
+}).factory('AnnouncementsResource', function ($resource, serverConfig, iStorage) {
+  start = new Date(Date.now() - 7776000000 * 2);
+  return $resource(serverConfig.url + '/api/announcements', {start: start}, {
+    query: {
+      method: 'GET',
+      // headers: {
+      //   token: iStorage.get('token')
+      // }
+    }
+  });
 });
+
+
+

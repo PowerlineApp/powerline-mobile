@@ -1,15 +1,4 @@
 {
-    "cordova-plugin-facebook4": {
-        "source": {
-            "type": "registry",
-            "id": "cordova-plugin-facebook4@~1.7.0"
-        },
-        "is_top_level": true,
-        "variables": {
-            "APP_ID": "244141112405524",
-            "APP_NAME": "PowerlineApp"
-        }
-    },
     "cordova-plugin-device": {
         "source": {
             "type": "registry",
@@ -50,12 +39,47 @@
         "is_top_level": true,
         "variables": {}
     },
-    "cordova-plugin-googleplayservices": {
+    "cordova-plugin-facebook4": {
         "source": {
             "type": "registry",
-            "id": "cordova-plugin-googleplayservices"
+            "id": "cordova-plugin-facebook4@~1.7.0"
         },
         "is_top_level": true,
+        "variables": {
+            "APP_ID": "244141112405524",
+            "APP_NAME": "PowerlineApp"
+        }
+    },
+    "cordova-plugin-datepicker": {
+        "source": {
+            "type": "registry",
+            "id": "cordova-plugin-datepicker"
+        },
+        "is_top_level": true,
+        "variables": {}
+    },
+    "cordova-plugin-x-socialsharing": {
+        "source": {
+            "type": "registry",
+            "id": "cordova-plugin-x-socialsharing"
+        },
+        "is_top_level": true,
+        "variables": {}
+    },
+    "cordova-plugin-camera": {
+        "source": {
+            "type": "registry",
+            "id": "cordova-plugin-camera"
+        },
+        "is_top_level": true,
+        "variables": {}
+    },
+    "cordova-plugin-compat": {
+        "source": {
+            "type": "registry",
+            "id": "cordova-plugin-compat"
+        },
+        "is_top_level": false,
         "variables": {}
     },
     "cordova-plugin-dialogs": {
@@ -68,9 +92,8 @@
     },
     "cordova-plugin-inappbrowser": {
         "source": {
-            "type": "git",
-            "url": "https://git-wip-us.apache.org/repos/asf/cordova-plugin-inappbrowser.git",
-            "subdir": "."
+            "type": "registry",
+            "id": "cordova-plugin-inappbrowser"
         },
         "is_top_level": true,
         "variables": {}
@@ -83,20 +106,14 @@
         "is_top_level": true,
         "variables": {}
     },
-    "cordova-plugin-calendar": {
+    "phonegap-plugin-push": {
         "source": {
             "type": "registry",
-            "id": "cordova-plugin-calendar"
+            "id": "phonegap-plugin-push"
         },
         "is_top_level": true,
-        "variables": {}
-    },
-    "cordova-plugin-datepicker": {
-        "source": {
-            "type": "registry",
-            "id": "cordova-plugin-datepicker"
-        },
-        "is_top_level": true,
-        "variables": {}
+        "variables": {
+            "SENDER_ID": "354736666363"
+        }
     }
 }

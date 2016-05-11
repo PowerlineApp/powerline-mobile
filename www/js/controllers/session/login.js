@@ -6,9 +6,6 @@ angular.module('app.controllers').controller('session.login',function ($scope, h
 
   $scope.hideSpinner();
 
-  flurry.log('login');
-  
-
   $scope.login = function () {
     if (!$scope.data.username || !$scope.data.password) {
       $scope.alert('All fields required', null, 'Error', 'OK');
@@ -17,11 +14,9 @@ angular.module('app.controllers').controller('session.login',function ($scope, h
     $scope.showSpinner();
     session.login($scope.data, $scope.keepLogged).then(
       function () {
-        //clear cache and history
         $ionicHistory.clearCache();
         $ionicHistory.clearHistory();
         homeCtrlParams.loaded = false;
-        flurry.log('logged in');
         $timeout(function(){
           $scope.hideSpinner();
           if (!session.is_registration_complete) {

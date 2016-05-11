@@ -74,6 +74,6 @@ gulp.task('setconfig', function () {
 gulp.task('check-config-exists', function () {
   var fs = require('fs');
   if (!fs.existsSync('./www/js/config.js')) {
-    setConfig('dev');
+    setConfig('staging');
   }
 });

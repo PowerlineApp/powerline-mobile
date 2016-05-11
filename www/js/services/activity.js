@@ -109,31 +109,6 @@ angular.module('app.services').factory('activity',
         }*/
 
         return 1;
-      },
-
-      getPostID: function(){
-        return this.attributes.id;
-      },
-
-      saveProfileSetting: function(){
-
-       return $http({
-          method: 'POST',
-          url: serverConfig.url + '/api/profile/settings',
-          data: null
-        }).then(function(resp) {
-          return resp.data;
-        });
-      },
-
-      changeSubscribe: function(id){
-        $http({
-          method: 'POST',
-          url: serverConfig.url + '/api/users/self/subscriptions',
-          data: {"id": id}
-        }).then(function(resp) {
-          return resp.data;
-        });
       }
     });
 
@@ -169,7 +144,6 @@ angular.module('app.services').factory('activity',
       }
     });
     
-    
     activities.setAnsweredQuestions = function (answers) {
       var types = _(['petition', 'question', 'payment-request', 'crowdfunding-payment-request', 'leader-event']);
       var answerById = {};
@@ -189,6 +163,8 @@ angular.module('app.services').factory('activity',
     };
 
     activities.getFilteredModels = function (filter) {
+      // console.log("filter:" + JSON.stringify(filter))
+
       if (!filter) {
         return this.models;
       }
@@ -214,8 +190,11 @@ angular.module('app.services').factory('activity',
       };
 
       _(representatives.getRepresentativesByGroupType(repMethod[filter.group_type])).each(function (representative) {
-        if (representative.representative) {
-          representativeIds.push(representative.representative.id);
+        // console.log("representative:" + JSON.stringify(representative))
+        if (representative) {
+          // console.log("representative.representative.id:" + representative.storage_id)
+          representativeIds.push(representative.storage_id);
+          // console.log("representativeIds:" + JSON.stringify(representativeIds))
         }
       });
 
@@ -248,9 +227,7 @@ angular.module('app.services').factory('activity',
         activities = activities.add(response.data);
         return activities;
       });
-    };
-
-    
+    }
 
     return {
 
@@ -265,6 +242,7 @@ angular.module('app.services').factory('activity',
         loadType = loadType || 'all';
 
         var originalSize = activities.size();
+        console.log("originalSize:" + originalSize)
         if (loadType !== 'append') {
           activities.reset();
         }
@@ -331,7 +309,6 @@ angular.module('app.services').factory('activity',
 
         return $http.get(
           serverConfig.url + '/api/activities/',
-          {params: {following: id}}
         ).then(function (response) {
           followingActivities.add(response.data);
           return $http.get(serverConfig.url + '/api/micro-petitions/answers/').then(function (response) {
