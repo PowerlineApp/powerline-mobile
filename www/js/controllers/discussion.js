@@ -1,4 +1,4 @@
-angular.module('app.controllers').controller('discussion',function ($scope, topBar, discussion, $stateParams, $cacheFactory, flurry) {
+angular.module('app.controllers').controller('discussion',function ($scope, topBar, discussion, $stateParams, $cacheFactory, flurry, $ionicPopup) {
 
   var isWidget = !/^\/discussion/.test($scope.path());
   
@@ -50,6 +50,11 @@ angular.module('app.controllers').controller('discussion',function ($scope, topB
     return !comment.user || !comment.is_owner;
   };
 
+  $scope.isAvailableToDelete = function(comment){
+    return comment.is_owner;
+  }
+
+
   $scope.up = function (comment) {
     if (comment.rate_status === 1) {
       discussion.rate(comment, 'delete');
@@ -80,6 +85,54 @@ angular.module('app.controllers').controller('discussion',function ($scope, topB
     });
   }
 
+  $scope.editClicked = [];
+
+  for (var i = 0; i < 10; i++){
+    $scope.editClicked[i] = false;
+  }
+
+  $scope.editComment = function(comment, $index){
+    if ($scope.editClicked[$index] == false){
+      $scope.editClicked[$index] = true;
+    }
+    else{
+      $scope.editClicked[$index] = false;
+      comment.comment_body_html = comment.comment_body;
+//Backend Connect
+            
+      discussion.update($scope.entity, $scope.id, comment.id).then(function (res){
+        return res.data;
+      });
+    }
+  };
+
+  $scope.deleteComment = function(comment, $index){
+    $scope.showConfirm(comment, $index);
+  };
+
+
+  $scope.showConfirm = function(comment, $index) {
+    var confirmPopup = $ionicPopup.confirm({
+      title: 'Delete Comment',
+      template: 'Are you sure you want to Delete?'
+    });
+
+    confirmPopup.then(function(res) {
+      if(res) {
+        $scope.editClicked[$index] = false;
+        comment.comment_body_html = "This comment was deleted by its author.";
+
+        discussion.delete($scope.entity, $scope.id, comment.id).then(function (res){
+          return res.data;
+        });
+
+//Backend part...
+      } else {
+        
+      }
+    });
+  };
+
 }).controller('discussion.comment-form',function ($scope, discussion, $state, homeCtrlParams, flurry) {
 
   $scope.data = {
@@ -105,5 +158,6 @@ angular.module('app.controllers').controller('discussion',function ($scope, topB
       $scope.hideSpinner();
     });
   };
+
 
 });

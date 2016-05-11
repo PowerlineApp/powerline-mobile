@@ -19,8 +19,6 @@
  *
 */
 
-/* global PluginResult */
-
 function getModelName () {
     var modelName = window.qnx.webplatform.device.modelName;
     //Pre 10.2 (meaning Z10 or Q10)

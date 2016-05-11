@@ -14,11 +14,16 @@ angular.module('app', [
   'jett.ionic.scroll.sista',
   'ngLetterAvatar',
   'ionic-toast',
-  'ngCordova'
+  //'ionic-zoom-view'
 ]).config(function ($ionicConfigProvider, $httpProvider) {
 
   $httpProvider.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
   $httpProvider.interceptors.push('authInterceptor');
+  
+  $httpProvider.defaults.headers.common = {};
+  $httpProvider.defaults.headers.post = {};
+  $httpProvider.defaults.headers.put = {};
+  $httpProvider.defaults.headers.patch = {};
   
   $ionicConfigProvider.views.transition('android');
   //$ionicConfigProvider.scrolling.jsScrolling(false);

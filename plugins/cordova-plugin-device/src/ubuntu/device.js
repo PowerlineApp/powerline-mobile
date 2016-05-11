@@ -19,7 +19,8 @@
  *
 */
 
-/* global Cordova */
+var cordova = require('cordova');
+var exec = require('cordova/exec');
 
 module.exports = {
     getInfo:function(win,fail,args) {

@@ -1,0 +1,35 @@
+<article class="item">
+
+  <figure ng-click="navigateTo('owner-profile', activity.get('owner'));$event.stopPropagation();">
+    <img bo-show="avatar_file_path" bo-src="avatar_file_path" ng-if="!isDefaultAvatar">
+    <ng-letter-avatar data="{{(full_name| trim) || (official_title| trim)}}" ng-if="isDefaultAvatar"></ng-letter-avatar>
+    <span ng-show="activity.isInPriorityZone()"></span>
+  </figure>
+
+  <div class="item-title">
+    <p class="first-line">
+      <i bo-class="iconClass"></i>
+      <strong bo-bind="full_name"></strong>
+      <strong bo-bind="official_title"></strong>
+      <span bo-if="owner_info_1" bo-bind="owner_info_1"></span>
+    </p>
+    <p ng-class="{unanswered: activity.isUnanswered()}" bo-if="title" bo-bind="title"></p>
+    <i class="time"><time>{{ sent_at_elapsed }}</time></i>
+  </div>
+  <div class="item-content" ng-click="navigateToActivity(activity)">
+    <p bo-if="activity.get('image_src')" class="picture"><img bo-src="activity.get('image_src')| imgix"/></p>
+    <p ng-class="{unanswered: activity.isUnanswered() && !title}" bo-bind="description"></p>
+    This is default.
+  </div>
+  <div class="item-footer">
+  <!--subscribe button for Bookmark start-->    
+    <div class="control" style="padding-top: 3px">
+      <a ng-click="onAddBookmark()">
+        <i class="ion-star" style="font-size: 22px;color: yellow;">
+        </i>
+      </a>
+    </div>
+<!--subscribe button for Bookmark end--> 
+    <div class="responses" bo-bind="responses_count"></div>
+  </div>
+</article>

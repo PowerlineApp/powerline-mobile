@@ -1,13 +1,17 @@
 angular.module('app.controllers').controller('home', function ($scope, $timeout, socialActivity, homeCtrlParams,
-        profile, activity, groups, $ionicScrollDelegate) {
+        profile, activity, groups, flurry, $ionicScrollDelegate) {
+
+  flurry.log('news feed');
+
   $scope.filter = homeCtrlParams.filter;
+
   $scope.isLoadMore = false;
+
   var activities = activity.getActivities();
+
   function getActivities() {
     $scope.activities = homeCtrlParams.filter.selectedGroup ? homeCtrlParams.filter.selectedGroup.activities
             : activities.getFilteredModels();
-    // console.log(homeCtrlParams.filter.selectedGroup);
-    // console.log("$scope.activities:" + JSON.stringify($scope.activities))
   }
 
   function getUnansweredCount(activities) {
@@ -18,17 +22,14 @@ angular.module('app.controllers').controller('home', function ($scope, $timeout,
 
   function setFiltersData() {
     homeCtrlParams.filter.groups = groups.getGroupsOptions();
-    // console.log("homeCtrlParams.filter.groups:" + JSON.stringify(homeCtrlParams.filter.groups))
     _(homeCtrlParams.filter.groups).each(function (group) {
       group.activities = activities.getFilteredModels(group);
       group.unansweredCount = getUnansweredCount(group.activities);
       group.read = !_.some(group.activities, function (item) {
         return !item.get('read');
       });
-      // console.log("homeCtrlParams.filter.selectedGroup:" + homeCtrlParams.filter.selectedGroup);
       if (homeCtrlParams.filter.selectedGroup && homeCtrlParams.filter.selectedGroup.id === group.id) {
         homeCtrlParams.filter.selectedGroup = group;
-        console.log("selected Group:" + homeCtrlParams.filter.selectedGroup);
       }
     });
     homeCtrlParams.filter.unansweredCount = getUnansweredCount(activities.getFilteredModels());
@@ -60,6 +61,7 @@ angular.module('app.controllers').controller('home', function ($scope, $timeout,
       $scope.$broadcast('scroll.infiniteScrollComplete');
     }, prepare).finally(socialActivity.load);
   }
+
 
   $scope.togglePostWindow = function () {
     $scope.showPostWindow = !$scope.showPostWindow;
@@ -179,6 +181,7 @@ angular.module('app.controllers').controller('preload', function (topBar, sessio
 });
 
 angular.module('app.controllers').directive('iActivity', function ($rootScope, questions, petitions, discussion, elapsedFilter, follows, session, iParse, $sce) {
+
   function eventCtrl($scope) {
     $scope.templateSrc = 'templates/home/activities/event.html';
   }

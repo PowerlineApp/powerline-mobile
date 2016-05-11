@@ -1884,6 +1884,8 @@ select.choice-filter {
     background-position-y: -443px; }
   .nav li.share-item i {
     background-position-y: -493px; }
+  .nav li.favorite-item i {
+    background-position-y: -542px; }
   .nav li.active,
   .nav li.ng-click-active,
   .nav li.activated {

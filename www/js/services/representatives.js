@@ -34,10 +34,7 @@ angular.module('app.services').factory('representatives', function ($resource, s
     },
 
     getRepresentativesByGroupType: function (type) {
-      // console.log(type);
       return _(representativesGroups).reduce(function (memo, group) {
-        // console.log("memo:" + JSON.stringify(memo));
-        // console.log("group:" + JSON.stringify(group));
         if (_.contains(groupTypes[type], group.title)) {
           return memo.concat(group.representatives);
         }

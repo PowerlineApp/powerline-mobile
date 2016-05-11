@@ -19,9 +19,6 @@
  *
 */
 
-/* jshint jasmine: true */
-/* global cordova */
-
 exports.defineAutoTests = function () {
     describe('Notification (navigator.notification)', function () {
         it("should exist", function () {
@@ -60,12 +57,12 @@ exports.defineManualTests = function (contentEl, createActionButton) {
         var logLine = document.createElement('div');
         logLine.innerHTML = message;
         log.appendChild(logLine);
-    };
+    }
 
     var clearLog = function () {
         var log = document.getElementById('info');
         log.innerHTML = '';
-    };
+    }
 
     var beep = function () {
         console.log("beep()");
@@ -121,7 +118,7 @@ exports.defineManualTests = function (contentEl, createActionButton) {
                 if (r && r.buttonIndex === 0) {
                     var msg = "Dismissed dialog";
                     if (r.input1) {
-                        msg += " with input: " + r.input1;
+                        msg += " with input: " + r.input1
                     }
                     logMessage(msg);
                     console.log(msg);
@@ -184,20 +181,14 @@ exports.defineManualTests = function (contentEl, createActionButton) {
     }, 'prompt');
 
     createActionButton('Built-in Alert Dialog', function () {
-        if (typeof alert === 'function') {
-            alert('You pressed alert');
-        }
+        typeof alert === 'function' && alert('You pressed alert');
     }, 'built_in_alert');
 
     createActionButton('Built-in Confirm Dialog', function () {
-        if (typeof confirm === 'function') {
-            confirm('You selected confirm');
-        }
+        typeof confirm === 'function' && confirm('You selected confirm');
     }, 'built_in_confirm');
 
     createActionButton('Built-in Prompt Dialog', function () {
-        if (typeof prompt === 'function') {
-            prompt('This is a prompt', 'Default value');
-        }
+        typeof prompt === 'function' && prompt('This is a prompt', 'Default value');
     }, 'built_in_prompt');
 };

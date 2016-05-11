@@ -6,7 +6,8 @@ angular.module('app.services').factory('session', function (serverConfig, $http,
       $http({
         method: 'POST',
         url: serverConfig.url + '/api/secure/login',
-        data: angular.element.param(data)
+        data: angular.element.param(data),
+        headers: { "Content-Type": "application/x-www-form-urlencoded" }
       }).success(function (data) {
         if (keepLogged) {
           iStorage.set('token', data.token);
