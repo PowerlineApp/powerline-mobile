@@ -207,7 +207,7 @@ angular.module('app.services').factory('groups',function ($resource, serverConfi
   function updateStatus() {
     var ids = [];
     _(userGroups).each(function (userGroup) {
-      console.log(JSON.stringify(userGroup));
+      // console.log(JSON.stringify(userGroup));
       userGroupsByGroupId[userGroup.id] = userGroup;
       var group = _.find(groups, function (item) {
         return item.id === userGroup.id;
