@@ -2,11 +2,11 @@ angular.module('app.services').factory('groups',function ($resource, serverConfi
 
   var GROUPS_CACHE_ID = 'group-items';
   var USER_GROUPS_CACHE_ID = 'user-group-items';
-  var GROUP_TYPE_COMMON = 0
+  var GROUP_TYPE_COMMON = 0;
 //        GROUP_TYPE_COUNTRY = 1,
 //        GROUP_TYPE_STATE = 2,
 //        GROUP_TYPE_LOCAL = 3
-    ;
+    
 
   var Groups = $resource(serverConfig.url + '/api/groups/', null, {
     get: {
@@ -96,15 +96,16 @@ angular.module('app.services').factory('groups',function ($resource, serverConfi
 
     getGroupsOptions: function () {
       var result = _(userGroups).reduce(function (memo, userGroup) {
-        var item = userGroup;
-        if (userGroup.joined) {
+        var item = userGroup.group;
+        console.log('controller:' + JSON.stringify(item.official_title))
+        if (item.joined) {
           memo.push({
-            id: userGroup.id,
-            official_title: userGroup.official_title,
-            avatar_file_path: userGroup.avatar_file_path,
-            group_type: userGroup.group_type,
-            acronym: userGroup.acronym,
-            petition_per_month: userGroup.petition_per_month,
+            id: item.id,
+            official_title: item.official_title,
+            avatar_file_path: item.avatar_file_path,
+            group_type: item.group_type,
+            acronym: item.acronym,
+            petition_per_month: item.petition_per_month,
             getTitle: function () {
               return this.acronym || this.official_title;
             },
@@ -166,7 +167,7 @@ angular.module('app.services').factory('groups',function ($resource, serverConfi
     loadActivities: function (id) {
       if (groupsInfo[id]) {
         groupsInfo[id].activities = Groups.getActivities({id: id}, function () {
-//                    activity.parse(groupsInfo[id].activities); TO DO:
+          activity.parse(groupsInfo[id].activities);
         });
       }
     },
@@ -207,11 +208,12 @@ angular.module('app.services').factory('groups',function ($resource, serverConfi
   function updateStatus() {
     var ids = [];
     _(userGroups).each(function (userGroup) {
-      // console.log(JSON.stringify(userGroup));
+      // console.log(JSON.stringify(userGroup.id));
       userGroupsByGroupId[userGroup.id] = userGroup;
       var group = _.find(groups, function (item) {
         return item.id === userGroup.id;
       });
+      // console.log(JSON.stringify(group));
       if (group) {
         group.status = userGroup.status;
       }
@@ -302,8 +304,11 @@ angular.module('app.services').factory('groups',function ($resource, serverConfi
   }
 
   function loadUserGroups() {
-    return $http.get(serverConfig.url + '/api/groups/user-groups/', {headers: {token: iStorage.get('token')}}).then(function (response) {
+    // return $http.get(serverConfig.url + '/api/groups/user-groups/', {headers: {token: iStorage.get('token')}}).then(function (response) {
+    return $http.get(serverConfig.url + '/api/groups/user-groups/').then(function (response) {
+      // console.log('response:' + JSON.stringify(response))
       userGroups = response.data;
+      // console.log('userGroups:' + JSON.stringify(userGroups))
       iStorage.set(USER_GROUPS_CACHE_ID, userGroups);
       updateStatus();
     });
