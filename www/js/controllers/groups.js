@@ -97,7 +97,7 @@ angular.module('app.services').factory('groups',function ($resource, serverConfi
     getGroupsOptions: function () {
       var result = _(userGroups).reduce(function (memo, userGroup) {
         var item = userGroup.group;
-        console.log('controller:' + JSON.stringify(item.official_title))
+        // console.log('controller:' + JSON.stringify(item.official_title))
         if (item.joined) {
           memo.push({
             id: item.id,
@@ -165,6 +165,7 @@ angular.module('app.services').factory('groups',function ($resource, serverConfi
     },
 
     loadActivities: function (id) {
+      console.logp0("loadActivities");
       if (groupsInfo[id]) {
         groupsInfo[id].activities = Groups.getActivities({id: id}, function () {
           activity.parse(groupsInfo[id].activities);

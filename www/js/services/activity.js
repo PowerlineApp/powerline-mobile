@@ -189,6 +189,7 @@ angular.module('app.services').factory('activity',
     };
 
     activities.getFilteredModels = function (filter) {
+      // console.log("filter:" + JSON.stringify(filter))
       if (!filter) {
         return this.models;
       }
@@ -214,15 +215,21 @@ angular.module('app.services').factory('activity',
       };
 
       _(representatives.getRepresentativesByGroupType(repMethod[filter.group_type])).each(function (representative) {
-        if (representative.representative) {
-          representativeIds.push(representative.representative.id);
+        // console.log("representative:" + JSON.stringify(representative))
+        if (representative) {
+          representativeIds.push(representative.storage_id);
         }
       });
 
       return this.filter(function (activity) {
+        console.log(activity);
         return hasGroup(activity) || hasRepresentative(activity) ||
           (1 === filter.group_type && 'admin' === activity.get('owner').type);
       });
+
+      // return hasGroup(activity) || hasRepresentative(activity) ||
+      //   (1 === filter.group_type && 'admin' === activity.get('owner').type);
+
     };
 
     activities.setDeferredRead = function () {
@@ -242,15 +249,19 @@ angular.module('app.services').factory('activity',
     function load(offset, limit) {
       offset = (offset === null || typeof(offset) === 'undefined') ? activities.size() : offset;
       limit = limit || -1;
-      console.log(offset + '===' + limit);
-      return $http.get(serverConfig.url + '/api/activities/?offset=' + offset + 
-              '&limit=' + limit + '&sort=priority').then(function (response) {
-        activities = activities.add(response.data);
-        return activities;
-      });
-    };
+      // console.log(offset + '===' + limit);
+      // return $http.get(serverConfig.url + '/api/activities/?offset=' + offset + 
+      //         '&limit=' + limit + '&sort=priority').then(function (response) {
+      //   activities = activities.add(response.data);
+      //   return activities;
+      // });
+    return $http.get(serverConfig.url + '/api/activities/').then(function (response) {
+      console.log(JSON.stringify(response.data))
+      activities = activities.add(response.data);
+      return activities;
+    });
 
-    
+    };
 
     return {
 
