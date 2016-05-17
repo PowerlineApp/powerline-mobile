@@ -1,7 +1,4 @@
-angular.module('app.controllers').controller('groups',function ($scope, groups, $state, $rootScope, flurry, $http, serverConfig) {
-  
-  flurry.log('my groups');
-  
+angular.module('app.controllers').controller('groups',function ($scope, groups, $state, $rootScope, $http, serverConfig) {
   $scope.items = [];
 
   function loadGroups(showSpinner){
@@ -49,14 +46,11 @@ angular.module('app.controllers').controller('groups',function ($scope, groups, 
   });
   
   
-}).controller('groups.search',function ($scope, groups, flurry, $rootScope) {
-
-  flurry.log('group search');
+}).controller('groups.search',function ($scope, groups, $rootScope) {
 
   var DEFAULT_SEARCH_ITEMS = [];
 
   $scope.searchItems = DEFAULT_SEARCH_ITEMS;
-
 
   $scope.data = {};
 
@@ -81,16 +75,18 @@ angular.module('app.controllers').controller('groups',function ($scope, groups, 
       });
     });
   };
+  
   if (!groups.getPopularGroups().length) {
-    $scope.showSpinner();
-    groups.loadSuggested().finally(function () {
-      $scope.hideSpinner();
-    });
+    // $scope.showSpinner();
+    // groups.loadSuggested().finally(function () {
+    //   $scope.hideSpinner();
+    // });
   }
 
 }).controller('groups.search.join-groups',function ($scope, groups, $rootScope) {
   $scope.popularItems = groups.getPopularGroups();
   $scope.newItems = groups.getNewGroups();
+
 
   $scope.$watch(groups.getPopularGroups, function (newValue) {
     $scope.popularItems = newValue;
@@ -99,13 +95,11 @@ angular.module('app.controllers').controller('groups',function ($scope, groups, 
   $scope.$watch(groups.getNewGroups, function (newValue) {
     $scope.newItems = newValue;
   });
-}).controller('groups.profile',function ($scope, topBar, groups, $stateParams, $state, activity, invites, influence, homeCtrlParams, flurry, $rootScope) {
+}).controller('groups.profile',function ($scope, topBar, groups, $stateParams, $state, activity, invites, influence, homeCtrlParams, $rootScope) {
   
   influence.loadFollowers();
 
   var id = parseInt($stateParams.id, 10);
-
-  flurry.log('group profile', {id: id});
 
   $scope.data = groups.get(id);
   $scope.isChangeAvailable = function () {
@@ -122,7 +116,6 @@ angular.module('app.controllers').controller('groups',function ($scope, groups, 
       $scope.showSpinner();
       invites.invite(id, followers).finally(function () {
         $scope.hideSpinner();
-        flurry.log('invite to group', {id: id});
       });
     });
   };
@@ -140,7 +133,6 @@ angular.module('app.controllers').controller('groups',function ($scope, groups, 
         $rootScope.$broadcast('groups-updated');
         groups.resetInfo($scope.data.id);
         $scope.hideSpinner();
-        flurry.log('unjoin', {id: id});
         $state.reload();
       }, function () {
         $scope.hideSpinner();
@@ -193,8 +185,7 @@ angular.module('app.controllers').controller('groups',function ($scope, groups, 
   }, function (newValue) {
     $scope.data = newValue;
   });
-}).controller('groups.join', function ($scope, $stateParams, groups, groupsInvites, homeCtrlParams, $rootScope, flurry) {
-
+}).controller('groups.join', function ($scope, $stateParams, groups, groupsInvites, homeCtrlParams, $rootScope) {
   $scope.showSpinner();
   $scope.data = {};
   var id = Number($stateParams.id);
@@ -259,7 +250,6 @@ angular.module('app.controllers').controller('groups',function ($scope, groups, 
     groups.join(id, $scope.data).then(function (status) {
       $scope.showApproveMessage = !status;
       success();
-      flurry.log('join to group', {id: id});
     }, function (response) {
       $scope.formClass = 'error';
       $scope.hideSpinner();
