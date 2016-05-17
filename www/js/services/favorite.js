@@ -236,7 +236,6 @@ angular.module('app.services').factory('favorite',
     function load(offset, limit) {
       offset = (offset === null || typeof(offset) === 'undefined') ? favorites.size() : offset;
       limit = limit || -1;
-      console.log(offset + '===' + limit);
       bLoaded = false;
 
       return $http.get(serverConfig.url + '/api/bookmarks/list/all').then(function (response) {

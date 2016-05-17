@@ -19,9 +19,9 @@
         <li class="title">{{ group.letter}}</li>
         <li ng-repeat="item in group.items">
           <figure ng-click="navigateTo('group-profile', item)">
-            <avatar-img img="item.avatar_file_path" text="item.official_title"></avatar-img>
+            <avatar-img img="item.group.avatar_file_path" text="item.group.official_title"></avatar-img>
           </figure>
-          <p ng-click="navigateTo('group-profile', item)">{{ item.official_title}}</p>
+          <p ng-click="navigateTo('group-profile', item)">{{ item.group.official_title}}</p>
           <button ng-if="item.status === 1" class="button button-clear button-remove" ng-click="unjoin(item)"><i class="icon ion-android-remove-circle"></i></button>
           <p ng-if="item.status === 0" class="pending-message">pending approval</p>
         </li>

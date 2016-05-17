@@ -12,8 +12,6 @@ angular.module('app.controllers').controller('home', function ($scope, $timeout,
   function getActivities() {
     $scope.activities = homeCtrlParams.filter.selectedGroup ? homeCtrlParams.filter.selectedGroup.activities
             : activities.getFilteredModels();
-    // console.log("activities:" + $scope.activities);
-    // console.log("homeCtrlParams.filter.selectedGroup:" + JSON.stringify(homeCtrlParams.filter.selectedGroup));
   }
 
   function getUnansweredCount(activities) {
@@ -41,10 +39,6 @@ angular.module('app.controllers').controller('home', function ($scope, $timeout,
     homeCtrlParams.loaded = true;
     activities.setDeferredRead().sort();
     setFiltersData();
-    console.log('prepare');
-    console.log(activities);
-    console.log($scope.activities);
-    // getActivities();
 
     $scope.loading = false;
     $ionicScrollDelegate.resize();
@@ -54,23 +48,17 @@ angular.module('app.controllers').controller('home', function ($scope, $timeout,
 
   function loadActivities(loadType) {
     var prevSize = activities.size();
-    console.log('ls');
-    console.log($scope.activities);
     activity.load(loadType).then(function () {
       if (loadType === 'append' && prevSize === activities.size()) {
         $scope.isLoadMore = false;
       } else {
         $scope.isLoadMore = true;
       }
-      console.log('li');
-      console.log($scope.activities);
       prepare();
       $scope.$emit('home.activities-reloaded');
       $scope.$broadcast('scroll.refreshComplete');
       $scope.$broadcast('scroll.infiniteScrollComplete');
     }, prepare).finally(socialActivity.load);
-    console.log('le');
-    console.log($scope.activities);
   }
 
 
@@ -161,15 +149,9 @@ angular.module('app.controllers').controller('home', function ($scope, $timeout,
     }
 
   });
-  console.log('enter1');
-  console.log(activities);
-  console.log($scope.activities);
   //call this because cache may be loaded
   setFiltersData();
   getActivities();
-  console.log('enter');
-  console.log(activities);
-  console.log($scope.activities);
 });
 
 angular.module('app.controllers').run(function (homeCtrlParams, $document, $rootScope) {
