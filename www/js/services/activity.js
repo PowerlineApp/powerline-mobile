@@ -214,8 +214,8 @@ angular.module('app.services').factory('activity',
       };
 
       _(representatives.getRepresentativesByGroupType(repMethod[filter.group_type])).each(function (representative) {
-        if (representative.representative) {
-          representativeIds.push(representative.representative.id);
+        if (representative) {
+          representativeIds.push(representative.storage_id);
         }
       });
 
@@ -223,6 +223,7 @@ angular.module('app.services').factory('activity',
         return hasGroup(activity) || hasRepresentative(activity) ||
           (1 === filter.group_type && 'admin' === activity.get('owner').type);
       });
+
     };
 
     activities.setDeferredRead = function () {
@@ -242,15 +243,12 @@ angular.module('app.services').factory('activity',
     function load(offset, limit) {
       offset = (offset === null || typeof(offset) === 'undefined') ? activities.size() : offset;
       limit = limit || -1;
-      console.log(offset + '===' + limit);
       return $http.get(serverConfig.url + '/api/activities/?offset=' + offset + 
               '&limit=' + limit + '&sort=priority').then(function (response) {
         activities = activities.add(response.data);
         return activities;
       });
     };
-
-    
 
     return {
 

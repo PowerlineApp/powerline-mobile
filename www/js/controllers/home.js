@@ -40,7 +40,6 @@ angular.module('app.controllers').controller('home', function ($scope, $timeout,
     activities.setDeferredRead().sort();
     setFiltersData();
 
-    getActivities();
     $scope.loading = false;
     $ionicScrollDelegate.resize();
 
@@ -148,8 +147,8 @@ angular.module('app.controllers').controller('home', function ($scope, $timeout,
     } else {
       prepare();
     }
-  });
 
+  });
   //call this because cache may be loaded
   setFiltersData();
   getActivities();

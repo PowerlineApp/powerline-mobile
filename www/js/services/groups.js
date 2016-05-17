@@ -1,14 +1,18 @@
 angular.module('app.services').factory('groups',function ($resource, serverConfig, $q, $http, PermissionsModel, iStorage) {
-
   var GROUPS_CACHE_ID = 'group-items';
   var USER_GROUPS_CACHE_ID = 'user-group-items';
-  var GROUP_TYPE_COMMON = 0
+  var GROUP_TYPE_COMMON = 0;
 //        GROUP_TYPE_COUNTRY = 1,
 //        GROUP_TYPE_STATE = 2,
 //        GROUP_TYPE_LOCAL = 3
-    ;
+    
+  var Groups = $resource(serverConfig.url + '/api/groups', null, {
+    query: {
+      method: 'GET',
+      isArray: false,
+      url: serverConfig.url + '/api/groups/user-groups'
+    },
 
-  var Groups = $resource(serverConfig.url + '/api/groups\\', null, {
     get: {
       method: 'GET',
       isArray: false,
@@ -21,6 +25,7 @@ angular.module('app.services').factory('groups',function ($resource, serverConfi
       url: serverConfig.url + '/api/poll/question/group/:id'
     }
   });
+
   var JoinGroups = $resource(serverConfig.url + '/api/groups/:sort', {sort: ''});
   var groups = [];
   var groupsById = {};
@@ -37,19 +42,23 @@ angular.module('app.services').factory('groups',function ($resource, serverConfi
 
   var service = {
     load: function () {
-      var deferred = $q.defer();
+      // var deferred = $q.defer();
+      // var results = Groups.query(
+      //   function () {
+      //     deferred.resolve();
+      //   },
+      //   function () {
+      //     var error = 'Error occurred.';
+      //     deferred.reject(error);
+      //   }
+      // );
 
-      var results = Groups.query(
-        function () {
-          deferred.resolve();
-        },
-        function () {
-          var error = 'Error occurred.';
-          deferred.reject(error);
-        }
-      );
+      // return $q.all([loadUserGroups(), deferred.promise]).then(function () {
+      //   createCollections(results);
+      // });
 
-      return $q.all([loadUserGroups(), deferred.promise]).then(function () {
+      return  $http.get(serverConfig.url + '/api/groups/user-groups/').then(function (response){
+        results = response.data;
         createCollections(results);
       });
     },
@@ -87,7 +96,21 @@ angular.module('app.services').factory('groups',function ($resource, serverConfi
     },
 
     getPopularGroups: function () {
-      return popularGroups;
+      return $http.get(serverConfig.url + '/api/groups/popular').then(function (response) {
+        return response.data.status;
+      });
+
+      // var deferred = $q.defer();
+      //   $http({
+      //     method: 'GET',
+      //     url: serverConfig.url + '/api/groups/popular',
+      //     headers: {token: iStorage.get('token')}
+      //   }).success(function (response) {
+      //     return response;
+      //   }).error(function (response, status) {
+      //     deferred.reject(status);
+      //   });
+      //   return deferred.promise;
     },
 
     getNewGroups: function () {
@@ -166,7 +189,7 @@ angular.module('app.services').factory('groups',function ($resource, serverConfi
     loadActivities: function (id) {
       if (groupsInfo[id]) {
         groupsInfo[id].activities = Groups.getActivities({id: id}, function () {
-//                    activity.parse(groupsInfo[id].activities); TO DO:
+          activity.parse(groupsInfo[id].activities);
         });
       }
     },
@@ -207,15 +230,15 @@ angular.module('app.services').factory('groups',function ($resource, serverConfi
   function updateStatus() {
     var ids = [];
     _(userGroups).each(function (userGroup) {
-      userGroupsByGroupId[userGroup.group.id] = userGroup;
+      userGroupsByGroupId[userGroup.id] = userGroup;
       var group = _.find(groups, function (item) {
-        return item.id === userGroup.group.id;
+        return item.id === userGroup.id;
       });
       if (group) {
         group.status = userGroup.status;
       }
-      if (userGroup.group.joined) {
-        ids.push(userGroup.group.id);
+      if (userGroup.joined) {
+        ids.push(userGroup.id);
       }
     });
     userGroupsIds = _(ids);
@@ -251,10 +274,10 @@ angular.module('app.services').factory('groups',function ($resource, serverConfi
   function createCollections(items) {
     groups = _.chain(items)
       .map(function (item) {
-        if (!item.official_title) {
+        if (!item.group.official_title) {
           return;
         }
-        item.upper_title = item.official_title.toUpperCase();
+        item.group.upper_title = item.group.official_title.toUpperCase();
         groupsById[item.id] = item;
         return item;
       })
@@ -270,10 +293,10 @@ angular.module('app.services').factory('groups',function ($resource, serverConfi
     lettersGroups = [];
     var lettersHash = {};
     _(groups).each(function (item) {
-      if (typeof item.status === 'undefined' || item.group_type !== GROUP_TYPE_COMMON) {
+      if (typeof item.status === 'undefined' || item.group.group_type !== GROUP_TYPE_COMMON) {
         return;
       }
-      var letter = item.upper_title[0];
+      var letter = item.group.upper_title[0];
       if (!lettersHash[letter]) {
         lettersHash[letter] = {
           letter: letter,
