@@ -60,7 +60,7 @@
         <splash height="480" src="resources/ios/splash/Default~iphone.png" width="320" />
     </platform>
     <icon src="resources/android/icon/drawable-xhdpi-icon.png" />
-    <plugin name="cordova-plugin-facebook4" spec="~1.7.0">
+    <plugin name="cordova-plugin-facebook4" spec="~1.7.1">
         <variable name="APP_ID" value="244141112405524" />
         <variable name="APP_NAME" value="PowerlineApp" />
     </plugin>

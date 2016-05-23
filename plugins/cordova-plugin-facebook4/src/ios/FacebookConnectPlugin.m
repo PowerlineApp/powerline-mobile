@@ -181,7 +181,7 @@
         if (self.loginManager == nil) {
             self.loginManager = [[FBSDKLoginManager alloc] init];
         }
-        [self.loginManager logInWithReadPermissions:permissions fromViewController:self.viewController handler:loginHandler];
+        [self.loginManager logInWithReadPermissions:permissions fromViewController:[self topMostController] handler:loginHandler];
         return;
     }
 
@@ -262,13 +262,16 @@
 
         self.dialogCallbackId = command.callbackId;
         FBSDKShareDialog *dialog = [[FBSDKShareDialog alloc] init];
-        dialog.fromViewController = self.viewController;
+        dialog.fromViewController = [self topMostController];
         dialog.shareContent = content;
         dialog.delegate = self;
         // Adopt native share sheets with the following line
         if (params[@"share_sheet"]) {
             dialog.mode = FBSDKShareDialogModeShareSheet;
+        } else if (params[@"share_feedBrowser"]) {
+            dialog.mode = FBSDKShareDialogModeFeedBrowser;
         }
+
         [dialog show];
         return;
     } else if ([method isEqualToString:@"apprequests"]) {
@@ -301,7 +304,7 @@
         if (!filters) {
             content.filters = FBSDKGameRequestFilterNone;
         } else if ([filters isEqualToString:@"app_users"]) {
-            content.filters = FBSDKGameRequestFilterAppNonUsers;
+            content.filters = FBSDKGameRequestFilterAppUsers;
         } else if ([filters isEqualToString:@"app_non_users"]) {
             content.filters = FBSDKGameRequestFilterAppNonUsers;
         }
@@ -426,12 +429,24 @@
 
     FBSDKAppInviteDialog *dialog = [[FBSDKAppInviteDialog alloc] init];
     if ((url || picture) && [dialog canShow]) {
-        [FBSDKAppInviteDialog showFromViewController:self.viewController withContent:content delegate:self];
+        [FBSDKAppInviteDialog showFromViewController:[self topMostController] withContent:content delegate:self];
     } else {
         result = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR];
         [self.commandDelegate sendPluginResult:result callbackId:self.dialogCallbackId];
     }
 
+}
+
+- (void) getDeferredApplink:(CDVInvokedUrlCommand *) command
+{
+    [FBSDKAppLinkUtility fetchDeferredAppLink:^(NSURL *url, NSError *error) {
+        if (error) {
+            NSLog(@"Received error while fetching deferred app link %@", error);
+        }
+        if (url) {
+            [[UIApplication sharedApplication] openURL:url];
+        }
+    }];
 }
 
 - (void) activateApp:(CDVInvokedUrlCommand *)command
@@ -471,11 +486,21 @@
 
     } else if (publishPermissionFound) {
         // Only publish permissions
-        [self.loginManager logInWithPublishPermissions:permissions fromViewController:self.viewController handler:handler];
+        [self.loginManager logInWithPublishPermissions:permissions fromViewController:[self topMostController] handler:handler];
     } else {
         // Only read permissions
-        [self.loginManager logInWithReadPermissions:permissions fromViewController:self.viewController handler:handler];
+        [self.loginManager logInWithReadPermissions:permissions fromViewController:[self topMostController] handler:handler];
     }
+}
+
+- (UIViewController*) topMostController {
+    UIViewController *topController = [UIApplication sharedApplication].keyWindow.rootViewController;
+    
+    while (topController.presentedViewController) {
+        topController = topController.presentedViewController;
+    }
+    
+    return topController;
 }
 
 - (NSDictionary *)responseObject {

@@ -2,7 +2,7 @@
     "cordova-plugin-facebook4": {
         "source": {
             "type": "registry",
-            "id": "cordova-plugin-facebook4@~1.7.0"
+            "id": "cordova-plugin-facebook4@~1.7.1"
         },
         "is_top_level": true,
         "variables": {
@@ -83,20 +83,14 @@
         "is_top_level": true,
         "variables": {}
     },
-    "cordova-plugin-calendar": {
+    "phonegap-plugin-push": {
         "source": {
             "type": "registry",
-            "id": "cordova-plugin-calendar"
+            "id": "phonegap-plugin-push"
         },
         "is_top_level": true,
-        "variables": {}
-    },
-    "cordova-plugin-datepicker": {
-        "source": {
-            "type": "registry",
-            "id": "cordova-plugin-datepicker"
-        },
-        "is_top_level": true,
-        "variables": {}
+        "variables": {
+            "SENDER_ID": "354736666363"
+        }
     }
 }
