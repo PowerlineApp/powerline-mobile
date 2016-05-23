@@ -1,8 +1,6 @@
-angular.module('app.controllers').controller('search', function ($scope, $ionicScrollDelegate, search, layout, $cacheFactory, flurry) {
+angular.module('app.controllers').controller('search', function ($scope, $ionicScrollDelegate, search, layout, $cacheFactory) {
   
   var cache = $cacheFactory.get('searchController');
-
-  flurry.log('search');
 
   $scope.query = cache.get('query');
   $scope.data = cache.get('data');

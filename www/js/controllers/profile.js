@@ -1,6 +1,4 @@
-angular.module('app.controllers').controller('profile', function ($scope, profile, $window, errorFormMessage, session, iStorage, flurry, homeCtrlParams, groups, formUtils) {
-
-  flurry.log('my profile');
+angular.module('app.controllers').controller('profile', function ($scope, profile, $window, errorFormMessage, session, iStorage, homeCtrlParams, groups, formUtils) {
 
   $scope.view = {editMode: false};
 
@@ -61,7 +59,6 @@ angular.module('app.controllers').controller('profile', function ($scope, profil
           homeCtrlParams.loaded = false;
         });
         $scope.profile.avatar_src_prefix = null;
-        flurry.log('profile updated');
 
         iStorage.set('is_registration_complete', $scope.profile.is_registration_complete);
         session.is_registration_complete = $scope.profile.is_registration_complete;

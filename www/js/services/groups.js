@@ -1,4 +1,4 @@
-angular.module('app.services').factory('groups',function ($resource, serverConfig, $q, $http, PermissionsModel, iStorage) {
+angular.module('app.services').factory('groups',function ($resource, serverConfig, $q, $http, PermissionsModel, iStorage, $rootScope) {
   var GROUPS_CACHE_ID = 'group-items';
   var USER_GROUPS_CACHE_ID = 'user-group-items';
   var GROUP_TYPE_COMMON = 0;
@@ -96,21 +96,7 @@ angular.module('app.services').factory('groups',function ($resource, serverConfi
     },
 
     getPopularGroups: function () {
-      return $http.get(serverConfig.url + '/api/groups/popular').then(function (response) {
-        return response.data.status;
-      });
-
-      // var deferred = $q.defer();
-      //   $http({
-      //     method: 'GET',
-      //     url: serverConfig.url + '/api/groups/popular',
-      //     headers: {token: iStorage.get('token')}
-      //   }).success(function (response) {
-      //     return response;
-      //   }).error(function (response, status) {
-      //     deferred.reject(status);
-      //   });
-      //   return deferred.promise;
+      return $rootScope.popularGroups;
     },
 
     getNewGroups: function () {
@@ -316,11 +302,19 @@ angular.module('app.services').factory('groups',function ($resource, serverConfi
   }
 
   function loadJoinCollections() {
-    var deferred = $q.defer();
-    popularGroups = JoinGroups.query({sort: 'popular'});
-    newGroups = JoinGroups.query({sort: 'new'}, deferred.resolve, deferred.reject);
-
-    return deferred.promise;
+    $http.get(serverConfig.url + '/api/groups/popular', {
+      query: {
+        method: 'GET',
+        isArray: false,  
+        headers: {Token: iStorage.get('token')}
+      }
+    }).then(function (response) {
+      var result = response.data;
+      var groups = $.map(result, function(array, index) {
+        return array;
+      });
+      $rootScope.popularGroups = groups;
+    });
   }
 
   function loadUserGroups() {

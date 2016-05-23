@@ -1,4 +1,4 @@
-angular.module('app.controllers').controller('followgroup', function($scope, $state, $stateParams, $rootScope, flurry, followgroup, $http, serverConfig, follows, session, users, $ionicPopup){
+angular.module('app.controllers').controller('followgroup', function($scope, $state, $stateParams, $rootScope, followgroup, $http, serverConfig, follows, session, users, $ionicPopup){
   var id = parseInt($stateParams.id, 10);
   
   $scope.loadGroupData = function(showSpinner){
@@ -105,19 +105,15 @@ angular.module('app.controllers').controller('followgroup', function($scope, $st
       item.unfollow();
       follows.remove(item);
       $scope.data = follows.getFollowing();
-      flurry.log('unfollow user', {id: item.get('id')});
     });
   };
 
 */
 
 }).controller('followgroup.profile',
-  function ($scope, users, follows, $stateParams, $state, profile, flurry, activity, $rootScope) {
+  function ($scope, users, follows, $stateParams, $state, profile, activity, $rootScope) {
 
   var id = parseInt($stateParams.id, 10);
-
-  flurry.log('user profile', {id: id});
-
   $scope.showSpinner();
   users.load(id).then(function (data) {
     $scope.data = data;
@@ -137,7 +133,6 @@ angular.module('app.controllers').controller('followgroup', function($scope, $st
         $rootScope.$broadcast('influences-updated');
         $state.reload();
       }, $state.reload);
-        flurry.log('unfollow user', {id: id});
         $rootScope.$broadcast('influences-updated');
       });
     } else {
@@ -145,7 +140,6 @@ angular.module('app.controllers').controller('followgroup', function($scope, $st
         $rootScope.$broadcast('influences-updated');
         $state.reload();
       }, $state.reload);
-      flurry.log('follow user', {id: id});
     }
   };
 

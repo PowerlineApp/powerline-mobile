@@ -1,6 +1,4 @@
-angular.module('app.controllers').controller('representatives',function ($scope, representatives, flurry, $rootScope) {
-
-  flurry.log('my representatives');
+angular.module('app.controllers').controller('representatives',function ($scope, representatives, $rootScope) {
   
   $scope.items = [];
 
@@ -35,12 +33,10 @@ angular.module('app.controllers').controller('representatives',function ($scope,
     }
   });
   
-}).controller('representatives.profile', function ($scope, representatives, topBar, $stateParams, $location, loaded, activity, flurry) {
+}).controller('representatives.profile', function ($scope, representatives, topBar, $stateParams, $location, loaded, activity) {
   
   var id = parseInt($stateParams.id, 10),
     storageId = parseInt($stateParams.storageId, 10);
-
-  flurry.log('representative profile', {id: $stateParams.id, storage_id: $stateParams.storageId});
 
   $scope.data = representatives.get(id, storageId);
 
@@ -73,7 +69,6 @@ angular.module('app.controllers').controller('representatives',function ($scope,
         $scope.hideSpinner();
         $scope.committees = committees;
         $scope.committeesLoaded = true;
-        flurry.log('committees loaded', {storage_id: $scope.data.storage_id});
       }, function () {
         $scope.hideSpinner();
       }
@@ -87,7 +82,6 @@ angular.module('app.controllers').controller('representatives',function ($scope,
         $scope.hideSpinner();
         $scope.sponsoredBills = sponsoredBills;
         $scope.sponsoredBillsLoaded = true;
-        flurry.log('sponsored bills loaded', {storage_id: $scope.data.storage_id});
       }, function () {
         $scope.hideSpinner();
       }

@@ -1,8 +1,6 @@
 angular.module('app.controllers').controller('session.registration',
-  function ($scope, topBar, session, $location, iStorageMemory, profile, flurry, layout, users, $ionicSideMenuDelegate) {
+  function ($scope, topBar, session, $location, iStorageMemory, profile, layout, users, $ionicSideMenuDelegate) {
     $ionicSideMenuDelegate.canDragContent(false);
-
-    flurry.log('registration');
 
     $scope.states = profile.states;
     $scope.countries = profile.countries;
@@ -36,6 +34,6 @@ angular.module('app.controllers').controller('session.registration',
         });
       }
     };
-  }).controller('session.terms', function (topBar, flurry) {
-    flurry.log('terms');
+  }).controller('session.terms', function (topBar) {
+    
   });

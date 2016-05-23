@@ -1,7 +1,5 @@
 angular.module('app.controllers').controller('question',function ($scope, $location, questions, $stateParams, layout,
-                                                                  iStorageMemory, activity, flurry) {
-
-  flurry.log('question', {id: $stateParams.id});
+                                                                  iStorageMemory, activity) {
 
   var optionsSubview = 'templates/question/options.html';
   var resultsSubview = 'templates/question/results.html';
@@ -58,14 +56,13 @@ angular.module('app.controllers').controller('question',function ($scope, $locat
       $scope.hideSpinner();
     }
   });
-}).controller('question.answer-form',function ($scope, $state, iStorageMemory, homeCtrlParams, flurry) {
+}).controller('question.answer-form',function ($scope, $state, iStorageMemory, homeCtrlParams) {
 
   $scope.answer = function () {
 
     $scope.showSpinner();
     $scope.$parent.q.answer($scope.data).then(function () {
       homeCtrlParams.loaded = false;
-      flurry.log('answer to question', {id: $scope.$parent.q.id});
       $scope.hideSpinner();
       if ($scope.q.recipients) {
         iStorageMemory.put('question-answered-' + $scope.$parent.q.id, 'Your response “' + $scope.$parent.current.title + '” was sent to ' +
@@ -79,7 +76,7 @@ angular.module('app.controllers').controller('question',function ($scope, $locat
     });
   };
   
-}).controller('question.influences',function ($scope, $stateParams, questions, questionCache, loaded, flurry) {
+}).controller('question.influences',function ($scope, $stateParams, questions, questionCache, loaded) {
   $scope.q = questionCache.get($stateParams.id);
   $scope.showSpinner();
   questions.loadAnswers($stateParams.id).then(function (answers) {
@@ -89,9 +86,8 @@ angular.module('app.controllers').controller('question',function ($scope, $locat
     $scope.hideSpinner();
   });
   
-}).controller('question.news',function ($scope, $location, $stateParams, questions, iJoinFilter, activity, flurry, layout) {
+}).controller('question.news',function ($scope, $location, $stateParams, questions, iJoinFilter, activity, layout) {
   
-  flurry.log('leader news', {id: $stateParams.id});
   activity.setEntityRead({id: Number($stateParams.id), type: 'leader-news'});
 
   $scope.showSpinner();
@@ -107,9 +103,7 @@ angular.module('app.controllers').controller('question',function ($scope, $locat
   });
 
 }).controller('question.leader-petition', function ($scope, $state, $stateParams, questions, iJoinFilter,
-                                                    serverConfig, homeCtrlParams, activity, flurry, layout) {
-  
-  flurry.log('leader petition', {id: $stateParams.id});
+                                                    serverConfig, homeCtrlParams, activity, layout) {
   
   $scope.data = {
     privacy: 0,
@@ -137,7 +131,6 @@ angular.module('app.controllers').controller('question',function ($scope, $locat
     $scope.showSpinner();
     $scope.q.answer($scope.data).then(function () {
       homeCtrlParams.loaded = false;
-      flurry.log('answer to leader petition', {id: $scope.q.id});
       $state.reload();
     }, function () {
       $state.reload();
@@ -147,7 +140,6 @@ angular.module('app.controllers').controller('question',function ($scope, $locat
   $scope.unsign = function () {
     $scope.showSpinner();
     questions.unsignFromPetition($scope.q.id, $scope.q.options[0].id).then($state.reload, $state.reload);
-    flurry.log('unsign petition', {id: $scope.q.id});
     homeCtrlParams.loaded = false;
   };
 });

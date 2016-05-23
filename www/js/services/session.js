@@ -27,6 +27,7 @@ angular.module('app.services').factory('session', function (serverConfig, $http,
       return $http({
         method: 'POST',
         url: serverConfig.url + '/api/secure/facebook/login',
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
         data: angular.element.param(params)
       }).then(function (response) {
         iStorage.set('token', response.data.token);

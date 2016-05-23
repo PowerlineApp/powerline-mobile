@@ -1,6 +1,4 @@
-angular.module('app.controllers').controller('services',function ($scope, flurry) {
-
-  flurry.log('services');
+angular.module('app.controllers').controller('services',function ($scope) {
 
   $scope.items = [
     {
