@@ -1,8 +1,6 @@
 angular.module('app.controllers').controller('petitions.add',
 function ($scope,  petitions, PetitionsResource, groups, $stateParams, errorFormMessage, getFormData,
-            camelcase2underscore, profile, homeCtrlParams, $document, session, flurry, $rootScope) {
-  
-  flurry.log('new micro petition form');
+            camelcase2underscore, profile, homeCtrlParams, $document, session, $rootScope) {
   
   $scope.type = $stateParams.type;
   $scope.groups = groups.getGroupsOptions();
@@ -79,7 +77,6 @@ function ($scope,  petitions, PetitionsResource, groups, $stateParams, errorForm
       $scope.showSpinner();
       petition.$save(function () {
         homeCtrlParams.loaded = false;
-        flurry.log('micro petition created');
         if ($stateParams.group_id) {
           petitions.loadAll().then($scope.back, $scope.back);
         } else {
@@ -133,12 +130,11 @@ function ($scope,  petitions, PetitionsResource, groups, $stateParams, errorForm
   });
 
 }).controller('petition',function ($scope, topBar, petitions, $stateParams, loaded, $cacheFactory, session, $state,
-                                   homeCtrlParams, activity, flurry, layout, $ionicPopup, $rootScope) {
+                                   homeCtrlParams, activity, layout, $ionicPopup, $rootScope) {
                                    
   var cache = $cacheFactory.get('petitionController');
   $scope.petition = cache.get($stateParams.id);
   activity.setEntityRead({id: Number($stateParams.id), type: 'micro-petition'});
-  flurry.log('micro petition', {id: Number($stateParams.id)});
 
   if (!$scope.petition) {
     $scope.showSpinner();
@@ -253,13 +249,12 @@ function ($scope,  petitions, PetitionsResource, groups, $stateParams, errorForm
     homeCtrlParams.loaded = false;
   };
 
-}).controller('petition.answer-form', function ($scope, $state, homeCtrlParams, flurry, $rootScope) {
+}).controller('petition.answer-form', function ($scope, $state, homeCtrlParams, $rootScope) {
 
   $scope.submit = function () {
     $scope.showSpinner();
     $scope.$parent.petition.$answer({option_id: $scope.$parent.current.id}, function () {
       $scope.hideSpinner();
-      flurry.log('answer to micro petition', {id: $scope.$parent.petition.id});
       homeCtrlParams.loaded = false;
       $state.reload();
     }, function () {

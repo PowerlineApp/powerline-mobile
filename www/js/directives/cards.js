@@ -7,7 +7,7 @@ angular.module('app.directives')
         completed: '&'
       },
       templateUrl: 'templates/profile/cards.html',
-      controller: function ($scope, profile, cards, $rootScope, flurry) {
+      controller: function ($scope, profile, cards, $rootScope) {
         $rootScope.showSpinner();
         cards.load()
           .then(function (collection) {
@@ -39,7 +39,6 @@ angular.module('app.directives')
           $rootScope.showSpinner();
           cards.create($scope.data)
             .then(function () {
-              flurry.log('card added');
               $scope.completed();
             })
             .catch(function (error) {
@@ -61,7 +60,7 @@ angular.module('app.directives')
         completed: '&'
       },
       templateUrl: 'templates/profile/cards.html',
-      controller: function ($scope, profile, cards, $rootScope, flurry) {
+      controller: function ($scope, profile, cards, $rootScope) {
         var user = profile.get() || {};
         $scope.data = {
           name: user.full_name,
@@ -83,7 +82,6 @@ angular.module('app.directives')
           $rootScope.showSpinner();
           cards.create($scope.data)
             .then(function (card) {
-              flurry.log('card added');
               $scope.completed(card);
             })
             .catch(function (error) {

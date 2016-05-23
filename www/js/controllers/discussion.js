@@ -1,4 +1,4 @@
-angular.module('app.controllers').controller('discussion',function ($scope, topBar, discussion, $stateParams, $cacheFactory, flurry, $ionicPopup) {
+angular.module('app.controllers').controller('discussion',function ($scope, topBar, discussion, $stateParams, $cacheFactory, $ionicPopup) {
 
   var isWidget = !/^\/discussion/.test($scope.path());
   
@@ -58,20 +58,16 @@ angular.module('app.controllers').controller('discussion',function ($scope, topB
   $scope.up = function (comment) {
     if (comment.rate_status === 1) {
       discussion.rate(comment, 'delete');
-      flurry.log('comment vote deleted', {id: comment.id});
     } else {
       discussion.rate(comment, 'up');
-      flurry.log('comment upvoted', {id: comment.id});
     }
   };
 
   $scope.down = function (comment) {
     if (comment.rate_status === -1) {
       discussion.rate(comment, 'delete');
-      flurry.log('comment vote deleted', {id: comment.id});
     } else {
       discussion.rate(comment, 'down');
-      flurry.log('comment downvoted', {id: comment.id});
     }
   };
 
@@ -133,7 +129,7 @@ angular.module('app.controllers').controller('discussion',function ($scope, topB
     });
   };
 
-}).controller('discussion.comment-form',function ($scope, discussion, $state, homeCtrlParams, flurry) {
+}).controller('discussion.comment-form',function ($scope, discussion, $state, homeCtrlParams) {
 
   $scope.data = {
     comment: '',
@@ -151,7 +147,6 @@ angular.module('app.controllers').controller('discussion',function ($scope, topB
     $scope.showSpinner();
     homeCtrlParams.loaded = false;
     discussion.createComment($scope.entity, $scope.id, data).then(function () {
-      flurry.log('comment added', {id: $scope.id});
       $scope.$emit('discussion.comment-added');
       $scope.data.comment = '';
     }, function(){

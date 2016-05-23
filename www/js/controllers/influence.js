@@ -1,9 +1,7 @@
 angular.module('app.controllers').controller('influence.profile',
-  function ($scope, users, follows, $stateParams, $state, profile, flurry, activity, $rootScope) {
+  function ($scope, users, follows, $stateParams, $state, profile, activity, $rootScope) {
 
   var id = parseInt($stateParams.id, 10);
-
-  flurry.log('user profile', {id: id});
 
   $scope.showSpinner();
   users.load(id).then(function (data) {
@@ -24,7 +22,6 @@ angular.module('app.controllers').controller('influence.profile',
         $rootScope.$broadcast('influences-updated');
         $state.reload();
       }, $state.reload);
-        flurry.log('unfollow user', {id: id});
         $rootScope.$broadcast('influences-updated');
       });
     } else {
@@ -32,7 +29,6 @@ angular.module('app.controllers').controller('influence.profile',
         $rootScope.$broadcast('influences-updated');
         $state.reload();
       }, $state.reload);
-      flurry.log('follow user', {id: id});
     }
   };
 
@@ -42,9 +38,7 @@ angular.module('app.controllers').controller('influence.profile',
     });
   }
 
-}).controller('influences',function ($scope, $location, influencesCD, follows, flurry, $rootScope) {
-
-  flurry.log('my influences');
+}).controller('influences',function ($scope, $location, influencesCD, follows, $rootScope) {
 
   function loadInfluences(showSpinner){
     if(showSpinner){
@@ -105,7 +99,7 @@ angular.module('app.controllers').controller('influence.profile',
     return influencesCD.view === view ? 'active' : '';
   };
 
-}).controller('influences.following',function ($scope, follows, flurry) {
+}).controller('influences.following',function ($scope, follows) {
 
   $scope.data = follows.getFollowing();
   $scope.$watch(follows.size, function () {
@@ -120,11 +114,10 @@ angular.module('app.controllers').controller('influence.profile',
       item.unfollow();
       follows.remove(item);
       $scope.data = follows.getFollowing();
-      flurry.log('unfollow user', {id: item.get('id')});
     });
   };
 
-}).controller('influences.followers',function ($scope, follows, flurry) {
+}).controller('influences.followers',function ($scope, follows) {
 
   $scope.data = follows.getFollowers();
   $scope.$watch(follows.size, function () {
@@ -137,11 +130,10 @@ angular.module('app.controllers').controller('influence.profile',
   $scope.remove = function (follows) {
     $scope.confirmAction('Are you sure?').then(function () {
       follows.unapprove();
-      flurry.log('unapprove user', {id: follows.get('id')});
     });
   };
 
-}).controller('influences.search',function ($scope, influence, facebook, profile, influencesCD, flurry, $rootScope) {
+}).controller('influences.search',function ($scope, influence, facebook, profile, influencesCD, $rootScope) {
 
   var user = profile.get();
   
@@ -166,7 +158,6 @@ angular.module('app.controllers').controller('influence.profile',
     $scope.data.page = 1;
     $scope.results = [];
     load();
-    flurry.log('search influences');
   };
 
   $scope.more = function () {
@@ -178,7 +169,6 @@ angular.module('app.controllers').controller('influence.profile',
     $scope.showSpinner();
     item.$changeStatus({status: 'follow'}, loaded, loaded);
     $scope.results = _($scope.results).without(item);
-    flurry.log('follow user', {id: item.id});
   };
 
   $scope.facebookFollow = function (item) {
@@ -208,10 +198,8 @@ angular.module('app.controllers').controller('influence.profile',
     $scope.path('/influences');
   }
 
-}).controller('influences.notifications', function ($scope, $state, layout, flurry, $q, socialActivity, socialActivityTabManager, socialActivityHandler) {
+}).controller('influences.notifications', function ($scope, $state, layout, $q, socialActivity, socialActivityTabManager, socialActivityHandler) {
 
-  flurry.log('social feed');
-  
   function loadNotifications(){
     socialActivityTabManager.getCurrentTab().setShownAt();
     socialActivityTabManager.getState().reload = false;

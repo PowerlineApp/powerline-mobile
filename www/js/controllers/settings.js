@@ -1,6 +1,4 @@
-angular.module('app.controllers').controller('settings', function ($scope, $ionicScrollDelegate, profile, facebook, $state, $timeout, flurry, cards, $q) {
-
-  flurry.log('settings');
+angular.module('app.controllers').controller('settings', function ($scope, $ionicScrollDelegate, profile, facebook, $state, $timeout, cards, $q) {
 
   $scope.profile = profile.get();
   $scope.data = {};
@@ -16,7 +14,6 @@ angular.module('app.controllers').controller('settings', function ($scope, $ioni
     $scope.data.scheduled_to = $scope.data.scheduled_to_date.toUTCString();
     _($scope.profile).extend($scope.data);
     $scope.profile.$save({action: 'settings'}, function () {
-      flurry.log('settings saved');
       $state.reload();
     }, $state.reload);
   };
@@ -32,7 +29,6 @@ angular.module('app.controllers').controller('settings', function ($scope, $ioni
       facebook.loadProfile(params).then(function(data) {
         data.action = 'link-to-facebook';
         $scope.profile.$save(data).then(function () {
-          flurry.log('facebook linked');
           $state.reload();
         }, function (response) {
           $scope.hideSpinner();
