@@ -98,7 +98,13 @@ angular.module('app.services', [
       $location.path('/group/join/' + group.id);
     },
     'activity': function (activity, focus) {
-      var path = activityRoutes[activity.get('entity').type] + activity.get('entity').id;
+      var activityType = activity.get('entity').type
+      // not sure if entity.id is used at all or everything goes via entity.group_id 
+      var activityID = activity.get('entity').id 
+      if(activityID == null)
+        activityID = activity.get('entity').group_id
+
+      var path = activityRoutes[activityType] + activityID;
       if (focus) {
         $location.path(path).search('focus', focus);
       } else {
