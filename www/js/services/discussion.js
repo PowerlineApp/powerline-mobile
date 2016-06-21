@@ -87,12 +87,12 @@ angular.module('app.services').factory('discussion',function (serverConfig, Comm
       });
     },
 
-    update: function(entity, id, comment_id){
-      return $http.put(serverConfig.url + '/api/' + entity + '/' + id + '/' + comment_id);
+    update: function(entity, id, comment){
+      return $http.put(serverConfig.url + '/api/' + entity + '/' + id + '/comments/' + comment.id, {comment_body: comment.comment_body});
     },
 
     delete: function(entity, id, comment_id){
-      return $http.delete(serverConfig.url + '/api/' + entity + '/' + id + '/' + comment_id);
+      return $http.delete(serverConfig.url + '/api/' + entity + '/' + id + '/comments/' + comment_id);
     }
   };
 }).factory('Comment', function () {

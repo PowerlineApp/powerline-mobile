@@ -100,7 +100,7 @@ angular.module('app.controllers').controller('discussion',function ($scope, topB
       comment.comment_body_html = comment.comment_body;
 //Backend Connect
             
-      discussion.update($scope.entity, $scope.id, comment.id).then(function (res){
+      discussion.update($scope.entity, $scope.id, comment).then(function (res){
         return res.data;
       });
     }
