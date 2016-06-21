@@ -119,25 +119,35 @@ angular.module('app.directives').directive('iPlaceholder',function () {
     element.bind('focus', function () {
 
       element.blur();
-      if (datePickerOpened) {
-        return false;
-      }
-      datePickerOpened = true;
-      $window.plugins.datePicker.show({
-        date: ctrl.$modelValue ? new Date(ctrl.$modelValue) : new Date(),
-        mode: 'date',
-        allowOldDates: true
-      }, function (returnDate) {
-        var newDate = new Date(returnDate);
-        ctrl.$setViewValue($filter('date')(newDate, 'MM/dd/y'));
 
-        scope.$apply(function () {
-          element.val(ctrl.$modelValue);
+      if($window.plugins && $window.plugins.datePicker){
+        if (datePickerOpened) {
+          return false;
+        }
+        datePickerOpened = true;
+        $window.plugins.datePicker.show({
+          date: ctrl.$modelValue ? new Date(ctrl.$modelValue) : new Date(),
+          mode: 'date',
+          allowOldDates: true
+        }, function (returnDate) {
+          var newDate = new Date(returnDate);
+          ctrl.$setViewValue($filter('date')(newDate, 'MM/dd/y'));
+
+          scope.$apply(function () {
+            element.val(ctrl.$modelValue);
+            datePickerOpened = false;
+          });
+        }, function () {
           datePickerOpened = false;
         });
-      }, function () {
-        datePickerOpened = false;
-      });
+      } else {
+        var d = '01/01/1977'
+        ctrl.$setViewValue(d)
+        scope.$apply(function () {
+          element.val(d);
+        });
+      }
+
     });
 
     scope.$watch(function () {
