@@ -49,11 +49,9 @@ angular.module('app.services').factory('session', function (serverConfig, $http,
         session.user_id = response.data.id;
         session.is_registration_complete = response.data.is_registration_complete;
 
-        if (data.facebook_id) {
-          iStorage.set('token', response.data.token);
-          iStorage.set('user_id', response.data.id);
-          iStorage.set('is_registration_complete', response.data.is_registration_complete);
-        }
+        iStorage.set('token', response.data.token);
+        iStorage.set('user_id', response.data.id);
+        iStorage.set('is_registration_complete', response.data.is_registration_complete);
 
         return response;
       });
