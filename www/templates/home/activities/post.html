@@ -30,10 +30,10 @@
     <div class="control" ng-show="sending">
       <spinner></spinner>
     </div>
-    <div class="control" ng-show="activity.isUnanswered() && !sending">
+    <div class="control" ng-show="activity.isUnanswered() && !sending && !currentUserIsActivityOwner">
       <i class="activity-control double-up" ng-click="sign(1)"></i>
     </div>
-    <div class="control" ng-show="activity.isUnanswered() && !sending">
+    <div class="control" ng-show="activity.isUnanswered() && !sending && !currentUserIsActivityOwner">
       <i class="activity-control double-down"  ng-click="sign(2)"></i>
     </div>
     <div class="control" ng-show="activity.get('answer').option_id && !sending">

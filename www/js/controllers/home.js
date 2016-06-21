@@ -207,6 +207,7 @@ angular.module('app.controllers').directive('iActivity', function ($rootScope, q
 
   function postCtrl($scope) {
     $scope.templateSrc = 'templates/home/activities/post.html';
+    $scope.currentUserIsActivityOwner = $scope.activity.get('owner').id == session.user_id
     $scope.booster = $scope.activity.get('owner').type === 'group' ? 100 : $scope.activity.getQuorumCompletedPercent();
     var follow = follows.getByUserId($scope.activity.get('owner').id);
     $scope.followable = !follow.isFollow();
