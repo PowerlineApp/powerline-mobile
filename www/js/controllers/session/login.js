@@ -1,7 +1,7 @@
 angular.module('app.controllers').controller('session.login',function ($scope, homeCtrlParams, session, facebook, $timeout, flurry, $ionicSideMenuDelegate, $ionicHistory) {
   $ionicSideMenuDelegate.canDragContent(false);
   
-  $scope.keepLogged = true;
+  $scope.keepLogged = {value: true};
   $scope.data = {};
 
   $scope.hideSpinner();
@@ -15,7 +15,7 @@ angular.module('app.controllers').controller('session.login',function ($scope, h
       return;
     }
     $scope.showSpinner();
-    session.login($scope.data, $scope.keepLogged).then(
+    session.login($scope.data, $scope.keepLogged.value).then(
       function () {
         //clear cache and history
         $ionicHistory.clearCache();
