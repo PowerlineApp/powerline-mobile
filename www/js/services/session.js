@@ -41,8 +41,9 @@ angular.module('app.services').factory('session', function (serverConfig, $http,
     registration: function (data) {
       return $http({
         method: 'POST',
+        headers: {'Content-Type': 'application/json'},
         url: serverConfig.url + '/api/secure/registration',
-        data: angular.element.param(data)
+        data: JSON.stringify(data)
       }).then(function (response) {
         session.token = response.data.token;
         session.user_id = response.data.id;
