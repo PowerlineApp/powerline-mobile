@@ -249,15 +249,15 @@ function ($scope,  petitions, PetitionsResource, groups, $stateParams, errorForm
 
   $scope.unsign = function () {
     $scope.showSpinner();
-    $scope.petition.$unsign($state.reload, $state.reload);
+    $scope.petition.$unsign($state.reload);
     homeCtrlParams.loaded = false;
   };
 
-}).controller('petition.answer-form', function ($scope, $state, homeCtrlParams, flurry, $rootScope) {
+}).controller('petition.answer-form', function ($scope, $state, homeCtrlParams, flurry, $rootScope, petitions) {
 
   $scope.submit = function () {
     $scope.showSpinner();
-    $scope.$parent.petition.$answer({option_id: $scope.$parent.current.id}, function () {
+    petitions.answer($scope.$parent.petition.id, $scope.$parent.current.id).then(function () {
       $scope.hideSpinner();
       flurry.log('answer to micro petition', {id: $scope.$parent.petition.id});
       homeCtrlParams.loaded = false;

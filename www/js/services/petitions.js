@@ -128,12 +128,15 @@ angular.module('app.services').factory('petitions',function ($q, PetitionsResour
       return _(petitionsByGroup).pluck('group');
     },
     answer: function(id, optionId) {
-      return $http.post(serverConfig.url + '/api/micro-petitions/' + id + '/answers/' + optionId).then(function(resp) {
+      var option = 'upvote'
+      if(optionId == 2)
+        option = 'downvote'
+
+      var payload = JSON.stringify({option: option})
+      var headers = {headers: {'Content-Type': 'application/json'}}
+      return $http.post(serverConfig.url + '/api/v2/micro-petitions/' + id + '/answer', payload, headers).then(function(resp) {
         return resp.data;
       });
-    },
-    unsign: function(id, optionId) {
-      return $http['delete'](serverConfig.url + '/api/micro-petitions/' + id + '/answers/' + optionId);
     },
 
     update: function(microPetition) {
@@ -153,11 +156,6 @@ angular.module('app.services').factory('petitions',function ($q, PetitionsResour
 
 }).factory('PetitionsResource', function ($resource, serverConfig) {
   return $resource(serverConfig.url + '/api/micro-petitions/:id', {id: '@id'}, {
-    answer: {
-      method: 'POST',
-      params: {id: '@id'},
-      url: serverConfig.url + '/api/micro-petitions/:id/answers/:option_id'
-    },
     searchByHashTag: {
       method: 'GET',
       isArray: true,
@@ -165,8 +163,8 @@ angular.module('app.services').factory('petitions',function ($q, PetitionsResour
     },
     unsign: {
       method: 'DELETE',
-      params: {id: '@id', answer_id: '@answer_id'},
-      url: serverConfig.url + '/api/micro-petitions/:id/answers/:answer_id'
+      params: {id: '@id'},
+      url: serverConfig.url + '/api/v2/micro-petitions/:id/answer'
     },
     update: {
       method: 'PUT',
