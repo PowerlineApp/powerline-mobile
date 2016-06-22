@@ -230,7 +230,7 @@ function ($scope,  petitions, PetitionsResource, groups, $stateParams, errorForm
   });
 
   $scope.$watch('petition', function (petition) {
-    if (petition) {
+    if (petition && petition.user) { // we need to wait for the real object (and not promise)
       $scope.shareBody = petition.petition_body;
       $scope.shareTitle = petition.title;
       $scope.shareImage = petition.share_picture;
