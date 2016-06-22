@@ -136,14 +136,16 @@ angular.module('app.services').factory('petitions',function ($q, PetitionsResour
       return $http['delete'](serverConfig.url + '/api/micro-petitions/' + id + '/answers/' + optionId);
     },
 
-    update: function(id) {
-      return $http.put(serverConfig.url + '/api/micro-petitions/' + id).then(function(resp) {
+    update: function(microPetition) {
+      var payload = JSON.stringify({petition_body: microPetition.petition_body})
+      var headers = {headers: {'Content-Type': 'application/json'}}
+      return $http.put(serverConfig.url + '/api/v2/micro-petitions/' + microPetition.id, payload, headers).then(function(resp) {
         return resp.data;
       });
     },
 
     delete: function(id){
-      return $http.delete(serverConfig.url + '/api/micro-petitions/' + id).then(function(resp) {
+      return $http.delete(serverConfig.url + '/api/v2/micro-petitions/' + id).then(function(resp) {
         return resp.data;
       });
     }

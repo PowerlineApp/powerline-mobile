@@ -189,7 +189,7 @@ function ($scope,  petitions, PetitionsResource, groups, $stateParams, errorForm
       $scope.petition.petition_body_parsed = $scope.petition.petition_body;
 //backend operation.      
       
-      petitions.update($scope.petition.id);
+      petitions.update($scope.petition);
       
     }
   };
