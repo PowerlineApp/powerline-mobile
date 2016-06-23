@@ -243,8 +243,8 @@ angular.module('app.services').factory('activity',
     function load(offset, limit) {
       offset = (offset === null || typeof(offset) === 'undefined') ? activities.size() : offset;
       limit = limit || -1;
-      return $http.get(serverConfig.url + '/api/activities?sort=priority').then(function (response) {
-        activities = activities.add(response.data);
+      return $http.get(serverConfig.url + '/api/v2/activities').then(function (response) {
+        activities = activities.add(response.data.payload);
         return activities;
       });
     };
