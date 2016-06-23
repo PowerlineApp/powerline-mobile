@@ -90,21 +90,27 @@ angular.module('app.controllers').controller('profile', function ($scope, profil
   };
 
   $scope.pickPicture = function () {
-    $window.navigator.camera.getPicture(function (imageData) {
-      $scope.profile.avatar_file_name = imageData;
-      $scope.profile.avatar_src_prefix = 'data:image/jpeg;base64,';
-      $scope.$apply();
-    }, function () {
+    if($window.navigator && window.navigator.camera){
+      $window.navigator.camera.getPicture(function (imageData) {
+        $scope.profile.avatar_file_name = imageData;
+        $scope.profile.avatar_src_prefix = 'data:image/jpeg;base64,';
+        $scope.$apply();
+      }, function () {
+      }, {
+        targetWidth: 256,
+        targetHeight: 256,
+        encodingType: $window.navigator.camera.EncodingType.JPEG,
+        sourceType: $window.navigator.camera.PictureSourceType.PHOTOLIBRARY,
+        destinationType: $window.navigator.camera.DestinationType.DATA_URL,
+        allowEdit: true,
+        correctOrientation: true
+      });
+    } else {
+        $scope.profile.avatar_file_name = 'images/mock-avatar.png';
+        $scope.profile.avatar_src_prefix = '';
+        $scope.$apply();
+    }
 
-    }, {
-      targetWidth: 256,
-      targetHeight: 256,
-      encodingType: $window.navigator.camera.EncodingType.JPEG,
-      sourceType: $window.navigator.camera.PictureSourceType.PHOTOLIBRARY,
-      destinationType: $window.navigator.camera.DestinationType.DATA_URL,
-      allowEdit: true,
-      correctOrientation: true
-    });
   };
 
   $scope.nonSelectedInterests = function (item) {
