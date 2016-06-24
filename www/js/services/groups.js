@@ -10,13 +10,13 @@ angular.module('app.services').factory('groups',function ($resource, serverConfi
     query: {
       method: 'GET',
       isArray: false,
-      url: serverConfig.url + '/api/groups/user-groups'
+      url: serverConfig.url + '/api/v2/user/groups'
     },
 
     get: {
       method: 'GET',
       isArray: false,
-      url: serverConfig.url + '/api/groups/info/:id'
+      url: serverConfig.url + '/api/v2/groups/:id'
     },
 
     getActivities: {
