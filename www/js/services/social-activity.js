@@ -123,7 +123,13 @@ angular.module('app.services').factory('socialActivity', function ($http, server
           activities.serverTimeDiff = (new Date(response.headers('Server-Time'))).getTime() - Date.now();
         })
       ]).finally(function () {
-        activities.add(data).prepare();
+        try{
+          activities.add(data.payload).prepare();
+        } catch(e){
+          console.log('failed to prepare social activities')
+          console.log(e)
+          console.log(e.stack)
+        }
       });
     }
   };
