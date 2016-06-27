@@ -61,7 +61,7 @@ angular.module('app.services').factory('announcements',function ($q, Announcemen
 
 }).factory('AnnouncementsResource', function ($resource, serverConfig) {
   var strDate = new Date(Date.now() - 86400000);
-  return $resource(serverConfig.url + '/api/announcements', {},{
+  return $resource(serverConfig.url + '/api/v2/announcements', {},{
     query: {
       method: 'GET',
       params: {start: strDate},
