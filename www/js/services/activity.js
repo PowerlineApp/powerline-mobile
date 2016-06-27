@@ -44,7 +44,8 @@ angular.module('app.services').factory('activity',
         
         var that = this;
         return $q.all(promises).then(function () {
-          //return that.setAnswers();
+          iStorage.set(ACTIVITIES_CACHE_ID, ActivityCollection.toArray()); //we may need to store only 20 items to cache
+          return that.setAnswers();
         });
       },
       
@@ -56,21 +57,7 @@ angular.module('app.services').factory('activity',
             $http.get(serverConfig.url + '/api/micro-petitions/answers/').then(function (response) {
               ActivityCollection.setAnsweredMicroPetitions(response.data);
             })
-          ]).then(function () {
-            var remove = [];
-            ActivityCollection.each(function (activity) {
-              activity.prepare();
-
-              if (activity.get('entity').group_id && !groups.hasUserGroup(activity.get('entity').group_id)) {
-                remove.push(activity);
-              }
-            });
-
-            ActivityCollection.remove(remove);
-            ActivityCollection.sort();
-            iStorage.set(ACTIVITIES_CACHE_ID, ActivityCollection.toArray()); //we may need to store only 20 items to cache
-            return ActivityCollection;
-          });
+          ])
       },
 
       fetchFollowingActivities: function(id) {
