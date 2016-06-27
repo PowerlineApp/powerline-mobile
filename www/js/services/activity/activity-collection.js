@@ -1,5 +1,5 @@
 angular.module('app.services').factory('ActivityCollection',
-  function (JsCollection, ActivityModel, representatives, iStorage, $http, serverConfig) {
+  function (JsCollection, ActivityModel, representatives, iStorage, $http, serverConfig, session) {
     var activityCollectionTemplate = JsCollection.extend({
       setAnsweredMicroPetitions: function (answers) {
         var answerByPetition = {};
@@ -13,7 +13,7 @@ angular.module('app.services').factory('ActivityCollection',
               activity.set('answered', true);
               activity.set('answer', answerByPetition[entity.id]);
             }
-            if ('user' === activity.get('owner').type) {
+            if (activity.get('owner').id == session.user_id) {
               activity.set('ignore_count', true);
             }
           }
