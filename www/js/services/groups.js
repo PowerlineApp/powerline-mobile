@@ -324,7 +324,7 @@ angular.module('app.services').factory('groups',function ($resource, serverConfi
   }
 
   function loadUserGroups() {
-    return $http.get(serverConfig.url + '/api/groups/user-groups/').then(function (response) {
+    return $http.get(serverConfig.url + '/api/v2/user/groups').then(function (response) {
       userGroups = response.data;
       iStorage.set(USER_GROUPS_CACHE_ID, userGroups);
       updateStatus();
