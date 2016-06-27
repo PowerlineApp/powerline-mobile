@@ -3,6 +3,9 @@ angular.module('app.services').factory('iStorage',function ($window) {
   var keyPrefix = 'POWERLINE-'
 
   return {
+    clear: function(){
+      $window.localStorage.clear()
+    },
     set: function (key, value) {
       if (typeof(value) !== 'undefined') {
         $window.localStorage.setItem(keyPrefix + key, angular.toJson(value));

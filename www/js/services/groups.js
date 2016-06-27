@@ -120,7 +120,7 @@ angular.module('app.services').factory('groups',function ($resource, serverConfi
     getGroupsOptions: function () {
       var result = _(userGroups).reduce(function (memo, userGroup) {
         var item = userGroup.group;
-        if (item.joined) {
+        if (item && item.joined) {
           memo.push({
             id: item.id,
             official_title: item.official_title,

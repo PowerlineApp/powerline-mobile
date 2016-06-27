@@ -67,9 +67,7 @@ angular.module('app.services').factory('session', function (serverConfig, $http,
       });
     },
     logout: function () {
-      iStorage.set('token', '');
-      iStorage.set('user_id', '');
-      iStorage.set('is_registration_complete', '');
+      iStorage.clear()
       session.token = null;
       session.user_id = null;
       session.is_registration_complete = null;
