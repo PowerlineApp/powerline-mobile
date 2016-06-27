@@ -1,5 +1,5 @@
 angular.module('app.services').factory('ActivityModel',
-  function (JsModel, groups, $http, follows, ActivityRead) {
+  function (JsModel, groups, $http, follows, ActivityRead, iStorage) {
    return JsModel.extend({
       labels: {
         question: 'Question',
@@ -65,7 +65,7 @@ angular.module('app.services').factory('ActivityModel',
         if (!this.get('read')) {
           this._setRead();
           ActivityRead.unshift(this.get('id'));
-          iStorage.set('read-activities', read.slice(0, 1000));
+          iStorage.set('read-activities', ActivityRead.slice(0, 1000));
         }
       },
       getResponsesToQuorum: function () {

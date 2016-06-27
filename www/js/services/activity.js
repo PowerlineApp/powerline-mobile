@@ -89,7 +89,7 @@ angular.module('app.services').factory('activity',
 
       saveRead: function () {
         if (ActivityRead.length) {
-          var needed = read;
+          var needed = ActivityRead;
           read = [];
           iStorage.set('read-activities', read);
 
