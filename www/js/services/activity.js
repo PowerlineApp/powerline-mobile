@@ -2,19 +2,7 @@ angular.module('app.services').factory('activity',
   function ($http, serverConfig, iStorage, JsModel, ActivityRead, ActivityCollection, JsCollection, $q, representatives, groups, session, follows) {
 
     var ACTIVITIES_CACHE_ID = 'last-activity-items';
-    var read = ActivityRead;
-    
     var defaultLimit = 20;
-    var activities = ActivityCollection
-
-    function load(offset, limit) {
-      offset = (offset === null || typeof(offset) === 'undefined') ? activities.size() : offset;
-      limit = limit || -1;
-      return $http.get(serverConfig.url + '/api/v2/activities').then(function (response) {
-        activities = activities.add(response.data.payload);
-        return activities;
-      });
-    };
 
     return {
 
@@ -28,20 +16,20 @@ angular.module('app.services').factory('activity',
       load: function (loadType) {
         loadType = loadType || 'all';
 
-        var originalSize = activities.size();
+        var originalSize = ActivityCollection.size();
         if (loadType !== 'append') {
-          activities.reset();
+          ActivityCollection.reset();
         }
         var promises = [];
         
         if(loadType === 'refresh'){
-          promises.push(load(0, originalSize));
+          promises.push(ActivityCollection.load(0, originalSize));
         } else if(loadType === 'clearAndLoad'){
-          promises.push(load(0, defaultLimit));
+          promises.push(ActivityCollection.load(0, defaultLimit));
         } else if(loadType === 'append') {
-          promises.push(load(null, defaultLimit));
+          promises.push(ActivityCollection.load(null, defaultLimit));
         } else {
-          promises.push(load());
+          promises.push(ActivityCollection.load());
         }
         
         if (!groups.getUserGroups().length) {
@@ -63,14 +51,14 @@ angular.module('app.services').factory('activity',
       setAnswers: function(){
         return $q.all([
             $http.get(serverConfig.url + '/api/poll/answers/').then(function (response) {
-              activities.setAnsweredQuestions(response.data);
+              ActivityCollection.setAnsweredQuestions(response.data);
             }),
             $http.get(serverConfig.url + '/api/micro-petitions/answers/').then(function (response) {
-              activities.setAnsweredMicroPetitions(response.data);
+              ActivityCollection.setAnsweredMicroPetitions(response.data);
             })
           ]).then(function () {
             var remove = [];
-            activities.each(function (activity) {
+            ActivityCollection.each(function (activity) {
               activity.prepare();
 
               if (activity.get('entity').group_id && !groups.hasUserGroup(activity.get('entity').group_id)) {
@@ -78,10 +66,10 @@ angular.module('app.services').factory('activity',
               }
             });
 
-            activities.remove(remove);
-            activities.sort();
-            iStorage.set(ACTIVITIES_CACHE_ID, activities.toArray()); //we may need to store only 20 items to cache
-            return activities;
+            ActivityCollection.remove(remove);
+            ActivityCollection.sort();
+            iStorage.set(ACTIVITIES_CACHE_ID, ActivityCollection.toArray()); //we may need to store only 20 items to cache
+            return ActivityCollection;
           });
       },
 
@@ -113,7 +101,7 @@ angular.module('app.services').factory('activity',
       },
 
       saveRead: function () {
-        if (read.length) {
+        if (ActivityRead.length) {
           var needed = read;
           read = [];
           iStorage.set('read-activities', read);
@@ -126,7 +114,7 @@ angular.module('app.services').factory('activity',
 
           $http.post(serverConfig.url + '/api/activities/read/', data).error(function () {
             _(needed).each(function (id) {
-              read.push(id);
+              ActivityRead.push(id);
               iStorage.set('read-activities', read);
             });
           });
@@ -134,7 +122,7 @@ angular.module('app.services').factory('activity',
       },
 
       getActivities: function () {
-        return activities;
+        return ActivityCollection;
       },
       
       getDefaultLimit: function(){

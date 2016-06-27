@@ -1,5 +1,5 @@
 angular.module('app.services').factory('ActivityCollection',
-  function (JsCollection, ActivityModel, representatives, iStorage) {
+  function (JsCollection, ActivityModel, representatives, iStorage, $http, serverConfig) {
     var activityCollectionTemplate = JsCollection.extend({
       setAnsweredMicroPetitions: function (answers) {
         var answerByPetition = {};
@@ -87,6 +87,7 @@ angular.module('app.services').factory('ActivityCollection',
 
     };
 
+    aCollection.deferredRead = [];
     aCollection.setDeferredRead = function () {
       this.each(function (activity) {
         if (activity.get('read')) {
@@ -101,7 +102,15 @@ angular.module('app.services').factory('ActivityCollection',
       return this;
     };
 
-    aCollection.deferredRead = [];
+    aCollection.load = function(offset, limit) {
+      var that = this
+      offset = (offset === null || typeof(offset) === 'undefined') ? that.size() : offset;
+      limit = limit || -1;
+      return $http.get(serverConfig.url + '/api/v2/activities').then(function (response) {
+        that.add(response.data.payload);
+        return that;
+      });
+    };
 
     return aCollection
 })
