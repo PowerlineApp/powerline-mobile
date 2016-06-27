@@ -1,4 +1,4 @@
-angular.module('app.services').factory('groups',function ($resource, serverConfig, $q, $http, PermissionsModel, iStorage) {
+angular.module('app.services').factory('groups',function ($resource, serverConfig, $q, $http, PermissionsModel, iStorage, $rootScope) {
   var GROUPS_CACHE_ID = 'group-items';
   var USER_GROUPS_CACHE_ID = 'user-group-items';
   var GROUP_TYPE_COMMON = 0;
@@ -96,9 +96,17 @@ angular.module('app.services').factory('groups',function ($resource, serverConfi
     },
 
     getPopularGroups: function () {
-      return $http.get(serverConfig.url + '/api/groups/popular').then(function (response) {
-        return response.data.status;
-      });
+      // return $http.get(serverConfig.url + '/api/groups/popular', {
+      //   query: {
+      //     method: 'GET',
+      //     isArray: false,  
+      //     headers: {Token: iStorage.get('token')}
+      //   }
+      // }).then(function (response) {
+      //   return response.data;
+      // });
+
+      return $rootScope.popularGroups;
 
       // var deferred = $q.defer();
       //   $http({
@@ -316,11 +324,25 @@ angular.module('app.services').factory('groups',function ($resource, serverConfi
   }
 
   function loadJoinCollections() {
-    var deferred = $q.defer();
-    popularGroups = JoinGroups.query({sort: 'popular'});
-    newGroups = JoinGroups.query({sort: 'new'}, deferred.resolve, deferred.reject);
+    // var deferred = $q.defer();
+    // popularGroups = JoinGroups.query({sort: 'popular'});
+    $http.get(serverConfig.url + '/api/groups/popular', {
+      query: {
+        method: 'GET',
+        isArray: false,  
+        headers: {Token: iStorage.get('token')}
+      }
+    }).then(function (response) {
+      var result = response.data;
+      var groups = $.map(result, function(array, index) {
+        return array;
+      });
+      $rootScope.popularGroups = groups;
+      console.log(JSON.stringify($rootScope.popularGroups))
+    });
 
-    return deferred.promise;
+    // newGroups = JoinGroups.query({sort: 'new'}, deferred.resolve, deferred.reject);
+    // return deferred.promise;
   }
 
   function loadUserGroups() {
