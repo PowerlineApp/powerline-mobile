@@ -9,7 +9,7 @@ angular.module('app.controllers').controller('home', function ($scope, $timeout,
 
   var activityCollection = activity.getActivities();
 
-  function getActivities() {
+  function refreshListOfActivities() {
     if(homeCtrlParams.filter.selectedGroup)
       $scope.activities = homeCtrlParams.filter.selectedGroup.activities
     else
@@ -106,7 +106,7 @@ angular.module('app.controllers').controller('home', function ($scope, $timeout,
     loadActivities('clearAndLoad');
   };
 
-  $scope.$watch('filter.selectedGroup', getActivities);
+  $scope.$watch('filter.selectedGroup', refreshListOfActivities);
   $scope.$watch('loading', function () {
     if ($scope.loading) {
       $scope.showSpinner();
@@ -152,7 +152,7 @@ angular.module('app.controllers').controller('home', function ($scope, $timeout,
   });
   //call this because cache may be loaded
   setFiltersData();
-  getActivities();
+  refreshListOfActivities();
 });
 
 angular.module('app.controllers').run(function (homeCtrlParams, $document, $rootScope) {
