@@ -54,7 +54,7 @@ angular.module('app.services').factory('activity',
             $http.get(serverConfig.url + '/api/poll/answers/').then(function (response) {
               ActivityCollection.setAnsweredQuestions(response.data);
             }),
-            $http.get(serverConfig.url + '/api/micro-petitions/answers/').then(function (response) {
+            $http.get(serverConfig.url + '/api/v2/user/micro-petition-answers/').then(function (response) {
               ActivityCollection.setAnsweredMicroPetitions(response.data);
             })
           ])
