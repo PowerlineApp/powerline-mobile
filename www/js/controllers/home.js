@@ -7,12 +7,14 @@ angular.module('app.controllers').controller('home', function ($scope, $timeout,
 
   $scope.isLoadMore = false;
 
-  var activities = activity.getActivities();
+  var activityCollection = activity.getActivities();
 
   function getActivities() {
-    $scope.activities = homeCtrlParams.filter.selectedGroup ? homeCtrlParams.filter.selectedGroup.activities
-            : activities.getFilteredModels();
-  }
+    if(homeCtrlParams.filter.selectedGroup)
+      $scope.activities = homeCtrlParams.filter.selectedGroup.activities
+    else
+      $scope.activities = activityCollection.getFilteredModels();
+  } 
 
   function getUnansweredCount(activities) {
     return _(activities).reduce(function (memo, activity) {
@@ -23,7 +25,7 @@ angular.module('app.controllers').controller('home', function ($scope, $timeout,
   function setFiltersData() {
     homeCtrlParams.filter.groups = groups.getGroupsOptions();
     _(homeCtrlParams.filter.groups).each(function (group) {
-      group.activities = activities.getFilteredModels(group);
+      group.activities = activityCollection.getFilteredModels(group);
       group.unansweredCount = getUnansweredCount(group.activities);
       group.read = !_.some(group.activities, function (item) {
         return !item.get('read');
@@ -32,12 +34,12 @@ angular.module('app.controllers').controller('home', function ($scope, $timeout,
         homeCtrlParams.filter.selectedGroup = group;
       }
     });
-    homeCtrlParams.filter.unansweredCount = getUnansweredCount(activities.getFilteredModels());
+    homeCtrlParams.filter.unansweredCount = getUnansweredCount(activityCollection.getFilteredModels());
   }
 
   function prepare() {
     homeCtrlParams.loaded = true;
-    activities.setDeferredRead().sort();
+    activityCollection.setDeferredRead().sort();
     setFiltersData();
 
     $scope.loading = false;
@@ -47,9 +49,9 @@ angular.module('app.controllers').controller('home', function ($scope, $timeout,
   }
 
   function loadActivities(loadType) {
-    var prevSize = activities.size();
+    var prevSize = activityCollection.size();
     activity.load(loadType).then(function () {
-      if (loadType === 'append' && prevSize === activities.size()) {
+      if (loadType === 'append' && prevSize === activityCollection.size()) {
         $scope.isLoadMore = false;
       } else {
         $scope.isLoadMore = true;
@@ -131,7 +133,6 @@ angular.module('app.controllers').controller('home', function ($scope, $timeout,
     }
   });
 
-
   //call this when this view is loaded because this view is cached
   $scope.$on('$ionicView.enter', function () {
     if (!profile.get()) {
@@ -139,7 +140,7 @@ angular.module('app.controllers').controller('home', function ($scope, $timeout,
     }
 
     if (!homeCtrlParams.loaded) {
-      if (activities.size() === 0) {
+      if (activityCollection.size() === 0) {
         $scope.isLoadMore = true;
       } else {
         loadActivities('refresh');
