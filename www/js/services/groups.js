@@ -57,8 +57,8 @@ angular.module('app.services').factory('groups',function ($resource, serverConfi
       //   createCollections(results);
       // });
 
-      return  $http.get(serverConfig.url + '/api/groups/user-groups/').then(function (response){
-        results = response.data;
+      return  $http.get(serverConfig.url + '/api/v2/user/groups').then(function (response){
+        results = response.data.payload;
         createCollections(results);
       });
     },
@@ -287,13 +287,14 @@ angular.module('app.services').factory('groups',function ($resource, serverConfi
     updateStatus();
     updateUnjoinedGroups();
     createLettersGroups();
+
   }
 
   function createLettersGroups() {
     lettersGroups = [];
     var lettersHash = {};
     _(groups).each(function (item) {
-      if (typeof item.status === 'undefined' || item.group.group_type !== GROUP_TYPE_COMMON) {
+      if (item.group.group_type !== GROUP_TYPE_COMMON) {
         return;
       }
       var letter = item.group.upper_title[0];
@@ -306,6 +307,7 @@ angular.module('app.services').factory('groups',function ($resource, serverConfi
       }
       lettersHash[letter].items.push(item);
     });
+
   }
 
   function updateUnjoinedGroups() {
