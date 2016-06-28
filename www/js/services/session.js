@@ -73,17 +73,7 @@ angular.module('app.services').factory('session', function (serverConfig, $http,
       session.is_registration_complete = null;
       
       $location.path('/login');
-      
-      /*if($window.navigator.app){
-        $window.navigator.app.exitApp();
-      }
-      
-      if ($window.device && $window.device.platform === 'Android') {
-        $window.navigator.app.loadUrl('file:///android_asset/www/index.html');
-      } else {
-        $window.location.reload();
-      }*/
-      
+      setTimeout(function(){$window.location.reload()}, 100)      
     }
   };
 
