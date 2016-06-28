@@ -2,22 +2,15 @@ angular.module('app.controllers').controller('groups',function ($scope, groups, 
   
   flurry.log('my groups');
   
-  $scope.items = [];
+  $scope.groupsGrupedByFirstLetter = [];
 
   function loadGroups(showSpinner){
     if(showSpinner) $scope.showSpinner();
     groups.load().finally(function () {
       if(showSpinner) $scope.hideSpinner();
       $scope.$broadcast('scroll.refreshComplete');
-      $scope.items = groups.getLettersGroups();
+      $scope.groupsGrupedByFirstLetter = groups.getLettersGroups();
     });
-
-    // return $http.get(serverConfig.url + '/api/groups/user-groups/').then(function (response) {
-    //   if(showSpinner) $scope.hideSpinner();
-    //   $scope.$broadcast('scroll.refreshComplete');
-    //   userGroups = response.data;
-    //   $scope.items = userGroups;
-    // });
   }
 
   $scope.unjoin = function (item) {
@@ -42,7 +35,7 @@ angular.module('app.controllers').controller('groups',function ($scope, groups, 
   
   //if this page is opened from menu or there is not data, we should refresh data
   $scope.$on('$ionicView.enter', function(){
-    if($scope.items.length === 0/* || $rootScope.menuClicked*/){
+    if($scope.groupsGrupedByFirstLetter.length === 0/* || $rootScope.menuClicked*/){
       loadGroups(true);
       groups.loadSuggested();
     }

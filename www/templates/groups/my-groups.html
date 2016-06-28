@@ -15,9 +15,9 @@
     </ion-refresher>
 
     <section class="margin-8">
-      <ul ng-repeat="group in items" class="profiles-list">
-        <li class="title">{{ group.letter}}</li>
-        <li ng-repeat="item in group.items">
+      <ul ng-repeat="letterGroup in groupsGrupedByFirstLetter" class="profiles-list">
+        <li class="title">{{ letterGroup.letter}}</li>
+        <li ng-repeat="item in letterGroup.items">
           <figure ng-click="navigateTo('group-profile', item)">
             <avatar-img img="item.group.avatar_file_path" text="item.group.official_title"></avatar-img>
           </figure>

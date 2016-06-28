@@ -303,11 +303,14 @@ angular.module('app.services').factory('groups',function ($resource, serverConfi
           letter: letter,
           items: []
         };
-        lettersGroups.push(lettersHash[letter]);
+        
       }
       lettersHash[letter].items.push(item);
     });
-
+    
+    Object.keys(lettersHash).sort().forEach(function(letter){
+      lettersGroups.push(lettersHash[letter]);
+    })
   }
 
   function updateUnjoinedGroups() {
