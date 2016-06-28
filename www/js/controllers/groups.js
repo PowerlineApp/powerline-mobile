@@ -85,9 +85,9 @@ angular.module('app.controllers').controller('groups',function ($scope, groups, 
   $scope.popularItems = groups.getPopularGroups();
   $scope.newItems = groups.getNewGroups();
 
-  $scope.$watch(groups.getPopularGroups, function (newValue) {
-    $scope.popularItems = newValue;
-  });
+  // $scope.$watch(groups.getPopularGroups, function (newValue) {
+  //   $scope.popularItems = newValue;
+  // });
 
   $scope.$watch(groups.getNewGroups, function (newValue) {
     $scope.newItems = newValue;

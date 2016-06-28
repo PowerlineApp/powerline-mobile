@@ -263,8 +263,7 @@ angular.module('app.services').factory('groups',function ($resource, serverConfi
         if (item.username && item.username.toUpperCase().slice(0, searchQuery.length) === searchQuery) {
           return true;
         }
-
-        return item.upper_title.slice(0, searchQuery.length) === searchQuery;
+        return item.group.upper_title.slice(0, searchQuery.length) === searchQuery;
       });
     }
     lastSearchQuery = query;
