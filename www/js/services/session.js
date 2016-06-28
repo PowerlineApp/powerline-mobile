@@ -253,11 +253,13 @@ angular.module('app.services').factory('session', function (serverConfig, $http,
 
   return {
     init: function () {
-      FB = $window.facebookConnectPlugin;
+      if(typeof(FB) == 'undefined')
+        FB = $window.facebookConnectPlugin;
     },
     login: function () {
       var deferred = $q.defer();
-
+      
+      this.init()
       FB.login(['public_profile', 'email', 'user_friends', 'user_birthday'], function (response) {
         if (response.status === 'connected') {
           uid = response.authResponse.userID || response.authResponse.userId;
