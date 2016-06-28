@@ -137,7 +137,8 @@ angular.module('app').run(function ($location, layout, spinnerIndicator, $rootSc
   };
 
   $rootScope.confirm = function () {
-    $window.navigator.notification.confirm.apply(null, arguments);
+    if($window.navigator.notification)
+      $window.navigator.notification.confirm.apply(null, arguments);
   };
   
   $rootScope.showToast = function(message){
