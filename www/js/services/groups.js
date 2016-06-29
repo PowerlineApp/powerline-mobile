@@ -195,7 +195,9 @@ angular.module('app.services').factory('groups',function ($resource, serverConfi
     },
 
     create: function (data) {
-      return $http.post(serverConfig.url + '/api/groups/', data).then(function (response) {
+      var payload = JSON.stringify(data)
+      var headers = {headers: {'Content-Type': 'application/json'}}
+      return $http.post(serverConfig.url + '/api/v2/user/groups', payload, headers).then(function (response) {
         return response.data;
       });
     },

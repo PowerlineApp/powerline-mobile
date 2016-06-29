@@ -291,6 +291,8 @@ angular.module('app.controllers').controller('groups',function ($scope, groups, 
     manager_phone: user.phone
   };
 
+  
+
   $scope.types = [
     'Educational',
     'Non-Profit (Not Campaign)',

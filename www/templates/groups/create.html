@@ -16,10 +16,30 @@
               <option value=""></option>
             </select>
           </div>
-          <div class="item-floating-label text-field-1" ng-class="{invalid: createGroupForm.official_title.$invalid && createGroupForm.$filled}">
+          <div class="item-floating-label text-field-1" ng-class="{invalid: createGroupForm.official_name.$invalid && createGroupForm.$filled}">
             <span class="input-label">Group Name<asterisk>*</asterisk></span>
-            <input type="text" ng-model="data.official_title" required name="official_title" />
+            <input type="text" ng-model="data.official_name" required name="official_name" />
           </div>
+          <div class="item-floating-label text-field-1" ng-class="{invalid: createGroupForm.official_description.$invalid && createGroupForm.$filled}">
+            <span class="input-label">Group Description<asterisk>*</asterisk></span>
+            <input type="text" ng-model="data.official_description" required name="official_description" />
+          </div>
+          <div class="item-floating-label text-field-1" ng-class="{invalid: createGroupForm.acronym.$invalid && createGroupForm.$filled}">
+            <span class="input-label">Group Acronym</span>
+            <input type="text" ng-model="data.acronym" name="acronym" />
+          </div>
+          <div class="item-floating-label text-field-1" ng-class="{invalid: createGroupForm.official_address.$invalid && createGroupForm.$filled}">
+            <span class="input-label">Address<asterisk>*</asterisk></span>
+            <input type="text" ng-model="data.official_address" required name="official_address" />
+          </div>
+          <div class="item-floating-label text-field-1" ng-class="{invalid: createGroupForm.official_city.$invalid && createGroupForm.$filled}">
+            <span class="input-label">City<asterisk>*</asterisk></span>
+            <input type="text" ng-model="data.official_city" required name="official_city" />
+          </div>
+          <div class="item-floating-label text-field-1" ng-class="{invalid: createGroupForm.official_state.$invalid && createGroupForm.$filled}">
+            <span class="input-label">State<asterisk>*</asterisk></span>
+            <input type="text" ng-model="data.official_state" required name="official_state" />
+          </div>          
         </fieldset>
         <button ng-click="create(createGroupForm)" id="submitter" class="ng-hide"></button>
       </form>
