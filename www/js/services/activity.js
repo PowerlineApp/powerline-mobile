@@ -96,10 +96,11 @@ angular.module('app.services').factory('activity',
           var data = [];
 
           _(needed).each(function (id) {
-            data.push({activity_id: id});
+            data.push({id: id, read: true});
           });
-
-          $http.post(serverConfig.url + '/api/activities/read/', data).error(function () {
+          var payload = JSON.stringify({activities: data})
+          var headers = {headers: {'Content-Type': 'application/json'}}
+          $http.patch(serverConfig.url + '/api/v2/activities', payload, headers).error(function () {
             _(needed).each(function (id) {
               ActivityRead.push(id);
               iStorage.set('read-activities', read);
