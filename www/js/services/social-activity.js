@@ -154,6 +154,7 @@ angular.module('app.services').factory('socialActivity', function ($http, server
       this.shownAt = iStorage.get('sa_shown_' + this.getLabel()) || Date.now();
 
       this.reset();
+      this._wasVisited = false
     },
     getLabel: function () {
       return this.options.label;
@@ -168,6 +169,7 @@ angular.module('app.services').factory('socialActivity', function ($http, server
       return this.evaluate();
     },
     evaluate: function () {
+      
       var cnt = 0;
       var activeRequests = 0;
       var self = this;
@@ -186,6 +188,19 @@ angular.module('app.services').factory('socialActivity', function ($http, server
       });
       return self.set('number_of_new', cnt).set('number_of_active_requests', activeRequests);
     },
+    wasVisited: function(){
+      this._wasVisited = true
+    },
+    counterIsVisible: function(){
+      if(this.isFollowingTab()){
+        return(!this._wasVisited && this.get('number_of_new'))
+      } else {
+        return(this.get('number_of_new'))
+      }
+    },
+    isFollowingTab(){
+      return(this.options.key == 1)
+    },
     add: function (activity) {
       this.get('activities').push(activity);
 
@@ -203,6 +218,8 @@ angular.module('app.services').factory('socialActivity', function ($http, server
   var state = {
     requestCount: iStorage.get('request-count') || 0,
     hasNew: iStorage.get('has-new') || false,
+    displayTopNotification: true,
+    displayFollowingCounter: true,
     setup: function () {
       state.hasNew = tabs[0].get('number_of_new') || tabs[1].get('number_of_new');
       state.requestCount = tabs[0].get('number_of_active_requests') + tabs[1].get('number_of_active_requests');
@@ -235,6 +252,7 @@ angular.module('app.services').factory('socialActivity', function ($http, server
       state.setup();
     },
     getTab: function (key) {
+      state.displayTopNotification = false
       return tabs[key];
     },
     getState: function () {
@@ -245,6 +263,7 @@ angular.module('app.services').factory('socialActivity', function ($http, server
     },
     setCurrentTab: function (key) {
       currentTab = tabs[key];
+      currentTab.wasVisited()
     }
   };
 });

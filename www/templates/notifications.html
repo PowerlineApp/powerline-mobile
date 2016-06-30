@@ -6,7 +6,7 @@
   </li>
   <li class="followers" ng-click="followersNotifications()" ng-class="getClass('/influences/notifications')">
     <i>
-      <span ng-show="SAState.hasNew || SAState.requestCount">{{ SAState.requestCount || ' '}}</span>
+      <span ng-show="SAState.displayTopNotification && (SAState.hasNew || SAState.requestCount)">{{ SAState.requestCount || ' '}}</span>
     </i>
   </li>
   <li class="messages" ng-click="goToMessages()" ng-class="getClass('/messages')">
