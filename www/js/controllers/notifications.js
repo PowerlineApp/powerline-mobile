@@ -1,8 +1,8 @@
-angular.module('app.controllers').controller('notifications', function ($scope, socialActivityTabManager, $location, groupsInvites, invites, announcements, $state, homeCtrlParams) {
+angular.module('app.controllers').controller('notifications', function ($scope, SocialActivityTabManager, $location, groupsInvites, invites, announcements, $state, homeCtrlParams) {
 
   $scope.homeCtrlParams = homeCtrlParams;
 
-  $scope.SAState = socialActivityTabManager.getState();
+  $scope.SAState = SocialActivityTabManager.getState();
 
   $scope.$watch(getMessagesCount, function (messagesCount) {
     $scope.messagesCount = messagesCount;

@@ -62,7 +62,7 @@ angular.module('app.services').factory('notifications', function ($window, devic
 
 }).factory('notificationsData',
         function ($rootScope, session, serverConfig, $http, activity, groupsInvites, follows, announcements, invites,
-                homeCtrlParams, socialActivityTabManager, navigateTo, socialActivity) {
+                homeCtrlParams, SocialActivityTabManager, navigateTo, socialActivity) {
 
           var scope = $rootScope.$new();
 
@@ -167,7 +167,7 @@ angular.module('app.services').factory('notifications', function ($window, devic
             },
             influence: function (redirect) {
               if (redirect) {
-                socialActivityTabManager.getState().reload = true;
+                SocialActivityTabManager.getState().reload = true;
                 $rootScope.path('/influences/notifications');
               } else {
                 follows.load().then(socialActivity.load);
@@ -175,7 +175,7 @@ angular.module('app.services').factory('notifications', function ($window, devic
             },
             social_activity: function (redirect, entity) {
               if (redirect) {
-                socialActivityTabManager.getState().reload = true;
+                SocialActivityTabManager.getState().reload = true;
                 if (entity.target) {
                   navigateTo('target', entity.target.type, entity.target.id);
                 } else {
