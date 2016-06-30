@@ -24,23 +24,25 @@ angular.module('app.services').factory('SocialActivityTabManager', function (iSt
     },
     evaluate: function () {
       
-      var cnt = 0;
+      var newItemsCounter = 0;
       var activeRequests = 0;
       var self = this;
       var shownAt = this.shownAt + diff;
       _(this.get('activities')).each(function (activity) {
         if (activity.get('created_at').getTime() > shownAt) {
           activity.isNew = true;
-          cnt++;
+          if(!activity.ignored())
+            newItemsCounter++;
           if (activity.isActiveRequest()) {
             activeRequests++;
           }
         } else if (activity.isActiveRequest()) {
-          cnt++;
+          if(!activity.ignored())
+            newItemsCounter++;
           activeRequests++;
         }
       });
-      return self.set('number_of_new', cnt).set('number_of_active_requests', activeRequests);
+      return self.set('number_of_new', newItemsCounter).set('number_of_active_requests', activeRequests);
     },
     wasVisited: function(){
       this._wasVisited = true
