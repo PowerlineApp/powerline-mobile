@@ -73,7 +73,9 @@ angular.module('app.services').factory('socialActivity', function ($http, server
     },
     ignore: function () {
       this.set('ignore', true);
-      $http.put(serverConfig.url + '/api/social-activities/' + this.get('id'), {ignore: 1});
+      var payload = JSON.stringify({ignore: true})
+      var headers = {headers: {'Content-Type': 'application/json'}}
+      $http.put(serverConfig.url + '/api/v2/social-activities/' + this.get('id'), payload, headers);
     }
   });
 
