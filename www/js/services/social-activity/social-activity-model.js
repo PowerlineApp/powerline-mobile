@@ -1,4 +1,4 @@
-angular.module('app.services').factory('SocialActivityModel', function (iStorage, JsModel, follows) {
+angular.module('app.services').factory('SocialActivityModel', function (iStorage, JsModel, follows, $http, serverConfig) {
   var typeToIcons = {
     'follow-request': 'sa-icon-request-1',
     'micropetition-created': function (activity) {
@@ -49,6 +49,32 @@ angular.module('app.services').factory('SocialActivityModel', function (iStorage
           this.get('userFollow').get('id') === this.get('target').id &&
           !this.get('ignore');
       },
+      currentUserIsBeingFollowed: function(){
+        return(this.get('userFollow').get('id') === this.get('target').id)
+      },
+      isApproved: function(){
+        return(this.get('userFollow').isApproved())
+      },
+      isFollowedByMe: function(){
+        return(this.get('userFollow').isFollow() )
+      },
+      unfollow: function(){
+        return(this.get('userFollow').unfollow())
+      },
+      follow: function(){
+        return(this.get('userFollow').follow())
+      },
+      unapprove: function(){
+        return(this.get('userFollow').unapprove())
+      },
+      approve: function(){
+        if(this.ignored())
+          this.unignore()
+        return(this.get('userFollow').approve())
+      },
+      ignored: function(){
+        return(this.get('ignore'))
+      },
       getWidgetType: function () {
         return this.isFollowRequest() ? 'follow-request' : 'link';
       },
@@ -75,6 +101,12 @@ angular.module('app.services').factory('SocialActivityModel', function (iStorage
         var payload = JSON.stringify({ignore: true})
         var headers = {headers: {'Content-Type': 'application/json'}}
         $http.put(serverConfig.url + '/api/v2/social-activities/' + this.get('id'), payload, headers);
-      }
+      },
+      unignore: function () {
+        this.set('ignore', false);
+        var payload = JSON.stringify({ignore: false})
+        var headers = {headers: {'Content-Type': 'application/json'}}
+        $http.put(serverConfig.url + '/api/v2/social-activities/' + this.get('id'), payload, headers);
+      },      
     });
 })

@@ -10,17 +10,32 @@
       <i ng-class="['sa-type', item.get('sa-icon')]"><time>{{ item.get('created_at') | elapsed }}</time> ago</i>
     </div>
     <div class="buttons">
+        <button class="btn-text-bordered pressed"
+                ng-if="item.currentUserIsBeingFollowed() && item.isApproved()"
+                ng-click="item.unapprove(); send()"
+                class="pressed">
+                Unapprove
+        </button>
         <button class="btn-text-bordered"
-                ng-if="item.get('userFollow').get('id') === item.get('target').id"
-                ng-click="item.ignore();send(item.get('userFollow').isApproved() ? item.get('userFollow').unapprove() : item.get('userFollow').approve())"
-                ng-class="{'pressed': item.get('userFollow').isApproved()}">{{ item.get('userFollow').isApproved() ? 'Unapprove' : 'Approve'}}</button>
+                ng-if="item.currentUserIsBeingFollowed() && !item.isApproved()"
+                ng-click="item.approve(); send()">
+                Approve
+        </button>
+        <button class="btn-text-bordered pressed"
+              ng-if="item.isFollowedByMe()"
+              ng-click="item.unfollow(); send()">
+              Unfollow
+        </button>
         <button class="btn-text-bordered"
-              ng-if="item.get('ignore')"
-              ng-click="send(item.get('userFollow').isFollow() ? item.get('userFollow').unfollow() : item.get('userFollow').follow())"
-              ng-class="{'pressed': item.get('userFollow').isFollow()}">{{ item.get('userFollow').isFollow() ? 'Unfollow' : 'Follow'}}</button>
+              ng-if="!item.isFollowedByMe()"
+              ng-click="item.follow(); send()">
+              Follow
+        </button>
         <button class="btn-text-bordered"
-                ng-if="!item.get('ignore')"
-                ng-click="item.ignore();send()">Ignore</button>
+                ng-if="!item.ignored() && !item.isApproved()"
+                ng-click="item.ignore();send()">
+                Ignore
+        </button>
     </div>
   </div>
 </div>
