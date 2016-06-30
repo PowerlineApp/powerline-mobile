@@ -148,6 +148,9 @@ angular.module('app.services').factory('socialActivity', function ($http, server
   };
 }).factory('socialActivityTabManager', function (iStorage, JsModel) {
 
+  var TAB_YOU_ID = 0
+  var TAB_FOLLOWING_ID = 1
+
   var diff = 0;
   var Tab = JsModel.extend({
     initialize: function () {
@@ -199,7 +202,7 @@ angular.module('app.services').factory('socialActivity', function ($http, server
       }
     },
     isFollowingTab(){
-      return(this.options.key == 1)
+      return(this.options.key == TAB_FOLLOWING_ID)
     },
     add: function (activity) {
       this.get('activities').push(activity);
@@ -214,15 +217,15 @@ angular.module('app.services').factory('socialActivity', function ($http, server
     }
   });
 
-  var tabs = [new Tab({}, {label: 'You', key: 0}), new Tab({}, {label: 'Following', key: 1})];
+  var tabs = [new Tab({}, {label: 'You', key: TAB_YOU_ID}), new Tab({}, {label: 'Following', key: TAB_FOLLOWING_ID})];
   var state = {
     requestCount: iStorage.get('request-count') || 0,
     hasNew: iStorage.get('has-new') || false,
     displayTopNotification: true,
     displayFollowingCounter: true,
     setup: function () {
-      state.hasNew = tabs[0].get('number_of_new') || tabs[1].get('number_of_new');
-      state.requestCount = tabs[0].get('number_of_active_requests') + tabs[1].get('number_of_active_requests');
+      state.hasNew = tabs[TAB_YOU_ID].get('number_of_new') || tabs[TAB_FOLLOWING_ID].get('number_of_new');
+      state.requestCount = tabs[TAB_YOU_ID].get('number_of_active_requests') + tabs[TAB_FOLLOWING_ID].get('number_of_active_requests');
       iStorage.set('has-new', state.hasNew);
       iStorage.set('request-count', state.requestCount);
     }
@@ -232,8 +235,8 @@ angular.module('app.services').factory('socialActivity', function ($http, server
   function reset() {
     //state.requestCount = 0;
     //state.hasNew = false;
-    tabs[0].reset();
-    tabs[1].reset();
+    tabs[TAB_YOU_ID].reset();
+    tabs[TAB_FOLLOWING_ID].reset();
   }
 
   return {
@@ -261,8 +264,8 @@ angular.module('app.services').factory('socialActivity', function ($http, server
     getCurrentTab: function () {
       return currentTab;
     },
-    setCurrentTab: function (key) {
-      currentTab = tabs[key];
+    setCurrentTab: function (tab) {
+      currentTab = tab;
       currentTab.wasVisited()
     }
   };

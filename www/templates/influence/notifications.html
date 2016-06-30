@@ -13,10 +13,10 @@
 
     <tab-panel open="currentTab.options.key">
       <ul class="header header-50">
-        <li ng-click="open($event); setCurrentTab(0)">
+        <li ng-click="open($event); setCurrentTab(tabYou)">
           You <i class="counter" ng-show="tabYou.counterIsVisible()">{{ tabYou.get('number_of_new')}}</i>
         </li>
-        <li ng-click="open($event); setCurrentTab(1)">
+        <li ng-click="open($event); setCurrentTab(tabFollowing)">
           Following <i class="counter" ng-show="tabFollowing.counterIsVisible()">{{ tabFollowing.get('number_of_new')}}</i>
         </li>
       </ul>

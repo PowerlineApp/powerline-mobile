@@ -225,9 +225,9 @@ angular.module('app.controllers').controller('influence.profile',
   $scope.tabYou = socialActivityTabManager.getTab(0);
   $scope.tabFollowing = socialActivityTabManager.getTab(1);
   $scope.socialActivityHandler = socialActivityHandler;
-  $scope.setCurrentTab = function (key) {
-    socialActivityTabManager.setCurrentTab(key);
-    socialActivityTabManager.getCurrentTab().setShownAt();
+  $scope.setCurrentTab = function (tab) {
+    socialActivityTabManager.setCurrentTab(tab);
+    tab.setShownAt();
     socialActivityTabManager.getState().setup();
   };
 
