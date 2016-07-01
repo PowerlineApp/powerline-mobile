@@ -41,7 +41,7 @@ angular.module('app.services').factory('socialActivity', function ($http, server
       var data = [];
       return $q.all([
         follows.load(),
-        $http.get(serverConfig.url + '/api/social-activities/').then(function (response) {
+        $http.get(serverConfig.url + '/api/v2/user/social-activities').then(function (response) {
           data = response.data;
           activities.serverTimeDiff = (new Date(response.headers('Server-Time'))).getTime() - Date.now();
         })
