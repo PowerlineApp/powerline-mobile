@@ -1,27 +1,20 @@
-<ion-view view-title="{{filter.selectedGroup ? filter.selectedGroup.getTitle() + ' ' : ''}}Powerline" hide-back-button="true" class="has-notifications-bar">
+<ion-view view-title="Favorites" hide-back-button="true" class="has-notifications-bar">
   <ion-nav-buttons side="left">
     <button menu-toggle="left" class="button button-icon icon ion-navicon"></button>
   </ion-nav-buttons>
 
-  <!-- fixed header content -->
-  
-  
-  <!-- fixed header content -->
-
   <ion-content class="page-home content">
-    <ion-refresher
-      pulling-text="Pull to refresh..."
-      on-refresh="pullToRefresh()">
-    </ion-refresher>
-    <p class="info-message" ng-show="!loading && !activities.length && !filter.selectedGroup">
-      Hmm - Your newsfeed is empty! Looks like a great opportunity to take a stand, start a discussion,
-      or improve your community by creating a post or petition. Use the button in the upper-right corner of the screen!
+    <p class="info-message" ng-show="hasNoFavorites()">
+      You have no favorites. Click star icon in the Home screen activity feed to add activity to your Favorites.
     </p>
-    <section class="activity-list-wrap" ng-include=" 'templates/favorite/activities.html'"></section>
-    
-    <ion-infinite-scroll
-      ng-if="isLoadMore"
-      on-infinite="loadMoreActivities()">
-    </ion-infinite-scroll>
+    <section class="activity-list-wrap">
+      <div class="activities-list">
+        <div ng-repeat="f in favorites">
+          {{f}}<br />
+          ---
+        </div>
+      </div>
+    </section>
+  
   </ion-content>
 </ion-view>
