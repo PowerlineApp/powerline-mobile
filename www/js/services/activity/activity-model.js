@@ -53,7 +53,8 @@ angular.module('app.services').factory('ActivityModel',
         if (this.get('read') || _(ActivityRead).contains(this.get('id'))) {
           this._setRead();
         }
-        if (this.get('owner').type === 'user' && this.get('entity').group_id) {
+        if (this.get('entity').group_id) {
+          
           var userGroup = groups.getUserGroup(this.get('entity').group_id);
           this.set('owner_info_1', userGroup ? userGroup.group.official_title : null);
         }

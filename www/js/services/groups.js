@@ -42,21 +42,6 @@ angular.module('app.services').factory('groups',function ($resource, serverConfi
 
   var service = {
     load: function () {
-      // var deferred = $q.defer();
-      // var results = Groups.query(
-      //   function () {
-      //     deferred.resolve();
-      //   },
-      //   function () {
-      //     var error = 'Error occurred.';
-      //     deferred.reject(error);
-      //   }
-      // );
-
-      // return $q.all([loadUserGroups(), deferred.promise]).then(function () {
-      //   createCollections(results);
-      // });
-
       return  $http.get(serverConfig.url + '/api/v2/user/groups').then(function (response){
         results = response.data.payload;
         createCollections(results);
