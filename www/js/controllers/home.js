@@ -1,12 +1,12 @@
 angular.module('app.controllers').controller('home', function ($scope, $timeout, socialActivity, homeCtrlParams,
-        profile, activity, groups, flurry, $ionicScrollDelegate) {
+        profile, activity, groups, flurry, $ionicScrollDelegate, favorite) {
 
   flurry.log('news feed');
 
   $scope.filter = homeCtrlParams.filter;
+  $scope.favoriteService = favorite
 
   $scope.isLoadMore = false;
-
   var activityCollection = activity.getActivities();
 
   function refreshListOfActivities() {
@@ -307,6 +307,9 @@ angular.module('app.controllers').directive('iActivity', function ($rootScope, q
     template: '<ng-include src="templateSrc"></ng-include>',
     controller: function ($scope) {
       $scope.navigateTo = $rootScope.navigateTo;
+      $scope.onAddBookmark = function(){
+        $scope.$parent.favoriteService.addBookmark($scope.activity)
+      }
       $scope.navigateToActivity = function (activity, focus, e) {
         activity.setRead();
         if (e && e.target.tagName.toLowerCase() === 'hash-tag') {

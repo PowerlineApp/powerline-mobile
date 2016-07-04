@@ -233,13 +233,14 @@ angular.module('app.services').factory('favorite',
       return this;
     };
 
+    
+
     function load(offset, limit) {
       offset = (offset === null || typeof(offset) === 'undefined') ? favorites.size() : offset;
       limit = limit || -1;
       bLoaded = false;
 
       return $http.get(serverConfig.url + '/api/bookmarks/list/all').then(function (response) {
-
 
         var count = response.data.items.length;
         var favoriteArray = [];
@@ -404,6 +405,13 @@ angular.module('app.services').factory('favorite',
       
       getDefaultLimit: function(){
         return defaultLimit;
+      },
+
+      addBookmark: function(activity){
+        var aType = activity.get('entity').type
+        var aID = activity.get('entity').id
+        console.log('todo')
+        //$http.post(serverConfig.url + '/api/bookmarks/add/'+aType+'/'+aID)
       }
     };
   });
