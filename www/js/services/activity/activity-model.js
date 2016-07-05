@@ -103,9 +103,17 @@ angular.module('app.services').factory('ActivityModel',
       isUnread: function(){
         return(!this.get('read'))
       },
+      isBoosted: function(){
+        return(this.get('publish_status') == 1)
+      },
+      isExpired: function(){
+        this.get('closed')
+      },
       isInPriorityZone: function() {
         if(this.isUserPetitionType()){
           return(this.isUnread())
+        } else if(this.isUserPostType()){
+          return(this.isBoosted() && !this.isExpired())
         } else
         	return(false)
       },
