@@ -115,13 +115,13 @@ angular.module('app.services').factory('ActivityModel',
         	return(false)
       },
       getSortMultiplier: function () {
-        /*if (this.get('closed')) {
+        if (this.isExpired()) {
           return 0;
         }
 
         if (this.isInPriorityZone()) {
           return 9;
-        }*/
+        }
 
         return 1;
       },
