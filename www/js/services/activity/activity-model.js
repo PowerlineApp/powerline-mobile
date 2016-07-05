@@ -82,18 +82,32 @@ angular.module('app.services').factory('ActivityModel',
       getIcon: function () {
         return this.icons[this.get('entity').type];
       },
-      isInPriorityZone: function() {
-        return(false)
-        // if (this.get('closed')) {
-        //   return false;
-        // }
-        // var entity = this.get('entity');
-        // var owner = this.get('owner');
 
-        // return (!this.get('answered') && entity.type !== 'leader-news' && owner.type !== 'user' && entity.type !== 'petition') ||
-        //   (!this.get('answered') && entity.type === 'petition' && !this.get('read')) ||
-        //   (entity.type === 'leader-news' && !this.get('read'))
-        // ;
+      // temporary hack: https://github.com/PowerlineApp/powerline-mobile/issues/125#issuecomment-230410395
+      isUserPetitionType: function(){
+        var aType = this.get('entity').type
+        if(aType == 'micro-petition'){
+          var hasTitle = this.get('title') && this.get('title').length > 0
+          return(hasTitle)
+        } else
+        return false
+      },
+      isUserPostType: function(){
+        var aType = this.get('entity').type
+        if(aType == 'micro-petition'){
+          var hasTitle = this.get('title') && this.get('title').length > 0
+          return(!hasTitle)
+        } else
+        return false
+      },
+      isUnread: function(){
+        return(!this.get('read'))
+      },
+      isInPriorityZone: function() {
+        if(this.isUserPetitionType()){
+          return(this.isUnread())
+        } else
+        	return(false)
       },
       getSortMultiplier: function () {
         /*if (this.get('closed')) {
