@@ -34,8 +34,14 @@ angular.module('app.services').factory('favorite',
       },
 
       removeBookmark: function(activity){
+        var that = this
         var aID = activity.get('entity').id
-        $http.delete(serverConfig.url + '/api/bookmarks/remove/'+aID).then(function(){
+        var bookmark =  _bookmarks.find(function(b){
+          return(b.item_id = aID)
+        })
+        var bID = bookmark.id
+
+        $http.delete(serverConfig.url + '/api/bookmarks/remove/'+bID).then(function(){
           that.load()
         })        
       }
