@@ -83,16 +83,17 @@ angular.module('app.services').factory('ActivityModel',
         return this.icons[this.get('entity').type];
       },
       isInPriorityZone: function() {
-        if (this.get('closed')) {
-          return false;
-        }
-        var entity = this.get('entity');
-        var owner = this.get('owner');
+        return(false)
+        // if (this.get('closed')) {
+        //   return false;
+        // }
+        // var entity = this.get('entity');
+        // var owner = this.get('owner');
 
-        return (!this.get('answered') && entity.type !== 'leader-news' && owner.type !== 'user' && entity.type !== 'petition') ||
-          (!this.get('answered') && entity.type === 'petition' && !this.get('read')) ||
-          (entity.type === 'leader-news' && !this.get('read'))
-        ;
+        // return (!this.get('answered') && entity.type !== 'leader-news' && owner.type !== 'user' && entity.type !== 'petition') ||
+        //   (!this.get('answered') && entity.type === 'petition' && !this.get('read')) ||
+        //   (entity.type === 'leader-news' && !this.get('read'))
+        // ;
       },
       getSortMultiplier: function () {
         /*if (this.get('closed')) {

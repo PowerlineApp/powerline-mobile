@@ -16,17 +16,11 @@ angular.module('app.controllers').controller('home', function ($scope, $timeout,
       $scope.activities = activityCollection.getFilteredModels();
   } 
 
-  function getUnansweredCount(activities) {
-    return _(activities).reduce(function (memo, activity) {
-      return (activity.get('answered') || activity.get('closed') || activity.get('ignore_count')) ? memo : ++memo;
-    }, 0);
-  }
-
   function setFiltersData() {
     homeCtrlParams.filter.groups = groups.getGroupsOptions();
     _(homeCtrlParams.filter.groups).each(function (group) {
       group.activities = activityCollection.getFilteredModels(group);
-      group.unansweredCount = getUnansweredCount(group.activities);
+      group.inPriorityZoneCount = activityCollection.inPriorityZoneCount(group.activities);
       group.read = !_.some(group.activities, function (item) {
         return !item.get('read');
       });
@@ -34,7 +28,7 @@ angular.module('app.controllers').controller('home', function ($scope, $timeout,
         homeCtrlParams.filter.selectedGroup = group;
       }
     });
-    homeCtrlParams.filter.unansweredCount = getUnansweredCount(activityCollection.getFilteredModels());
+    homeCtrlParams.filter.inPriorityZoneCount = activityCollection.inPriorityZoneCount(activityCollection.getFilteredModels());
   }
 
   function prepare() {

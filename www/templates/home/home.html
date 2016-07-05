@@ -17,7 +17,7 @@
       <div ng-click="filter.selectedGroup = null" ng-class="{selected: !filter.selectedGroup}">
         <figure>
           <img src="images/v2/icons/all-group.png" />
-          <span ng-show="filter.unansweredCount" ng-bind="filter.unansweredCount"></span>
+          <span ng-show="filter.inPriorityZoneCount" ng-bind="filter.inPriorityZoneCount"></span>
         </figure>
         <span>All</span>
       </div>
@@ -25,7 +25,7 @@
            ng-class="{selected: group == filter.selectedGroup, read: group.read}">
         <figure>
           <img ng-src="{{ group.getIcon()}}" />
-          <span ng-show="group.unansweredCount" ng-bind="group.unansweredCount"></span>
+          <span ng-show="group.inPriorityZoneCount" ng-bind="group.inPriorityZoneCount"></span>
         </figure>
         <span ng-bind="group.getTitle()"></span>
       </div>
@@ -47,7 +47,7 @@
            ng-class="{selected: group == filter.selectedGroup, read: group.read}">
         <figure>
           <img ng-src="{{ group.getIcon()}}" />
-          <span ng-show="group.unansweredCount" ng-bind="group.unansweredCount"></span>
+          <span ng-show="group.inPriorityZoneCount" ng-bind="group.inPriorityZoneCount"></span>
         </figure>
         <span ng-bind="group.getTitle()"></span>
       </div>

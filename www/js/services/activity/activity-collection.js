@@ -88,6 +88,15 @@ angular.module('app.services').factory('ActivityCollection',
 
     };
 
+    aCollection.inPriorityZoneCount = function(activities){
+      var count = 0
+      activities.forEach(function(a){
+        if(a.isInPriorityZone())
+          count++
+      })
+      return count
+    }
+
     aCollection.deferredRead = [];
     aCollection.setDeferredRead = function () {
       this.each(function (activity) {

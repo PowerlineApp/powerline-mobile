@@ -1,7 +1,7 @@
 <ul class="notifications" ng-controller="notifications">
   <li class="news" ng-click="activity()" ng-class="getClass('/main')">
     <i>
-      <span ng-show="homeCtrlParams.filter.unansweredCount">{{ homeCtrlParams.filter.unansweredCount}}</span>
+      <span ng-show="homeCtrlParams.filter.inPriorityZoneCount">{{ homeCtrlParams.filter.inPriorityZoneCount}}</span>
     </i>
   </li>
   <li class="followers" ng-click="followersNotifications()" ng-class="getClass('/influences/notifications')">
