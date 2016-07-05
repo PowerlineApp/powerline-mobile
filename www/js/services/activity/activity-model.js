@@ -1,5 +1,5 @@
 angular.module('app.services').factory('ActivityModel',
-  function (JsModel, groups, $http, follows, ActivityRead, iStorage) {
+  function (JsModel, groups, $http, follows, iStorage, serverConfig) {
    return JsModel.extend({
       labels: {
         question: 'Question',
@@ -41,29 +41,21 @@ angular.module('app.services').factory('ActivityModel',
           return following.get('user').id === owner.id && following.isApproved();
         });
       },
-      _setRead: function () {
-        this.set('read', true);
-        if ('leader-news' === this.get('entity').type || 'petition' === this.get('entity').type) {
-          this.set('ignore_count', true);
-        } else if ('micro-petition' === this.get('entity').type && 'user' === this.get('owner').type && this.isFollowing()) {
-          this.set('ignore_count', true);
-        }
-      },
       prepare: function () {
-        if (this.get('read') || _(ActivityRead).contains(this.get('id'))) {
-          this._setRead();
-        }
         if (this.get('entity').group_id) {
-          
           var userGroup = groups.getUserGroup(this.get('entity').group_id);
           this.set('owner_info_1', userGroup ? userGroup.group.official_title : null);
         }
       },
       setRead: function () {
-        if (!this.get('read')) {
-          this._setRead();
-          ActivityRead.unshift(this.get('id'));
-          iStorage.set('read-activities', ActivityRead.slice(0, 1000));
+        if (this.isUnread()) {
+          var that = this
+          var aID = this.get('entity').id
+          var payload = JSON.stringify({activities: [{id: aID, read: true}]})
+          var headers = {headers: {'Content-Type': 'application/json'}}
+          $http.patch(serverConfig.url + '/api/v2/activities', payload, headers).then(function(){
+            that.set('read', true);
+          })
         }
       },
       getResponsesToQuorum: function () {

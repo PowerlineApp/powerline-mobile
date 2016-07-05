@@ -33,13 +33,11 @@ angular.module('app.controllers').controller('home', function ($scope, $timeout,
 
   function prepare() {
     homeCtrlParams.loaded = true;
-    activityCollection.setDeferredRead().sort();
+    activityCollection.sort();
     setFiltersData();
 
     $scope.loading = false;
     $ionicScrollDelegate.resize();
-
-    activity.saveRead();
   }
 
   function loadActivities(loadType) {

@@ -1,5 +1,5 @@
 angular.module('app.services').factory('activity',
-  function ($http, serverConfig, iStorage, JsModel, ActivityRead, ActivityCollection, JsCollection, $q, representatives, groups, session, follows, favorite) {
+  function ($http, serverConfig, iStorage, JsModel, ActivityCollection, JsCollection, $q, representatives, groups, session, follows, favorite) {
 
     var ACTIVITIES_CACHE_ID = 'last-activity-items';
     var defaultLimit = 20;
@@ -84,32 +84,6 @@ angular.module('app.services').factory('activity',
             return followingActivities;
           });
         });
-      },
-
-      setEntityRead: function (entity) {
-        ActivityCollection.deferredRead.push(entity);
-      },
-
-      saveRead: function () {
-        if (ActivityRead.length) {
-          var needed = ActivityRead;
-          read = [];
-          iStorage.set('read-activities', read);
-
-          var data = [];
-
-          _(needed).each(function (id) {
-            data.push({id: id, read: true});
-          });
-          var payload = JSON.stringify({activities: data})
-          var headers = {headers: {'Content-Type': 'application/json'}}
-          $http.patch(serverConfig.url + '/api/v2/activities', payload, headers).error(function () {
-            _(needed).each(function (id) {
-              ActivityRead.push(id);
-              iStorage.set('read-activities', read);
-            });
-          });
-        }
       },
 
       getActivities: function () {

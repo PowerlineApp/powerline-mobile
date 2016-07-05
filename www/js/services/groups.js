@@ -260,7 +260,7 @@ angular.module('app.services').factory('groups',function ($resource, serverConfi
   function createCollections(items) {
     groups = _.chain(items)
       .map(function (item) {
-        if (!item.group.official_title) {
+        if (!item.group || !item.group.official_title) {
           return;
         }
         item.group.upper_title = item.group.official_title.toUpperCase();

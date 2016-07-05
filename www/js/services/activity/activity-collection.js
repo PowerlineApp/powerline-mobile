@@ -13,9 +13,6 @@ angular.module('app.services').factory('ActivityCollection',
               activity.set('answered', true);
               activity.set('answer', answerByPetition[entity.id]);
             }
-            if (activity.get('owner').id == session.user_id) {
-              activity.set('ignore_count', true);
-            }
           }
           
         });
@@ -96,21 +93,6 @@ angular.module('app.services').factory('ActivityCollection',
       })
       return count
     }
-
-    aCollection.deferredRead = [];
-    aCollection.setDeferredRead = function () {
-      this.each(function (activity) {
-        if (activity.get('read')) {
-          return;
-        }
-        if (_.find(this.deferredRead, function (entity) {
-          return entity.type === activity.get('entity').type && entity.id === activity.get('entity').id;
-        })) {
-          activity.setRead();
-        }
-      });
-      return this;
-    };
 
     aCollection.load = function(offset, limit) {
       var that = this
