@@ -1,6 +1,5 @@
 angular.module('app.services').factory('groups',function ($resource, serverConfig, $q, $http, PermissionsModel, iStorage) {
   var GROUPS_CACHE_ID = 'group-items';
-  var USER_GROUPS_CACHE_ID = 'user-group-items';
   var GROUP_TYPE_COMMON = 0;
 //        GROUP_TYPE_COUNTRY = 1,
 //        GROUP_TYPE_STATE = 2,
@@ -28,6 +27,7 @@ angular.module('app.services').factory('groups',function ($resource, serverConfi
 
   var JoinGroups = $resource(serverConfig.url + '/api/groups/:sort', {sort: ''});
   var groups = [];
+  var abc = '1';
   var groupsById = {};
   var unjoinedGroups = [];
   /* only joined */
@@ -36,19 +36,17 @@ angular.module('app.services').factory('groups',function ($resource, serverConfi
   var popularGroups = [];
   var newGroups = [];
   var groupsInfo = {};
-  var userGroups = iStorage.get(USER_GROUPS_CACHE_ID) || [];
   var userGroupsIds = _([]);
   var userGroupsByGroupId = {};
 
   var service = {
     load: function () {
+      var that = this
       return  $http.get(serverConfig.url + '/api/v2/user/groups').then(function (response){
         results = response.data.payload;
         createCollections(results);
       });
     },
-
-    loadUserGroups:loadUserGroups,
 
     loadSuggested: loadJoinCollections,
 
@@ -73,7 +71,7 @@ angular.module('app.services').factory('groups',function ($resource, serverConfi
     },
 
     getUserGroups: function () {
-      return userGroups;
+      return groups;
     },
 
     getLettersGroups: function () {
@@ -103,9 +101,7 @@ angular.module('app.services').factory('groups',function ($resource, serverConfi
     },
 
     getGroupsOptions: function () {
-      var result = _(userGroups).reduce(function (memo, userGroup) {
-        var item = userGroup.group;
-        if (item && item.joined) {
+      var result = _(groups).reduce(function (memo, item) {
           memo.push({
             id: item.id,
             official_title: item.official_title,
@@ -123,7 +119,6 @@ angular.module('app.services').factory('groups',function ($resource, serverConfi
               return 0 === this.group_type ? this.avatar_file_path : 'images/v2/icons/location-group.png';
             }
           });
-        }
         return memo;
       }, []);
 
@@ -216,7 +211,7 @@ angular.module('app.services').factory('groups',function ($resource, serverConfi
 
   function updateStatus() {
     var ids = [];
-    _(userGroups).each(function (userGroup) {
+    _(groups).each(function (userGroup) {
       userGroupsByGroupId[userGroup.id] = userGroup;
       var group = _.find(groups, function (item) {
         return item.id === userGroup.id;
@@ -250,7 +245,7 @@ angular.module('app.services').factory('groups',function ($resource, serverConfi
         if (item.username && item.username.toUpperCase().slice(0, searchQuery.length) === searchQuery) {
           return true;
         }
-        return item.group.upper_title.slice(0, searchQuery.length) === searchQuery;
+        return item.upper_title.slice(0, searchQuery.length) === searchQuery;
       });
     }
     lastSearchQuery = query;
@@ -258,12 +253,10 @@ angular.module('app.services').factory('groups',function ($resource, serverConfi
   }
 
   function createCollections(items) {
+    
     groups = _.chain(items)
       .map(function (item) {
-        if (!item.group || !item.group.official_title) {
-          return;
-        }
-        item.group.upper_title = item.group.official_title.toUpperCase();
+        item.upper_title = item.official_title.toUpperCase();
         groupsById[item.id] = item;
         return item;
       })
@@ -273,17 +266,16 @@ angular.module('app.services').factory('groups',function ($resource, serverConfi
     updateStatus();
     updateUnjoinedGroups();
     createLettersGroups();
-
   }
 
   function createLettersGroups() {
     lettersGroups = [];
     var lettersHash = {};
     _(groups).each(function (item) {
-      if (item.group.group_type !== GROUP_TYPE_COMMON) {
+      if (item.group_type !== GROUP_TYPE_COMMON) {
         return;
       }
-      var letter = item.group.upper_title[0];
+      var letter = item.upper_title[0];
       if (!lettersHash[letter]) {
         lettersHash[letter] = {
           letter: letter,
@@ -312,14 +304,6 @@ angular.module('app.services').factory('groups',function ($resource, serverConfi
     newGroups = JoinGroups.query({sort: 'new'}, deferred.resolve, deferred.reject);
 
     return deferred.promise;
-  }
-
-  function loadUserGroups() {
-    return $http.get(serverConfig.url + '/api/v2/user/groups').then(function (response) {
-      userGroups = response.data.payload;
-      iStorage.set(USER_GROUPS_CACHE_ID, userGroups);
-      updateStatus();
-    });
   }
 
   //call this function initially because cache may be loaded

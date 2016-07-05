@@ -44,7 +44,7 @@ angular.module('app.services').factory('ActivityModel',
       prepare: function () {
         if (this.get('entity').group_id) {
           var userGroup = groups.getUserGroup(this.get('entity').group_id);
-          this.set('owner_info_1', userGroup ? userGroup.group.official_title : null);
+          this.set('owner_info_1', userGroup ? userGroup.official_title : null);
         }
       },
       setRead: function () {

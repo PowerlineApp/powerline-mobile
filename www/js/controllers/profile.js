@@ -56,7 +56,7 @@ angular.module('app.controllers').controller('profile', function ($scope, profil
         action: 'update',
         step: 0
       }, function () {
-        groups.loadUserGroups().finally(function () {
+        groups.load().finally(function () {
           $scope.hideSpinner();
           homeCtrlParams.loaded = false;
         });

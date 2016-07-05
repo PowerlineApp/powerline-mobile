@@ -52,7 +52,7 @@ angular.module('app.controllers').controller('home', function ($scope, $timeout,
       $scope.$emit('home.activities-reloaded');
       $scope.$broadcast('scroll.refreshComplete');
       $scope.$broadcast('scroll.infiniteScrollComplete');
-    }, prepare).finally(socialActivity.load);
+    }).finally(socialActivity.load);
   }
 
 

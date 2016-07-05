@@ -17,13 +17,13 @@
     <section class="margin-8">
       <ul ng-repeat="letterGroup in groupsGrupedByFirstLetter" class="profiles-list">
         <li class="title">{{ letterGroup.letter}}</li>
-        <li ng-repeat="item in letterGroup.items">
-          <figure ng-click="navigateTo('group-profile', item)">
-            <avatar-img img="item.group.avatar_file_path" text="item.group.official_title"></avatar-img>
+        <li ng-repeat="group in letterGroup.items">
+          <figure ng-click="navigateTo('group-profile', group)">
+            <avatar-img img="group.avatar_file_path" text="group.official_title"></avatar-img>
           </figure>
-          <p ng-click="navigateTo('group-profile', item)">{{ item.group.official_title}}</p>
-          <button ng-if="item.status === 1" class="button button-clear button-remove" ng-click="unjoin(item)"><i class="icon ion-android-remove-circle"></i></button>
-          <p ng-if="item.status === 0" class="pending-message">pending approval</p>
+          <p ng-click="navigateTo('group-profile', group)">{{ group.official_title}}</p>
+          <button ng-if="group.status === 1" class="button button-clear button-remove" ng-click="unjoin(group)"><i class="icon ion-android-remove-circle"></i></button>
+          <p ng-if="group.status === 0" class="pending-message">pending approval</p>
         </li>
       </ul>
     </section>

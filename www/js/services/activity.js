@@ -32,9 +32,6 @@ angular.module('app.services').factory('activity',
           promises.push(ActivityCollection.load());
         }
         
-        if (!groups.getUserGroups().length) {
-          promises.push(groups.loadUserGroups());
-        }
         if (!representatives.getRepresentativesGroups().length) {
           promises.push(representatives.load());
         }

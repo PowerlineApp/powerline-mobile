@@ -92,9 +92,10 @@ angular.module('app.controllers').controller('groups',function ($scope, groups, 
   $scope.$watch(groups.getNewGroups, function (newValue) {
     $scope.newItems = newValue;
   });
-}).controller('groups.profile',function ($scope, topBar, groups, $stateParams, $state, activity, invites, influence, homeCtrlParams, flurry, $rootScope) {
+}).controller('groups.profile',function ($scope, topBar, groups, $stateParams, $state, activity, favorite, invites, influence, homeCtrlParams, flurry, $rootScope) {
   
   influence.loadFollowers();
+  $scope.favoriteService = favorite
 
   var id = parseInt($stateParams.id, 10);
 
