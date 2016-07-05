@@ -33,7 +33,7 @@ angular.module('app.services').factory('ActivityModel',
         return this.get('owner').type === 'user' && this.get('owner').id === session.user_id;
       },
       isUnanswered: function () {
-        return !this.get('answered') && !this.get('closed') && 'leader-news' !== this.get('entity').type;
+        return !this.get('answered') && !this.isExpired() && 'leader-news' !== this.get('entity').type;
       },
       isFollowing: function () {
         var owner = this.get('owner');
@@ -57,9 +57,6 @@ angular.module('app.services').factory('ActivityModel',
           
           var userGroup = groups.getUserGroup(this.get('entity').group_id);
           this.set('owner_info_1', userGroup ? userGroup.group.official_title : null);
-        }
-        if (this.get('expire_at') && Date.now() > this.get('expire_at').getTime()) {
-          this.set('closed', true);
         }
       },
       setRead: function () {
@@ -107,7 +104,7 @@ angular.module('app.services').factory('ActivityModel',
         return(this.get('publish_status') == 1)
       },
       isExpired: function(){
-        this.get('closed')
+        this.get('expire_at') && Date.now() > this.get('expire_at').getTime()
       },
       isInPriorityZone: function() {
         if(this.isUserPetitionType()){
