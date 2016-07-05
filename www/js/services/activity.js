@@ -1,5 +1,5 @@
 angular.module('app.services').factory('activity',
-  function ($http, serverConfig, iStorage, JsModel, ActivityRead, ActivityCollection, JsCollection, $q, representatives, groups, session, follows) {
+  function ($http, serverConfig, iStorage, JsModel, ActivityRead, ActivityCollection, JsCollection, $q, representatives, groups, session, follows, favorite) {
 
     var ACTIVITIES_CACHE_ID = 'last-activity-items';
     var defaultLimit = 20;
@@ -41,6 +41,9 @@ angular.module('app.services').factory('activity',
         if (!follows.size()) {
           promises.push(follows.load());
         }
+
+        promises.push(groups.load())
+        promises.push(favorite.load())
         
         var that = this;
         return $q.all(promises).then(function () {

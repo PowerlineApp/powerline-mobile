@@ -2913,6 +2913,8 @@ asterisk {
         text-transform: uppercase; }
       .activities-list .item .item-footer .control .icon {
         font-size: 20px; }
+      .activities-list .item .item-footer .control .icon.ion-star.active {
+        color: #54c5ff; }
   .activities-list .item > figure {
     display: block;
     position: absolute;

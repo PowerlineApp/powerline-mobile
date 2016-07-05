@@ -1,5 +1,5 @@
 angular.module('app.services').factory('ActivityCollection',
-  function (JsCollection, ActivityModel, representatives, iStorage, $http, serverConfig, session, groups) {
+  function (JsCollection, ActivityModel, representatives, iStorage, $http, serverConfig, session) {
     var activityCollectionTemplate = JsCollection.extend({
       setAnsweredMicroPetitions: function (answers) {
         var answerByPetition = {};
@@ -108,16 +108,13 @@ angular.module('app.services').factory('ActivityCollection',
       offset = (offset === null || typeof(offset) === 'undefined') ? that.size() : offset;
       limit = limit || -1;
       var p = new Promise(function(resolve, reject){
-        groups.load().then(function(){
-          $http.get(serverConfig.url + '/api/v2/activities').then(function (response) {
-            var activities = that.add(response.data.payload);
-            activities.forEach(function(activity){
-              activity.prepare()
-            })
-            resolve(that)
-          });
-          
-        })
+        $http.get(serverConfig.url + '/api/v2/activities').then(function (response) {
+          var activities = that.add(response.data.payload);
+          activities.forEach(function(activity){
+            activity.prepare()
+          })
+          resolve(that)
+        });
       })
 
       return p
