@@ -14,7 +14,7 @@ angular.module('app.services').factory('favorite',
           return(b.item_id)
         })
         var aID = activity.get('entity').id
-        return bookmarkedIDs.includes(aID)
+        return (bookmarkedIDs.indexOf(aID) >= 0)
       },
       addBookmark: function(activity){
         var aID = activity.get('entity').id

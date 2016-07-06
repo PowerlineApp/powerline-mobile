@@ -1,6 +1,6 @@
 angular.module('app.controllers').controller('favorite', function ($scope, favorite) {
   $scope.hasNoFavorites = function(){
-    return($scope.favorites.lenghh == 0)
+    return($scope.favorites.length == 0)
   }
 
   $scope.favorites = []
