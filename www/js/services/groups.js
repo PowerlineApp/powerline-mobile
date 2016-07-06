@@ -56,14 +56,14 @@ angular.module('app.services').factory('groups',function ($resource, serverConfi
       });
     },
 
-    join: function (id, data) {
-      return $http.post(serverConfig.url + '/api/groups/join/' + id, data).then(function (response) {
+    join: function (id) {
+      return $http.put(serverConfig.url + '/api/v2/user/groups/' + id).then(function (response) {
         return response.data.status;
       });
     },
 
     unjoin: function (id) {
-      return $http({method: 'DELETE', url: serverConfig.url + '/api/groups/join/' + id});
+      return $http.delete(serverConfig.url + '/api/v2/user/groups/' + id);
     },
 
     getAll: function () {

@@ -250,7 +250,7 @@ angular.module('app.controllers').controller('groups',function ($scope, groups, 
   function join(joinForm) {
     $scope.formClass = '';
     $scope.showSpinner();
-    groups.join(id, $scope.data).then(function (status) {
+    groups.join(id).then(function (status) {
       $scope.showApproveMessage = !status;
       success();
       flurry.log('join to group', {id: id});
