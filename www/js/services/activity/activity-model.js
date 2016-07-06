@@ -50,7 +50,7 @@ angular.module('app.services').factory('ActivityModel',
       setRead: function () {
         if (this.isUnread()) {
           var that = this
-          var aID = this.get('entity').id
+          var aID = this.get('id') // https://github.com/PowerlineApp/powerline-mobile/issues/84#issuecomment-230568369
           var payload = JSON.stringify({activities: [{id: aID, read: true}]})
           var headers = {headers: {'Content-Type': 'application/json'}}
           $http.patch(serverConfig.url + '/api/v2/activities', payload, headers).then(function(){
