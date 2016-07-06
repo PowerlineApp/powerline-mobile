@@ -30,7 +30,8 @@ angular.module('app.services').factory('announcements',function ($q, Announcemen
     load: function () {
       var deferred = $q.defer();
       start.setTime(Date.now() - 7776000000 * 2);
-      AnnouncementsResource.query({start: start.toUTCString()}, function (data) {
+      AnnouncementsResource.query({start: start.toUTCString()}, function (response) {
+        var data = response.payload
         prepare(data);
         announcements = data;
         deferred.resolve(announcements);
