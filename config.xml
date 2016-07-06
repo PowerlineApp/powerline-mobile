@@ -64,4 +64,7 @@
         <variable name="APP_ID" value="244141112405524" />
         <variable name="APP_NAME" value="PowerlineApp" />
     </plugin>
+    <plugin name="phonegap-plugin-push" spec="1.6.0">
+        <variable name="SENDER_ID" value="354736666363" />
+    </plugin>    
 </widget>

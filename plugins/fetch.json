@@ -50,14 +50,6 @@
         "is_top_level": true,
         "variables": {}
     },
-    "cordova-plugin-googleplayservices": {
-        "source": {
-            "type": "registry",
-            "id": "cordova-plugin-googleplayservices"
-        },
-        "is_top_level": true,
-        "variables": {}
-    },
     "cordova-plugin-dialogs": {
         "source": {
             "type": "registry",
@@ -114,5 +106,15 @@
         },
         "is_top_level": false,
         "variables": {}
+    },
+    "phonegap-plugin-push": {
+        "source": {
+            "type": "registry",
+            "id": "phonegap-plugin-push@1.6.0"
+        },
+        "is_top_level": true,
+        "variables": {
+            "SENDER_ID": "354736666363"
+        }
     }
 }
