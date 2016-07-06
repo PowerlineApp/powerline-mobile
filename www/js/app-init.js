@@ -146,14 +146,14 @@ angular.module('app').run(function ($location, layout, spinnerIndicator, $rootSc
   };
 
   $rootScope.isDefaultAvatar = function (avatarUrl) {
-    if (avatarUrl == null) {
-      return !avatarUrl || avatarUrl.indexOf('default_user.png') !== -1
-            || avatarUrl.indexOf('default_group.png') !== -1
-            || avatarUrl.indexOf('default_representative.png') !== -1;
-    }else{
-      return true;
+    var isDefault = true
+    if (avatarUrl) {
+      var a = avatarUrl.indexOf('default_user.png') !== -1
+      var b = avatarUrl.indexOf('default_group.png') !== -1
+      var c = avatarUrl.indexOf('default_representative.png') !== -1;
+      isDefault = (a || b || c)
     }
-
+    return isDefault
 };
 
 });
