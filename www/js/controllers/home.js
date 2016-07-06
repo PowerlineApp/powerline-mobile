@@ -303,10 +303,13 @@ angular.module('app.controllers').directive('iActivity', function ($rootScope, q
         return $scope.$parent.favoriteService.isBookmarked($scope.activity)
       }
       $scope.bookmarkButtonClicked = function(){
-        if($scope.isBookmarked())
+        if($scope.isBookmarked()){
           $scope.$parent.favoriteService.removeBookmark($scope.activity)
-        else
-          $scope.$parent.favoriteService.addBookmark($scope.activity)
+          $scope.showToast('Item was removed from Favorites');
+        } else {
+         $scope.$parent.favoriteService.addBookmark($scope.activity)
+         $scope.showToast('Item was added to Favorites');
+        }
       }
       $scope.navigateToActivity = function (activity, focus, e) {
         activity.setRead();
