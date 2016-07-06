@@ -1,5 +1,5 @@
 angular.module('app.controllers').controller('home', function ($scope, $timeout, socialActivity, homeCtrlParams,
-        profile, activity, groups, flurry, $ionicScrollDelegate, favorite) {
+        profile, activity, groups, flurry, $ionicScrollDelegate, favorite, $ionicPlatform) {
 
   flurry.log('news feed');
 
@@ -118,10 +118,10 @@ angular.module('app.controllers').controller('home', function ($scope, $timeout,
   //move scroll to top when filter is changed
   $scope.$watch('filter.selectedGroup', function (nVal) {
     if (typeof (nVal) !== undefined) {
-      $timeout(function () {
+      $ionicPlatform.ready(function () {
         $ionicScrollDelegate.resize();
         $ionicScrollDelegate.scrollTop();
-      });
+      })
     }
   });
 
