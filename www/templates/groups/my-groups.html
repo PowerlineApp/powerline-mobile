@@ -17,7 +17,7 @@
     <section class="margin-8">
       <ul ng-repeat="letterGroup in groupsGrupedByFirstLetter" class="profiles-list">
         <li class="title">{{ letterGroup.letter}}</li>
-        <li ng-repeat="group in letterGroup.items">
+        <li ng-repeat="group in letterGroup.groups">
           <figure ng-click="navigateTo('group-profile', group)">
             <avatar-img img="group.avatar_file_path" text="group.official_title"></avatar-img>
           </figure>
@@ -27,7 +27,7 @@
         </li>
       </ul>
     </section>
-    <section ng-show="!items.length" class="margin-10">
+    <section ng-show="groupsGrupedByFirstLetter.length == 0" class="margin-10">
       <p class="info-message" ng-show="!loading">Looks like you haven't joined any groups yet! Join or create one to make Powerline work for you!</p>
     </section>
 

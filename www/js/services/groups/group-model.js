@@ -17,6 +17,10 @@ angular.module('app.services').factory('GroupModel', function(groupsInvites) {
       return this.fill_fields_required
     }
 
+    this.groupTypeIsCommon = function(){
+      return this.group_type == 0
+    },
+
     this.isPasscodeRequiredOnJoin = function(){
       // todo fix when we determine membership_control values
       // !groupsInvites.hasInvite(id) && 2 === $scope.publicStatus;
@@ -28,11 +32,11 @@ angular.module('app.services').factory('GroupModel', function(groupsInvites) {
     },
 
     this.getIconWhite = function () {
-      return 0 === this.group_type ? this.avatar_file_path : 'images/v2/icons/location-group-white.png';
+      return this.groupTypeIsCommon() ? this.avatar_file_path : 'images/v2/icons/location-group-white.png';
     },
 
     this.getIcon = function () {
-      return 0 === this.group_type ? this.avatar_file_path : 'images/v2/icons/location-group.png';
+      return this.groupTypeIsCommon() ? this.avatar_file_path : 'images/v2/icons/location-group.png';
     },
 
     this.joinedByCurrentUser = function(){

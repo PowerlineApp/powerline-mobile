@@ -1,6 +1,6 @@
 angular.module('app.services').factory('groups',function ($resource, serverConfig, $q, $http, PermissionsModel, iStorage, GroupModel) {
   var GROUPS_CACHE_ID = 'group-items';
-  var GROUP_TYPE_COMMON = 0;
+  
 //        GROUP_TYPE_COUNTRY = 1,
 //        GROUP_TYPE_STATE = 2,
 //        GROUP_TYPE_LOCAL = 3
@@ -52,7 +52,7 @@ angular.module('app.services').factory('groups',function ($resource, serverConfi
 
     join: function (id) {
       return $http.put(serverConfig.url + '/api/v2/user/groups/' + id).then(function (response) {
-        return response.data.status;
+        return response.status;
       });
     },
 
@@ -205,19 +205,19 @@ angular.module('app.services').factory('groups',function ($resource, serverConfi
   function _createLettersGroups() {
     lettersGroups = [];
     var lettersHash = {};
-    _(service.getAll()).each(function (item) {
-      if (item.group_type !== GROUP_TYPE_COMMON) {
+    _(service.getAll()).each(function (group) {
+      if (!group.groupTypeIsCommon()) {
         return;
       }
-      var letter = item.upper_title[0];
+      var letter = group.upper_title[0];
       if (!lettersHash[letter]) {
         lettersHash[letter] = {
           letter: letter,
-          items: []
+          groups: []
         };
         
       }
-      lettersHash[letter].items.push(item);
+      lettersHash[letter].groups.push(group);
     });
     
     Object.keys(lettersHash).sort().forEach(function(letter){
@@ -227,7 +227,7 @@ angular.module('app.services').factory('groups',function ($resource, serverConfi
 
   function _createUnjoinedGroups(){
     unjoinedGroups = _(service.getAll()).filter(function (group) {
-      return !group.joined && group.group_type === GROUP_TYPE_COMMON;
+      return !group.joined && group.groupTypeIsCommon();
     });
   }
 
