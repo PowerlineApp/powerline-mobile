@@ -1,4 +1,4 @@
-angular.module('app.services').factory('groups',function ($resource, serverConfig, $q, $http, PermissionsModel, iStorage) {
+angular.module('app.services').factory('groups',function ($resource, serverConfig, $q, $http, PermissionsModel, iStorage, GroupModel) {
   var GROUPS_CACHE_ID = 'group-items';
   var GROUP_TYPE_COMMON = 0;
 //        GROUP_TYPE_COUNTRY = 1,
@@ -52,7 +52,7 @@ angular.module('app.services').factory('groups',function ($resource, serverConfi
 
     join: function (id) {
       return $http.put(serverConfig.url + '/api/v2/user/groups/' + id).then(function (response) {
-        return response.data.status;
+        return response.status;
       });
     },
 
@@ -121,8 +121,7 @@ angular.module('app.services').factory('groups',function ($resource, serverConfi
       return groupsById[id] && groupsById[id].joined === 1;
     },
 
-    loadInfo: function (id) {
-      console.log('service/group.js loadInfo '+id)
+    loadAllDetails: function (id) {
       var that = this
       var deferred = $q.defer();
       var data = Groups.get({id: id}, function () {
@@ -130,7 +129,7 @@ angular.module('app.services').factory('groups',function ($resource, serverConfi
         var group = that.get(id) || new GroupModel()
         group.fillWith(data)
         groupsById[id] = group
-        deferred.resolve();
+        deferred.resolve(group);
       }, function (data, status) {
         deferred.reject(data, status);
       });

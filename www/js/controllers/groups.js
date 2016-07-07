@@ -145,7 +145,6 @@ angular.module('app.controllers').controller('groups',function ($scope, groups, 
   };
 
   function checkPermissions() {
-    console.log('controller/group.js checkPermissions '+id)
     var group = groups.get(id);
     if (group.joined && group.required_permissions && group.required_permissions.length) {
       return groups.loadPermissions(id).then(function (permissions) {
@@ -165,7 +164,7 @@ angular.module('app.controllers').controller('groups',function ($scope, groups, 
   }
 
   $scope.showSpinner();
-  groups.loadInfo(id).then(loaded, loaded);
+  groups.loadAllDetails(id).then(loaded, loaded);
 
   $scope.$watch('data', function () {
     if ($scope.data) {
@@ -184,22 +183,13 @@ angular.module('app.controllers').controller('groups',function ($scope, groups, 
   $scope.data = {};
   var id = Number($stateParams.id);
 
-  groups.loadInfo(id).then(function () {
+  groups.loadAllDetails(id).then(function (group) {
     $scope.hideSpinner();
-    var group = groups.get(id);
-    $scope.isFieldRequired = group.fill_fields_required;
-    $scope.publicStatus = Number(group.membership_control);
-    $scope.isPasscodeRequired = !groupsInvites.hasInvite(id) && 2 === $scope.publicStatus;
+    $scope.group = group
 
-    console.log('isFieldRequired '+$scope.isFieldRequired)
-    console.log('group.membership_control '+group.membership_control)
-    console.log('$scope.isPasscodeRequired '+$scope.isPasscodeRequired)
-    console.log('groupsInvites.hasInvite(id) '+groupsInvites.hasInvite(id))
-    if (!$scope.isFieldRequired && ((0 === $scope.publicStatus || 1 === $scope.publicStatus) || groupsInvites.hasInvite(id))) {
+    if (group.canBeJoinedInstantly()) 
       $scope.join();
-    }
-
-    if ($scope.isFieldRequired) {
+    else {
       $scope.showSpinner();
       groups.loadFields(id).then(function (fields) {
         $scope.hideSpinner();
