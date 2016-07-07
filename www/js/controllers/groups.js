@@ -115,7 +115,6 @@ angular.module('app.controllers').controller('groups',function ($scope, groups, 
   };
 
   $scope.join = function () {
-    groups.resetInfo($scope.data.id);
     $scope.navigateTo('group-join', $scope.data);
   };
 
@@ -125,7 +124,6 @@ angular.module('app.controllers').controller('groups',function ($scope, groups, 
       $scope.showSpinner();
       groups.unjoin($scope.data.id).then(function () {
         $rootScope.$broadcast('groups-updated');
-        groups.resetInfo($scope.data.id);
         $scope.hideSpinner();
         $state.reload();
       }, function () {
@@ -147,6 +145,7 @@ angular.module('app.controllers').controller('groups',function ($scope, groups, 
   };
 
   function checkPermissions() {
+    console.log('controller/group.js checkPermissions '+id)
     var group = groups.get(id);
     if (group.joined && group.required_permissions && group.required_permissions.length) {
       return groups.loadPermissions(id).then(function (permissions) {
@@ -191,6 +190,11 @@ angular.module('app.controllers').controller('groups',function ($scope, groups, 
     $scope.isFieldRequired = group.fill_fields_required;
     $scope.publicStatus = Number(group.membership_control);
     $scope.isPasscodeRequired = !groupsInvites.hasInvite(id) && 2 === $scope.publicStatus;
+
+    console.log('isFieldRequired '+$scope.isFieldRequired)
+    console.log('group.membership_control '+group.membership_control)
+    console.log('$scope.isPasscodeRequired '+$scope.isPasscodeRequired)
+    console.log('groupsInvites.hasInvite(id) '+groupsInvites.hasInvite(id))
     if (!$scope.isFieldRequired && ((0 === $scope.publicStatus || 1 === $scope.publicStatus) || groupsInvites.hasInvite(id))) {
       $scope.join();
     }
@@ -267,7 +271,6 @@ angular.module('app.controllers').controller('groups',function ($scope, groups, 
     homeCtrlParams.loaded = false;
     $rootScope.$broadcast('groups-updated');
     $scope.hideSpinner();
-    groups.resetInfo(id);
     if (!$scope.showApproveMessage) {
       $scope.path('/groups');
     }

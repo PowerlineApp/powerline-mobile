@@ -26,8 +26,6 @@ angular.module('app.services').factory('groups',function ($resource, serverConfi
   });
 
   var JoinGroups = $resource(serverConfig.url + '/api/groups/:sort', {sort: ''});
-  var groups = [];
-  var abc = '1';
   var groupsById = {};
   var unjoinedGroups = [];
   /* only joined */
@@ -35,16 +33,12 @@ angular.module('app.services').factory('groups',function ($resource, serverConfi
 
   var popularGroups = [];
   var newGroups = [];
-  var groupsInfo = {};
-  var userGroupsIds = _([]);
-  var userGroupsByGroupId = {};
 
   var service = {
     load: function () {
       var that = this
       return  $http.get(serverConfig.url + '/api/v2/user/groups').then(function (response){
-        results = response.data.payload;
-        createCollections(results);
+        _createGroupModels(response.data.payload);
       });
     },
 
@@ -67,11 +61,13 @@ angular.module('app.services').factory('groups',function ($resource, serverConfi
     },
 
     getAll: function () {
-      return groups;
+      var groups = _.values(groupsById);
+      var sortedGroups = _.chain(groups).compact().sortBy('upper_title').value();
+      return(sortedGroups)
     },
 
-    getUserGroups: function () {
-      return groups;
+    get: function(id) {
+      return groupsById[id]
     },
 
     getLettersGroups: function () {
@@ -82,18 +78,6 @@ angular.module('app.services').factory('groups',function ($resource, serverConfi
       return $http.get(serverConfig.url + '/api/groups/popular').then(function (response) {
         return response.data.status;
       });
-
-      // var deferred = $q.defer();
-      //   $http({
-      //     method: 'GET',
-      //     url: serverConfig.url + '/api/groups/popular',
-      //     headers: {token: iStorage.get('token')}
-      //   }).success(function (response) {
-      //     return response;
-      //   }).error(function (response, status) {
-      //     deferred.reject(status);
-      //   });
-      //   return deferred.promise;
     },
 
     getNewGroups: function () {
@@ -101,7 +85,7 @@ angular.module('app.services').factory('groups',function ($resource, serverConfi
     },
 
     getGroupsOptions: function () {
-      var result = _(groups).reduce(function (memo, item) {
+      var result = _(service.getAll()).reduce(function (memo, item) {
           memo.push({
             id: item.id,
             official_title: item.official_title,
@@ -129,31 +113,23 @@ angular.module('app.services').factory('groups',function ($resource, serverConfi
 
     search: search,
 
-    get: function (id) {
-      return groupsInfo[id];
-    },
-
     getGroup: function (id) {
       return groupsById[id];
-    },
-
-    getUserGroup: function (id) {
-      return userGroupsByGroupId[id];
     },
 
     hasGroup: function (id) {
       return groupsById[id] && groupsById[id].joined === 1;
     },
 
-    hasUserGroup: function (id) {
-      return userGroupsIds.contains(id);
-    },
-
     loadInfo: function (id) {
+      console.log('service/group.js loadInfo '+id)
+      var that = this
       var deferred = $q.defer();
       var data = Groups.get({id: id}, function () {
         parseInfo(data);
-        groupsInfo[id] = data;
+        var group = that.get(id) || new GroupModel()
+        group.fillWith(data)
+        groupsById[id] = group
         deferred.resolve();
       }, function (data, status) {
         deferred.reject(data, status);
@@ -162,14 +138,11 @@ angular.module('app.services').factory('groups',function ($resource, serverConfi
       return deferred.promise;
     },
 
-    resetInfo: function (id) {
-      groupsInfo[id] = null;
-    },
-
     loadActivities: function (id) {
-      if (groupsInfo[id]) {
-        groupsInfo[id].activities = Groups.getActivities({id: id}, function () {
-          activity.parse(groupsInfo[id].activities);
+      var group = this.get(id)
+      if (group) {
+        group.activities = Groups.getActivities({id: id}, function () {
+          activity.parse(group.activities);
         });
       }
     },
@@ -209,23 +182,6 @@ angular.module('app.services').factory('groups',function ($resource, serverConfi
     data.full_address = _.compact([data.official_address, data.official_city, data.official_state]).join(', ');
   }
 
-  function updateStatus() {
-    var ids = [];
-    _(groups).each(function (userGroup) {
-      userGroupsByGroupId[userGroup.id] = userGroup;
-      var group = _.find(groups, function (item) {
-        return item.id === userGroup.id;
-      });
-      if (group) {
-        group.status = userGroup.status;
-      }
-      if (userGroup.joined) {
-        ids.push(userGroup.id);
-      }
-    });
-    userGroupsIds = _(ids);
-  }
-
   var EMPTY_SEARCH_ITEMS = [], lastSearchItems = [], lastSearchQuery = '';
 
   function search(query) {
@@ -235,7 +191,7 @@ angular.module('app.services').factory('groups',function ($resource, serverConfi
 
     if (lastSearchQuery !== query) {
       var searchQuery = query.toUpperCase();
-      lastSearchItems = _(groups).filter(function (item) {
+      lastSearchItems = _(this.getAll()).filter(function (item) {
         if (item.group_type !== 0) {
           return false;
         }
@@ -252,26 +208,22 @@ angular.module('app.services').factory('groups',function ($resource, serverConfi
     return lastSearchItems;
   }
 
-  function createCollections(items) {
-    
-    groups = _.chain(items)
-      .map(function (item) {
-        item.upper_title = item.official_title.toUpperCase();
-        groupsById[item.id] = item;
-        return item;
+  function _createGroupModels(rawGroupsData) {
+    rawGroupsData.forEach(function (rawGroupData) {
+        var group = new GroupModel()
+        group.fillWith(rawGroupData)
+        groupsById[group.id] = group;
+        return group;
       })
-      .compact()
-      .sortBy('upper_title').value();
 
-    updateStatus();
-    updateUnjoinedGroups();
-    createLettersGroups();
+    _createLettersGroups();
+    _createUnjoinedGroups();
   }
 
-  function createLettersGroups() {
+  function _createLettersGroups() {
     lettersGroups = [];
     var lettersHash = {};
-    _(groups).each(function (item) {
+    _(service.getAll()).each(function (item) {
       if (item.group_type !== GROUP_TYPE_COMMON) {
         return;
       }
@@ -291,11 +243,10 @@ angular.module('app.services').factory('groups',function ($resource, serverConfi
     })
   }
 
-  function updateUnjoinedGroups() {
-    unjoinedGroups = _(groups).filter(function (item) {
-      return !item.joined && item.group_type === GROUP_TYPE_COMMON;
+  function _createUnjoinedGroups(){
+    unjoinedGroups = _(service.getAll()).filter(function (group) {
+      return !group.joined && group.group_type === GROUP_TYPE_COMMON;
     });
-    lastSearchQuery = '';
   }
 
   function loadJoinCollections() {
@@ -305,9 +256,6 @@ angular.module('app.services').factory('groups',function ($resource, serverConfi
 
     return deferred.promise;
   }
-
-  //call this function initially because cache may be loaded
-  updateStatus();
 
   return service;
 })
