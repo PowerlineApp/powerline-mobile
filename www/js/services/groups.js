@@ -57,7 +57,14 @@ angular.module('app.services').factory('groups',function ($resource, serverConfi
     },
 
     unjoin: function (id) {
-      return $http.delete(serverConfig.url + '/api/v2/user/groups/' + id);
+      var that = this
+      var group = this.get(id)
+      promise = group.unjoin()
+      promise.then(function(){
+        _createLettersGroups()
+        _createUnjoinedGroups()
+      })
+      return promise
     },
 
     getAll: function () {
@@ -206,7 +213,7 @@ angular.module('app.services').factory('groups',function ($resource, serverConfi
     lettersGroups = [];
     var lettersHash = {};
     _(service.getAll()).each(function (group) {
-      if (!group.groupTypeIsCommon()) {
+      if (!group.groupTypeIsCommon() || !group.joinedByCurrentUser()) {
         return;
       }
       var letter = group.upper_title[0];

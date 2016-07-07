@@ -1,4 +1,4 @@
-angular.module('app.services').factory('GroupModel', function(groupsInvites) {
+angular.module('app.services').factory('GroupModel', function(groupsInvites, $http, serverConfig) {
   var model = function(){
     this.fillWith = function(data){
       $.extend(this, data)
@@ -41,6 +41,13 @@ angular.module('app.services').factory('GroupModel', function(groupsInvites) {
 
     this.joinedByCurrentUser = function(){
       return(this.joined == 1)
+    }
+
+    this.unjoin = function(){
+      var that = this
+      return $http.delete(serverConfig.url + '/api/v2/user/groups/' + this.id).then(function(){
+        that.joined = 0
+      })
     }
   }
 
