@@ -54,7 +54,7 @@ angular.module('app.services').factory('SocialActivityTabManager', function (iSt
         return(this.get('number_of_new'))
       }
     },
-    isFollowingTab(){
+    isFollowingTab: function(){
       return(this.options.key == TAB_FOLLOWING_ID)
     },
     add: function (activity) {
