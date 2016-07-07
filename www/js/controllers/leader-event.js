@@ -1,13 +1,11 @@
 angular.module('app.controllers')
-  .controller('question.leader-event', function ($scope, topBar, $stateParams, questions, activity, flurry,
+  .controller('question.leader-event', function ($scope, topBar, $stateParams, questions, activity,
                                                  homeCtrlParams, $state, layout) {
     
     $scope.data = {
       comment: '',
       privacy: 0
     };
-
-    flurry.log('leader event', {id: Number($stateParams.id)});
 
     activity.setEntityRead({id: Number($stateParams.id), type: 'leader-event'});
 
@@ -45,7 +43,6 @@ angular.module('app.controllers')
         payment_amount: $scope.data.payment_amount
       }).then(function () {
         homeCtrlParams.loaded = false;
-        flurry.log('answer to event', {id: Number($stateParams.id)});
         $scope.addToCalendar();
         $state.reload();
       }, function (error) {

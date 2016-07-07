@@ -4,8 +4,7 @@ var fs = require('fs');
 var path = require('path');
 
 var filestocopy = [{
-  "resources/notification_icon.png": "platforms/android/res/drawable-xhdpi/notification_icon.png",
-  "frameworks/FlurryAnalytics-4.1.0.jar": "platforms/android/libs/FlurryAnalytics-4.1.0.jar"
+  "resources/notification_icon.png": "platforms/android/res/drawable-xhdpi/notification_icon.png"
 }];
 
 var rootdir = process.argv[2];

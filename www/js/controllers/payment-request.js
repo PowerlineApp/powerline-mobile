@@ -1,13 +1,11 @@
 angular.module('app.controllers')
   .controller('question.payment-request', function ($scope, topBar, $stateParams, questions, $state, serverConfig,
-                                                    homeCtrlParams, activity, $http, flurry, layout) {
+                                                    homeCtrlParams, activity, $http, layout) {
 
     $scope.data = {
       comment: '',
       privacy: 0
     };
-
-    flurry.log('payment request', {id: Number($stateParams.id)});
 
     activity.setEntityRead({id: Number($stateParams.id), type: 'payment-request'});
     activity.setEntityRead({id: Number($stateParams.id), type: 'crowdfunding-payment-request'});
@@ -55,7 +53,6 @@ angular.module('app.controllers')
         payment_amount: $scope.data.payment_amount
       }).then(function () {
         homeCtrlParams.loaded = false;
-        flurry.log('answer to payment request', {id: Number($stateParams.id)});
         $state.reload();
       }, function (error) {
         $scope.hideSpinner();

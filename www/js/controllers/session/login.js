@@ -1,13 +1,10 @@
-angular.module('app.controllers').controller('session.login',function ($scope, homeCtrlParams, session, facebook, $timeout, flurry, $ionicSideMenuDelegate, $ionicHistory) {
+angular.module('app.controllers').controller('session.login',function ($scope, homeCtrlParams, session, facebook, $timeout, $ionicSideMenuDelegate, $ionicHistory) {
   $ionicSideMenuDelegate.canDragContent(false);
   
   $scope.keepLogged = {value: true};
   $scope.data = {};
 
   $scope.hideSpinner();
-
-  flurry.log('login');
-  
 
   $scope.login = function () {
     if (!$scope.data.username || !$scope.data.password) {
@@ -21,7 +18,6 @@ angular.module('app.controllers').controller('session.login',function ($scope, h
         $ionicHistory.clearCache();
         $ionicHistory.clearHistory();
         homeCtrlParams.loaded = false;
-        flurry.log('logged in');
         $timeout(function(){
           $scope.hideSpinner();
           if (!session.is_registration_complete) {
@@ -52,7 +48,6 @@ angular.module('app.controllers').controller('session.login',function ($scope, h
       $timeout.cancel(promise);
       $scope.loading = true;
       session.facebookLogin(params).then(function () {
-        flurry.log('logged in from facebook');
         if (!session.is_registration_complete) {
           $scope.path('/profile');
         } else {
@@ -81,8 +76,7 @@ angular.module('app.controllers').controller('session.login',function ($scope, h
     $scope.path('/forgot-password');
   };
 
-}).controller('session.logout', function ($scope, $location, session, $window, flurry) {
-  flurry.log('logout');
+}).controller('session.logout', function ($scope, $location, session, $window) {
   $scope.showSpinner();
   session.logout();
 });

@@ -1,7 +1,5 @@
 angular.module('app.controllers').controller('home', function ($scope, $timeout, socialActivity, homeCtrlParams,
-        profile, activity, groups, flurry, $ionicScrollDelegate, favorite, $ionicPlatform) {
-
-  flurry.log('news feed');
+        profile, activity, groups, $ionicScrollDelegate, favorite, $ionicPlatform) {
 
   $scope.filter = homeCtrlParams.filter;
   $scope.favoriteService = favorite

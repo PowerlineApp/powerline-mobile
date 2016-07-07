@@ -102,7 +102,7 @@ angular.module('app.services').factory('topBar',function ($location) {
     ]
   };
 
-}).factory('layout', function ($rootScope, $document, device, $location, $window, notifications, facebook, flurry, $timeout) {
+}).factory('layout', function ($rootScope, $document, device, $location, $window, notifications, facebook, $timeout) {
 
   var $body, $content;
   var layout = {
@@ -150,7 +150,6 @@ angular.module('app.services').factory('topBar',function ($location) {
     device.init();
     notifications.init();
     facebook.init();
-    flurry.init();
 
     if (device.isAndroid) {
       $document.bind('backbutton', function (e) {

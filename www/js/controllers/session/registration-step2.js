@@ -1,5 +1,5 @@
 angular.module('app.controllers').controller('session.registration-step2',
-  function ($scope, session, $location, $window, iStorageMemory, profile, layout, flurry, $ionicSideMenuDelegate) {
+  function ($scope, session, $location, $window, iStorageMemory, profile, layout, $ionicSideMenuDelegate) {
     $ionicSideMenuDelegate.canDragContent(false);
 
     $scope.states = profile.states;
@@ -22,7 +22,6 @@ angular.module('app.controllers').controller('session.registration-step2',
         $scope.showSpinner();
         session.registration($scope.data).then(
           function () {
-            flurry.log('registered');
             $scope.hideSpinner();
             iStorageMemory.remove('registration-form-data');
             $location.path('/guide');
