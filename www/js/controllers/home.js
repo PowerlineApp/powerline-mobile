@@ -15,7 +15,7 @@ angular.module('app.controllers').controller('home', function ($scope, $timeout,
   } 
 
   function setFiltersData() {
-    homeCtrlParams.filter.groups = groups.getGroupsOptions();
+    homeCtrlParams.filter.groups = groups.groupsJoinedByCurrentUser();
     _(homeCtrlParams.filter.groups).each(function (group) {
       group.activities = activityCollection.getFilteredModels(group);
       group.inPriorityZoneCount = activityCollection.inPriorityZoneCount(group.activities);

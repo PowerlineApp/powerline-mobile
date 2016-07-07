@@ -3,7 +3,7 @@ function ($scope,  petitions, PetitionsResource, groups, $stateParams, errorForm
             camelcase2underscore, profile, homeCtrlParams, $document, session, $rootScope) {
   
   $scope.type = $stateParams.type;
-  $scope.groups = groups.getGroupsOptions();
+  $scope.groups = groups.groupsJoinedByCurrentUser();
   var form_templates = {
     quorum: 'templates/petitions/forms/micro-petition.html',
     'long petition': 'templates/petitions/forms/long-petition.html'

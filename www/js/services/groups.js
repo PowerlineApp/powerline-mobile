@@ -52,7 +52,7 @@ angular.module('app.services').factory('groups',function ($resource, serverConfi
 
     join: function (id) {
       return $http.put(serverConfig.url + '/api/v2/user/groups/' + id).then(function (response) {
-        return response.status;
+        return response.data.status;
       });
     },
 
@@ -84,27 +84,10 @@ angular.module('app.services').factory('groups',function ($resource, serverConfi
       return newGroups;
     },
 
-    getGroupsOptions: function () {
-      var result = _(service.getAll()).reduce(function (memo, item) {
-          memo.push({
-            id: item.id,
-            official_title: item.official_title,
-            avatar_file_path: item.avatar_file_path,
-            group_type: item.group_type,
-            acronym: item.acronym,
-            petition_per_month: item.petition_per_month,
-            getTitle: function () {
-              return this.acronym || this.official_title;
-            },
-            getIconWhite: function () {
-              return 0 === this.group_type ? this.avatar_file_path : 'images/v2/icons/location-group-white.png';
-            },
-            getIcon: function () {
-              return 0 === this.group_type ? this.avatar_file_path : 'images/v2/icons/location-group.png';
-            }
-          });
-        return memo;
-      }, []);
+    groupsJoinedByCurrentUser: function () {
+      var result = service.getAll().filter(function(g){
+        return g.joinedByCurrentUser()
+      })
 
       return _(result).sortBy(function (item) {
         return -item.group_type;

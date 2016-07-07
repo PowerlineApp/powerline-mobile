@@ -21,8 +21,23 @@ angular.module('app.services').factory('GroupModel', function(groupsInvites) {
       // todo fix when we determine membership_control values
       // !groupsInvites.hasInvite(id) && 2 === $scope.publicStatus;
       return false 
-    }
+    },
 
+    this.getTitle = function () {
+      return this.acronym || this.official_title;
+    },
+
+    this.getIconWhite = function () {
+      return 0 === this.group_type ? this.avatar_file_path : 'images/v2/icons/location-group-white.png';
+    },
+
+    this.getIcon = function () {
+      return 0 === this.group_type ? this.avatar_file_path : 'images/v2/icons/location-group.png';
+    },
+
+    this.joinedByCurrentUser = function(){
+      return(this.joined == 1)
+    }
   }
 
   return model
