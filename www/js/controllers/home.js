@@ -234,7 +234,7 @@ angular.module('app.controllers').directive('iActivity', function ($rootScope, q
         $scope.showToast('Follow request sent!');
       });
     };
-    $scope.showToast = $rootScope.showToast;
+    
   }
 
   function petitionCtrl($scope) {
@@ -297,6 +297,7 @@ angular.module('app.controllers').directive('iActivity', function ($rootScope, q
     restrict: 'E',
     template: '<ng-include src="templateSrc"></ng-include>',
     controller: function ($scope) {
+      $scope.showToast = $rootScope.showToast;
       $scope.navigateTo = $rootScope.navigateTo;
       $scope.isBookmarked = function(){
         return $scope.$parent.favoriteService.isBookmarked($scope.activity)
