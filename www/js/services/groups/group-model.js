@@ -6,25 +6,35 @@ angular.module('app.services').factory('GroupModel', function(groupsInvites, $ht
     },
 
     this.canBeJoinedInstantly = function(){
-      var isPublic = this.membership_control == 'public'
-      var noFieldsRequired = !this.fill_fields_required
-      var hasInvitation =  groupsInvites.hasInvite(this.id)
-
-      return((isPublic && noFieldsRequired) || hasInvitation)
+      return((this.groupMembershipIsPublic() && !this.requiredToFillFieldsOnJoin()) || this.userHasInvitation())
     }
 
     this.requiredToFillFieldsOnJoin = function(){
       return this.fill_fields_required
     }
 
+    this.userHasInvitation = function(){
+      return groupsInvites.hasInvite(this.id)
+    }
+
     this.groupTypeIsCommon = function(){
       return this.group_type == 0
     },
 
+    this.groupMembershipIsPublic = function(){
+      return this.membership_control == 'public' // 0
+    },
+
+    this.groupMembershipIsApproval = function(){
+      return this.membership_control == 'approval' // 1
+    },
+
+    this.groupMembershipIsPasscode = function(){
+      return this.membership_control == 'passcode' // 2
+    },
+
     this.isPasscodeRequiredOnJoin = function(){
-      // todo fix when we determine membership_control values
-      // !groupsInvites.hasInvite(id) && 2 === $scope.publicStatus;
-      return false 
+      return !this.userHasInvitation() && this.groupMembershipIsPasscode()
     },
 
     this.getTitle = function () {
