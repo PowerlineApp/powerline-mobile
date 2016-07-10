@@ -29,14 +29,14 @@
   <div class="item-footer">
     <div class="control"><a ng-click="navigateToActivity(activity)">Pay</a></div>
     <div class="control"><a ng-click="navigateToActivity(activity, 'add-comment')" class="activity-control reply"></a></div>
-<!--subscribe button start-->    
-    <div class="control" style="padding-top: 3px">
+    <div class="control notification">
       <a ng-click="onSubscribeBtnClicked()"><i ng-class="'ion-android-notifications'" style="font-size: 22px;" ng-style="mutingStyle"></i></a>
+    </div>
+    <div class="control bookmark">
       <a ng-click="bookmarkButtonClicked()">
         <i class="icon ion-star" ng-class="isBookmarked() ? 'active': ''"></i>
       </a>
-    </div>
-<!--subscribe button end-->    
+    </div>  
     </div>
     <div class="responses" bo-bind="responses_count"></div>
   </div>

@@ -854,7 +854,12 @@
         min-width: 50px;
         text-align: center;
         font-size: 13px;
-
+        &.notification {
+          padding-top: 3px;
+        }
+        &.bookmark {
+          padding-top: 2px;
+        }
         a, span {
           font-size: 13px;
           font-family: 'Lato Bold';

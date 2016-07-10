@@ -2907,6 +2907,10 @@ asterisk {
       min-width: 50px;
       text-align: center;
       font-size: 13px; }
+      .activities-list .item .item-footer .control.notification {
+        padding-top: 3px; }
+      .activities-list .item .item-footer .control.bookmark {
+        padding-top: 2px; }
       .activities-list .item .item-footer .control a, .activities-list .item .item-footer .control span {
         font-size: 13px;
         font-family: 'Lato Bold';
