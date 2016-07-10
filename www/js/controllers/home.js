@@ -284,7 +284,8 @@ angular.module('app.controllers').directive('iActivity', function ($rootScope, q
     'leader-news': newsCtrl,
     'crowdfunding-payment-request': paymentCtrl,
     'payment-request': paymentCtrl,
-    'micro-petition': postCtrl,
+    'micro-petition-post': postCtrl,
+    'micro-petition-petition': petitionCtrl,
     'petition': petitionCtrl,
     'question': questionCtrl
   };
@@ -329,11 +330,10 @@ angular.module('app.controllers').directive('iActivity', function ($rootScope, q
       $scope.responses_count = $scope.activity.get('responses_count');
       $scope.isDefaultAvatar = $rootScope.isDefaultAvatar($scope.avatar_file_path);
 
-      var entity = $scope.activity.get('entity');
-
-      if (ctrlByType[entity.type]) {
-        ctrlByType[entity.type]($scope);
-      } else if (ctrlByType[entity.type_default]) {
+      var activityType = $scope.activity.dataType()
+      if (ctrlByType[activityType]) {
+        ctrlByType[activityType]($scope);
+      } else {
         $scope.templateSrc = 'templates/home/activities/default.html';
       }
     }

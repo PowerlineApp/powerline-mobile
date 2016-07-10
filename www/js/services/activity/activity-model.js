@@ -41,6 +41,15 @@ angular.module('app.services').factory('ActivityModel',
           return following.get('user').id === owner.id && following.isApproved();
         });
       },
+
+      dataType: function(){
+        if(this.isUserPetitionType())
+          return 'micro-petition-petition'
+        else if(this.isUserPostType())
+          return 'micro-petition-post'
+        else
+          return this.get('entity').type
+      },
       prepare: function () {
         if (this.get('entity').group_id) {
           var userGroup = groups.get(this.get('entity').group_id);
