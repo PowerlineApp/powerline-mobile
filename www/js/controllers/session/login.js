@@ -62,7 +62,7 @@ angular.module('app.controllers').controller('session.login',function ($scope, h
           });
         } else if (400 === response.status) {
           $scope.alert('Facebook login failed', null, 'Error', 'OK');
-        }
+        } 
         $scope.loading = false;
       });
     }, function (error) {

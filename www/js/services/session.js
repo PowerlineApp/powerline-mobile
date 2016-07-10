@@ -268,10 +268,14 @@ angular.module('app.services').factory('session', function (serverConfig, $http,
             facebook_id: uid
           });
         } else {
+          console.log('facebook login failed:')
+          console.log(response)
           deferred.reject('Facebook login failed');
         }
         $rootScope.execApply();
-      }, function () {
+      }, function (error) {
+        console.log('facebook login failed:')
+        console.log(error)
         deferred.reject('Facebook login failed');
       });
 
