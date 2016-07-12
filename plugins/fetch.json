@@ -1,13 +1,24 @@
 {
     "cordova-plugin-facebook4": {
         "source": {
-            "type": "registry",
-            "id": "cordova-plugin-facebook4@~1.7.0"
+            "type": "git",
+            "url": "https://github.com/jeduan/cordova-plugin-facebook4.git",
+            "subdir": "."
         },
         "is_top_level": true,
         "variables": {
             "APP_ID": "244141112405524",
             "APP_NAME": "PowerlineApp"
+        }
+    },
+    "phonegap-plugin-push": {
+        "source": {
+            "type": "registry",
+            "id": "phonegap-plugin-push@1.6.0"
+        },
+        "is_top_level": true,
+        "variables": {
+            "SENDER_ID": "354736666363"
         }
     },
     "cordova-plugin-device": {
@@ -66,55 +77,5 @@
         },
         "is_top_level": true,
         "variables": {}
-    },
-    "cordova-plugin-statusbar": {
-        "source": {
-            "type": "registry",
-            "id": "cordova-plugin-statusbar"
-        },
-        "is_top_level": true,
-        "variables": {}
-    },
-    "cordova-plugin-calendar": {
-        "source": {
-            "type": "registry",
-            "id": "cordova-plugin-calendar"
-        },
-        "is_top_level": true,
-        "variables": {}
-    },
-    "cordova-plugin-datepicker": {
-        "source": {
-            "type": "registry",
-            "id": "cordova-plugin-datepicker"
-        },
-        "is_top_level": true,
-        "variables": {}
-    },
-    "cordova-plugin-camera": {
-        "source": {
-            "type": "registry",
-            "id": "cordova-plugin-camera"
-        },
-        "is_top_level": true,
-        "variables": {}
-    },
-    "cordova-plugin-compat": {
-        "source": {
-            "type": "registry",
-            "id": "cordova-plugin-compat"
-        },
-        "is_top_level": false,
-        "variables": {}
-    },
-    "phonegap-plugin-push": {
-        "source": {
-            "type": "registry",
-            "id": "phonegap-plugin-push@1.6.0"
-        },
-        "is_top_level": true,
-        "variables": {
-            "SENDER_ID": "354736666363"
-        }
     }
 }
