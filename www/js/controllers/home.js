@@ -47,9 +47,11 @@ angular.module('app.controllers').controller('home', function ($scope, $timeout,
         $scope.isLoadMore = true;
       }
       prepare();
+      
       $scope.$emit('home.activities-reloaded');
       $scope.$broadcast('scroll.refreshComplete');
       $scope.$broadcast('scroll.infiniteScrollComplete');
+      refreshListOfActivities();
     }).finally(socialActivity.load);
   }
 
