@@ -46,7 +46,9 @@
       <div ng-repeat="group in filter.groups.slice(start, start + filterLineStep())" ng-click="filter.selectedGroup = group"
            ng-class="{selected: group == filter.selectedGroup, read: group.read}">
         <figure>
-          <img ng-src="{{ group.getIcon()}}" />
+          <div class="avatar">
+            <avatar-img img="group.getIcon()" text="group.acronym"></avatar-img>
+          </div>
           <span ng-show="group.inPriorityZoneCount" ng-bind="group.inPriorityZoneCount"></span>
         </figure>
         <span ng-bind="group.getTitle()"></span>
