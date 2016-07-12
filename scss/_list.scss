@@ -119,12 +119,6 @@
       }
     }
 
-    &.more.open {
-      img {
-        top: -17px;
-      }
-    }
-
     &.ng-click-active, &.more.open {
       background-color: #f1f7f9;
       span {color: #54c5ff;}

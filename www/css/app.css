@@ -2233,8 +2233,6 @@ asterisk {
     .article-list-filter div.more img {
       position: relative;
       top: 5px; }
-    .article-list-filter div.more.open img {
-      top: -17px; }
     .article-list-filter div.ng-click-active, .article-list-filter div.more.open {
       background-color: #f1f7f9; }
       .article-list-filter div.ng-click-active span, .article-list-filter div.more.open span {
