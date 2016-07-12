@@ -136,7 +136,7 @@ angular.module('app.controllers').controller('influence.profile',
 }).controller('influences.search',function ($scope, influence, facebook, profile, influencesCD, $rootScope) {
 
   var user = profile.get();
-  
+
   if (user && user.facebook_id && facebook.getFriends().length) {
     $scope.showSpinner();
     influence.loadSuggested(facebook.getFriends()).then(function (suggested) {
@@ -157,7 +157,8 @@ angular.module('app.controllers').controller('influence.profile',
   $scope.search = function () {
     $scope.data.page = 1;
     $scope.results = [];
-    load();
+    if($scope.data.query && $scope.data.query.length > 0)
+      load();
   };
 
   $scope.more = function () {
