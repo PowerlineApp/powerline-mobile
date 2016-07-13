@@ -61,12 +61,7 @@ angular.module('app.services').factory('activity',
       },
 
       fetchFollowingActivities: function(id) {
-        var followingActivities = new ActivityCollection([], {
-          model: ActivityModel,
-          comparator: function (activity) {
-            return -activity.get('sent_at').getTime() * activity.getSortMultiplier();
-          }
-        });
+        var followingActivities = ActivityCollection
 
         return $http.get(
           serverConfig.url + '/api/activities/',
