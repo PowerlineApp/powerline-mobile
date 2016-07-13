@@ -1,11 +1,21 @@
-angular.module('app.controllers').controller('profile', function ($scope, profile, $window, errorFormMessage, session, iStorage, homeCtrlParams, groups, formUtils) {
+angular.module('app.controllers').controller('profile', function ($scope, profile, $window, errorFormMessage, session, iStorage, homeCtrlParams, groups, formUtils, $rootScope) {
 
   $scope.view = {editMode: false};
 
   $scope.profile = profile.get();
   $scope.profileManager = profile;
+  $scope.isDefaultAvatar = function(){
+    if($scope.profile)
+      return $rootScope.isDefaultAvatar($scope.profile.avatar_file_name);
+    else 
+      return false
+  }
+  
+  
 
   $scope.data = {};
+
+
 
   $scope.percent = 0;
 
