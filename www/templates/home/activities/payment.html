@@ -9,7 +9,7 @@
   <div class="item-title">
     <p class="first-line">
       <i bo-class="iconClass"></i>
-      <strong bo-bind="full_name"></strong>
+      <strong bo-bind="full_name" ng-click="navigateTo('owner-profile', activity.get('owner'));$event.stopPropagation();"></strong>
       <strong bo-bind="official_title"></strong>
       <span bo-if="owner_info_1" bo-bind="owner_info_1"></span>
     </p>
