@@ -1696,7 +1696,7 @@ select.choice-filter {
     text-align: left; }
   .p-header p {
     line-height: 17px;
-    font-size: 12px;
+    font-size: 13px;
     font-family: Lato; }
 
 .profile-header-2,
@@ -2136,6 +2136,9 @@ h4 {
 asterisk {
   color: #c1353c;
   position: relative; }
+
+.capitalize {
+  text-transform: capitalize; }
 
 .article-list .item {
   background: #f8f8f8;

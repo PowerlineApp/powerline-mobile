@@ -33,6 +33,10 @@
           <p><span>Acronym</span></p>
           <p ng-bind="data.acronym"></p>
         </li>
+        <li ng-show="data.membership_control">
+          <p><span>Membership</span></p>
+          <p ng-bind="data.membership_control" class="capitalize"></p>
+        </li>        
         <li ng-show="data.manager_phone" ng-click="openSystem('tel:' + data.manager_phone)">
           <p><span>Phone Number</span></p>
           <p ng-bind="data.manager_phone"></p>
