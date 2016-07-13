@@ -88,7 +88,7 @@ angular.module('app.controllers').controller('groups',function ($scope, groups, 
   $scope.$watch(groups.getNewGroups, function (newValue) {
     $scope.newItems = newValue;
   });
-}).controller('groups.profile',function ($scope, topBar, groups, $stateParams, $state, activity, favorite, invites, influence, homeCtrlParams, $rootScope) {
+}).controller('groups.profile',function ($scope, topBar, groups, $stateParams, $state, activity, favorite, invites, influence, homeCtrlParams, $rootScope, $location) {
   
   influence.loadFollowers();
   $scope.favoriteService = favorite
@@ -125,7 +125,7 @@ angular.module('app.controllers').controller('groups',function ($scope, groups, 
       groups.unjoin($scope.data.id).then(function () {
         $rootScope.$broadcast('groups-updated');
         $scope.hideSpinner();
-        $state.reload();
+        $location.path('/groups');
       }, function () {
         $scope.hideSpinner();
         $rootScope.$broadcast('groups-updated');
