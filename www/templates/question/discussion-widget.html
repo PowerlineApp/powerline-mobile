@@ -33,7 +33,7 @@
           </div>
         </div>
         <div class="item-content">
-          <p ng-bind-html="comment.comment_body_html"
+          <p ng-bind-html="toTrustedHTML(comment.comment_body_html)"
              i-content-link
              ng-click="view.selectedId = view.selectedId === comment.id ? null : comment.id" ng-hide="editClicked[$index]==true"></p>
           <textarea ng-model="comment.comment_body" ng-show="editClicked[$index]==true" i-tags i-open-system-links style="border: 1px solid grey;

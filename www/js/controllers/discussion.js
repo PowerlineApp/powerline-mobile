@@ -1,4 +1,4 @@
-angular.module('app.controllers').controller('discussion',function ($scope, topBar, discussion, $stateParams, $cacheFactory, $ionicPopup) {
+angular.module('app.controllers').controller('discussion',function ($scope, topBar, discussion, $stateParams, $cacheFactory, $ionicPopup, $sce) {
 
   var isWidget = !/^\/discussion/.test($scope.path());
   
@@ -7,6 +7,10 @@ angular.module('app.controllers').controller('discussion',function ($scope, topB
   $scope.entity = $scope.entity || $stateParams.entity;
 
   var cache = $cacheFactory.get('discussionController');
+
+  $scope.toTrustedHTML = function(html) {
+    return $sce.trustAsHtml(html);
+  }
 
   var commentId = $stateParams.comment ? $stateParams.comment : 0;
   $scope.showForm = Boolean(commentId);
