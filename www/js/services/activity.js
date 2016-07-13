@@ -64,10 +64,10 @@ angular.module('app.services').factory('activity',
         var followingActivities = ActivityCollection
 
         return $http.get(
-          serverConfig.url + '/api/activities/',
+          serverConfig.url + '/api/v2/activities',
           {params: {following: id}}
         ).then(function (response) {
-          followingActivities.add(response.data);
+          followingActivities.add(response.data.payload);
           return $http.get(serverConfig.url + '/api/micro-petitions/answers/').then(function (response) {
             followingActivities.setAnsweredMicroPetitions(response.data);
             followingActivities.each(function(activity) {

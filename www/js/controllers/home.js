@@ -2,7 +2,6 @@ angular.module('app.controllers').controller('home', function ($scope, $timeout,
         profile, activity, groups, $ionicScrollDelegate, favorite, $ionicPlatform) {
 
   $scope.filter = homeCtrlParams.filter;
-  $scope.favoriteService = favorite
 
   $scope.isLoadMore = false;
   var activityCollection = activity.getActivities();
@@ -172,7 +171,7 @@ angular.module('app.controllers').controller('preload', function (topBar, sessio
   }
 });
 
-angular.module('app.controllers').directive('iActivity', function ($rootScope, questions, petitions, discussion, elapsedFilter, follows, session, iParse, $sce) {
+angular.module('app.controllers').directive('iActivity', function ($rootScope, questions, petitions, discussion, elapsedFilter, follows, session, iParse, $sce, favorite) {
 
   function eventCtrl($scope) {
     $scope.templateSrc = 'templates/home/activities/event.html';
@@ -302,14 +301,14 @@ angular.module('app.controllers').directive('iActivity', function ($rootScope, q
       $scope.showToast = $rootScope.showToast;
       $scope.navigateTo = $rootScope.navigateTo;
       $scope.isBookmarked = function(){
-        return $scope.$parent.favoriteService.isBookmarked($scope.activity)
+        return favorite.isBookmarked($scope.activity)
       }
       $scope.bookmarkButtonClicked = function(){
         if($scope.isBookmarked()){
-          $scope.$parent.favoriteService.removeBookmark($scope.activity)
+          favorite.removeBookmark($scope.activity)
           $scope.showToast('Item was removed from Favorites');
         } else {
-         $scope.$parent.favoriteService.addBookmark($scope.activity)
+         favorite.addBookmark($scope.activity)
          $scope.showToast('Item was added to Favorites');
         }
       }
