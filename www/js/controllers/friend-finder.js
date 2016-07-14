@@ -1,8 +1,16 @@
-angular.module('app.controllers').controller('friend-finder', function ($scope, friendFinder) {
+angular.module('app.controllers').controller('friend-finder', function ($scope, friendFinder, follows) {
+  
+  $scope.friends = []
   $scope.search = function(){
-    friendFinder.search().then(function(a){
-      console.log(a)
+    $scope.showSpinner();
+    friendFinder.search().then(function(response){
+      $scope.friends = response
+      $scope.hideSpinner();
     })
   }
+
+  $scope.add = function (friend) {
+    console.log('todo')
+  };
 })
 
