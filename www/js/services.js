@@ -10,25 +10,32 @@ angular.module('app.services', [
 
   var service = {
     init: function () {
+      service._isSmartphone = false
       if ($window.device && $window.device.platform) {
-
-
-
         if ($window.device.platform === 'iOS') {
           service.isIOS = true;
           //$window.StatusBar.hide();
           ionic.Platform.fullScreen(true);
+          service._isSmartphone = true
         }
         if ($window.device.name) {
           var name = $window.device.name.toUpperCase();
           service.isIPad = name.search('IPAD') !== -1;
+          if(service.isIPad)
+            service._isSmartphone = true
         }
 
         if ($window.device.platform === 'Android') {
           service.isAndroid = true;
           service.isAndroid2 = $window.device.version[0] === '2';
+          service._isSmartphone = true
         }
       }
+    },
+
+    isSmartphone : function(){
+      this.init()
+      return this._isSmartphone
     }
   };
 
