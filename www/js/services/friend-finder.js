@@ -1,4 +1,4 @@
-angular.module('app.services').factory('friendFinder', function ($http, serverConfig, Sha1, follows, $q, device) {
+angular.module('app.services').factory('FriendFinder', function ($http, serverConfig, Sha1, follows, $q, device) {
 
   getContactEmailsInBrowser = function(){
     var deferred = $q.defer();
@@ -12,10 +12,8 @@ angular.module('app.services').factory('friendFinder', function ($http, serverCo
      var  onSuccess = function(rawContacts){
       try {
         var contactsSize = rawContacts.length
-        console.log('Found ' + contactsSize + ' contacts in phone.')
-        
         var emails = []
-        rawContacts.forEach((rawContact, i) => {
+        rawContacts.forEach(function(rawContact, i){
           if(rawContact.emails && 0 < rawContact.emails.length){
             var email = rawContact.emails[0].value
             emails.push(email) 
@@ -65,7 +63,6 @@ angular.module('app.services').factory('friendFinder', function ($http, serverCo
         emailsPromise = getContactEmailsInBrowser()
 
       emailsPromise.then(function(emails){
-        console.log(emails)
         var emailsForHttp = []
         emails.forEach(function(email){
           emailsForHttp.push('emails[]='+Sha1.hash(email))

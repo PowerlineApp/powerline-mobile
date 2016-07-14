@@ -36,10 +36,10 @@ angular.module('app')
       templateUrl: 'templates/session/logout.html',
       controller: 'session.logout'
     }, {
-      name: 'friendFinder',
+      name: 'friendFinderController',
       url: '/friend-finder',
       templateUrl: 'templates/friend-finder/index.html',
-      controller: 'friend-finder',
+      controller: 'friendFinderController',
       cache: true
     }, {
       name: 'commingSoon',
