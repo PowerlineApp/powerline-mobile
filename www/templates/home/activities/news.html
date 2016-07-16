@@ -39,6 +39,9 @@
       <i class="activity-control down" ng-click="rate('down')"></i>
     </div>
     <div class="control"><a ng-click="navigateToActivity(activity, 'add-comment')" class="activity-control reply"></a></div>
+    <div class="control" ng-show="showFollow">
+      <a ng-click="followClicked()"><i class="icon" ng-class="followIcon()"></i></a>
+    </div>
     <div class="control notification">
       <a ng-click="onSubscribeBtnClicked()"><i ng-class="'ion-android-notifications'" style="font-size: 22px;" ng-style="mutingStyle"></i></a>
     </div>

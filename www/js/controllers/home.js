@@ -201,12 +201,7 @@ angular.module('app.controllers').directive('iActivity', function ($rootScope, q
     $scope.templateSrc = 'templates/home/activities/post.html';
     $scope.currentUserIsActivityOwner = $scope.activity.get('owner').id == session.user_id
     $scope.booster = $scope.activity.get('owner').type === 'group' ? 100 : $scope.activity.getQuorumCompletedPercent();
-    var follow = follows.getByUserId($scope.activity.get('owner').id);
-    $scope.followable = !follow.isFollow();
-    if ($scope.followable && follow.isApproved()) {
-      $scope.isFollowApproved = true;
-    }
-    $scope.isFollowShow = follows.loaded && follow.get('user').id !== session.user_id;
+
     $scope.sign = function (optionId) {
       $scope.sending = true;
       petitions.answer($scope.activity.get('entity').id, optionId).then(function (answer) {
@@ -226,16 +221,7 @@ angular.module('app.controllers').directive('iActivity', function ($rootScope, q
         $scope.activity.set('answered', false).set('answer', null);
         $scope.sending = false;
       });
-    };
-    $scope.followOwner = function () {
-      $scope.sending = true;
-      follow.follow().then(function () {
-        $scope.activity.followable = false;
-        $scope.sending = false;
-        $scope.showToast('Follow request sent!');
-      });
-    };
-    
+    };  
   }
 
   function petitionCtrl($scope) {
@@ -331,6 +317,37 @@ angular.module('app.controllers').directive('iActivity', function ($rootScope, q
       $scope.sent_at_elapsed = elapsedFilter($scope.activity.get('sent_at'));
       $scope.responses_count = $scope.activity.get('responses_count');
       $scope.isDefaultAvatar = $rootScope.isDefaultAvatar($scope.avatar_file_path);
+
+      var activityOwnerID = $scope.activity.get('owner').id
+      var activityOwnerFollow = follows.getByUserId(activityOwnerID);
+      $scope.showFollow = follows.loaded && activityOwnerID != session.user_id
+      $scope.followClicked = function(){
+        if(activityOwnerFollow.isFollow() && activityOwnerFollow.isApproved())
+          $scope.showToast('You are following this user');
+        else if (activityOwnerFollow.isFollow() && !activityOwnerFollow.isApproved())
+          $scope.showToast('Waiting for user to approve...');
+        else {
+          $scope.sending = true;
+          activityOwnerFollow.follow().then(function () {
+            $scope.activity.followable = false;
+            $scope.sending = false;
+            $scope.showToast('Follow request sent!');
+            follows.load().then(function(){
+              activityOwnerFollow = follows.getByUserId(activityOwnerID);
+            })
+          });          
+          msg = 'Follow request sent!'
+        }
+      }
+
+      $scope.followIcon = function(){
+        if(activityOwnerFollow.isFollow() && activityOwnerFollow.isApproved())
+          return 'ion-person calm'
+        else if(activityOwnerFollow.isFollow() && !activityOwnerFollow.isApproved())
+          return 'ion-person'
+        else
+          return 'ion-person-add'
+      }
 
       var activityType = $scope.activity.dataType()
       if (ctrlByType[activityType]) {

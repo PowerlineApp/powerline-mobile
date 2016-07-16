@@ -39,12 +39,8 @@
       <a ng-click="unsign()">undo</a>
     </div>
     <div class="control"><a ng-click="navigateToActivity(activity, 'add-comment')" class="activity-control reply"></a></div>
-    <div class="control" ng-show="followable && isFollowShow">
-      <a ng-click="followOwner()"><i class="icon ion-person-add"></i></a>
-    </div>
-    <div class="control" ng-show="!followable && isFollowShow">
-      <span ng-show="isFollowApproved" ng-click="showToast('You are following this user')"><i class="icon ion-person-stalker"></i></span>
-      <span ng-show="!isFollowApproved" ng-click="showToast('Waiting for user to approve...')"><i class="icon ion-person"></i></span>
+    <div class="control" ng-show="showFollow">
+      <a ng-click="followClicked()"><i class="icon" ng-class="followIcon()"></i></a>
     </div>
     <div class="control notification">
       <a ng-click="onSubscribeBtnClicked()"><i ng-class="'ion-android-notifications'" style="font-size: 22px;" ng-style="mutingStyle"></i></a>
