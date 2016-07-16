@@ -2677,7 +2677,7 @@ asterisk {
       color: #636363;
       line-height: 1.4em; }
       .comments .item .item-content p a {
-        font-family: "Lato Bolder";
+        font-family: "Lato Bold";
         color: #030366; }
       @media (max-width: 375px) {
         .comments .item .item-content p {
