@@ -88,7 +88,6 @@ angular.module('app.services').factory('topBar',function ($location) {
       new MenuItem('Favorites', '/favorite-main', 'favorite-item'),
       new MenuItem('My Profile', '/profile', 'profile-item'),
       new MenuItem('Settings', '/settings', 'settings-item'),
-      new MenuItem('Find Friends', '/friend-finder', 'friend-finder-item'),
       new MenuItem('Other Apps', '/other-services', 'other-item'),
       new MenuItem('Take Tour', '/guide', 'help-item'),
       new MenuItem('Share this App', null, 'share-item', function() {
