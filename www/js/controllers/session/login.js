@@ -47,25 +47,29 @@ angular.module('app.controllers').controller('session.login',function ($scope, h
     facebook.login().then(function (params) {
       $timeout.cancel(promise);
       $scope.loading = true;
-      session.facebookLogin(params).then(function () {
-        if (!session.is_registration_complete) {
-          $scope.path('/profile');
-        } else {
-          $scope.path('/main');
-        }
-      }, function (response) {
-        if (302 === response.status) {
-          facebook.setRegistrationFormData(params).then(function () {
-            $scope.path('/registration');
-          }, function() {
-            $scope.path('/registration');
-          });
-        } else if (400 === response.status) {
-          $scope.alert('Facebook login failed', null, 'Error', 'OK');
-        } 
-        $scope.loading = false;
-      });
+      console.log(params)
+      session.registerUserFromFacebook(params)
+      // session.facebookLogin(params).then(function () {
+      //   if (!session.is_registration_complete) {
+      //     $scope.path('/profile');
+      //   } else {
+      //     $scope.path('/main');
+      //   }
+      // }, function (response) {
+      //   if (302 === response.status) {
+      //     facebook.setRegistrationFormData(params).then(function () {
+      //       $scope.path('/registration');
+      //     }, function() {
+      //       $scope.path('/registration');
+      //     });
+      //   } else if (400 === response.status) {
+      //     $scope.alert('Facebook login failed', null, 'Error', 'OK');
+      //   } 
+      //   $scope.loading = false;
+      // });
     }, function (error) {
+      console.log('facebook.login failed with:')
+      console.log(error)
       $scope.alert(error, null, 'Error', 'OK');
       $scope.loading = false;
     });
