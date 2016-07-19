@@ -271,8 +271,8 @@ angular.module('app.controllers').directive('iActivity', function ($rootScope, q
     'leader-news': newsCtrl,
     'crowdfunding-payment-request': paymentCtrl,
     'payment-request': paymentCtrl,
-    'micro-petition-post': postCtrl,
-    'micro-petition-petition': petitionCtrl,
+    'micro-petition:quorum': postCtrl,
+    'micro-petition:long-petition': petitionCtrl,
     'petition': petitionCtrl,
     'question': questionCtrl
   };

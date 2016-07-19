@@ -43,12 +43,7 @@ angular.module('app.services').factory('ActivityModel',
       },
 
       dataType: function(){
-        if(this.isUserPetitionType())
-          return 'micro-petition-petition'
-        else if(this.isUserPostType())
-          return 'micro-petition-post'
-        else
-          return this.get('entity').type
+        return this.get('entity').type
       },
       prepare: function () {
         if (this.get('entity').group_id) {
@@ -81,22 +76,13 @@ angular.module('app.services').factory('ActivityModel',
         return this.icons[this.get('entity').type];
       },
 
-      // temporary hack: https://github.com/PowerlineApp/powerline-mobile/issues/125#issuecomment-230410395
       isUserPetitionType: function(){
         var aType = this.get('entity').type
-        if(aType == 'micro-petition'){
-          var hasTitle = this.get('title') && this.get('title').length > 0
-          return(hasTitle)
-        } else
-        return false
+        return aType == 'micro-petition:long-petition'
       },
       isUserPostType: function(){
         var aType = this.get('entity').type
-        if(aType == 'micro-petition'){
-          var hasTitle = this.get('title') && this.get('title').length > 0
-          return(!hasTitle)
-        } else
-        return false
+        return aType == 'micro-petition:quorum'
       },
       isUnread: function(){
         return(!this.get('read'))
