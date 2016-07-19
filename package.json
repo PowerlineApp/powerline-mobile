@@ -19,6 +19,7 @@
     "cordova-plugin-console",
     "cordova-plugin-whitelist",
     "cordova-plugin-splashscreen",
+    "cordova-plugin-contacts",
     "ionic-plugin-keyboard",
     "cordova-plugin-dialogs",
     "cordova-plugin-camera",

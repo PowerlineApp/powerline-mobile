@@ -1,4 +1,4 @@
-angular.module('app.services').factory('follows', function ($http, JsCollection, JsModel, serverConfig, session) {
+angular.module('app.services').factory('follows', function ($http, JsCollection, JsModel, serverConfig, session, $q) {
 
   var follows = new JsCollection();
   follows.model = JsModel.extend({
@@ -106,6 +106,19 @@ angular.module('app.services').factory('follows', function ($http, JsCollection,
       return item.isFollower();
     });
   };
+
+  follows.loadAndGetFollowing = function(){
+    var deferred = $q.defer();
+    if(!follows.loaded){
+      follows.load().then(function(){
+        deferred.resolve(follows.getFollowing())
+      })
+    } else {
+      deferred.resolve(follows.getFollowing())
+    }
+
+    return deferred.promise;
+  }  
 
   return follows;
 });

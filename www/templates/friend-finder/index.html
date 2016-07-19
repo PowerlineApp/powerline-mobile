@@ -1,0 +1,28 @@
+<ion-view view-title="Friend Finder" hide-back-button="true" class="has-notifications-bar">
+  <ion-nav-buttons side="left">
+    <button menu-toggle="left" class="button button-icon icon ion-navicon"></button>
+  </ion-nav-buttons>
+
+  <ion-content class="content">
+    <section class="margin-8">
+      <button class="button" ng-click="search()">
+        Search Address Book Now
+      </button>
+    </section>
+
+  <section class="margin-8">
+    <ul class="profiles-list-two">
+      <li ng-repeat="friend in friends">
+        <figure ng-click="navigateTo('path', 'influence/profile', friend.id)">
+          <avatar-img img="friend.avatar_file_name" text="friend.first_name"></avatar-img>
+        </figure>
+        <p ng-click="navigateTo('path', 'influence/profile', friend.id)">{{ friend.username}}</p>
+        <p><span>{{ friend.first_name}} {{ friend.last_name}}</span></p>
+        <p class="btn-add" ng-click="add(friend)"></p>
+      </li>
+    </ul>
+  </section>
+
+  </ion-content>
+</ion-view>
+Contact GitHub API Training Shop Blog About

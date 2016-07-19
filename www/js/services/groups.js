@@ -171,7 +171,7 @@ angular.module('app.services').factory('groups',function ($resource, serverConfi
       });
     },
 
-    setMembeshipControlToPasscode(groupID, passcode){
+    setMembeshipControlToPasscode: function(groupID, passcode){
       var data = {membership_control: 'passcode', 
           membership_passcode: passcode}
       var payload = JSON.stringify(data)
