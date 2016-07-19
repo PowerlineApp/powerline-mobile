@@ -33,7 +33,7 @@ angular.module('app', [
 }).config(['uiGmapGoogleMapApiProvider', function (GoogleMapApi) {
   GoogleMapApi.configure({
     //    key: 'your api key',
-    v: '3.18',
+    v: '3.24',
     libraries: 'places'
     });
 }]);

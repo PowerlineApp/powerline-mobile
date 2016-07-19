@@ -9,7 +9,7 @@
     "iscroll": "5.0.5",
     "momentjs": "~2.4.0",
     "ionic": "driftyco/ionic-bower#1.1.0",
-    "angular-google-maps": "~2.0.6",
+    "angular-google-maps": "~2.3.3",
     "Autolinker.js": "~0.15.2",
     "angular-bindonce": "~0.3.3",
     "textarea-caret-position": "~3.0.0",
