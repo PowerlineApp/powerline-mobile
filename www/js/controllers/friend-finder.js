@@ -1,4 +1,4 @@
-angular.module('app.controllers').controller('friendFinderController', function ($scope, FriendFinder, follows) {
+angular.module('app.controllers').controller('friendFinderController', function ($scope, FriendFinder) {
   
   $scope.friends = []
   $scope.search = function(){
@@ -10,7 +10,9 @@ angular.module('app.controllers').controller('friendFinderController', function 
   }
 
   $scope.add = function (friend) {
-    console.log('todo')
+    FriendFinder.follow(friend).then(function(){
+       $scope.showToast('Follow request sent!');
+    })
   };
 })
 

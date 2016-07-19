@@ -106,7 +106,16 @@ angular.module('app.services').factory('FriendFinder', function ($http, serverCo
       })
 
       return deferred.promise
+    },
+
+    follow: function(friend){
+      var friendAsFollowable = follows.getByUserId(friend.id);
+      return friendAsFollowable.follow().then(function () {
+        follows.load()
+        friend.followButtonClicked = true
+      });   
     }
+
   }
 
   return friendFinderService
