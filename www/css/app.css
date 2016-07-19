@@ -1878,6 +1878,8 @@ select.choice-filter {
     background-position-y: -216px; }
   .nav li.settings-item i {
     background-position-y: -272px; }
+  .nav li.friend-finder-item i {
+    background-position-y: -102px; }
   .nav li.logout-item i {
     background-position-y: -384px; }
   .nav li.help-item i {
