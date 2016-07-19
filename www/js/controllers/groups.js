@@ -236,7 +236,10 @@ angular.module('app.controllers').controller('groups',function ($scope, groups, 
   function join(joinForm) {
     $scope.formClass = '';
     $scope.showSpinner();
-    groups.join(id).then(function (status) {
+    var passcode = null
+    if(joinForm) 
+      passcode = joinForm.passcode.$modelValue
+    groups.join(id, passcode).then(function (status) {
       $scope.showApproveMessage = !status;
       success();
     }, function (response) {

@@ -50,10 +50,15 @@ angular.module('app.services').factory('groups',function ($resource, serverConfi
       });
     },
 
-    join: function (id) {
-      return $http.put(serverConfig.url + '/api/v2/user/groups/' + id).then(function (response) {
+    join: function (id, passcode) {
+      var payload = null
+      var headers = {headers: {'Content-Type': 'application/json'}}
+      if(passcode)
+        payload = JSON.stringify({passcode: passcode})
+
+      return $http.put(serverConfig.url + '/api/v2/user/groups/' + id, payload, headers).then(function (response) {
         return response.status;
-      });
+      });   
     },
 
     unjoin: function (id) {
@@ -164,6 +169,16 @@ angular.module('app.services').factory('groups',function ($resource, serverConfi
 
         return model;
       });
+    },
+
+    setMembeshipControlToPasscode(groupID, passcode){
+      var data = {membership_control: 'passcode', 
+          membership_passcode: passcode}
+      var payload = JSON.stringify(data)
+      var headers = {headers: {'Content-Type': 'application/json'}}
+      return $http.put(serverConfig.url + '/api/v2/groups/'+groupID+'/membership', payload, headers).then(function(response){
+        return(response)
+      })
     }
   };
 
