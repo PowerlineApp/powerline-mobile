@@ -13,6 +13,12 @@ angular.module('app.services').factory('GroupModel', function(groupsInvites, $ht
       return this.fill_fields_required
     }
 
+    this.fieldsToFillOnJoin = function(){
+      return $http.get(serverConfig.url + '/api/v2/groups/'+this.id+'/fields').then(function(response){
+        console.log(response)
+      })      
+    }
+
     this.userHasInvitation = function(){
       return groupsInvites.hasInvite(this.id)
     }
