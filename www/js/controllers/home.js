@@ -241,16 +241,13 @@ angular.module('app.controllers').directive('iActivity', function ($rootScope, q
       $scope.answerAction = answer ? 'unsign' : 'sign';
     });
     $scope.sign = function () {
-      questions.load($scope.activity.get('entity').id).then(function (question) {
-        question.answer({
-          privacy: 0,
-          comment: '',
-          option_id: question.options[0].id
-        }).then(function (answer) {
-          $scope.activity.set('answer', answer).set('answered', true);
+      var petitionID = $scope.activity.get('entity').id
+      $scope.sending = true
+      petitions.answer(petitionID, 1).then(function(){
+          $scope.activity.set('answered', true);
           $scope.sending = false;
-        });
-      });
+      })
+
     };
     $scope.unsign = function () {
       $scope.answerAction = '';

@@ -127,6 +127,7 @@ angular.module('app.services').factory('petitions',function ($q, PetitionsResour
     getGroups: function () {
       return _(petitionsByGroup).pluck('group');
     },
+    
     answer: function(id, optionId) {
       var option = 'upvote'
       if(optionId == 2)
@@ -165,14 +166,9 @@ angular.module('app.services').factory('petitions',function ($q, PetitionsResour
       method: 'DELETE',
       params: {id: '@id'},
       url: serverConfig.url + '/api/v2/micro-petitions/:id/answer'
-    },
+    },   
     update: {
       method: 'PUT',
-      params: {id: '@id'},
-      url: serverConfig.url + '/api/micro-petitions/:id'
-    },
-    update: {
-      method: 'DELETE',
       params: {id: '@id'},
       url: serverConfig.url + '/api/micro-petitions/:id'
     }

@@ -172,15 +172,15 @@ angular.module('app.services').factory('groups',function ($resource, serverConfi
     },
 
     setMembeshipControlToPasscode: function(groupID, passcode){
-      var data = {membership_control: 'passcode', 
-          membership_passcode: passcode}
-      var payload = JSON.stringify(data)
-      var headers = {headers: {'Content-Type': 'application/json'}}
-      return $http.put(serverConfig.url + '/api/v2/groups/'+groupID+'/membership', payload, headers).then(function(response){
-        return(response)
-      })
+        var data = {membership_control: 'passcode', 
+            membership_passcode: passcode}
+        var payload = JSON.stringify(data)
+        var headers = {headers: {'Content-Type': 'application/json'}}
+        return $http.put(serverConfig.url + '/api/v2/groups/'+groupID+'/membership', payload, headers).then(function(response){
+          return(response)
+        })
     }
-  };
+  }
 
   function parseInfo(data) {
     data.full_address = _.compact([data.official_address, data.official_city, data.official_state]).join(', ');
