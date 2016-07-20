@@ -300,6 +300,8 @@ angular.module('app.controllers').directive('iActivity', function ($rootScope, q
         if (e && e.target.tagName.toLowerCase() === 'hash-tag') {
           $rootScope.openTag(angular.element(e.target).text());
         } else {
+          console.log('navigate to')
+          console.log(activity)
           $rootScope.navigateTo('activity', activity, focus);
         }
       };

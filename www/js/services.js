@@ -44,7 +44,8 @@ angular.module('app.services', [
 
   var activityRoutes = {
     'question': '/questions/',
-    'micro-petition': '/petition/',
+    'micro-petition:long-petition': '/petition/',
+    'micro-petition:quorum': '/petition/',
     'leader-news': '/question/news/',
     'petition': '/question/leader-petition/',
     'payment-request': '/payment-polls/payment-request/',
@@ -111,7 +112,10 @@ angular.module('app.services', [
       if(activityID == null)
         activityID = activity.get('entity').group_id
 
-      var path = activityRoutes[activityType] + activityID;
+      var activityRoute = activityRoutes[activityType]
+      if(activityRoute == null)
+        console.error('undefined route for activity type: '+activityType)
+      var path = activityRoute + activityID;
       if (focus) {
         $location.path(path).search('focus', focus);
       } else {
