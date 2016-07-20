@@ -9,6 +9,12 @@ angular.module('app.services').factory('GroupModel', function(groupsInvites, $ht
       return((this.groupMembershipIsPublic() && !this.requiredToFillFieldsOnJoin()) || this.userHasInvitation())
     }
 
+    this.members = function(){
+      return $http.get(serverConfig.url + '/api/v2/groups/'+this.id+'/users').then(function(response){
+        return(response.data.payload)
+      })  
+    }
+
     this.requiredToFillFieldsOnJoin = function(){
       return this.fill_fields_required
     }

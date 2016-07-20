@@ -102,6 +102,9 @@ angular.module('app.services', [
     'group-profile': function (group) {
       $location.path('/group/' + group.id);
     },
+    'group-members': function (group) {
+      $location.path('/group-members/' + group.id);
+    },    
     'group-join': function (group) {
       $location.path('/group/join/' + group.id);
     },

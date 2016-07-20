@@ -1,0 +1,31 @@
+<ion-view view-title="Group Members">
+  
+  <section ng-show="showPostWindow" class="new-post-window" ng-click="$event.stopPropagation()">
+    <a ng-click="followAll()" class="micropetition"><span class="text">Follow All</span></a>
+  </section>
+  <ion-content class="content">
+
+    <section class="p-header">
+      <div class="avatar">
+        <avatar-img img="group.avatar_file_path" text="group.official_title"></avatar-img>
+      </div>
+
+      <h3 ng-bind="group.official_title"></h3>
+      <br><br>
+    </section>
+
+  <section class="margin-8">
+    <ul class="profiles-list-two">
+      <li ng-repeat="member in groupMembers">
+        <figure ng-click="navigateTo('path', 'influence/profile', member.id)">
+          <avatar-img img="member.avatar_file_name" text="member.first_name"></avatar-img>
+        </figure>
+        <p ng-click="navigateTo('path', 'influence/profile', member.id)">{{ member.username}}</p>
+        <p><span>{{ member.first_name}} {{ member.last_name}}</span></p>
+        <p class="btn-add" ng-click="follow(member)" ng-show="!member.isFollowed"></p>
+      </li>
+    </ul>
+  </section>
+
+  </ion-content>
+</ion-view>

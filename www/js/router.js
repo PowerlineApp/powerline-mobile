@@ -204,6 +204,11 @@ angular.module('app')
       url: '/group/:id',
       templateUrl: 'templates/groups/profile.html',
       controller: 'groups.profile'
+    },{
+      name: 'groupMembers',
+      url: '/group-members/:id',
+      templateUrl: 'templates/groups/group-members.html',
+      controller: 'group.members'
     }, {
       name: 'groupsJoin',
       url: '/group/join/:id',

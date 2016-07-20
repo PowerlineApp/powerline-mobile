@@ -100,6 +100,10 @@ angular.module('app.controllers').controller('groups',function ($scope, groups, 
     return $scope.data && $scope.data.group_type === 0;
   };
 
+  $scope.goToMembers = function(){
+    $scope.navigateTo('group-members', $scope.data)
+  }
+
   $scope.invite = function () {
     $scope.confirmAction('Are you sure you want to invite all of your followers to join this group?').then(function () {
       var followers = influence.getFollowers().reduce(function (memo, item) {
@@ -212,7 +216,6 @@ angular.module('app.controllers').controller('groups',function ($scope, groups, 
     $scope.alert('Error occurred');
     $scope.back();
   });
-
 
   $scope.join = function (joinForm) {
     if (joinForm && joinForm.$invalid) {
