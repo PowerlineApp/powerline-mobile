@@ -112,7 +112,6 @@ angular.module('app.services').factory('FriendFinder', function ($http, serverCo
       var friendAsFollowable = follows.getByUserId(friend.id);
       return friendAsFollowable.follow().then(function () {
         follows.load()
-        friend.followButtonClicked = true
       });   
     }
 
