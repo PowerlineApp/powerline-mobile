@@ -71,6 +71,10 @@ angular.module('app.services').factory('GroupModel', function(groupsInvites, $ht
         that.joined = 0
       })
     }
+
+    this.followAllMembers = function(){
+      return $http.put(serverConfig.url + '/api/v2/user/group-followers/' + this.id)    
+    }
   }
 
   return model

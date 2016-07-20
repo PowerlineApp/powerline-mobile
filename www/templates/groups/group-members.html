@@ -10,8 +10,12 @@
         <avatar-img img="group.avatar_file_path" text="group.official_title"></avatar-img>
       </div>
 
-      <h3 ng-bind="group.official_title"></h3>
+      <h3 ng-bind="data.official_title"></h3>
       <br><br>
+      <button class="btn-large btn-primary"
+              ng-click="followAll()"
+              ng-hide="followingAll"
+              style="text-transform: capitalize;">Follow All</button>
     </section>
 
   <section class="margin-8">
