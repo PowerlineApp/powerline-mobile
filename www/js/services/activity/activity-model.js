@@ -91,7 +91,7 @@ angular.module('app.services').factory('ActivityModel',
         return(this.get('publish_status') == 1)
       },
       isExpired: function(){
-        this.get('expire_at') && Date.now() > this.get('expire_at').getTime()
+        return this.get('expire_at') && Date.now() > this.get('expire_at').getTime()
       },
       isInPriorityZone: function() {
         if(this.isUserPetitionType()){

@@ -30,7 +30,7 @@
     <div class="control" ng-show="sending">
       <spinner></spinner>
     </div>
-    <div class="control" ng-show="answerAction && !sending"><a ng-click="answer()">{{ answerAction }}</a></div>
+    <div class="control" ng-show="!activity.isExpired() && answerAction && !sending"><a ng-click="answer()">{{ answerAction }}</a></div>
     <div class="control"><a ng-click="navigateToActivity(activity, 'add-comment')" class="activity-control reply"></a></div>
     <div class="control" ng-show="showFollow">
       <a ng-click="followClicked()"><i class="icon" ng-class="followIcon()"></i></a>
