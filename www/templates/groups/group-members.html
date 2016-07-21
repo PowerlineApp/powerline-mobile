@@ -10,7 +10,7 @@
         <avatar-img img="group.avatar_file_path" text="group.official_title"></avatar-img>
       </div>
 
-      <h3 ng-bind="data.official_title"></h3>
+      <h3 ng-bind="group.official_title"></h3>
       <br><br>
       <button class="btn-large btn-primary"
               ng-click="followAll()"
@@ -25,8 +25,11 @@
           <avatar-img img="member.avatar_file_name" text="member.first_name"></avatar-img>
         </figure>
         <p ng-click="navigateTo('path', 'influence/profile', member.id)">{{ member.username}}</p>
-        <p><span>{{ member.first_name}} {{ member.last_name}}</span></p>
-        <p class="btn-add" ng-click="follow(member)" ng-show="!member.isFollowed"></p>
+        <p ng-show="!pendingApproval(member)"><span>{{ member.first_name}} {{ member.last_name}}</span></p>
+        <p ng-show="pendingApproval(member)" class="pending-message">pending approval</p>
+        <p class="btn-add" ng-click="follow(member)" ng-show="isFollowable(member)"></p>
+        <p class="btn-remove" ng-click="unfollow(member)"  ng-show="isUnfollowable(member)"></p>
+        
       </li>
     </ul>
   </section>
