@@ -11,8 +11,12 @@ angular.module('app.controllers').controller('influence.profile',
     $scope.hideSpinner();
   });
 
+  $scope.follow = null
   if (profile.get() && profile.get().id !== id) {
     $scope.follow = follows.getByUserId(id);
+  }
+  $scope.isFollowedAndApproved = function(){
+    return ($scope.follow && $scope.follow.isFollow() && $scope.follow.isApproved())
   }
 
   $scope.changeStatus = function (status) {

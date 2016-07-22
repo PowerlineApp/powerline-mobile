@@ -1,12 +1,13 @@
 <ion-view view-title="User Profile">
   <ion-content class="content">
-    <section class="p-header">
+    <section class="profile-header">
       <div class="avatar">
         <avatar-img img="data.avatar_file_name" text="data.first_name"></avatar-img>
       </div>
       <div>
-          <h3 ng-bind="data.username"></h3>
-          <p ng-bind="data.first_name + ' ' + data.last_name"></p>
+          <p class="title" ng-bind="data.first_name + ' ' + data.last_name"></p>
+          <p class="slogan" ng-bind="data.slogan" ng-show="isFollowedAndApproved()"></p>
+          <p ng-show="data.bio && isFollowedAndApproved()" style="clear: both;"><strong>Bio:</strong> {{ data.bio}}</p>
       </div>
       <br>
       <button class="btn-large"
