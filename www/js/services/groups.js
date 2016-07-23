@@ -44,17 +44,16 @@ angular.module('app.services').factory('groups',function ($resource, serverConfi
 
     loadSuggested: loadJoinCollections,
 
-    loadFields: function (id) {
-      return $http.get(serverConfig.url + '/api/groups/' + id + '/fields').then(function (response) {
-        return response.data;
-      });
-    },
-
-    join: function (id, passcode) {
-      var payload = null
+    join: function (id, passcode, answeredFields) {
+      var payload = {}
       var headers = {headers: {'Content-Type': 'application/json'}}
       if(passcode)
-        payload = JSON.stringify({passcode: passcode})
+        payload['passcode'] = passcode
+
+      if(answeredFields)
+        payload['fields'] = answeredFields
+      
+      payload = JSON.stringify(payload)
 
       return $http.put(serverConfig.url + '/api/v2/user/groups/' + id, payload, headers).then(function (response) {
         return response.status;

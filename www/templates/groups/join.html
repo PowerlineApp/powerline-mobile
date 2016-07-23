@@ -9,7 +9,7 @@
           </div>
         </fieldset>
 
-        <fieldset class="padding-v-10" ng-show="!group.canBeJoinedInstantly() && group.requiredToFillFieldsOnJoin()">
+        <fieldset class="padding-v-10" ng-show="!group.canBeJoinedInstantly()">
           <ng-form name="fields" ng-repeat="item in data.fields">
             <div class="text-field text-field-label" ng-class="invalidClass(fields.value.$invalid)">
               <label ng-bind="item.field.field_name" for="passcode_input_{{$index}}"></label>

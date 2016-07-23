@@ -129,6 +129,7 @@ angular.module('app.controllers').controller('groups',function ($scope, groups, 
       groups.unjoin($scope.data.id).then(function () {
         $rootScope.$broadcast('groups-updated');
         $scope.hideSpinner();
+         $scope.showToast('Successfully left group ' + $scope.data.official_title);
         $location.path('/groups');
       }, function () {
         $scope.hideSpinner();
@@ -190,12 +191,11 @@ angular.module('app.controllers').controller('groups',function ($scope, groups, 
   groups.loadAllDetails(id).then(function (group) {
     $scope.hideSpinner();
     $scope.group = group
+    
+    $scope.showSpinner();
+    group.fieldsToFillOnJoin().then(function (fields) {
 
-    if (group.canBeJoinedInstantly()) 
-      $scope.join();
-    else {
-      $scope.showSpinner();
-      groups.loadFields(id).then(function (fields) {
+      if(fields && fields.length > 0){
         $scope.hideSpinner();
         $scope.data.fields = [];
         _(fields).each(function (field) {
@@ -206,11 +206,14 @@ angular.module('app.controllers').controller('groups',function ($scope, groups, 
             }
           );
         });
-      }, function () {
-        $scope.hideSpinner();
-        $scope.alert('Error occurred');
-      });
-    }
+      } else if(group.groupMembershipIsPublic() || group.userHasInvitation())
+        $scope.join();
+
+    }, function () {
+      $scope.hideSpinner();
+      $scope.alert('Error occurred');
+    });
+    
 
   }, function () {
     $scope.alert('Error occurred');
@@ -240,9 +243,11 @@ angular.module('app.controllers').controller('groups',function ($scope, groups, 
     $scope.formClass = '';
     $scope.showSpinner();
     var passcode = null
-    if(joinForm) 
-      passcode = joinForm.passcode.$modelValue
-    groups.join(id, passcode).then(function (status) {
+    var answers = null
+
+    passcode = $scope.data.passcode
+    answeredFields = $scope.data.fields
+    groups.join(id, passcode, answeredFields).then(function (status) {
       $scope.showApproveMessage = !status;
       success();
     }, function (response) {
@@ -268,6 +273,7 @@ angular.module('app.controllers').controller('groups',function ($scope, groups, 
     $rootScope.$broadcast('groups-updated');
     $scope.hideSpinner();
     if (!$scope.showApproveMessage) {
+      $scope.showToast('Successfully joined group ' + $scope.group.official_title);
       $scope.path('/groups');
     }
   }

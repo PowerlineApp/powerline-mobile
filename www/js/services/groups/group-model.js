@@ -1,13 +1,9 @@
-angular.module('app.services').factory('GroupModel', function(groupsInvites, $http, serverConfig) {
+angular.module('app.services').factory('GroupModel', function(groupsInvites, $http, $q, serverConfig) {
   var model = function(){
     this.fillWith = function(data){
       $.extend(this, data)
       this.upper_title = this.official_title.toUpperCase();
     },
-
-    this.canBeJoinedInstantly = function(){
-      return((this.groupMembershipIsPublic() && !this.requiredToFillFieldsOnJoin()) || this.userHasInvitation())
-    }
 
     this.members = function(){
       return $http.get(serverConfig.url + '/api/v2/groups/'+this.id+'/users').then(function(response){
@@ -15,14 +11,18 @@ angular.module('app.services').factory('GroupModel', function(groupsInvites, $ht
       })  
     }
 
-    this.requiredToFillFieldsOnJoin = function(){
-      return this.fill_fields_required
-    }
-
     this.fieldsToFillOnJoin = function(){
-      return $http.get(serverConfig.url + '/api/v2/groups/'+this.id+'/fields').then(function(response){
-        console.log(response)
-      })      
+      var deferred = $q.defer();
+      var that = this
+      if(that._fieldsToFillOnJoin)
+        deferred.resolve(that._fieldsToFillOnJoin);
+      else {
+        $http.get(serverConfig.url + '/api/v2/groups/'+this.id+'/fields').then(function(response){
+          that._fieldsToFillOnJoin = response.data || []
+          deferred.resolve(that._fieldsToFillOnJoin);
+        })  
+      }
+      return deferred.promise;   
     }
 
     this.userHasInvitation = function(){
