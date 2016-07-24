@@ -1,10 +1,11 @@
 angular.module('app.services').factory('favorite',
-  function ($http, serverConfig) {
+  function ($http, serverConfig, $rootScope) {
     var _bookmarks = []
     return {
       load: function(){
         return $http.get(serverConfig.url + '/api/bookmarks/list/all/1').then(function(response){
           _bookmarks = response.data.items
+          $rootScope.$broadcast('favorites:updated',_bookmarks);
           return(_bookmarks)
         })
       },
