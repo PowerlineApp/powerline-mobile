@@ -1,12 +1,12 @@
-angular.module('app.controllers').controller('favorite', function ($scope, favorite) {
-  $scope.hasNoFavorites = function(){
-    return($scope.favorites.length == 0)
-  }
-
-  $scope.favorites = []
-
+angular.module('app.controllers').controller('favorite', function ($scope, favorite, ActivityModel) {
+  $scope.hasNoFavorites = false
+  $scope.showSpinner()
   favorite.load().then(function(favorites){
-    $scope.favorites = favorites
+    $scope.activities = favorites.map(function(f){
+      return new ActivityModel(f.detail)
+    })
+    $scope.hasNoFavorites = ($scope.activities.length == 0)
+    $scope.hideSpinner();
   })
 })
 
