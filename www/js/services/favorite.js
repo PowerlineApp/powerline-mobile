@@ -5,19 +5,19 @@ angular.module('app.services').factory('favorite',
       load: function(){
         return $http.get(serverConfig.url + '/api/bookmarks/list/all/1').then(function(response){
           _bookmarks = response.data.items
-          return(response.data.items)
+          return(_bookmarks)
         })
       },
 
       isBookmarked: function(activity){
         var bookmarkedIDs = _bookmarks.map(function(b){
-          return(b.item_id)
+          return(b.detail.id)
         })
-        var aID = activity.get('entity').id
+        var aID = activity.get('id')
         return (bookmarkedIDs.indexOf(aID) >= 0)
       },
       addBookmark: function(activity){
-        var aID = activity.get('entity').id
+        var aID = activity.get('id')
         var aType = activity.get('entity').type
         if(activity.isUserPetitionType() || activity.isUserPostType())
           aType = 'micro_petition'
@@ -30,9 +30,9 @@ angular.module('app.services').factory('favorite',
 
       removeBookmark: function(activity){
         var that = this
-        var aID = activity.get('entity').id
+        var aID = activity.get('id')
         var bookmark =  _bookmarks.find(function(b){
-          return(b.item_id = aID)
+          return(b.detail.id = aID)
         })
         var bID = bookmark.id
 
