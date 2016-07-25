@@ -50,8 +50,11 @@ angular.module('app.services').factory('groups',function ($resource, serverConfi
       if(passcode)
         payload['passcode'] = passcode
 
-      if(answeredFields)
-        payload['fields'] = answeredFields
+      if(answeredFields){
+        payload['fields'] = answeredFields.map(function(f){
+          return {'field': {'id': f.field.id}, 'field_value': f.field_value}
+        })
+      }
       
       payload = JSON.stringify(payload)
 
