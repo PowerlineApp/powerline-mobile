@@ -106,13 +106,12 @@ angular.module('app.controllers').controller('groups',function ($scope, groups, 
 
   $scope.invite = function () {
     $scope.confirmAction('Are you sure you want to invite all of your followers to join this group?').then(function () {
-      var followers = influence.getFollowers().reduce(function (memo, item) {
-        memo.push(item.follower.id);
-        return memo;
-      }, []);
+      var followersUsernames = influence.getFollowers().map(function (followerItem) {
+        return(followerItem.follower.username);
+      });
       $scope.showPostWindow = false;
       $scope.showSpinner();
-      invites.invite(id, followers).finally(function () {
+      invites.invite(id, followersUsernames).finally(function () {
         $scope.hideSpinner();
       });
     });

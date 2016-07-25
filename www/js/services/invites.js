@@ -10,17 +10,11 @@ angular.module('app.services').factory('invites', function (JsCollection, $http,
     get: function () {
       return invites;
     },
-    invite: function (id, followers) {
-      var data = [];
-      _(followers).each(function (followerId) {
-        data.push({
-          type: 'user-to-group',
-          group: {id: id},
-          user: {id: followerId}
-        });
-      });
-
-      return $http.post(serverConfig.url + '/api/invites/', data);
+    invite: function (id, usernames) {
+      var data = {users: usernames};
+      var payload = JSON.stringify(data)
+      var headers = {headers: {'Content-Type': 'application/json'}}
+      return $http.put(serverConfig.url + '/api/v2/groups/'+id+'/users', payload, headers)
     },
 
     remove: function (invite) {
