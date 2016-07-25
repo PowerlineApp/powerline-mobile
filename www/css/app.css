@@ -2765,8 +2765,7 @@ asterisk {
       vertical-align: middle; }
   .services-list li p {
     color: #1c1f22;
-    opacity: 0.4;
-    font-size: 11px;
+    font-size: 13px;
     line-height: 1.4; }
   .services-list li h2 {
     text-align: left;
