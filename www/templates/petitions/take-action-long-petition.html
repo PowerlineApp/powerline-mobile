@@ -1,0 +1,16 @@
+<section class="margin-h-10">
+    <div style="float: left;width: 50%;padding-top: 12px;" class="margin-v-20">
+        <div class="checkbox-privacy" ng-class="{checked: data.privacy}" ng-click="data.privacy = data.privacy ? 0 : 1" guide="privacy-option">
+            <i></i>
+            {{ data.privacy ? 'Username hidden' : 'Username visible'  }}
+        </div>
+    </div>
+    <div style="float: left;width: 50%;" class="margin-v-20">
+        <button class="btn-large btn-primary" ng-click="answer()">Sign</button>
+    </div>
+</section>
+
+<!--<section class="info-message" ng-show="q.is_answered && !loading">
+    Signed
+</section>-->
+<section class="margin-v-10" ng-controller="petition.answer-form" ng-include="'templates/petitions/answer-form.html'" ng-show="current"></section>

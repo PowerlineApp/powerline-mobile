@@ -229,11 +229,16 @@ function ($scope,  petitions, PetitionsResource, groups, $stateParams, errorForm
       $scope.shareBody = petition.petition_body;
       $scope.shareTitle = petition.title;
       $scope.shareImage = petition.share_picture;
-
       if ((petition.answer_id && petition.answer_id !== 3) || petition.expired || session.user_id === petition.user.id) {
-        $scope.subview = 'templates/petitions/results.html';
+        if(petition.type == 'quorum')
+          $scope.subview = 'templates/petitions/results-quorum.html';
+        else
+          $scope.subview = 'templates/petitions/results-long-petition.html';
       } else {
-        $scope.subview = 'templates/petitions/options.html';
+        if(petition.type == 'quorum')
+          $scope.subview = 'templates/petitions/take-action-quorum.html';
+        else
+          $scope.subview = 'templates/petitions/take-action-long-petition.html';
       }
 
       if (petition.answer_id && petition.answer_id === 3) {
