@@ -113,6 +113,7 @@ angular.module('app.controllers').controller('groups',function ($scope, groups, 
       $scope.showSpinner();
       invites.invite(id, followersUsernames).finally(function () {
         $scope.hideSpinner();
+        $scope.showToast('Invites sent!')
       });
     });
   };
