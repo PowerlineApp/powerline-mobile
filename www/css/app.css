@@ -1044,8 +1044,8 @@ select.choice-filter {
       .dropdown-1 .title .profile-avatar img {
         width: 22px; }
     .dropdown-1 .title span {
-      opacity: 0.3;
-      color: #fff; }
+      color: #fff;
+      font-size: 110%; }
     .dropdown-1 .title .icon-post {
       display: block;
       width: 35px;
