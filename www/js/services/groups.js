@@ -171,25 +171,6 @@ angular.module('app.services').factory('groups',function ($resource, serverConfi
 
         return model;
       });
-    },
-
-    addQuestionRequiredOnJoin: function(groupID, questionText){
-        var data = {field_name: questionText}
-        var payload = JSON.stringify(data)
-        var headers = {headers: {'Content-Type': 'application/json'}}
-        return $http.post(serverConfig.url + '/api/v2/groups/'+groupID+'/fields', payload, headers).then(function(response){
-          return(response)
-        })
-    },
-
-    setMembeshipControlToPasscode: function(groupID, passcode){
-        var data = {membership_control: 'passcode', 
-            membership_passcode: passcode}
-        var payload = JSON.stringify(data)
-        var headers = {headers: {'Content-Type': 'application/json'}}
-        return $http.put(serverConfig.url + '/api/v2/groups/'+groupID+'/membership', payload, headers).then(function(response){
-          return(response)
-        })
     }
   }
 
