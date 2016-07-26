@@ -305,7 +305,7 @@ angular.module('app.controllers').directive('iActivity', function ($rootScope, q
       };
 
       $scope.title = $scope.activity.get('title');
-      $scope.description = $sce.trustAsHtml(iParse.wrapHashTags($scope.activity.get('description')));
+      $scope.description = iParse.wrapHashTags($scope.activity.get('description'))
       $scope.avatar_file_path = $scope.activity.get('owner').avatar_file_path;
       $scope.iconClass = $scope.activity.getIcon();
       $scope.official_title = $scope.activity.get('owner').official_title;

@@ -18,7 +18,7 @@
   </div>
   <div class="item-content" ng-click="navigateToActivity(activity)">
     <p bo-if="activity.get('image_src')" class="picture"><img ng-src="{{imagePath}}" zoom-src="{{imagePath}}" zoom-view/></p>
-    <p ng-class="{unanswered: activity.isUnanswered() && !title}" ng-bind-html="description" ng-click="navigateToActivity(activity, null, $event)"></p>
+    <p ng-class="{unanswered: activity.isUnanswered() && !title}" bo-html="description" ng-click="navigateToActivity(activity, null, $event)"></p>
 
     <div ng-show="hasMetaData" style="margin-top:5px">
       <img src="{{image}}" style="width: :100%"/>
