@@ -207,9 +207,13 @@ angular.module('app.services').factory('groups',function ($resource, serverConfi
   function _createGroupModels(rawGroupsData) {
     rawGroupsData.forEach(function (rawGroupData) {
         var group = new GroupModel()
-        group.fillWith(rawGroupData)
-        groupsById[group.id] = group;
-        return group;
+        if(rawGroupData.official_title){
+          group.fillWith(rawGroupData)
+          groupsById[group.id] = group;
+        } else {
+          console.log('unable to process group data:')
+          console.log(JSON.stringify(rawGroupData))
+        }
       })
 
     _createLettersGroups();
