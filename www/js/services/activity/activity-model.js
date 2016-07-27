@@ -136,6 +136,10 @@ angular.module('app.services').factory('ActivityModel',
         }).then(function(resp) {
           return resp.data;
         });
+      },
+      
+      hasLinkPreviewMetadata: function(){
+        return !!this.get('metadata');
       }
     });
   })

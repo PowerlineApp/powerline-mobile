@@ -18,12 +18,7 @@
   <div class="item-content" ng-click="navigateToActivity(activity)">
 <p bo-if="activity.get('image_src')" class="picture"><img ng-src="{{imagePath}}" zoom-src="{{imagePath}}" zoom-view/></p>
     <p ng-class="{unanswered: activity.isUnanswered() && !title}" bo-html="description" ng-click="navigateToActivity(activity, null, $event)"></p>
-
-    <div ng-show="hasMetaData" style="margin-top:5px">
-      <img src="{{image}}" style="width: :100%"/>
-      <div style="font-weight:700;font-size:15px;color: #000;line-height:32px;">{{title}}</div>
-      <div style="font-size:14px;color: #666">{{meta_description}}</div>      
-    </div>
+    <ng-include src="'templates/home/activities/_link-preview-metadata.html'" ng-show="activity.hasLinkPreviewMetadata()">
   </div>
   <div class="item-footer">
     <div class="control" ng-show="showFollow">
