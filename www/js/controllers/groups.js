@@ -158,7 +158,7 @@ angular.module('app.controllers').controller('groups',function ($scope, groups, 
           _(permissions.getNew()).each(function (key) {
             message += '\n ' + (groups.permissionsLabels[key] || key);
           });
-          $scope.confirmAction(message, 'Permissions', 'OK,Cancel').then(function () {
+          $scope.confirmAction(message, 'Permissions', ['OK','Cancel']).then(function () {
             permissions.approveNew().save();
           }, function () {
             permissions.save();
@@ -230,7 +230,7 @@ angular.module('app.controllers').controller('groups',function ($scope, groups, 
         _(group.required_permissions).each(function (key) {
           message += '\n ' + groups.permissionsLabels[key];
         });
-        $scope.confirmAction(message, 'Permissions', 'OK,Cancel').then(function(){
+        $scope.confirmAction(message, 'Permissions',['OK','Cancel']).then(function(){
           join(joinForm);
         });
       } else {
