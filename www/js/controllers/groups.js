@@ -28,7 +28,7 @@ angular.module('app.controllers').controller('groups',function ($scope, groups, 
   };
   
   $rootScope.$on('groups-updated', function(){
-    loadGroups(true);
+    loadGroups(false);
   });
   
   //if this page is opened from menu or there is not data, we should refresh data
@@ -312,6 +312,7 @@ angular.module('app.controllers').controller('groups',function ($scope, groups, 
     } else {
       $scope.showSpinner();
       groups.create($scope.data).then(function (group) {
+        $scope.hideSpinner();
         $scope.alert('Way to go! You\'ve created a new Powerline group. Invite your followers from the next screen or login via our website for group management features. Check your e-mail for more information.', function () {
           $scope.path('/groups');
           $scope.execApply();

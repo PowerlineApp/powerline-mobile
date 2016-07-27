@@ -1,4 +1,4 @@
-angular.module('app.services').factory('groups',function ($resource, serverConfig, $q, $http, PermissionsModel, iStorage, GroupModel) {
+angular.module('app.services').factory('groups',function ($resource, serverConfig, $q, $http, PermissionsModel, iStorage, GroupModel, $rootScope) {
   var GROUPS_CACHE_ID = 'group-items';
   
 //        GROUP_TYPE_COUNTRY = 1,
@@ -39,6 +39,8 @@ angular.module('app.services').factory('groups',function ($resource, serverConfi
       var that = this
       return  $http.get(serverConfig.url + '/api/v2/user/groups').then(function (response){
         _createGroupModels(response.data.payload);
+        $rootScope.$broadcast('groups-updated');
+        iStorage.set('GROUPS_RAW_DATA', response.data.payload)
       });
     },
 
@@ -144,9 +146,11 @@ angular.module('app.services').factory('groups',function ($resource, serverConfi
     },
 
     create: function (data) {
+      var that = this
       var payload = JSON.stringify(data)
       var headers = {headers: {'Content-Type': 'application/json'}}
       return $http.post(serverConfig.url + '/api/v2/user/groups', payload, headers).then(function (response) {
+        that.load()
         return response.data;
       });
     },
@@ -256,6 +260,11 @@ angular.module('app.services').factory('groups',function ($resource, serverConfi
 
     return deferred.promise;
   }
+
+  if(iStorage.get('GROUPS_RAW_DATA'))
+    _createGroupModels(iStorage.get('GROUPS_RAW_DATA'))
+  
+    
 
   return service;
 })
