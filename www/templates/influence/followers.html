@@ -6,7 +6,11 @@
       </figure>
       <p ng-click="navigateTo('path', 'influence/profile', item.get('follower').id)">{{ item.get('follower').username}}</p>
       <p><span>{{ item.get('follower').first_name}} {{ item.get('follower').last_name}}</span></p>
-      <p class="btn-remove" ng-click="remove(item)"></p>
+      <a style="position:absolute; right: 10px; top: 25px" ng-click="remove(item)">
+        <i class="icon ion-person calm" style="font-size: 25px"></i>
+        <i class="icon ion-minus-circled" style="font-size: 14px; vertical-align: middle"></i> 
+      </a>
+
     </li>
   </ul>
 </section>
