@@ -10,12 +10,24 @@
           <p ng-show="data.bio && isFollowedAndApproved()" style="clear: both;"><strong>Bio:</strong> {{ data.bio}}</p>
       </div>
       <br>
-      <button class="btn-large"
-         ng-show="follow && (!follow.isFollow() || follow.isApproved())"
-         ng-click="changeStatus(follow.isFollow() ? 'unfollow' : 'follow')"
-         ng-bind="follow.isFollow() ? 'unfollow' : 'follow'"
-         ng-class="{'btn-primary': !follow.isFollow(), 'btn-red1': follow.isFollow()}"
-         style="text-transform: capitalize"></button>
+      <button class="btn-large btn-red1" 
+        style="text-transform: capitalize" 
+        ng-show="follow && follow.isApproved()"
+        ng-click="changeStatus('unfollow')">
+        <i class="icon ion-person" style="font-size: 25px"></i>
+        <i class="icon ion-minus-circled" style="font-size: 14px; vertical-align: middle"></i> 
+        <span style="margin-left: 5px; vertical-align: text-top">Unfollow</span>
+      </button>
+
+      <button class="btn-large btn-primary" 
+        style="text-transform: capitalize" 
+        ng-show="follow && !follow.isFollow()"
+        ng-click="changeStatus('follow')">
+        <i class="icon ion-person" style="font-size: 25px"></i>
+        <i class="icon ion-plus-circled" style="font-size: 14px; vertical-align: middle"></i> 
+        <span style="margin-left: 5px; vertical-align: text-top">Follow</span>
+      </button>
+
       <p ng-if="follow.isFollow() && !follow.isApproved()" style="font-style: italic;">pending approval</p>
     </section>
 
