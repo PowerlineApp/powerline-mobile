@@ -2913,6 +2913,11 @@ asterisk {
         padding-top: 3px; }
       .activities-list .item .item-footer .control.bookmark {
         padding-top: 2px; }
+      .activities-list .item .item-footer .control.follow {
+        padding-top: 2px; }
+        .activities-list .item .item-footer .control.follow a i:nth-of-type(2) {
+          font-size: 14px;
+          vertical-align: middle; }
       .activities-list .item .item-footer .control a, .activities-list .item .item-footer .control span {
         font-size: 13px;
         font-family: 'Lato Bold';
@@ -3045,6 +3050,16 @@ asterisk {
   text-align: center;
   font-style: italic;
   padding-top: 50px; }
+
+a.follow-action {
+  position: absolute;
+  right: 10px;
+  top: 25px; }
+  a.follow-action i:nth-of-type(1) {
+    font-size: 25px; }
+  a.follow-action i:nth-of-type(2) {
+    font-size: 14px;
+    vertical-align: middle; }
 
 .group {
   margin-bottom: 12px; }

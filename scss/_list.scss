@@ -853,6 +853,13 @@
         &.bookmark {
           padding-top: 2px;
         }
+        &.follow {
+          padding-top: 2px;
+          a i:nth-of-type(2){
+            font-size: 14px; 
+            vertical-align: middle;
+          }
+        }        
         a, span {
           font-size: 13px;
           font-family: 'Lato Bold';
@@ -1014,5 +1021,20 @@
     text-align: center;
     font-style: italic;
     padding-top: 50px;
+  }
+}
+
+a.follow-action {
+  position:absolute; 
+  right: 10px; 
+  top: 25px;
+
+  i:nth-of-type(1) {
+    font-size: 25px;
+  }
+
+  i:nth-of-type(2){
+    font-size: 14px; 
+    vertical-align: middle
   }
 }

@@ -32,14 +32,14 @@
         <p ng-show="!pendingApproval(member)"><span>{{ member.first_name}} {{ member.last_name}}</span></p>
         <p ng-show="pendingApproval(member)" class="pending-message">pending approval</p>
 
-        <a style="position:absolute; right: 10px; top: 25px" ng-click="follow(member)" ng-show="isFollowable(member)">
-          <i class="icon ion-person" style="font-size: 25px; color: #adb7c6"></i>
-          <i class="icon ion-plus-circled calm" style="font-size: 14px; vertical-align: middle"></i> 
+        <a class="follow-action" ng-click="follow(member)" ng-show="isFollowable(member)">
+          <i class="icon ion-person" style="color: #adb7c6"></i>
+          <i class="icon ion-plus-circled calm"></i> 
         </a>
 
-        <a style="position:absolute; right: 10px; top: 25px" ng-click="unfollow(member)" ng-show="isUnfollowable(member)">
-          <i class="icon ion-person calm" style="font-size: 25px"></i>
-          <i class="icon ion-minus-circled" style="font-size: 14px; vertical-align: middle; color: #adb7c6"></i> 
+        <a class="follow-action" ng-click="unfollow(member)" ng-show="isUnfollowable(member)">
+          <i class="icon ion-person calm"></i>
+          <i class="icon ion-minus-circled" style="color: #adb7c6"></i> 
         </a>
 
       </li>
