@@ -12,10 +12,14 @@
 
       <h3 ng-bind="group.official_title"></h3>
       <br><br>
-      <button class="btn-large btn-primary"
-              ng-click="followAll()"
-              ng-hide="followingAll"
-              style="text-transform: capitalize;">Follow All</button>
+      <button class="btn-large btn-primary" 
+        style="text-transform: capitalize" 
+        ng-click="followAll()"
+        ng-hide="followingAll">
+        <i class="icon ion-person-stalker" style="font-size: 25px"></i>
+        <i class="icon ion-plus-circled" style="font-size: 14px; vertical-align: middle"></i> 
+        <span style="margin-left: 5px; vertical-align: text-top">Follow All</span>
+      </button>              
     </section>
 
   <section class="margin-8">
@@ -27,9 +31,17 @@
         <p ng-click="navigateTo('path', 'influence/profile', member.id)">{{ member.username}}</p>
         <p ng-show="!pendingApproval(member)"><span>{{ member.first_name}} {{ member.last_name}}</span></p>
         <p ng-show="pendingApproval(member)" class="pending-message">pending approval</p>
-        <p class="btn-add" ng-click="follow(member)" ng-show="isFollowable(member)"></p>
-        <p class="btn-remove" ng-click="unfollow(member)"  ng-show="isUnfollowable(member)"></p>
-        
+
+        <a style="position:absolute; right: 10px; top: 25px" ng-click="follow(member)" ng-show="isFollowable(member)">
+          <i class="icon ion-person" style="font-size: 25px; color: #adb7c6"></i>
+          <i class="icon ion-plus-circled calm" style="font-size: 14px; vertical-align: middle"></i> 
+        </a>
+
+        <a style="position:absolute; right: 10px; top: 25px" ng-click="unfollow(member)" ng-show="isUnfollowable(member)">
+          <i class="icon ion-person calm" style="font-size: 25px"></i>
+          <i class="icon ion-minus-circled" style="font-size: 14px; vertical-align: middle; color: #adb7c6"></i> 
+        </a>
+
       </li>
     </ul>
   </section>

@@ -8,7 +8,7 @@
       <p ng-if="item.isApproved()"><span>{{ item.get('user').first_name}} {{ item.get('user').last_name}}</span></p>
       <a style="position:absolute; right: 10px; top: 25px" ng-click="unfollow(item)">
         <i class="icon ion-person calm" style="font-size: 25px"></i>
-        <i class="icon ion-minus-circled" style="font-size: 14px; vertical-align: middle"></i> 
+        <i class="icon ion-minus-circled" style="font-size: 14px; vertical-align: middle; color: #adb7c6"></i> 
       </a>
       <p ng-if="!item.isApproved()" class="pending-message">pending approval</p>
     </li>
