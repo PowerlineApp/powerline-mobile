@@ -19,7 +19,7 @@
   <div class="item-content" ng-click="navigateToActivity(activity, null, $event)">
     <p bo-if="activity.get('image_src')" class="picture"><img ng-src="{{imagePath}}" zoom-src="{{imagePath}}" zoom-view/></p>
     <p ng-class="{unanswered: activity.isUnanswered() && !title}" bo-html="description" ng-click="navigateToActivity(activity, null, $event)"></p>
-    <ng-include src="'templates/home/activities/_link-preview-metadata.html'" ng-show="activity.hasLinkPreviewMetadata()">
+    <ng-include src="'templates/home/activities/_link-preview-metadata.html'" ng-show="activity.hasLinkPreviewMetadata()"></ng-include>
   </div>
   <div class="item-footer">
     <div class="control" ng-show="sending">
@@ -35,9 +35,7 @@
       <a ng-click="unsign()">undo</a>
     </div>
     <div class="control"><a ng-click="navigateToActivity(activity, 'add-comment')" class="activity-control reply"></a></div>
-    <div class="control" ng-show="showFollow">
-      <a ng-click="followClicked()"><i class="icon" ng-class="followIcon()"></i></a>
-    </div>
+    <ng-include src="'templates/home/activities/_follow.html'" ng-show="showFollow"></ng-include>
     <div class="control notification">
       <a ng-click="onSubscribeBtnClicked()"><i ng-class="'ion-android-notifications'" style="font-size: 22px;" ng-style="mutingStyle"></i></a>
     </div>
