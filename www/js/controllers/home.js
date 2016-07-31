@@ -226,20 +226,9 @@ angular.module('app.controllers').directive('iActivity', function ($rootScope, q
 
   function petitionCtrl($scope) {
     $scope.templateSrc = 'templates/home/activities/petition.html';
-    $scope.answer = function () {
-      $scope.sending = true;
-      if ($scope.answerAction === 'sign') {
-        $scope.sign();
-      } else {
-        $scope.unsign();
-      }
-      $scope.answerAction = '';
-    };
-    $scope.$watch(function () {
-      return $scope.activity.get('answer');
-    }, function (answer) {
-      $scope.answerAction = answer ? 'unsign' : 'sign';
-    });
+    $scope.canBeSigned = !$scope.activity.isExpired() && !$scope.activity.get('answers')
+    $scope.canBeUnsigned = !$scope.activity.isExpired() && !!$scope.activity.get('answers')
+
     $scope.sign = function () {
       var petitionID = $scope.activity.get('entity').id
       $scope.sending = true
