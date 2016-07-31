@@ -94,12 +94,7 @@ angular.module('app.services').factory('ActivityModel',
         return this.get('expire_at') && Date.now() > this.get('expire_at').getTime()
       },
       isInPriorityZone: function() {
-        if(this.isUserPetitionType()){
-          return(this.isUnread())
-        } else if(this.isUserPostType()){
-          return(this.isBoosted() && !this.isExpired())
-        } else
-        	return(false)
+        return (this.get('zone') == 'prioritized')
       },
       getSortMultiplier: function () {
         if (this.isExpired()) {
