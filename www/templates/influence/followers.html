@@ -1,6 +1,6 @@
 <section ng-controller="influences.followers" class="margin-8">
   <ul class="profiles-list-two">
-    <li ng-repeat="item in data" ng-if="item.isApproved()">
+    <li ng-repeat="item in data">
       <figure ng-click="navigateTo('path', 'influence/profile', item.get('follower').id)">
         <avatar-img img="item.get('follower').avatar_file_name" text="item.get('follower').first_name"></avatar-img>
       </figure>
@@ -12,4 +12,8 @@
       </a>
     </li>
   </ul>
+
+  <p class="info-message" ng-hide="data && data.length > 0">
+    Well, that's a bummer. It looks like no one is following you.
+  </p>
 </section>

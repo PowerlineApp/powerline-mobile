@@ -128,7 +128,6 @@ angular.module('app.services').factory('influence',function (InfluenceResource, 
     getFollowers: function () {
       return influenceData.followers;
     },
-
     getWaitingApproveFollowers: function () {
       return influenceData.waitingApproveFollowers;
     }

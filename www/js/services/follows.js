@@ -117,6 +117,10 @@ angular.module('app.services').factory('follows', function ($http, JsCollection,
     return(f)
   };
 
+  follows.getApprovedFollowers = function () {
+      return this.getFollowers().filter(function(f){return f.isApproved()});
+  }  
+
   follows.loadAndGetFollowing = function(){
     var deferred = $q.defer();
     if(!follows.loaded){
