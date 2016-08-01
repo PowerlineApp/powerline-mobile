@@ -118,8 +118,10 @@ angular.module('app.controllers').controller('home', function ($scope, $timeout,
   $scope.$watch('filter.selectedGroup', function (nVal) {
     if (typeof (nVal) !== undefined) {
       $ionicPlatform.ready(function () {
-        $ionicScrollDelegate.resize();
-        $ionicScrollDelegate.scrollTop();
+        if($ionicScrollDelegate){
+          $ionicScrollDelegate.resize();
+          $ionicScrollDelegate.scrollTop();
+        }
       })
     }
   });
