@@ -6,11 +6,30 @@ angular.module('app.controllers').controller('home', function ($scope, $timeout,
   $scope.isLoadMore = false;
   var activityCollection = activity.getActivities();
 
+  $scope.changeGroupFilter = function(group){
+    var isDifferentGroupThanCurrentlyActive = $scope.filter.selectedGroup != group
+    if(!$scope.isSpinnerShow && isDifferentGroupThanCurrentlyActive)
+      $scope.showSpinner();
+    
+    if(isDifferentGroupThanCurrentlyActive){
+      // we want to make sure the spinner is displayed prior the rendering starts
+      $timeout(function(){
+        $scope.filter.selectedGroup = group
+      }, 0);
+    }
+
+  }
+
   function refreshListOfActivities() {
     if(homeCtrlParams.filter.selectedGroup)
       $scope.activities = homeCtrlParams.filter.selectedGroup.activities
     else
       $scope.activities = activityCollection.getFilteredModels();
+    
+    //we want to wait until rendering is finished
+    $timeout(function(){
+      $scope.hideSpinner()
+    }, 0);
   } 
 
   function setFiltersData() {

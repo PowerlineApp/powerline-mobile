@@ -14,14 +14,14 @@
   <section ng-include="'templates/notifications.html'"></section>
   <section class="groups-filter-panel">
     <div class="article-list-filter">
-      <div ng-click="filter.selectedGroup = null" ng-class="{selected: !filter.selectedGroup}">
+      <div ng-click="changeGroupFilter(null)" ng-class="{selected: !filter.selectedGroup}">
         <figure>
           <img src="images/v2/icons/all-group.png" />
           <span ng-show="filter.inPriorityZoneCount" ng-bind="filter.inPriorityZoneCount"></span>
         </figure>
         <span>All</span>
       </div>
-      <div ng-repeat="group in filter.groups.slice(0, 3)" ng-click="filter.selectedGroup = group"
+      <div ng-repeat="group in filter.groups.slice(0, 3)" ng-click="changeGroupFilter(group)"
            ng-class="{selected: group == filter.selectedGroup, read: group.read}">
         <figure>
           <img ng-src="{{ group.getIcon()}}" />
