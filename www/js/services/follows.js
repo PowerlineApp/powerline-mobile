@@ -46,7 +46,7 @@ angular.module('app.services').factory('follows', function ($http, JsCollection,
       return this.isFollowing() ? this.has('id') : follows.getByUserId(this.get('follower').id).has('id');
     },
     isApproved: function () {
-      return 1 === this.get('status');
+      return 'active' === this.get('status');
     },
     isFollowing: function () {
       return this.get('follower').id === session.user_id;
@@ -57,9 +57,9 @@ angular.module('app.services').factory('follows', function ($http, JsCollection,
   });
 
   follows.load = function () {
-    return $http.get(serverConfig.url + '/api/follow/').then(function (response) {
+    return $http.get(serverConfig.url + '/api/v2/user/followers').then(function (response) {
       follows.loaded = true;
-      return follows.set(response.data);
+      return follows.set(response.data.payload);
     });
   };
   follows.getByUserId = function (id) {
@@ -97,14 +97,16 @@ angular.module('app.services').factory('follows', function ($http, JsCollection,
     return follow;
   };
   follows.getFollowing = function () {
-    return this.filter(function (item) {
+    var f = this.filter(function (item) {
       return item.isFollowing();
-    });
+    })
+    return(f)
   };
   follows.getFollowers = function () {
-    return this.filter(function (item) {
+    var f =  this.filter(function (item) {
       return item.isFollower();
     });
+    return(f)
   };
 
   follows.loadAndGetFollowing = function(){
