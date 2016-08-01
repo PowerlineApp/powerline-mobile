@@ -21,7 +21,7 @@ angular.module('app.services').factory('favorite',
         var aID = activity.get('id')
         var aType = activity.get('entity').type
         if(activity.isUserPetitionType() || activity.isUserPostType())
-          aType = 'micro_petition'
+          aType = 'micro-petition'
 
         var that = this
         $http.post(serverConfig.url + '/api/bookmarks/add/'+aType+'/'+aID).then(function(){
