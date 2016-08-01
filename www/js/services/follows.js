@@ -2,6 +2,14 @@ angular.module('app.services').factory('follows', function ($http, JsCollection,
 
   var follows = new JsCollection();
   follows.model = JsModel.extend({
+    _put2: function () {
+      console.log(JSON.stringify(this))
+      var payload = this.toJSON()
+      var headers = {headers: {'Content-Type': 'application/json'}}
+      return $http.patch(serverConfig.url + '/api/v2/user/followers/' + this.get('id'), payload, headers).then(function () {
+        return follows.load();
+      });
+    },
     _put: function () {
       return $http.put(serverConfig.url + '/api/follow/' + this.get('id'), this.toJSON()).then(function () {
         return follows.load();
@@ -21,11 +29,11 @@ angular.module('app.services').factory('follows', function ($http, JsCollection,
       return follows;
     },
     approve: function () {
-      this.set('status', 1);
+      this.set('status', 'active');
       return this._put();
     },
     unapprove: function () {
-      this.set('status', 0);
+      this.set('status', 'inactive');
       return this._put();
     },
     follow: function () {
