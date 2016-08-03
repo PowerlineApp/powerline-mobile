@@ -15,7 +15,7 @@
 
       <ul ng-show="popularItems.length" class="profiles-list margin-v-10">
         <li class="title">Popular Groups</li>
-        <li ng-repeat="item in popularItems">
+        <li ng-repeat="item in popularItems | limitTo:5">
           <figure ng-click="navigateTo('group-profile', item)">
             <avatar-img img="item.avatar_file_path" text="item.official_title"></avatar-img>
           </figure>
@@ -26,7 +26,7 @@
 
       <ul ng-show="newItems.length" class="profiles-list margin-v-10">
         <li class="title">New Groups</li>
-        <li ng-repeat="item in newItems">
+        <li ng-repeat="item in newItems | limitTo:5">
           <figure ng-click="navigateTo('group-profile', item)">
             <avatar-img img="item.avatar_file_path" text="item.official_title"></avatar-img>
           </figure>

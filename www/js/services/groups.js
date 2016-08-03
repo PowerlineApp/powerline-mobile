@@ -91,9 +91,7 @@ angular.module('app.services').factory('groups',function ($resource, serverConfi
     },
 
     getPopularGroups: function () {
-      return $http.get(serverConfig.url + '/api/groups/popular').then(function (response) {
-        return response.data.status;
-      });
+      return popularGroups
     },
 
     getNewGroups: function () {
