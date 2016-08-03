@@ -1850,8 +1850,7 @@ select.choice-filter {
     width: 100%;
     text-align: center; }
   .nav li {
-    border-bottom: solid 1px #31316e;
-    border-left: solid 1px #31316e;
+    border: solid 1px #31316e;
     float: left;
     width: 50%;
     color: #fff;

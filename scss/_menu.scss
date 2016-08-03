@@ -16,8 +16,7 @@ $menuBorderBottomColor: #31316e;
   }
 
   li {
-    border-bottom: solid 1px $menuBorderBottomColor;
-    border-left: solid 1px $menuBorderBottomColor;
+    border: solid 1px $menuBorderBottomColor;
     float: left; 
     width: 50%;
     color: $menuColor;
