@@ -31,6 +31,7 @@ angular.module('app.controllers').controller('influence.profile',
     } else {
       $scope.follow[status]().then(function(){
         $rootScope.$broadcast('influences-updated');
+        $scope.showToast('Follow request sent!');
         $state.reload();
       }, $state.reload);
     }
@@ -174,6 +175,7 @@ angular.module('app.controllers').controller('influence.profile',
     $scope.showSpinner();
     item.$changeStatus({status: 'follow'}, loaded, loaded);
     $scope.results = _($scope.results).without(item);
+    $scope.showToast('Follow request sent!');
   };
 
   $scope.facebookFollow = function (item) {
