@@ -51,7 +51,10 @@ function ($scope,  petitions, PetitionsResource, groups, $stateParams, errorForm
 
   $scope.back = function(){
     $scope.hideSpinner();
-    $rootScope.showToast('Sent!');
+    if($scope.data.type == 'quorum')
+      $rootScope.showToast('Post successfully created!');
+    else 
+      $rootScope.showToast('Petition successfully created!');
     $rootScope.back();
   };
 

@@ -36,6 +36,7 @@ angular.module('app.controllers').controller('discussion',function ($scope, topB
   $scope.$on('discussion.comment-added', function () {
     //if (!isWidget) {
       loadComments();
+      $scope.showToast('Comment successfully added.');
     //}
   });
 
