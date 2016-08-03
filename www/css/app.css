@@ -1847,23 +1847,25 @@ select.choice-filter {
   .nav .bar-header, .nav ion-content {
     background-color: transparent; }
   .nav .menu-items {
-    width: 100%; }
+    width: 100%;
+    text-align: center; }
   .nav li {
-    height: 57px;
     border-bottom: solid 1px #31316e;
+    border-left: solid 1px #31316e;
+    float: left;
+    width: 50%;
     color: #fff;
-    font-size: 15px;
-    line-height: 57px; }
+    font-size: 15px; }
     .nav li i {
       display: block;
-      height: 57px;
-      width: 64px;
-      float: left;
+      height: 50px;
+      width: 84px;
+      margin-top: -5px;
       background-image: url("../images/v2/icons/menu-sprite.png");
       background-size: 129px 585px;
       background-repeat: no-repeat;
       background-position-y: 55px;
-      background-position-x: -63px; }
+      background-position-x: -27px; }
   .nav li.home-item i {
     background-position-y: 11px; }
   .nav li.groups-item i {
