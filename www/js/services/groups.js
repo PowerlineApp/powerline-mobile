@@ -27,8 +27,6 @@ angular.module('app.services').factory('groups',function ($resource, serverConfi
 
   var JoinGroups = $resource(serverConfig.url + '/api/groups/:sort', {sort: ''});
   var groupsById = {};
-  var unjoinedGroups = [];
-  /* only joined */
   var lettersGroups = [];
 
   var popularGroups = [];
@@ -71,12 +69,11 @@ angular.module('app.services').factory('groups',function ($resource, serverConfi
       promise = group.unjoin()
       promise.then(function(){
         _createLettersGroups()
-        _createUnjoinedGroups()
       })
       return promise
     },
 
-    getAll: function () {
+    getAllUserGroups: function () {
       var groups = _.values(groupsById);
       var sortedGroups = _.chain(groups).compact().sortBy('upper_title').value();
       return(sortedGroups)
@@ -99,7 +96,7 @@ angular.module('app.services').factory('groups',function ($resource, serverConfi
     },
 
     groupsJoinedByCurrentUser: function () {
-      var result = service.getAll().filter(function(g){
+      var result = service.getAllUserGroups().filter(function(g){
         return g.joinedByCurrentUser()
       })
 
@@ -189,7 +186,9 @@ angular.module('app.services').factory('groups',function ($resource, serverConfi
 
     if (lastSearchQuery !== query) {
       var searchQuery = query.toUpperCase();
-      lastSearchItems = _(this.getAll()).filter(function (item) {
+      console.log('search query: '+searchQuery)
+      console.log(this.getAll().map(function(g){return g.official_title}))
+      lastSearchItems = _(this.getAllUserGroups()).filter(function (item) {
         if (item.group_type !== 0) {
           return false;
         }
@@ -219,13 +218,12 @@ angular.module('app.services').factory('groups',function ($resource, serverConfi
       })
 
     _createLettersGroups();
-    _createUnjoinedGroups();
   }
 
   function _createLettersGroups() {
     lettersGroups = [];
     var lettersHash = {};
-    _(service.getAll()).each(function (group) {
+    _(service.getAllUserGroups()).each(function (group) {
       if (!group.groupTypeIsCommon() || !group.joinedByCurrentUser()) {
         return;
       }
@@ -243,12 +241,6 @@ angular.module('app.services').factory('groups',function ($resource, serverConfi
     Object.keys(lettersHash).sort().forEach(function(letter){
       lettersGroups.push(lettersHash[letter]);
     })
-  }
-
-  function _createUnjoinedGroups(){
-    unjoinedGroups = _(service.getAll()).filter(function (group) {
-      return !group.joined && group.groupTypeIsCommon();
-    });
   }
 
   function loadJoinCollections() {
