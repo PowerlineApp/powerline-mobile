@@ -24,7 +24,10 @@
           </figure>
           <p ng-click="navigateTo('path', 'influence/profile', item.id)">{{ item.username}}</p>
           <p><span>{{ item.first_name}} {{ item.last_name}}</span></p>
-          <p class="btn-plus-1" ng-click="follow(item)"></p>
+          <a class="follow-action" ng-click="follow(item)">
+            <i class="icon ion-person" style="color: #adb7c6"></i>
+            <i class="icon ion-plus-circled calm"></i> 
+          </a>
         </li>
       </ul>
       <button class="btn-large btn-primary margin-v-10" ng-click="more()" ng-hide="(results.length < data.page * data.max_count) || loading">See More</button><br>
