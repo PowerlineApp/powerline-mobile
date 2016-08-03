@@ -264,6 +264,7 @@ function ($scope,  petitions, PetitionsResource, groups, $stateParams, errorForm
       $scope.hideSpinner();
       homeCtrlParams.loaded = false;
       $state.reload();
+      $scope.showToast('Your opinion was submitted!');
     }, function () {
       $scope.hideSpinner();
       $state.reload();
