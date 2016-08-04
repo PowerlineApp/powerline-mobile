@@ -12,25 +12,25 @@ $menuBorderBottomColor: #31316e;
 
   .menu-items {
     width: 100%;
+    text-align: center;
   }
 
   li {
-    height: 57px;
-    border-bottom: solid 1px $menuBorderBottomColor;
+    border: solid 1px $menuBorderBottomColor;
+    float: left; 
+    width: 50%;
     color: $menuColor;
     font-size: 15px;
-    line-height: 57px;
-
     i {
       display: block;
-      height: 57px;
-      width: 64px;
-      float: left;
+      height: 50px;
+      width: 84px;
+      margin-top: -5px;
       background-image: url("../images/v2/icons/menu-sprite.png");
-      background-size: 129px 585px;
+      background-size: 129px 630px;
       background-repeat: no-repeat;
       background-position-y: 55px;
-      background-position-x: -63px;
+      background-position-x: -27px;
     }
 
   }
@@ -38,15 +38,16 @@ $menuBorderBottomColor: #31316e;
   li.home-item i {background-position-y: 11px;}
   li.groups-item i {background-position-y: -47px;}
   li.influences-item i {background-position-y: -102px;}
-  li.representatives-item i {background-position-y: -161px;}
-  li.other-item i {background-position-y: -328px;}
-  li.profile-item i {background-position-y: -216px;}
-  li.settings-item i {background-position-y: -272px;}
+  li.representatives-item i {background-position-y: -157px;}
+  li.other-item i {background-position-y: -320px;}
+  li.profile-item i {background-position-y: -210px;}
+  li.settings-item i {background-position-y: -265px;}
   li.friend-finder-item i {background-position-y: -102px;}
-  li.logout-item i {background-position-y: -384px;}
-  li.help-item i {background-position-y: -443px;}
-  li.share-item i {background-position-y: -493px;}
-  li.favorite-item i {background-position-y: -542px;}
+  li.logout-item i {background-position-y: -377px;}
+  li.help-item i {background-position-y: -430px;}
+  li.share-item i {background-position-y: -482px;}
+  li.favorite-item i {background-position-y: -528px;}
+  li.searching-item i {background-position-y: -576px;}
 
   li.active,
   li.ng-click-active,

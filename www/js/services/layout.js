@@ -82,9 +82,10 @@ angular.module('app.services').factory('topBar',function ($location) {
   return {
     items: [
       new MenuItem('Home', '/main', 'home-item'),
+      new MenuItem('Search', '/search', 'searching-item'),
       new MenuItem('My Groups', '/groups', 'groups-item'),
       new MenuItem('My Influences', '/influences', 'influences-item'),
-      new MenuItem('My Representatives', '/representatives', 'representatives-item'),
+      new MenuItem('Representatives', '/representatives', 'representatives-item'),
       new MenuItem('Favorites', '/favorite-main', 'favorite-item'),
       new MenuItem('My Profile', '/profile', 'profile-item'),
       new MenuItem('Settings', '/settings', 'settings-item'),

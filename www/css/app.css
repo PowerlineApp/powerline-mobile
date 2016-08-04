@@ -1847,23 +1847,24 @@ select.choice-filter {
   .nav .bar-header, .nav ion-content {
     background-color: transparent; }
   .nav .menu-items {
-    width: 100%; }
+    width: 100%;
+    text-align: center; }
   .nav li {
-    height: 57px;
-    border-bottom: solid 1px #31316e;
+    border: solid 1px #31316e;
+    float: left;
+    width: 50%;
     color: #fff;
-    font-size: 15px;
-    line-height: 57px; }
+    font-size: 15px; }
     .nav li i {
       display: block;
-      height: 57px;
-      width: 64px;
-      float: left;
+      height: 50px;
+      width: 84px;
+      margin-top: -5px;
       background-image: url("../images/v2/icons/menu-sprite.png");
-      background-size: 129px 585px;
+      background-size: 129px 630px;
       background-repeat: no-repeat;
       background-position-y: 55px;
-      background-position-x: -63px; }
+      background-position-x: -27px; }
   .nav li.home-item i {
     background-position-y: 11px; }
   .nav li.groups-item i {
@@ -1871,23 +1872,25 @@ select.choice-filter {
   .nav li.influences-item i {
     background-position-y: -102px; }
   .nav li.representatives-item i {
-    background-position-y: -161px; }
+    background-position-y: -157px; }
   .nav li.other-item i {
-    background-position-y: -328px; }
+    background-position-y: -320px; }
   .nav li.profile-item i {
-    background-position-y: -216px; }
+    background-position-y: -210px; }
   .nav li.settings-item i {
-    background-position-y: -272px; }
+    background-position-y: -265px; }
   .nav li.friend-finder-item i {
     background-position-y: -102px; }
   .nav li.logout-item i {
-    background-position-y: -384px; }
+    background-position-y: -377px; }
   .nav li.help-item i {
-    background-position-y: -443px; }
+    background-position-y: -430px; }
   .nav li.share-item i {
-    background-position-y: -493px; }
+    background-position-y: -482px; }
   .nav li.favorite-item i {
-    background-position-y: -542px; }
+    background-position-y: -528px; }
+  .nav li.searching-item i {
+    background-position-y: -576px; }
   .nav li.active,
   .nav li.ng-click-active,
   .nav li.activated {
