@@ -5,13 +5,16 @@
 
   <div class="bar bar-subheader bar-search">
     <div class="filter">
-      <input type="text" placeholder="Search for Groups" ng-model="data.search" />
+      <input type="text" 
+      placeholder="Search for Groups" 
+      ng-model="data.search"
+      ng-model-options="{ debounce: 500 }" />
       <i class="icon ion-ios-search"></i>
     </div>
   </div>
   <ion-content class="content has-subheader">
 
-    <div ng-controller="groups.search.join-groups" ng-show="!isSearchActive" class="margin-10">
+    <div ng-controller="groups.search.join-groups" ng-show="!displaySearchResults" class="margin-10">
 
       <ul ng-show="popularItems.length" class="profiles-list margin-v-10">
         <li class="title">Popular Groups</li>
@@ -36,7 +39,7 @@
       </ul>
     </div>
 
-    <ul ng-show="isSearchActive" class="profiles-list margin-10">
+    <ul ng-show="displaySearchResults" class="profiles-list margin-10">
       <li class="title">Results</li>
       <li ng-repeat="item in searchItems">
         <figure ng-click="navigateTo('group-profile', item)">
@@ -47,6 +50,11 @@
         <p ng-if="item.status === 1" class="btn-remove" ng-click="unjoin(item)"></p>
         <p ng-if="item.status === 0" class="pending-message">pending approval</p>
       </li>
+      <li ng-show="searchItems.length == 0">
+       No results were found.
+      </li>
     </ul>
+
+   
   </ion-content>
 </ion-view>

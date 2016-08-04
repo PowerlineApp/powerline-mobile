@@ -105,7 +105,11 @@ angular.module('app.services').factory('groups',function ($resource, serverConfi
       });
     },
 
-    search: search,
+    search: function(query){
+      return $http.get(serverConfig.url + '/api/search?query='+query).then(function (response) {
+        return(response.data.groups)
+      });        
+    },
 
     getGroup: function (id) {
       return groupsById[id];
@@ -175,34 +179,6 @@ angular.module('app.services').factory('groups',function ($resource, serverConfi
 
   function parseInfo(data) {
     data.full_address = _.compact([data.official_address, data.official_city, data.official_state]).join(', ');
-  }
-
-  var EMPTY_SEARCH_ITEMS = [], lastSearchItems = [], lastSearchQuery = '';
-
-  function search(query) {
-    if (!query) {
-      return EMPTY_SEARCH_ITEMS;
-    }
-
-    if (lastSearchQuery !== query) {
-      var searchQuery = query.toUpperCase();
-      console.log('search query: '+searchQuery)
-      console.log(this.getAll().map(function(g){return g.official_title}))
-      lastSearchItems = _(this.getAllUserGroups()).filter(function (item) {
-        if (item.group_type !== 0) {
-          return false;
-        }
-        if (item.acronym && item.acronym.toUpperCase().slice(0, searchQuery.length) === searchQuery) {
-          return true;
-        }
-        if (item.username && item.username.toUpperCase().slice(0, searchQuery.length) === searchQuery) {
-          return true;
-        }
-        return item.upper_title.slice(0, searchQuery.length) === searchQuery;
-      });
-    }
-    lastSearchQuery = query;
-    return lastSearchItems;
   }
 
   function _createGroupModels(rawGroupsData) {

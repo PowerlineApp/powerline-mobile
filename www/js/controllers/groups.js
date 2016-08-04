@@ -42,23 +42,19 @@ angular.module('app.controllers').controller('groups',function ($scope, groups, 
   
 }).controller('groups.search',function ($scope, groups, $rootScope) {
 
-  var DEFAULT_SEARCH_ITEMS = [];
-
-  $scope.searchItems = DEFAULT_SEARCH_ITEMS;
-
-
+  $scope.searchItems = [];
   $scope.data = {};
-
-  $scope.isSearchActive = false;
+  $scope.displaySearchResults = false;
 
   $scope.$watch('data.search', function (value) {
-    $scope.isSearchActive = Boolean(value);
-  });
-
-  $scope.$watch(function () {
-    return $scope.isSearchActive ? groups.search($scope.data.search) : DEFAULT_SEARCH_ITEMS;
-  }, function (searchItems) {
-    $scope.searchItems = searchItems;
+    var doSearch = Boolean(value);
+    if(doSearch){
+      groups.search($scope.data.search).then(function(groups){
+        $scope.searchItems = groups;
+        $scope.displaySearchResults = true
+      })
+    } else 
+      $scope.displaySearchResults = false
   });
 
   $scope.unjoin = function (item) {
