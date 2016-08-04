@@ -247,8 +247,6 @@ angular.module('app.controllers').directive('iActivity', function ($rootScope, q
 
   function petitionCtrl($scope) {
     $scope.templateSrc = 'templates/home/activities/petition.html';
-    $scope.canBeSigned = !$scope.activity.isExpired() && !$scope.activity.get('answers')
-    $scope.canBeUnsigned = !$scope.activity.isExpired() && !!$scope.activity.get('answers')
 
     $scope.sign = function () {
       var petitionID = $scope.activity.get('entity').id
@@ -256,15 +254,16 @@ angular.module('app.controllers').directive('iActivity', function ($rootScope, q
       petitions.answer(petitionID, 1).then(function(){
           $scope.activity.set('answered', true);
           $scope.sending = false;
+          $scope.showToast('Petition signed.');
       })
 
     };
     $scope.unsign = function () {
-      $scope.answerAction = '';
       var answer = $scope.activity.get('answer');
       questions.unsignFromPetition(answer.question.id, answer.option_id).then(function () {
         $scope.activity.set('answer', null).set('answered', false);
         $scope.sending = false;
+        $scope.showToast('Petition unsigned.');
       });
     };
   }

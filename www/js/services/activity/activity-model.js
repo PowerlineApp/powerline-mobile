@@ -135,6 +135,26 @@ angular.module('app.services').factory('ActivityModel',
       
       hasLinkPreviewMetadata: function(){
         return !!this.get('metadata');
+      },
+
+      // makes sense only for micro-petition-long-petition and petition
+      canBeSigned: function(){
+        var notExpired = !this.isExpired()
+        var notAnsweredOnBackend = this.get('answers').length == 0
+        var notAnsweredLocally = !this.get('answered')
+        return notExpired && notAnsweredOnBackend && notAnsweredLocally
+      },
+      canBeUnsigned: function(){
+        var notExpired = !this.isExpired()
+        var answeredOnBackend = this.get('answers').length > 0
+        var answeredLocally = this.get('answered')
+        return notExpired && (answeredOnBackend || answeredLocally)
+      },
+      markAsSigned: function(){
+        this.set('answered', true);
+      },
+      markAsUnsigned: function(){
+        this.set('answered', false);
       }
     });
   })
