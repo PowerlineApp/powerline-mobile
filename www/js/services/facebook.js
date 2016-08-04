@@ -59,12 +59,23 @@ angular.module('app.services').factory('facebook', function ($window, $q, $rootS
       if(typeof(FB) == 'undefined')
         FB = $window.facebookConnectPlugin;
     },
+    // use this when you experience on login: "Error validating access token: Session does not match current stored session. This may be because the user changed the password since the time the session was created or may be due to a system error."
+    logout: function(){
+      FB.logout(function(resp){
+        console.log('facebook logout successful')
+        console.log(resp)
+      }, function(error){
+        console.log('facebook logout failed')
+        console.log(error)
+      })
+    },
     login: function () {
       var deferred = $q.defer();
       
       this.init()
+      // this.logout()
+      // return deferred.promise
       FB.login(['public_profile', 'email'], function (response) {
-        console.log(response)
         if (response.status === 'connected') {
           uid = response.authResponse.userID || response.authResponse.userId;
           deferred.resolve({
