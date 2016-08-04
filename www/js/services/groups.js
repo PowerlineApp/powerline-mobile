@@ -168,10 +168,10 @@ angular.module('app.services').factory('groups',function ($resource, serverConfi
     },
 
     loadPermissions: function (id) {
-      return $http.get(serverConfig.url + '/api/groups/' + id + '/permissions').then(function (response) {
+      var that = this
+      return $http.get(serverConfig.url + '/api/v2/groups/'+id+'/permission-settings').then(function (response) {
         var model = new PermissionsModel(response.data);
-        model.set('group', groupsInfo[id]);
-
+        model.set('group',that.get(id));
         return model;
       });
     }

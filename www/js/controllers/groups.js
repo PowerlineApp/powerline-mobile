@@ -92,6 +92,7 @@ angular.module('app.controllers').controller('groups',function ($scope, groups, 
   var id = parseInt($stateParams.id, 10);
 
   $scope.data = groups.get(id);
+  //$scope.data.setPermissions(['permissions_name', 'permissions_country'])
   $scope.isChangeAvailable = function () {
     return $scope.data && $scope.data.group_type === 0;
   };
@@ -147,21 +148,19 @@ angular.module('app.controllers').controller('groups',function ($scope, groups, 
 
   function checkPermissions() {
     var group = groups.get(id);
-    if (group.joined && group.required_permissions && group.required_permissions.length) {
-      return groups.loadPermissions(id).then(function (permissions) {
-        if (permissions.hasNew()) {
-          var message = 'The group requests new permissions: ';
-          _(permissions.getNew()).each(function (key) {
-            message += '\n ' + (groups.permissionsLabels[key] || key);
-          });
-          $scope.confirmAction(message, 'Permissions', ['OK','Cancel']).then(function () {
-            permissions.approveNew().save();
-          }, function () {
-            permissions.save();
-          });
-        }
-      });
-    }
+    return groups.loadPermissions(id).then(function (permissionModel) {
+      if (group.joined && permissionModel.hasNew()) {
+        var message = 'The group requests new permissions: ';
+        _(permissionModel.getNew()).each(function (key) {
+          message += '\n ' + (groups.permissionsLabels[key] || key);
+        });
+        $scope.confirmAction(message, 'Permissions', ['OK','Cancel']).then(function () {
+          permissionModel.approveNew().save();
+        }, function () {
+          permissionModel.save();
+        });
+      }
+    });
   }
 
   $scope.showSpinner();
@@ -221,17 +220,21 @@ angular.module('app.controllers').controller('groups',function ($scope, groups, 
       $scope.formClass = 'error';
     } else {
       var group = groups.get(id);
-      if (group.required_permissions && group.required_permissions.length) {
-        var message = 'The next information will be shared with the group leader: ';
-        _(group.required_permissions).each(function (key) {
-          message += '\n ' + groups.permissionsLabels[key];
-        });
-        $scope.confirmAction(message, 'Permissions',['OK','Cancel']).then(function(){
+
+      groups.loadPermissions(id).then(function (permissionModel) {
+        if (permissionModel.hasPermissions()) {
+          var permissions = permissionModel.get('required_permissions')
+          var message = 'The next information will be shared with the group leader: ';
+          _(permissions).each(function (key) {
+            message += '\n ' + groups.permissionsLabels[key];
+          });
+          $scope.confirmAction(message, 'Permissions',['OK','Cancel']).then(function(){
+            join(joinForm);
+          })
+        } else {
           join(joinForm);
-        });
-      } else {
-        join(joinForm);
-      }
+        }
+      });      
     }
   };
 

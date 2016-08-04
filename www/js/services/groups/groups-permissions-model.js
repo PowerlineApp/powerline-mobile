@@ -15,6 +15,9 @@ angular.module('app.services').factory('PermissionsModel', function (JsModel, $h
         return !self.get(permission);
       });
     },
+    hasPermissions: function(){
+      return this.get('required_permissions') && this.get('required_permissions').length > 0;
+    },
     getNew: function () {
       var self = this;
       return _(this.get('group').required_permissions).reduce(function (memo, permission) {
