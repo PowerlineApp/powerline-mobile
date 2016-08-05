@@ -322,7 +322,7 @@ angular.module('app.controllers').directive('iActivity', function ($rootScope, q
       $scope.owner_info_1 = $scope.activity.get('owner_info_1');
       $scope.sent_at_elapsed = elapsedFilter($scope.activity.get('sent_at'));
       $scope.responses_count = $scope.activity.get('responses_count');
-      $scope.comments_count = $scope.activity.get('comments_count');
+      $scope.comments_count = $scope.activity.get('comments_count') - 1;
       $scope.isDefaultAvatar = $rootScope.isDefaultAvatar($scope.avatar_file_path);
 
       var activityOwnerID = $scope.activity.get('owner').id
