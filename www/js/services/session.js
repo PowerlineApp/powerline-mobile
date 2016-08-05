@@ -25,16 +25,20 @@ angular.module('app.services').factory('session', function (serverConfig, $http,
     },
 
     registerUserFromFacebook: function(params){
+      var deferred = $q.defer();
       facebook.loadProfile(params).then(function(profileData){
         var payload = JSON.stringify(profileData)
         var headers = {headers: {'Content-Type': 'application/json'}}
         $http.post(serverConfig.url + '/api/secure/registration-facebook', payload, headers).then(function(response){
-          console.log(response)
+          deferred.resolve()
         }, function(error){
-          console.log('failed to register user from facebook:')
+          console.log('failed to register user from facebook (may be already registered)')
           console.log(error)
+          deferred.reject();
         })  
       })
+
+      return deferred.promise;
     },
     facebookLogin: function (params) {
       var payload = JSON.stringify(params)
