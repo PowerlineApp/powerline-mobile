@@ -347,6 +347,12 @@ angular.module('app.controllers').directive('iActivity', function ($rootScope, q
         }
       }
 
+      $scope.openUrlInExternalBrowser = function(url){
+        if(url.substring(0,4) != 'http')
+          url = 'http://'+url
+        $rootScope.openSystem(url)
+      }
+
       $scope.followIcons = function(){
         if(activityOwnerFollow.isFollow() && activityOwnerFollow.isApproved())
           return ['icon ion-person calm', 'icon ion-minus-circled']

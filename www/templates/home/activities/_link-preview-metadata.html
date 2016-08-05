@@ -1,4 +1,4 @@
-<div style="margin-top:5px">
+<div style="margin-top:5px" ng-click="openUrlInExternalBrowser(activity.get('metadata').url)">
   <img ng-src="{{activity.get('metadata').image}}" ng-show="activity.get('metadata').image" style="width: :100%"/>
   <div style="font-weight:700;font-size:15px;color: #000;line-height:32px;" bo-bind="activity.get('metadata').title">
   </div>
