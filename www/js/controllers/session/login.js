@@ -47,7 +47,7 @@ angular.module('app.controllers').controller('session.login',function ($scope, h
     facebook.login().then(function (params) {
       $timeout.cancel(promise);
       $scope.loading = true;
-      session.registerUserFromFacebook(params)
+      //session.registerUserFromFacebook(params)
 
       session.facebookLogin(params).then(function () {
         if (!session.is_registration_complete) {

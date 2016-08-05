@@ -37,11 +37,9 @@ angular.module('app.services').factory('session', function (serverConfig, $http,
       })
     },
     facebookLogin: function (params) {
-      return $http({
-        method: 'POST',
-        url: serverConfig.url + '/api/secure/facebook/login',
-        data: angular.element.param(params)
-      }).then(function (response) {
+      var payload = JSON.stringify(params)
+      var headers = {headers: {'Content-Type': 'application/json'}}
+      return $http.post(serverConfig.url + '/api/secure/facebook/login', payload, headers).then(function (response) {
         iStorage.set('token', response.data.token);
         iStorage.set('user_id', response.data.id);
         iStorage.set('is_registration_complete', response.data.is_registration_complete);
