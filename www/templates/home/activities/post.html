@@ -16,9 +16,16 @@
     <p ng-class="{unanswered: activity.isUnanswered()}" bo-if="title" bo-bind="title"></p>
     <i class="time"><time>{{ sent_at_elapsed }}</time></i>
   </div>
-  <div class="item-content" ng-click="navigateToActivity(activity, null, $event)">
-    <p bo-if="activity.get('image_src')" class="picture"><img ng-src="{{imagePath}}" zoom-src="{{imagePath}}" zoom-view/></p>
-    <p ng-class="{unanswered: activity.isUnanswered() && !title}" bo-html="description" ng-click="navigateToActivity(activity, null, $event)"></p>
+  <div class="item-content">
+    <p ng-click="navigateToActivity(activity, null, $event)"
+      bo-if="activity.get('image_src')" 
+      class="picture">
+      <img ng-src="{{imagePath}}" zoom-src="{{imagePath}}" zoom-view/>
+    </p>
+    <p ng-class="{unanswered: activity.isUnanswered() && !title}" 
+      bo-html="description" 
+      ng-click="navigateToActivity(activity, null, $event)">
+    </p>
     <ng-include src="'templates/home/activities/_link-preview-metadata.html'" ng-show="activity.hasLinkPreviewMetadata()"></ng-include>
   </div>
   <div class="item-footer">
