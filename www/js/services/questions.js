@@ -62,6 +62,7 @@ angular.module('app.services').factory('questions',function (QuestionResource,
     },
 
     unsignFromPetition: function (id, answer_id) {
+      console.log('unsignFromPetition')
       return $http({
         method: 'DELETE',
         url: serverConfig.url + '/api/petition/' + id + '/answers/' + answer_id

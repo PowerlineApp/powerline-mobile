@@ -155,6 +155,7 @@ angular.module('app.services').factory('ActivityModel',
       },
       markAsUnsigned: function(){
         this.set('answered', false);
+        this.set('answers', []);
       }
     });
   })

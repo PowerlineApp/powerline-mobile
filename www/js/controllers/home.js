@@ -192,7 +192,7 @@ angular.module('app.controllers').controller('preload', function (topBar, sessio
   }
 });
 
-angular.module('app.controllers').directive('iActivity', function ($rootScope, questions, petitions, discussion, elapsedFilter, follows, session, iParse, $sce, favorite) {
+angular.module('app.controllers').directive('iActivity', function ($rootScope, questions, petitions, discussion, elapsedFilter, follows, session, iParse, $sce, favorite, microPetitions) {
 
   function eventCtrl($scope) {
     $scope.templateSrc = 'templates/home/activities/event.html';
@@ -249,19 +249,20 @@ angular.module('app.controllers').directive('iActivity', function ($rootScope, q
     $scope.templateSrc = 'templates/home/activities/petition.html';
 
     $scope.sign = function () {
-      var petitionID = $scope.activity.get('entity').id
+      var microPetitionID = $scope.activity.get('entity').id
       $scope.sending = true
-      petitions.answer(petitionID, 1).then(function(){
-          $scope.activity.set('answered', true);
+      microPetitions.signLongPetition(microPetitionID).then(function(){
+          $scope.activity.markAsSigned()
           $scope.sending = false;
           $scope.showToast('Petition signed.');
       })
-
     };
+
     $scope.unsign = function () {
-      var answer = $scope.activity.get('answer');
-      questions.unsignFromPetition(answer.question.id, answer.option_id).then(function () {
-        $scope.activity.set('answer', null).set('answered', false);
+      $scope.sending = true;
+      var microPetitionID = $scope.activity.get('entity').id;
+      microPetitions.unsignLongPetition(microPetitionID).then(function (response) {
+        $scope.activity.markAsSigned()
         $scope.sending = false;
         $scope.showToast('Petition unsigned.');
       });
