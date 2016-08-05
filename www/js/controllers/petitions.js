@@ -133,7 +133,7 @@ function ($scope,  petitions, PetitionsResource, groups, $stateParams, errorForm
   });
 
 }).controller('petition',function ($scope, topBar, petitions, $stateParams, loaded, $cacheFactory, session, $state,
-                                   homeCtrlParams, activity, layout, $ionicPopup, $rootScope) {
+                                   homeCtrlParams, activity, layout, $ionicPopup, $rootScope, microPetitions) {
                                    
   var cache = $cacheFactory.get('petitionController');
   $scope.petition = cache.get($stateParams.id);
@@ -250,10 +250,20 @@ function ($scope,  petitions, PetitionsResource, groups, $stateParams, errorForm
     }
   });
 
+  $scope.answer = function () {
+    $scope.showSpinner();
+    microPetitions.signLongPetition($scope.petition.id).then(function(){
+      $state.reload()
+      homeCtrlParams.loaded = false;
+    })
+  };
+  
   $scope.unsign = function () {
     $scope.showSpinner();
-    $scope.petition.$unsign($state.reload);
-    homeCtrlParams.loaded = false;
+    microPetitions.unsignLongPetition($scope.petition.id).then(function(){
+      $state.reload()
+      homeCtrlParams.loaded = false;
+    })
   };
 
 }).controller('petition.answer-form', function ($scope, $state, homeCtrlParams, $rootScope, petitions) {
