@@ -226,7 +226,7 @@ angular.module('app.controllers').directive('iActivity', function ($rootScope, q
     $scope.sign = function (optionId) {
       $scope.sending = true;
       petitions.answer($scope.activity.get('entity').id, optionId).then(function (answer) {
-        $scope.activity.set('answer', answer).set('answered', true);
+        $scope.activity.set('answers', [answer]);
         $scope.sending = false;
         if (optionId === 1) {
           $scope.showToast('Post upvoted!');
@@ -313,6 +313,10 @@ angular.module('app.controllers').directive('iActivity', function ($rootScope, q
           $rootScope.navigateTo('activity', activity, focus);
         }
       };
+
+      // if($scope.activity.get('entity').id == 240)
+      //   console.log(JSON.stringify($scope.activity))
+
       $scope.title = $scope.activity.get('title');
       $scope.description = iParse.wrapHashTags($scope.activity.get('description'))
       $scope.avatar_file_path = $scope.activity.get('owner').avatar_file_path;

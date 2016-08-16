@@ -32,9 +32,12 @@ angular.module('app.services').factory('ActivityModel',
       isOwn: function () {
         return this.get('owner').type === 'user' && this.get('owner').id === session.user_id;
       },
-      isUnanswered: function () {
-        return !this.get('answered') && !this.isExpired() && 'leader-news' !== this.get('entity').type;
+      isAnswered: function(){
+        return this.get('answers') && this.get('answers').length > 0
       },
+      isUnanswered: function () {
+        return !this.isAnswered()
+      },      
       isFollowing: function () {
         var owner = this.get('owner');
         return owner.type === 'user' && follows.some(function (following) {

@@ -38,7 +38,7 @@
     <div class="control" ng-show="activity.isUnanswered() && !sending && !currentUserIsActivityOwner && !activity.isExpired()">
       <i class="activity-control double-down"  ng-click="sign(2)"></i>
     </div>
-    <div class="control" ng-show="activity.get('answer').option_id && !sending">
+    <div class="control" ng-show="activity.isAnswered() && !activity.isExpired() && !sending">
       <a ng-click="unsign()">undo</a>
     </div>
     <div class="control"><a ng-click="navigateToActivity(activity, 'add-comment')" class="activity-control reply"></a></div>
