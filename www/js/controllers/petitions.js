@@ -164,7 +164,8 @@ function ($scope,  petitions, PetitionsResource, groups, $stateParams, errorForm
 
 //Check the petitions owner = login user
     if ($scope.petition){
-      if ($scope.petition.owner.id == session.user_id){
+      if ($scope.petition.user.id == session.user_id){
+
         $scope.hidden = false;
       }
       else {
