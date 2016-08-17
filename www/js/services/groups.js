@@ -107,8 +107,8 @@ angular.module('app.services').factory('groups',function ($resource, serverConfi
     },
 
     search: function(query){
-      return $http.get(serverConfig.url + '/api/search?query='+query).then(function (response) {
-        return(response.data.groups)
+      return $http.get(serverConfig.url + '/api/v2/groups?query='+query).then(function (response) {
+        return(response.data.payload)
       });        
     },
 
