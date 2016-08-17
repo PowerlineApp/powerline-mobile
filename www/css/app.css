@@ -2822,7 +2822,8 @@ asterisk {
       .activities-list .item .item-content p:first-child {
         margin-bottom: 5px; }
       .activities-list .item .item-content p a {
-        color: #030366; }
+        color: #030366;
+        font-family: "Lato Bold"; }
         .activities-list .item .item-content p a.ng-click-active {
           opacity: 0.7; }
     .activities-list .item .item-content .picture {
