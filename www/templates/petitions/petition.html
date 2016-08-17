@@ -38,7 +38,7 @@
       
       <h1 ng-bind="petition.title" ng-show="petition.title"></h1>
       <div contenteditable="true">
-        <p ng-hide="editClicked==true" ng-bind-html="petition.petition_body_parsed" i-tags i-open-system-links></p>
+        <p ng-hide="editClicked==true" ng-bind-html="petition.petition_body_parsed" i-content-link></p>
         <textarea ng-model="petition.petition_body" ng-show="editClicked==true" i-tags i-open-system-links style="border: 1px solid grey;
             margin-left: 10px;
             width: 90vw;

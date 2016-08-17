@@ -67,6 +67,9 @@ angular.module('app.directives').directive('iOpenSystem',function ($parse, $wind
       } else if ($link.data('hashtag')) {
         searchCache.put('query', $link.data('hashtag'));
         $location.path('/search');
+      } else {
+        console.log('dont know how to process this link')
+        console.log($link)
       }
       scope.$parent.$root.execApply();
       return false;

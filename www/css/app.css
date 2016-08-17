@@ -2087,10 +2087,12 @@ h4 {
     margin: 15px 8px;
     line-height: 1.4; }
     .q-content p[i-open-system-links] a,
+    .q-content p[i-content-link] a,
     .q-content p hash-tag {
       font-family: "Lato Bold";
       color: #030366; }
       .q-content p[i-open-system-links] a.ng-click-active,
+      .q-content p[i-content-link] a.ng-click-active,
       .q-content p hash-tag.ng-click-active {
         opacity: 0.7; }
     .q-content p strong {

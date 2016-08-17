@@ -49,8 +49,11 @@ angular.module('app.services').factory('petitions',function ($q, PetitionsResour
     data.created_at_date = new Date(data.created_at);
     data.votes_count = formatOptions([data.options[0], data.options[1]]);
 
-    var escapedBody = iParse.htmlEscape(data.petition_body);
-    data.petition_body_parsed = $sce.trustAsHtml(iParse.wrapHashTags(iParse.wrapLinks(escapedBody)));
+    var petition_body = data.petition_body_html
+    if(petition_body == null || petition_body.length == 0)
+      petition_body = data.petition_body
+      
+    data.petition_body_parsed = $sce.trustAsHtml(iParse.wrapHashTags(iParse.wrapLinks(petition_body)));
     data.getOptionLabel = function (id) {
       var option = _(this.options).find(function (item) {
         return item.id === id;

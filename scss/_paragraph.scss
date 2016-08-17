@@ -100,7 +100,8 @@
   p {
     margin: 15px 8px;
     line-height: 1.4;
-    &[i-open-system-links] a,
+    &[i-open-system-links] a, 
+    &[i-content-link] a,
     hash-tag {
       font-family: "Lato Bold";
       color: #030366;
