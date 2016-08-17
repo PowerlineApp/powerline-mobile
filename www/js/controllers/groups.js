@@ -4,7 +4,8 @@ angular.module('app.controllers').controller('groups',function ($scope, groups, 
 
   function loadGroups(showSpinner){
     if(showSpinner) $scope.showSpinner();
-    groups.load().finally(function () {
+    var doNotEmitGroupsUpdatedEvent = true;
+    groups.load(doNotEmitGroupsUpdatedEvent).finally(function () {
       if(showSpinner) $scope.hideSpinner();
       $scope.$broadcast('scroll.refreshComplete');
       $scope.groupsGrupedByFirstLetter = groups.getLettersGroups();

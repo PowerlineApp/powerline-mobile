@@ -33,11 +33,12 @@ angular.module('app.services').factory('groups',function ($resource, serverConfi
   var newGroups = [];
 
   var service = {
-    load: function () {
+    load: function (doNotEmitGroupsUpdatedEvent) {
       var that = this
       return  $http.get(serverConfig.url + '/api/v2/user/groups').then(function (response){
         _createGroupModels(response.data.payload);
-        $rootScope.$broadcast('groups-updated');
+        if(!doNotEmitGroupsUpdatedEvent)
+          $rootScope.$broadcast('groups-updated');
         iStorage.set('GROUPS_RAW_DATA', response.data.payload)
       });
     },
