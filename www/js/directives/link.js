@@ -68,8 +68,7 @@ angular.module('app.directives').directive('iOpenSystem',function ($parse, $wind
         searchCache.put('query', $link.data('hashtag'));
         $location.path('/search');
       }
-
-      scope.execApply();
+      scope.$parent.$root.execApply();
       return false;
     });
   };

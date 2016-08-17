@@ -24,7 +24,7 @@
     </p>
     <p ng-class="{unanswered: activity.isUnanswered() && !title}" 
     bo-html="description" 
-    ng-click="navigateToActivity(activity, null, $event)">
+    ng-click="navigateToActivity(activity, null, $event)" i-content-link>
     </p>
     <ng-include src="'templates/home/activities/_link-preview-metadata.html'" ng-show="activity.hasLinkPreviewMetadata()">
   </div>

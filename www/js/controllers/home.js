@@ -314,11 +314,14 @@ angular.module('app.controllers').directive('iActivity', function ($rootScope, q
         }
       };
 
-      // if($scope.activity.get('entity').id == 240)
+      // if($scope.activity.get('entity').id == 238)
       //   console.log(JSON.stringify($scope.activity))
 
       $scope.title = $scope.activity.get('title');
-      $scope.description = iParse.wrapHashTags($scope.activity.get('description'))
+      var description_raw = $scope.activity.get('description_html')
+      if(description_raw == null || description_raw.length == 0)
+        description_raw = $scope.activity.get('description')
+      $scope.description = iParse.wrapHashTags(description_raw)
       $scope.avatar_file_path = $scope.activity.get('owner').avatar_file_path;
       $scope.iconClass = $scope.activity.getIcon();
       $scope.official_title = $scope.activity.get('owner').official_title;
