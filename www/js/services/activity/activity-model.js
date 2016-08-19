@@ -6,7 +6,8 @@ angular.module('app.services').factory('ActivityModel',
         petition: 'Petition',
         'leader-news': 'News',
         'leader-event': 'Event',
-        'micro-petition': 'Petition',
+        'user-petition': 'Petition',
+        'post': 'Post',
         'payment-request': 'Payment',
         'crowdfunding-payment-request': 'Payment'
       },
@@ -15,7 +16,8 @@ angular.module('app.services').factory('ActivityModel',
         petition: 'petition',
         'leader-news': 'discussion',
         'leader-event': 'event',
-        'micro-petition': 'post',
+        'user-petition': 'petition',
+        'post': 'post',
         'payment-request': 'fundraiser',
         'crowdfunding-payment-request': 'fundraiser'
       },
@@ -81,11 +83,11 @@ angular.module('app.services').factory('ActivityModel',
 
       isUserPetitionType: function(){
         var aType = this.get('entity').type
-        return aType == 'micro-petition:long-petition'
+        return aType == 'user-petition'
       },
       isUserPostType: function(){
         var aType = this.get('entity').type
-        return aType == 'micro-petition:quorum'
+        return aType == 'post'
       },
       isUnread: function(){
         return(!this.get('read'))

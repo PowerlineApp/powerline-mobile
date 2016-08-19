@@ -44,8 +44,8 @@ angular.module('app.services', [
 
   var activityRoutes = {
     'question': '/questions/',
-    'micro-petition:long-petition': '/petition/',
-    'micro-petition:quorum': '/petition/',
+    'user-petition': '/petition/',
+    'post': '/petition/',
     'leader-news': '/question/news/',
     'petition': '/question/leader-petition/',
     'payment-request': '/payment-polls/payment-request/',
