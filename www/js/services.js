@@ -112,8 +112,6 @@ angular.module('app.services', [
       var activityType = activity.get('entity').type
       // not sure if entity.id is used at all or everything goes via entity.group_id 
       var activityID = activity.get('entity').id 
-      if(activityID == null)
-        activityID = activity.get('entity').group_id
 
       var activityRoute = activityRoutes[activityType]
       if(activityRoute == null)
