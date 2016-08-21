@@ -192,7 +192,7 @@ angular.module('app.controllers').controller('preload', function (topBar, sessio
   }
 });
 
-angular.module('app.controllers').directive('iActivity', function ($rootScope, questions, petitions, discussion, elapsedFilter, follows, session, iParse, $sce, favorite, microPetitions) {
+angular.module('app.controllers').directive('iActivity', function ($rootScope, questions, petitions, discussion, elapsedFilter, follows, session, iParse, $sce, favorite, microPetitions, leaderContentHelper) {
 
   function eventCtrl($scope) {
     $scope.templateSrc = 'templates/home/activities/event.html';
@@ -306,6 +306,8 @@ angular.module('app.controllers').directive('iActivity', function ($rootScope, q
         }
       }
       $scope.navigateToActivity = function (activity, focus, e) {
+        //leaderContentHelper.createPoll()
+
         activity.setRead();
         if (e && e.target.tagName.toLowerCase() === 'hash-tag') {
           $rootScope.openTag(angular.element(e.target).text());
