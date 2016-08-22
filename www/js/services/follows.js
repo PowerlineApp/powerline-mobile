@@ -14,6 +14,10 @@ angular.module('app.services').factory('follows', function ($http,serverConfig, 
       return(this.role == 'isFollowingCurrentUser')
     }
 
+    this.isFollowedByCurrentUser = function(){
+      return(this.role == 'isFollowedByCurrentUser')
+    }
+
     this.stopHimFromFollowingMe = function(){
       return $http.delete(serverConfig.url + '/api/v2/user/followers/'+this.user_id)
     }
