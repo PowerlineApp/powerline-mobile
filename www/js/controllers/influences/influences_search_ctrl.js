@@ -1,4 +1,4 @@
-angular.module('app.controllers').controller('influences.search',function ($scope, influence, facebook, profile, influencesCD, $rootScope) {
+angular.module('app.controllers').controller('influences.search',function ($scope, influence, follows, facebook, profile, influencesCD, $rootScope) {
 
   var user = profile.get();
 
@@ -32,8 +32,7 @@ angular.module('app.controllers').controller('influences.search',function ($scop
   };
 
   $scope.follow = function (item) {
-    $scope.showSpinner();
-    item.$changeStatus({status: 'follow'}, loaded, loaded);
+    item.followByCurrentUser()
     $scope.results = _($scope.results).without(item);
     $scope.showToast('Follow request sent!');
   };
@@ -50,10 +49,8 @@ angular.module('app.controllers').controller('influences.search',function ($scop
 
   function load() {
     $scope.showSpinner();
-    influence.search($scope.data.query, $scope.data.page, $scope.data.max_count).then(function (results) {
-      _(results).each(function (item) {
-        $scope.results.push(item);
-      });
+    follows.searchForUsersFollowableByCurrentUser($scope.data.query, $scope.data.page, $scope.data.max_count).then(function (results) {
+      $scope.results = results
       $scope.hideSpinner();
     }, loaded);
   }

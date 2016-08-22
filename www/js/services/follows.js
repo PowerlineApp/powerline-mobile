@@ -28,6 +28,18 @@ angular.module('app.services').factory('follows', function ($http,serverConfig, 
     }
   }
 
+  var UserFollowableByCurrentUser = function(userData){
+    this.first_name = userData.first_name
+    this.last_name = userData.last_name
+    this.avatar_file_name = userData.avatar_file_name
+    this.user_id = userData.id
+    this.username = userData.username    
+
+    this.followByCurrentUser = function(){
+      $http.put(serverConfig.url + '/api/v2/user/followings/'+this.user_id)
+    }
+  }
+
   var service = {}
   service.loaded = false
   service.usersFollowedByCurrentUser = []
@@ -92,7 +104,22 @@ angular.module('app.services').factory('follows', function ($http,serverConfig, 
   }
 
   service.size = function(){
-    return service.usersFollowedByCurrentUser.length
+    return(service.usersFollowedByCurrentUser.length + service.usersFollowingCurrentUser.length)
+  }
+
+  service.searchForUsersFollowableByCurrentUser = function(queryText, page, max_count){
+      var params = {
+        unfollowing: 1,
+        q: queryText,
+        page: page || 1,
+        max_count: max_count || 50
+      };
+
+      return $http.get(serverConfig.url + '/api/users/?' + angular.element.param(params)).then(function (response) {
+        return _(response.data).map(function (userData) {
+          return new UserFollowableByCurrentUser(userData);
+        });
+      });
   }
 
   return service
