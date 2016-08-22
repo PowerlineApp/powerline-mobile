@@ -85,9 +85,9 @@ angular.module('app.controllers').controller('groups',function ($scope, groups, 
   $scope.$watch(groups.getNewGroups, function (newValue) {
     $scope.newItems = newValue;
   });
-}).controller('groups.profile',function ($scope, topBar, groups, $stateParams, $state, activity, favorite, invites, influence, homeCtrlParams, $rootScope, $location) {
+}).controller('groups.profile',function ($scope, topBar, groups, $stateParams, $state, activity, favorite, invites, follows, homeCtrlParams, $rootScope, $location) {
   
-  influence.loadFollowers();
+  follows.load();
   $scope.favoriteService = favorite
 
   var id = parseInt($stateParams.id, 10);
@@ -104,8 +104,8 @@ angular.module('app.controllers').controller('groups',function ($scope, groups, 
 
   $scope.invite = function () {
     $scope.confirmAction('Are you sure you want to invite all of your followers to join this group?').then(function () {
-      var followersUsernames = influence.getFollowers().map(function (followerItem) {
-        return(followerItem.follower.username);
+      var followersUsernames = follow.getUsersFollowingCurrentUser().map(function (followerItem) {
+        return(followerItem.username);
       });
       $scope.showPostWindow = false;
       $scope.showSpinner();

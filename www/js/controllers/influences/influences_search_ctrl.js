@@ -1,10 +1,10 @@
-angular.module('app.controllers').controller('influences.search',function ($scope, influence, follows, facebook, profile, influencesCD, $rootScope) {
+angular.module('app.controllers').controller('influences.search',function ($scope, follows, facebook, profile, influencesCD, $rootScope) {
 
   var user = profile.get();
 
   if (user && user.facebook_id && facebook.getFriends().length) {
     $scope.showSpinner();
-    influence.loadSuggested(facebook.getFriends()).then(function (suggested) {
+    follows.loadSuggested(facebook.getFriends()).then(function (suggested) {
       $scope.hideSpinner();
       $scope.suggested = suggested;
     }, function () {
@@ -40,7 +40,7 @@ angular.module('app.controllers').controller('influences.search',function ($scop
   $scope.facebookFollow = function (item) {
     $scope.showSpinner();
     item.$changeStatus({status: 'follow'}, function () {
-      influence.loadSuggested(facebook.getFriends()).then(function (suggested) {
+      follows.loadSuggested(facebook.getFriends()).then(function (suggested) {
         $scope.hideSpinner();
         $scope.suggested = suggested;
       }, loaded);
