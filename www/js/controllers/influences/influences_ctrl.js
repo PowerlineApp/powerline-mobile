@@ -5,7 +5,6 @@ angular.module('app.controllers').controller('influences',function ($scope, $loc
       $scope.showSpinner();
     }
     follows.load().then(function () {
-      $scope.$broadcast('follows-loaded');
       $scope.$broadcast('scroll.refreshComplete');
       if(showSpinner){
         $scope.hideSpinner();

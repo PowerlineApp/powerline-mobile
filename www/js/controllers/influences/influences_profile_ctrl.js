@@ -13,7 +13,7 @@ angular.module('app.controllers').controller('influence.profile',
 
   $scope.follow = null
   if (profile.get() && profile.get().id !== id) {
-    $scope.follow = follows.getUserFollowedByCurrentUser(id);
+    $scope.follow = follows.getOrCreateUser(id);
   }
   $scope.isFollowedAndApproved = function(){
     return ($scope.follow && $scope.follow.isApproved())

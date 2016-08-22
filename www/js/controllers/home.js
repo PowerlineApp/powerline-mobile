@@ -334,7 +334,7 @@ angular.module('app.controllers').directive('iActivity', function ($rootScope, q
       $scope.isDefaultAvatar = $rootScope.isDefaultAvatar($scope.avatar_file_path);
 
       var activityOwnerID = $scope.activity.get('owner').id
-      var activityOwnerFollow = follows.getUserFollowedByCurrentUser(activityOwnerID);
+      var activityOwnerFollow = follows.getOrCreateUser(activityOwnerID);
       $scope.showFollow = follows.loaded && activityOwnerID != session.user_id
       $scope.followClicked = function(){
         if(activityOwnerFollow && activityOwnerFollow.isApproved())
@@ -348,7 +348,7 @@ angular.module('app.controllers').directive('iActivity', function ($rootScope, q
             $scope.sending = false;
             $scope.showToast('Follow request sent!');
             follows.load().then(function(){
-              activityOwnerFollow = follows.getUserFollowedByCurrentUser(activityOwnerID);
+              activityOwnerFollow = follows.getOrCreateUser(activityOwnerID);
             })
           });          
           msg = 'Follow request sent!'

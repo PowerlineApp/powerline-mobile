@@ -1,4 +1,4 @@
-angular.module('app.services').factory('follows', function ($http,serverConfig, $q) {
+angular.module('app.services').factory('follows', function ($http,serverConfig, $q, $rootScope) {
 
   var FUser = function(userData, role){
     this.first_name = userData.first_name
@@ -8,14 +8,23 @@ angular.module('app.services').factory('follows', function ($http,serverConfig, 
     this.username = userData.username
     this.date_approval = userData.date_approval
     this.full_name = userData.full_name
-    this.role = role
+    this.roles = [role]
 
     this.isFollowingCurrentUser = function(){
-      return(this.role == 'isFollowingCurrentUser')
+      return(_.include(this.roles, 'isFollowingCurrentUser'))
     }
 
     this.isFollowedByCurrentUser = function(){
-      return(this.role == 'isFollowedByCurrentUser')
+      return(_.include(this.roles, 'isFollowedByCurrentUser'))
+    }
+
+    this.addRole = function(role){
+      this.roles.push(role)
+      this.roles = _.uniq(this.roles)
+    }
+
+    this.removeRole = function(role){
+      this.roles = _.without(this.roles, role)
     }
 
     this.stopHimFromFollowingMe = function(){
@@ -47,10 +56,12 @@ angular.module('app.services').factory('follows', function ($http,serverConfig, 
     }
 
     this.followByCurrentUser = function(){
+      this.addRole('isFollowedByCurrentUser')
       return $http.put(serverConfig.url + '/api/v2/user/followings/'+this.user_id)
     }
 
     this.unFollowByCurrentUser = function(){
+      this.removeRole('isFollowedByCurrentUser')
       return $http.delete(serverConfig.url + '/api/v2/user/followings/'+this.user_id)
     }
 
@@ -65,29 +76,42 @@ angular.module('app.services').factory('follows', function ($http,serverConfig, 
 
   var service = {}
   service.loaded = false
-  service.usersFollowedByCurrentUser = []
-  service.usersFollowingCurrentUser = []
+
+  service.users = []
 
   service.load = function(){
+    service.users = []
+
     var p1 = $http.get(serverConfig.url + '/api/v2/user/followings').then(function(response){
-      service.usersFollowedByCurrentUser = []
       response.data.payload.forEach(function(userData){
-        var u = new FUser(userData, 'isFollowedByCurrentUser')
-        service.usersFollowedByCurrentUser.push(u)
+        var uID = userData.id
+        var u = service.getUser(uID)
+        if(u)
+          u.addRole('isFollowedByCurrentUser')
+        else{
+          u = new FUser(userData, 'isFollowedByCurrentUser')
+          service.users.push(u)
+        }
       })
     })
 
     var p2 = $http.get(serverConfig.url + '/api/v2/user/followers').then(function(response){
-      service.usersFollowingCurrentUser = []
       response.data.payload.forEach(function(userData){
-        var u = new FUser(userData, 'isFollowingCurrentUser')
-        service.usersFollowingCurrentUser.push(u)
+        var uID = userData.id
+        var u = service.getUser(uID)
+        if(u)
+          u.addRole('isFollowingCurrentUser')
+        else{
+          u = new FUser(userData, 'isFollowingCurrentUser')
+          service.users.push(u)
+        }
       })
     })
 
     var deferred = $q.defer();
     $q.all([p1, p2]).then(function(){
       service.loaded = true
+      $rootScope.$broadcast('follows-loaded');
       deferred.resolve()
     })
 
@@ -105,11 +129,11 @@ angular.module('app.services').factory('follows', function ($http,serverConfig, 
   }
 
   service.getUsersFollowingCurrentUser = function(){
-    return this.usersFollowingCurrentUser
+    return this.users.filter(function(u){return u.isFollowingCurrentUser()})
   }
 
   service.getUsersFollowedByCurrentUser = function(){
-    return this.usersFollowedByCurrentUser
+    return this.users.filter(function(u){return u.isFollowedByCurrentUser()})
   }
 
   service.loadSuggested = function (friends) {
@@ -120,23 +144,20 @@ angular.module('app.services').factory('follows', function ($http,serverConfig, 
 
   service.getFollowing = service.getUsersFollowedByCurrentUser
 
-  service.getUserFollowedByCurrentUser = function(uID){
-    var u = service.usersFollowedByCurrentUser.find(function(user){
+  service.getUser = function(uID){
+    return service.users.find(function(user){
       return user.user_id == uID
     })
-    
-    if(u == null)
-      u = new FUser({id: uID}, 'isCandidate')
-    return u
   }
 
-  service.getUserFollowingCurrentUser = function(uID){
-    var u = service.usersFollowingCurrentUser.find(function(user){
-      return user.user_id == uID
-    })
-
-    if(u == null)
-      u = new FUser({id: uID}, 'isCandidate')
+  service.getOrCreateUser = function(uID){
+    var u = service.getUser(uID)
+    
+    if(u == null){
+      u = new FUser({id: uID})
+      service.users.push(u)
+    }
+      
     return u
   }
 
@@ -145,7 +166,7 @@ angular.module('app.services').factory('follows', function ($http,serverConfig, 
   }
 
   service.size = function(){
-    return(service.usersFollowedByCurrentUser.length + service.usersFollowingCurrentUser.length)
+    return(service.users.length)
   }
 
   service.searchForUsersFollowableByCurrentUser = function(queryText, page, max_count){

@@ -34,7 +34,7 @@ angular.module('app.services').factory('SocialActivityModel', function (iStorage
         var icon = typeToIcons[this.get('type')];
         this.set('sa-icon', typeof icon === 'function' ? icon(this) : icon);
         if (this.isFollowRequest()) {
-          this.set('userFollow', follows.getUserFollowingCurrentUser(this.get('following').id));
+          this.set('userFollow', follows.getOrCreateUser(this.get('following').id));
         }
       },
       isRequest: function () {
@@ -66,7 +66,7 @@ angular.module('app.services').factory('SocialActivityModel', function (iStorage
         if(follow && follow.isApprovedByCurrentUser()){
           return '<p><strong>' + follow.full_name + '</strong> is now following you. Follow back?</p>';
         }
-        if(follow && follow.isApprovedByCurrentUser() && userFollowingCurrentUser.isAlsoFollowedByCurrentUser()){
+        if(follow && userFollowingCurrentUser.isFollowedByCurrentUser() && follow.isApprovedByCurrentUser()){
           return '<p><strong>' + follow.full_name + '</strong> and you are now following each other.</p>';
         }
 
