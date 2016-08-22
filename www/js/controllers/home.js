@@ -1,6 +1,5 @@
 angular.module('app.controllers').controller('home', function ($scope, $timeout, socialActivity, homeCtrlParams,
         profile, activity, groups, $ionicScrollDelegate, favorite, $ionicPlatform) {
-
   $scope.filter = homeCtrlParams.filter;
 
   $scope.isLoadMore = false;
