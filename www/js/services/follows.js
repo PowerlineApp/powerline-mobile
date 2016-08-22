@@ -1,27 +1,74 @@
-angular.module('app.services').factory('follows', function ($http,serverConfig) {
+angular.module('app.services').factory('follows', function ($http,serverConfig, $q) {
 
-  var FollowedUser = function(userData){
-    this.data = userData
+  var UserFollowedByCurrentUser = function(userData){
+    this.first_name = userData.first_name
+    this.last_name = userData.last_name
+    this.avatar_file_name = userData.avatar_file_name
+    this.user_id = userData.id
+    this.username = userData.username
+
     this.isApproved = function(){
-      return false
+      return(this.date_approval != null)
     }
+
+    this.stopFollowing = function(){
+      $http.delete(serverConfig.url + '/api/v2/user/followings/'+this.user_id)
+    }
+  }
+
+  var UserFollowingCurrentUser = function(userData){
+    this.first_name = userData.first_name
+    this.last_name = userData.last_name
+    this.avatar_file_name = userData.avatar_file_name
+    this.user_id = userData.id
+    this.username = userData.username
   }
 
   var service = {}
   service.loaded = false
   service.usersFollowedByCurrentUser = []
+  service.usersFollowingCurrentUser = []
 
   service.load = function(){
-    return $http.get(serverConfig.url + '/api/v2/user/followings').then(function(response){
+    var p1 = $http.get(serverConfig.url + '/api/v2/user/followings').then(function(response){
       service.usersFollowedByCurrentUser = []
       response.data.payload.forEach(function(userData){
-        var u = new FollowedUser(userData)
+        var u = new UserFollowedByCurrentUser(userData)
         service.usersFollowedByCurrentUser.push(u)
       })
-
-      service.loaded = true
     })
+
+    var p2 = $http.get(serverConfig.url + '/api/v2/user/followers').then(function(response){
+      service.usersFollowingCurrentUser = []
+      response.data.payload.forEach(function(userData){
+        var u = new UserFollowingCurrentUser(userData)
+        service.usersFollowingCurrentUser.push(u)
+      })
+    })
+
+    var deferred = $q.defer();
+    $q.all([p1, p2]).then(function(){
+      service.loaded = true
+      deferred.resolve()
+    })
+
+    return deferred.promise
   }
+
+  service.stopFollowing = function(userFollowedByCurrentUser){
+    userFollowedByCurrentUser.stopFollowing()
+    this.usersFollowedByCurrentUser = _.without(this.usersFollowedByCurrentUser, userFollowedByCurrentUser)
+  }
+
+  service.getUsersFollowingCurrentUser = function(){
+    return this.usersFollowingCurrentUser
+  }
+
+  service.getUsersFollowedByCurrentUser = function(){
+    return this.usersFollowedByCurrentUser
+  }
+
+  service.getFollowing = service.getUsersFollowedByCurrentUser
 
   service.getUserFollowedByCurrentUser = function(uID){
     var u = service.usersFollowedByCurrentUser.find(function(user){

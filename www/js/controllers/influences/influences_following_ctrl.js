@@ -8,10 +8,9 @@ angular.module('app.controllers').controller('influences.following',function ($s
     $scope.data = follows.getFollowing();
   });
 
-  $scope.unfollow = function (item) {
+  $scope.unfollow = function (userFollowedByCurrentUser) {
     $scope.confirmAction('Are you sure?').then(function () {
-      item.unfollow();
-      follows.remove(item);
+      follows.stopFollowing(userFollowedByCurrentUser)
       $scope.data = follows.getFollowing();
     });
   };
