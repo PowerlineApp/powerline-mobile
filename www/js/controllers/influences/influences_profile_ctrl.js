@@ -13,23 +13,23 @@ angular.module('app.controllers').controller('influence.profile',
 
   $scope.follow = null
   if (profile.get() && profile.get().id !== id) {
-    $scope.follow = follows.getByUserId(id);
+    $scope.follow = follows.getUserFollowedByCurrentUser(id);
   }
   $scope.isFollowedAndApproved = function(){
-    return ($scope.follow && $scope.follow.isFollow() && $scope.follow.isApproved())
+    return ($scope.follow && $scope.follow.isApproved())
   }
 
   $scope.changeStatus = function (status) {
     if ('unfollow' === status) {
       $scope.confirmAction('Are you sure?').then(function () {
-        $scope.follow[status]().then(function(){
+        $scope.unFollowByCurrentUser().then(function(){
         $rootScope.$broadcast('influences-updated');
         $state.reload();
       }, $state.reload);
         $rootScope.$broadcast('influences-updated');
       });
     } else {
-      $scope.follow[status]().then(function(){
+      $scope.follow.followByCurrentUser().then(function(){
         $rootScope.$broadcast('influences-updated');
         $scope.showToast('Follow request sent!');
         $state.reload();
@@ -37,8 +37,8 @@ angular.module('app.controllers').controller('influence.profile',
     }
   };
 
-  if ($scope.follow && $scope.follow.get('status')) {
-    activity.fetchFollowingActivities($scope.follow.get('user').id).then(function(activities) {
+  if ($scope.isFollowedAndApproved()) {
+    activity.fetchFollowingActivities($scope.follow.user_id).then(function(activities) {
       $scope.activities = activities.models;
     });
   }

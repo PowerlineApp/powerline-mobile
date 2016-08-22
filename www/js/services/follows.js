@@ -1,23 +1,6 @@
 angular.module('app.services').factory('follows', function ($http,serverConfig, $q) {
 
-  var UserFollowedByCurrentUser = function(userData){
-    this.first_name = userData.first_name
-    this.last_name = userData.last_name
-    this.avatar_file_name = userData.avatar_file_name
-    this.user_id = userData.id
-    this.username = userData.username
-    this.full_name = userData.full_name
-
-    this.isApproved = function(){
-      return(this.date_approval != null)
-    }
-
-    this.stopMeFollowingHim = function(){
-      $http.delete(serverConfig.url + '/api/v2/user/followings/'+this.user_id)
-    }
-  }
-
-  var UserFollowingCurrentUser = function(userData){
+  var FUser = function(userData, role){
     this.first_name = userData.first_name
     this.last_name = userData.last_name
     this.avatar_file_name = userData.avatar_file_name
@@ -25,7 +8,11 @@ angular.module('app.services').factory('follows', function ($http,serverConfig, 
     this.username = userData.username
     this.date_approval = userData.date_approval
     this.full_name = userData.full_name
-    this.is_mock = userData.is_mock
+    this.role = role
+
+    this.isFollowingCurrentUser = function(){
+      return(this.role == 'isFollowingCurrentUser')
+    }
 
     this.stopHimFromFollowingMe = function(){
       return $http.delete(serverConfig.url + '/api/v2/user/followers/'+this.user_id)
@@ -53,21 +40,20 @@ angular.module('app.services').factory('follows', function ($http,serverConfig, 
       return $http.put(serverConfig.url + '/api/v2/user/followings/'+this.user_id)
     }
 
+    this.followByCurrentUser = function(){
+      return $http.put(serverConfig.url + '/api/v2/user/followings/'+this.user_id)
+    }
+
     this.unFollowByCurrentUser = function(){
       return $http.delete(serverConfig.url + '/api/v2/user/followings/'+this.user_id)
     }
-  }
 
-  var UserFollowableByCurrentUser = function(userData){
-    this.first_name = userData.first_name
-    this.last_name = userData.last_name
-    this.avatar_file_name = userData.avatar_file_name
-    this.user_id = userData.id
-    this.username = userData.username    
-    this.full_name = userData.full_name
+    this.isApproved = function(){
+      return(this.date_approval != null)
+    }
 
-    this.followByCurrentUser = function(){
-      return $http.put(serverConfig.url + '/api/v2/user/followings/'+this.user_id)
+    this.stopMeFollowingHim = function(){
+      $http.delete(serverConfig.url + '/api/v2/user/followings/'+this.user_id)
     }
   }
 
@@ -80,7 +66,7 @@ angular.module('app.services').factory('follows', function ($http,serverConfig, 
     var p1 = $http.get(serverConfig.url + '/api/v2/user/followings').then(function(response){
       service.usersFollowedByCurrentUser = []
       response.data.payload.forEach(function(userData){
-        var u = new UserFollowedByCurrentUser(userData)
+        var u = new FUser(userData, 'isFollowedByCurrentUser')
         service.usersFollowedByCurrentUser.push(u)
       })
     })
@@ -88,7 +74,7 @@ angular.module('app.services').factory('follows', function ($http,serverConfig, 
     var p2 = $http.get(serverConfig.url + '/api/v2/user/followers').then(function(response){
       service.usersFollowingCurrentUser = []
       response.data.payload.forEach(function(userData){
-        var u = new UserFollowingCurrentUser(userData)
+        var u = new FUser(userData, 'isFollowingCurrentUser')
         service.usersFollowingCurrentUser.push(u)
       })
     })
@@ -132,7 +118,9 @@ angular.module('app.services').factory('follows', function ($http,serverConfig, 
     var u = service.usersFollowedByCurrentUser.find(function(user){
       return user.user_id == uID
     })
-
+    
+    if(u == null)
+      u = new FUser({id: uID}, 'isCandidate')
     return u
   }
 
@@ -142,7 +130,7 @@ angular.module('app.services').factory('follows', function ($http,serverConfig, 
     })
 
     if(u == null)
-      u = new UserFollowingCurrentUser({id: uID, is_mock: true})
+      u = new FUser({id: uID}, 'isCandidate')
     return u
   }
 
@@ -164,7 +152,7 @@ angular.module('app.services').factory('follows', function ($http,serverConfig, 
 
       return $http.get(serverConfig.url + '/api/users/?' + angular.element.param(params)).then(function (response) {
         return _(response.data).map(function (userData) {
-          return new UserFollowableByCurrentUser(userData);
+          return new FUser(userData);
         });
       });
   }

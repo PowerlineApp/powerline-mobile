@@ -56,18 +56,18 @@ angular.module('app.services').factory('SocialActivityModel', function (iStorage
         return this.isFollowRequest() ? 'follow-request' : 'link';
       },
       getHtmlMessage: function(){
-        var userFollowingCurrentUser = this.get('userFollow')
-        if(userFollowingCurrentUser.is_mock)
+        var follow = this.get('userFollow')
+        if(!follow.isFollowingCurrentUser())
           return this.get('html_message'); 
 
-        if(userFollowingCurrentUser && !userFollowingCurrentUser.isApprovedByCurrentUser()){
-        return '<p><strong>' + userFollowingCurrentUser.full_name + '</strong> requested to follow you.</p>'; 
+        if(follow && !follow.isApprovedByCurrentUser()){
+        return '<p><strong>' + follow.full_name + '</strong> requested to follow you.</p>'; 
         }
-        if(userFollowingCurrentUser && userFollowingCurrentUser.isApprovedByCurrentUser()){
-          return '<p><strong>' + userFollowingCurrentUser.full_name + '</strong> is now following you. Follow back?</p>';
+        if(follow && follow.isApprovedByCurrentUser()){
+          return '<p><strong>' + follow.full_name + '</strong> is now following you. Follow back?</p>';
         }
-        if(userFollowingCurrentUser && userFollowingCurrentUser.isApprovedByCurrentUser() && userFollowingCurrentUser.isAlsoFollowedByCurrentUser()){
-          return '<p><strong>' + userFollowingCurrentUser.full_name + '</strong> and you are now following each other.</p>';
+        if(follow && follow.isApprovedByCurrentUser() && userFollowingCurrentUser.isAlsoFollowedByCurrentUser()){
+          return '<p><strong>' + follow.full_name + '</strong> and you are now following each other.</p>';
         }
 
         return this.get('html_message'); 

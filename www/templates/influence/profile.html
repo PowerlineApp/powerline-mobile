@@ -12,7 +12,7 @@
       <br>
       <button class="btn-large btn-red1" 
         style="text-transform: capitalize" 
-        ng-show="follow && follow.isApproved()"
+        ng-show="follow && follow.isFollowingCurrentUser() && follow.isApproved()"
         ng-click="changeStatus('unfollow')">
         <i class="icon ion-person" style="font-size: 25px"></i>
         <i class="icon ion-minus-circled" style="font-size: 14px; vertical-align: middle"></i> 
@@ -21,14 +21,13 @@
 
       <button class="btn-large btn-primary" 
         style="text-transform: capitalize" 
-        ng-show="follow && !follow.isFollow()"
+        ng-show="follow && !follow.isFollowingCurrentUser()"
         ng-click="changeStatus('follow')">
         <i class="icon ion-person" style="font-size: 25px"></i>
         <i class="icon ion-plus-circled" style="font-size: 14px; vertical-align: middle"></i> 
         <span style="margin-left: 5px; vertical-align: text-top">Follow</span>
       </button>
-
-      <p ng-if="follow.isFollow() && !follow.isApproved()" style="font-style: italic;">pending approval</p>
+      <p ng-if="follow && follow.isFollowingCurrentUser() && !follow.isApproved()" style="font-style: italic;">pending approval</p>
     </section>
 
     <section>
