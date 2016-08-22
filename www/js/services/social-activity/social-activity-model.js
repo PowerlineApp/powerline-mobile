@@ -1,4 +1,4 @@
-angular.module('app.services').factory('SocialActivityModel', function (iStorage, JsModel, follows, $http, serverConfig) {
+angular.module('app.services').factory('SocialActivityModel', function (iStorage, JsModel, follows, $http, serverConfig, session) {
   var typeToIcons = {
     'follow-request': 'sa-icon-request-1',
     'micropetition-created': function (activity) {
@@ -34,43 +34,20 @@ angular.module('app.services').factory('SocialActivityModel', function (iStorage
         var icon = typeToIcons[this.get('type')];
         this.set('sa-icon', typeof icon === 'function' ? icon(this) : icon);
         if (this.isFollowRequest()) {
-          this.set('userFollow', follows.getByFollowerId(this.get('following').id));
+          this.set('userFollow', follows.getUserFollowingCurrentUser(this.get('following').id));
         }
       },
       isRequest: function () {
         return this.get('type') === 'follow-request';
       },
-      isFollowRequest: function () {
+      isFollowRequest: function(){
         return this.get('type') === 'follow-request';
       },
       isActiveRequest: function () {
         return this.isFollowRequest() &&
           this.get('userFollow') &&
-          this.get('userFollow').get('id') === this.get('target').id &&
-          !this.get('ignore');
-      },
-      currentUserIsBeingFollowed: function(){
-        return(this.get('userFollow').get('id') === this.get('target').id)
-      },
-      isApproved: function(){
-        return(this.get('userFollow').isApproved())
-      },
-      isFollowedByMe: function(){
-        return(this.get('userFollow').isFollow() )
-      },
-      unfollow: function(){
-        return(this.get('userFollow').unfollow())
-      },
-      follow: function(){
-        return(this.get('userFollow').follow())
-      },
-      unapprove: function(){
-        return(this.get('userFollow').unapprove())
-      },
-      approve: function(){
-        if(this.ignored())
-          this.unignore()
-        return(this.get('userFollow').approve())
+          this.get('userFollow').user_id === this.get('target').id &&
+          !this.ignored();
       },
       ignored: function(){
         return(this.get('ignore'))
@@ -79,22 +56,21 @@ angular.module('app.services').factory('SocialActivityModel', function (iStorage
         return this.isFollowRequest() ? 'follow-request' : 'link';
       },
       getHtmlMessage: function(){
-        if(this.getWidgetType() !== 'follow-request'){
-          return this.get('html_message');
+        var userFollowingCurrentUser = this.get('userFollow')
+        if(userFollowingCurrentUser.is_mock)
+          return this.get('html_message'); 
+
+        if(userFollowingCurrentUser && !userFollowingCurrentUser.isApprovedByCurrentUser()){
+        return '<p><strong>' + userFollowingCurrentUser.full_name + '</strong> requested to follow you.</p>'; 
         }
-        //when being shown to owner
-        if(this.get('userFollow').get('id') === this.get('target').id){
-          if(!this.get('userFollow').isApproved() && !this.get('ignore')){
-            return '<p><strong>' + this.get('userFollow').get('follower').full_name + '</strong> requested to follow you.</p>';
-          }
-          if(this.get('userFollow').isApproved() && !this.get('userFollow').isFollow()){
-            return '<p><strong>' + this.get('userFollow').get('follower').full_name + '</strong> is now following you. Follow back?</p>';
-          }
-          if(this.get('userFollow').isApproved() && this.get('userFollow').isFollow()){
-            return '<p><strong>' + this.get('userFollow').get('follower').full_name + '</strong> and you are now following each other.</p>';
-          }
+        if(userFollowingCurrentUser && userFollowingCurrentUser.isApprovedByCurrentUser()){
+          return '<p><strong>' + userFollowingCurrentUser.full_name + '</strong> is now following you. Follow back?</p>';
         }
-        return this.get('html_message');
+        if(userFollowingCurrentUser && userFollowingCurrentUser.isApprovedByCurrentUser() && userFollowingCurrentUser.isAlsoFollowedByCurrentUser()){
+          return '<p><strong>' + userFollowingCurrentUser.full_name + '</strong> and you are now following each other.</p>';
+        }
+
+        return this.get('html_message'); 
       },
       ignore: function () {
         this.set('ignore', true);

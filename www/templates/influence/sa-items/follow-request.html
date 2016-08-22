@@ -11,24 +11,24 @@
     </div>
     <div class="buttons">
         <button class="btn-text-bordered pressed"
-                ng-if="item.currentUserIsBeingFollowed() && item.isApproved()"
-                ng-click="item.unapprove(); send()"
+                ng-if="item.get('userFollow').isApprovedByCurrentUser()"
+                ng-click="send(item.get('userFollow').unApprove())"
                 class="pressed">
                 Unapprove
         </button>
         <button class="btn-text-bordered"
-                ng-if="item.currentUserIsBeingFollowed() && !item.isApproved()"
-                ng-click="item.approve(); send()">
+                ng-if="!item.get('userFollow').isApprovedByCurrentUser()"
+                ng-click="send(item.get('userFollow').approve())">
                 Approve
         </button>
         <button class="btn-text-bordered pressed"
-              ng-if="item.isFollowedByMe()"
-              ng-click="item.unfollow(); send()">
+              ng-if="item.isAlsoFollowedByCurrentUser()"
+              ng-click="send(item.get('userFollow').unFollowByCurrentUser())">
               Unfollow
         </button>
         <button class="btn-text-bordered"
-              ng-if="!item.isFollowedByMe()"
-              ng-click="item.follow(); send()">
+              ng-if="!item.isAlsoFollowedByCurrentUser()"
+              ng-click="send(item.get('userFollow').followBack())">
               Follow
         </button>
         <button class="btn-text-bordered"

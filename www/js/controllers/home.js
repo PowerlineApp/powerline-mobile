@@ -362,9 +362,9 @@ angular.module('app.controllers').directive('iActivity', function ($rootScope, q
       }
 
       $scope.followIcons = function(){
-        if(activityOwnerFollow && activityOwnerFollow.isFollow() && activityOwnerFollow.isApproved())
+        if(activityOwnerFollow && activityOwnerFollow.isApproved())
           return ['icon ion-person calm', 'icon ion-minus-circled']
-        else if(activityOwnerFollow && activityOwnerFollow.isFollow() && !activityOwnerFollow.isApproved())
+        else if(activityOwnerFollow && !activityOwnerFollow.isApproved())
           return ['icon ion-person', 'icon ion-android-time calm']
         else
           return ['icon ion-person', 'icon ion-plus-circled calm']
