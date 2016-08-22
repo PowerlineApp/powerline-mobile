@@ -1,16 +1,17 @@
 angular.module('app.controllers').controller('influences.followers',function ($scope, follows) {
 
-  $scope.data = follows.getApprovedFollowers();
+  $scope.data = follows.getUsersFollowingCurrentUser();
   $scope.$watch(follows.size, function () {
-    $scope.data = follows.getApprovedFollowers();
+    $scope.data = follows.getUsersFollowingCurrentUser();
   });
   $scope.$on('follows-loaded', function () {
-    $scope.data = follows.getApprovedFollowers();
+    $scope.data = follows.getUsersFollowingCurrentUser();
   });
 
-  $scope.remove = function (follows) {
+  $scope.remove = function (userFollowingCurrentUser) {
     $scope.confirmAction('Are you sure?').then(function () {
-      follows.unapprove();
+      follows.stopFollower(userFollowingCurrentUser);
+      $scope.data = follows.getUsersFollowingCurrentUser();
     });
   };
 

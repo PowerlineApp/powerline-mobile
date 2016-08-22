@@ -1,11 +1,11 @@
 <section ng-controller="influences.followers" class="margin-8">
   <ul class="profiles-list-two">
     <li ng-repeat="item in data">
-      <figure ng-click="navigateTo('path', 'influence/profile', item.get('follower').id)">
-        <avatar-img img="item.get('follower').avatar_file_name" text="item.get('follower').first_name"></avatar-img>
+      <figure ng-click="navigateTo('path', 'influence/profile', item.user_id)">
+        <avatar-img img="item.avatar_file_name" text="item.first_name"></avatar-img>
       </figure>
-      <p ng-click="navigateTo('path', 'influence/profile', item.get('follower').id)">{{ item.get('follower').username}}</p>
-      <p><span>{{ item.get('follower').first_name}} {{ item.get('follower').last_name}}</span></p>
+      <p ng-click="navigateTo('path', 'influence/profile', item.user_id)">{{ item.username}}</p>
+      <p><span>{{ item.first_name}} {{ item.last_name}}</span></p>
       <a class="follow-action" ng-click="remove(item)">
         <i class="icon ion-person calm"></i>
         <i class="icon ion-minus-circled" style="color: #adb7c6"></i> 
