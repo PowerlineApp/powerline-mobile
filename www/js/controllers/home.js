@@ -343,7 +343,7 @@ angular.module('app.controllers').directive('iActivity', function ($rootScope, q
           $scope.showToast('Waiting for user to approve...');
         else {
           $scope.sending = true;
-          follows.currentUserWantsToFollowUser(activityOwnerID).then(function () {
+          activityOwnerFollow.followByCurrentUser().then(function () {
             $scope.activity.followable = false;
             $scope.sending = false;
             $scope.showToast('Follow request sent!');

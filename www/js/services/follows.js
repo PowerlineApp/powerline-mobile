@@ -139,10 +139,6 @@ angular.module('app.services').factory('follows', function ($http,serverConfig, 
     return u
   }
 
-  service.currentUserWantsToFollowUser = function(uIDtoFollow){
-    return $http.put('/api/v2/user/followings/'+uIDtoFollow)
-  }
-
   service.size = function(){
     return(service.users.length)
   }
