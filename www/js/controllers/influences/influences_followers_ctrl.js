@@ -10,7 +10,7 @@ angular.module('app.controllers').controller('influences.followers',function ($s
 
   $scope.remove = function (userFollowingCurrentUser) {
     $scope.confirmAction('Are you sure?').then(function () {
-      follows.stopFollower(userFollowingCurrentUser);
+      userFollowingCurrentUser.unApprove()
       $scope.data = follows.getUsersFollowingCurrentUser();
     });
   };

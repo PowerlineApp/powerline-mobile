@@ -27,10 +27,6 @@ angular.module('app.services').factory('follows', function ($http,serverConfig, 
       this.roles = _.without(this.roles, role)
     }
 
-    this.stopHimFromFollowingMe = function(){
-      return $http.delete(serverConfig.url + '/api/v2/user/followers/'+this.user_id)
-    }
-
     this.isAlsoFollowedByCurrentUser = function(){
       return service.usersFollowedByCurrentUser.find(function(u){
         return u.user_id == this.user_id
@@ -51,10 +47,6 @@ angular.module('app.services').factory('follows', function ($http,serverConfig, 
       return $http.delete(serverConfig.url + '/api/v2/user/followers/'+this.user_id)
     }
 
-    this.followBack = function(){
-      return $http.put(serverConfig.url + '/api/v2/user/followings/'+this.user_id)
-    }
-
     this.followByCurrentUser = function(){
       this.addRole('isFollowedByCurrentUser')
       return $http.put(serverConfig.url + '/api/v2/user/followings/'+this.user_id)
@@ -67,10 +59,6 @@ angular.module('app.services').factory('follows', function ($http,serverConfig, 
 
     this.isApproved = function(){
       return(this.date_approval != null)
-    }
-
-    this.stopMeFollowingHim = function(){
-      $http.delete(serverConfig.url + '/api/v2/user/followings/'+this.user_id)
     }
   }
 
@@ -116,16 +104,6 @@ angular.module('app.services').factory('follows', function ($http,serverConfig, 
     })
 
     return deferred.promise
-  }
-
-  service.stopFollowing = function(userFollowedByCurrentUser){
-    userFollowedByCurrentUser.stopMeFollowingHim()
-    this.usersFollowedByCurrentUser = _.without(this.usersFollowedByCurrentUser, userFollowedByCurrentUser)
-  }
-
-  service.stopFollower = function(userFollowingCurrentUser){
-    userFollowingCurrentUser.stopHimFromFollowingMe()
-    this.usersFollowingCurrentUser = _.without(this.usersFollowingCurrentUser, userFollowingCurrentUser)
   }
 
   service.getUsersFollowingCurrentUser = function(){

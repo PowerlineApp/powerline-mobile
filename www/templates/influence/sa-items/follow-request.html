@@ -22,13 +22,13 @@
                 Approve
         </button>
         <button class="btn-text-bordered pressed"
-              ng-if="item.isAlsoFollowedByCurrentUser()"
+              ng-if="item.get('userFollow').isFollowedByCurrentUser()"
               ng-click="send(item.get('userFollow').unFollowByCurrentUser())">
               Unfollow
         </button>
         <button class="btn-text-bordered"
-              ng-if="!item.isAlsoFollowedByCurrentUser()"
-              ng-click="send(item.get('userFollow').followBack())">
+              ng-if="!item.get('userFollow').isFollowedByCurrentUser()"
+              ng-click="send(item.get('userFollow').followByCurrentUser())">
               Follow
         </button>
         <button class="btn-text-bordered"
