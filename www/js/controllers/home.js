@@ -334,21 +334,21 @@ angular.module('app.controllers').directive('iActivity', function ($rootScope, q
       $scope.isDefaultAvatar = $rootScope.isDefaultAvatar($scope.avatar_file_path);
 
       var activityOwnerID = $scope.activity.get('owner').id
-      var activityOwnerFollow = follows.getByUserId(activityOwnerID);
+      var activityOwnerFollow = follows.getUserFollowedByCurrentUser(activityOwnerID);
       $scope.showFollow = follows.loaded && activityOwnerID != session.user_id
       $scope.followClicked = function(){
-        if(activityOwnerFollow.isFollow() && activityOwnerFollow.isApproved())
+        if(activityOwnerFollow && activityOwnerFollow.isApproved())
           $scope.showToast('You are following this user');
-        else if (activityOwnerFollow.isFollow() && !activityOwnerFollow.isApproved())
+        else if (activityOwnerFollow && !activityOwnerFollow.isApproved())
           $scope.showToast('Waiting for user to approve...');
         else {
           $scope.sending = true;
-          activityOwnerFollow.follow().then(function () {
+          follows.currentUserWantsToFollowUser(activityOwnerID).then(function () {
             $scope.activity.followable = false;
             $scope.sending = false;
             $scope.showToast('Follow request sent!');
             follows.load().then(function(){
-              activityOwnerFollow = follows.getByUserId(activityOwnerID);
+              activityOwnerFollow = follows.getUserFollowedByCurrentUser(activityOwnerID);
             })
           });          
           msg = 'Follow request sent!'
@@ -362,9 +362,9 @@ angular.module('app.controllers').directive('iActivity', function ($rootScope, q
       }
 
       $scope.followIcons = function(){
-        if(activityOwnerFollow.isFollow() && activityOwnerFollow.isApproved())
+        if(activityOwnerFollow && activityOwnerFollow.isFollow() && activityOwnerFollow.isApproved())
           return ['icon ion-person calm', 'icon ion-minus-circled']
-        else if(activityOwnerFollow.isFollow() && !activityOwnerFollow.isApproved())
+        else if(activityOwnerFollow && activityOwnerFollow.isFollow() && !activityOwnerFollow.isApproved())
           return ['icon ion-person', 'icon ion-android-time calm']
         else
           return ['icon ion-person', 'icon ion-plus-circled calm']
