@@ -38,9 +38,8 @@ angular.module('app.controllers').controller('influences',function ($scope, $loc
   
   //if this page is opened from menu or there is not data, we should refresh data
   $scope.$on('$ionicView.enter', function(){
-    if($scope.isEmpty()/* || $rootScope.menuClicked*/){
+    if($scope.isEmpty()  || follows.containsMockUsers)
       loadFollowsFromServer(true);
-    }
   });
   
 })

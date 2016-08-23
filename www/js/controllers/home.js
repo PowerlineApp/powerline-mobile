@@ -335,11 +335,12 @@ angular.module('app.controllers').directive('iActivity', function ($rootScope, q
 
       var activityOwnerID = $scope.activity.get('owner').id
       var activityOwnerFollow = follows.getOrCreateUser(activityOwnerID);
+
       $scope.showFollow = follows.loaded && activityOwnerID != session.user_id
       $scope.followClicked = function(){
-        if(activityOwnerFollow && activityOwnerFollow.isApproved())
+        if(activityOwnerFollow && activityOwnerFollow.isFollowedByCurrentUser() && activityOwnerFollow.isApproved())
           $scope.showToast('You are following this user');
-        else if (activityOwnerFollow && !activityOwnerFollow.isApproved())
+        else if (activityOwnerFollow && activityOwnerFollow.isFollowedByCurrentUser() && !activityOwnerFollow.isApproved())
           $scope.showToast('Waiting for user to approve...');
         else {
           $scope.sending = true;
@@ -362,9 +363,9 @@ angular.module('app.controllers').directive('iActivity', function ($rootScope, q
       }
 
       $scope.followIcons = function(){
-        if(activityOwnerFollow && activityOwnerFollow.isApproved())
+        if(activityOwnerFollow && activityOwnerFollow.isFollowedByCurrentUser() && activityOwnerFollow.isApproved())
           return ['icon ion-person calm', 'icon ion-minus-circled']
-        else if(activityOwnerFollow && !activityOwnerFollow.isApproved())
+        else if(activityOwnerFollow && activityOwnerFollow.isFollowedByCurrentUser() && !activityOwnerFollow.isApproved())
           return ['icon ion-person', 'icon ion-android-time calm']
         else
           return ['icon ion-person', 'icon ion-plus-circled calm']

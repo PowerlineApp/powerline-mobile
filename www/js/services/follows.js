@@ -1,14 +1,18 @@
 angular.module('app.services').factory('follows', function ($http,serverConfig, $q, $rootScope) {
 
   var FUser = function(userData, role){
-    this.first_name = userData.first_name
-    this.last_name = userData.last_name
-    this.avatar_file_name = userData.avatar_file_name
-    this.user_id = userData.id
-    this.username = userData.username
-    this.date_approval = userData.date_approval
-    this.full_name = userData.full_name
+    this.setData = function(userData){
+      this.first_name = userData.first_name
+      this.last_name = userData.last_name
+      this.avatar_file_name = userData.avatar_file_name
+      this.user_id = userData.id
+      this.username = userData.username
+      this.date_approval = userData.date_approval
+      this.full_name = userData.full_name      
+    }
+
     this.roles = [role]
+    this.setData(userData)
 
     this.isFollowingCurrentUser = function(){
       return(_.include(this.roles, 'isFollowingCurrentUser'))
@@ -68,8 +72,11 @@ angular.module('app.services').factory('follows', function ($http,serverConfig, 
       response.data.payload.forEach(function(userData){
         var uID = userData.id
         var u = service.getUser(uID)
-        if(u)
+        if(u){
           u.addRole('isFollowedByCurrentUser')
+          u.setData(userData)
+        }
+          
         else{
           u = new FUser(userData, 'isFollowedByCurrentUser')
           service.users.push(u)
@@ -81,8 +88,10 @@ angular.module('app.services').factory('follows', function ($http,serverConfig, 
       response.data.payload.forEach(function(userData){
         var uID = userData.id
         var u = service.getUser(uID)
-        if(u)
+        if(u){
           u.addRole('isFollowingCurrentUser')
+          u.setData(userData)
+        }
         else{
           u = new FUser(userData, 'isFollowingCurrentUser')
           service.users.push(u)
@@ -120,6 +129,16 @@ angular.module('app.services').factory('follows', function ($http,serverConfig, 
     return service.users.find(function(user){
       return user.user_id == uID
     })
+  }
+
+  service.containsMockUsers = function(){
+    var containsMock = false
+    this.users.forEach(function(u){
+      if(user.roles.length == 0)
+        containsMock = true
+    })
+
+    return containsMock
   }
 
   service.getOrCreateUser = function(uID){
