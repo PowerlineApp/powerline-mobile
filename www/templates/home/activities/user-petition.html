@@ -1,0 +1,49 @@
+<article class="item">
+
+  <figure ng-click="navigateTo('owner-profile', activity.get('owner'));$event.stopPropagation();">
+    <img bo-show="avatar_file_path" bo-src="avatar_file_path" ng-if="!isDefaultAvatar">
+    <ng-letter-avatar data="{{(full_name| trim) || (official_title| trim)}}" ng-if="isDefaultAvatar"></ng-letter-avatar>
+    <span ng-show="activity.isInPriorityZone()"></span>
+  </figure>
+
+  <div class="item-title">
+    <p class="first-line">
+      <i bo-class="iconClass"></i>
+      <strong bo-bind="full_name" ng-click="navigateTo('owner-profile', activity.get('owner'));$event.stopPropagation();"></strong>
+      <strong bo-bind="official_title"></strong>
+      <span ng-if="owner_info_1" ng-bind="owner_info_1"></span>
+    </p>
+    <p ng-class="{unanswered: activity.isUnanswered()}" bo-if="title" bo-bind="title"></p>
+    <i class="time"><time>{{ sent_at_elapsed }}</time></i>
+  </div>
+  <div class="item-content">
+    <p ng-click="navigateToActivity(activity)"
+      bo-if="activity.get('image_src')" 
+      class="picture">
+      <img ng-src="{{imagePath}}" zoom-src="{{imagePath}}" zoom-view/>
+    </p>
+    <p ng-class="{unanswered: activity.isUnanswered() && !title}" 
+      bo-html="description" 
+      ng-click="navigateToActivity(activity, null, $event)" i-content-link>
+    </p>
+    <ng-include src="'templates/home/activities/_link-preview-metadata.html'" ng-show="activity.hasLinkPreviewMetadata()">
+  </div>
+  <div class="item-footer">
+    <div class="control" ng-show="sending">
+      <spinner></spinner>
+    </div>
+    <div class="control" ng-show="activity.canBeSigned() && !sending"><a ng-click="sign()">SIGN</a></div>
+    <div class="control" ng-show="activity.canBeUnsigned() && !sending"><a ng-click="unsign()">UNSIGN</a></div>
+    <div class="control"><a ng-click="navigateToActivity(activity, 'add-comment')" class="activity-control reply"></a></div>
+    <ng-include src="'templates/home/activities/_follow.html'" ng-show="showFollow"></ng-include>
+    <div class="control notification">
+      <a ng-click="onSubscribeBtnClicked()"><i ng-class="'ion-android-notifications'" style="font-size: 22px;" ng-style="mutingStyle"></i></a>
+    </div>
+    <div class="control bookmark">
+      <a ng-click="bookmarkButtonClicked()">
+        <i class="icon ion-star" ng-class="isBookmarked() ? 'active': ''"></i>
+      </a>
+    </div>  
+    <div class="responses" bo-bind="comments_count"></div>
+  </div>
+</article>

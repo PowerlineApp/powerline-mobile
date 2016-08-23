@@ -44,8 +44,8 @@ angular.module('app.services', [
 
   var activityRoutes = {
     'question': '/questions/',
-    'user-petition': '/petition/',
-    'post': '/petition/',
+    'user-petition': '/user-petition/',
+    'post': '/post/',
     'leader-news': '/question/news/',
     'petition': '/question/leader-petition/',
     'payment-request': '/payment-polls/payment-request/',
@@ -110,13 +110,13 @@ angular.module('app.services', [
     },
     'activity': function (activity, focus) {
       var activityType = activity.get('entity').type
-      // not sure if entity.id is used at all or everything goes via entity.group_id 
       var activityID = activity.get('entity').id 
 
       var activityRoute = activityRoutes[activityType]
       if(activityRoute == null)
         console.error('undefined route for activity type: '+activityType)
       var path = activityRoute + activityID;
+      console.log('navigate to '+path)
       if (focus) {
         $location.path(path).search('focus', focus);
       } else {

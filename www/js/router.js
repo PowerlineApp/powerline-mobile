@@ -104,10 +104,10 @@ angular.module('app')
       templateUrl: 'templates/payment-polls/crowdfunding-payment-request.html',
       controller: 'question.payment-request'
     }, {
-      name: 'petition',
-      url: '/petition/:id',
-      templateUrl: 'templates/petitions/petition.html',
-      controller: 'petition'
+      name: 'userPetition',
+      url: '/user-petition/:id',
+      templateUrl: 'templates/user-petitions/user-petition.html',
+      controller: 'userPetitionCtrl'
     }, {
       name: 'discussion',
       url: '/discussion/:entity/:id',

@@ -244,8 +244,32 @@ angular.module('app.controllers').directive('iActivity', function ($rootScope, q
     };  
   }
 
-  function petitionCtrl($scope) {
+  function userPetitionCtrl($scope) {
     $scope.templateSrc = 'templates/home/activities/petition.html';
+
+    $scope.sign = function () {
+      var microPetitionID = $scope.activity.get('entity').id
+      $scope.sending = true
+      microPetitions.signLongPetition(microPetitionID).then(function(){
+          $scope.activity.markAsSigned()
+          $scope.sending = false;
+          $scope.showToast('Petition signed.');
+      })
+    };
+
+    $scope.unsign = function () {
+      $scope.sending = true;
+      var microPetitionID = $scope.activity.get('entity').id;
+      microPetitions.unsignLongPetition(microPetitionID).then(function (response) {
+        $scope.activity.markAsSigned()
+        $scope.sending = false;
+        $scope.showToast('Petition unsigned.');
+      });
+    };
+  }
+
+  function petitionCtrl($scope) {
+    $scope.templateSrc = 'templates/home/activities/user-petition.html';
 
     $scope.sign = function () {
       var microPetitionID = $scope.activity.get('entity').id
@@ -278,7 +302,7 @@ angular.module('app.controllers').directive('iActivity', function ($rootScope, q
     'crowdfunding-payment-request': paymentCtrl,
     'payment-request': paymentCtrl,
     'post': postCtrl,
-    'user-petition': petitionCtrl,
+    'user-petition': userPetitionCtrl,
     'petition': petitionCtrl,
     'question': questionCtrl
   };
@@ -305,7 +329,6 @@ angular.module('app.controllers').directive('iActivity', function ($rootScope, q
         }
       }
       $scope.navigateToActivity = function (activity, focus, e) {
-        //leaderContentHelper.createPoll()
 
         activity.setRead();
         if (e && e.target.tagName.toLowerCase() === 'hash-tag') {
@@ -315,8 +338,8 @@ angular.module('app.controllers').directive('iActivity', function ($rootScope, q
         }
       };
 
-      // if($scope.activity.get('entity').id == 238)
-      //   console.log(JSON.stringify($scope.activity))
+      // if($scope.activity.get('entity').id == 237)
+      //    console.log(JSON.stringify($scope.activity))
 
       $scope.title = $scope.activity.get('title');
       var description_raw = $scope.activity.get('description_html')

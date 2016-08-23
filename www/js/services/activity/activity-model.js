@@ -6,7 +6,7 @@ angular.module('app.services').factory('ActivityModel',
         petition: 'Petition',
         'leader-news': 'News',
         'leader-event': 'Event',
-        'user-petition': 'Petition',
+        'user-petition': 'User Petition',
         'post': 'Post',
         'payment-request': 'Payment',
         'crowdfunding-payment-request': 'Payment'
