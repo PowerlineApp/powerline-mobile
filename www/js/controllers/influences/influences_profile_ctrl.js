@@ -22,7 +22,7 @@ angular.module('app.controllers').controller('influence.profile',
   $scope.changeStatus = function (status) {
     if ('unfollow' === status) {
       $scope.confirmAction('Are you sure?').then(function () {
-        $scope.unFollowByCurrentUser().then(function(){
+        $scope.follow.unFollowByCurrentUser().then(function(){
         $rootScope.$broadcast('influences-updated');
         $state.reload();
       }, $state.reload);

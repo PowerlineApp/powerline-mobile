@@ -19,10 +19,10 @@
     <section class="margin-8">
       <ul class="profiles-list-two">
         <li ng-repeat="item in results">
-          <figure ng-click="navigateTo('path', 'influence/profile', item.id)">
+          <figure ng-click="navigateTo('path', 'influence/profile', item.user_id)">
             <avatar-img img="item.avatar_file_name" text="item.first_name"></avatar-img>
           </figure>
-          <p ng-click="navigateTo('path', 'influence/profile', item.id)">{{ item.username}}</p>
+          <p ng-click="navigateTo('path', 'influence/profile', item.user_id)">{{ item.username}}</p>
           <p><span>{{ item.first_name}} {{ item.last_name}}</span></p>
           <a class="follow-action" ng-click="follow(item)">
             <i class="icon ion-person" style="color: #adb7c6"></i>
@@ -37,10 +37,10 @@
       <ul class="profiles-list-two">
         <li class="title">Suggested from Facebook</li>
         <li ng-repeat="item in suggested">
-          <figure ng-click="navigateTo('path', 'influence/profile', item.id)">
+          <figure ng-click="navigateTo('path', 'influence/profile', item.user_id)">
             <avatar-img img="item.avatar_file_name" text="item.first_name"></avatar-img>
           </figure>
-          <p ng-click="navigateTo('path', 'influence/profile', item.id)">{{ item.username}}</p>
+          <p ng-click="navigateTo('path', 'influence/profile', item.user_id)">{{ item.username}}</p>
           <p><span>{{ item.first_name}} {{ item.last_name}}</span></p>
           <p class="btn-plus-1" ng-click="facebookFollow(item)"></p>
         </li>

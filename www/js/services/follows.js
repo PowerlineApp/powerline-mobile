@@ -27,12 +27,6 @@ angular.module('app.services').factory('follows', function ($http,serverConfig, 
       this.roles = _.without(this.roles, role)
     }
 
-    this.isAlsoFollowedByCurrentUser = function(){
-      return service.usersFollowedByCurrentUser.find(function(u){
-        return u.user_id == this.user_id
-      })
-    }
-
     this.isApprovedByCurrentUser = function(){
       return(this.date_approval != null)
     }
