@@ -24,8 +24,26 @@ angular.module('app.services').factory('leaderContentHelper', function($http, se
     })    
   }
 
+  // created poll with ID = 194 in group 285 as user Peter10
+
+  service.addPollAnswer = function(value){
+    var pollID = 194
+    var data = {value : value}
+    var payload = JSON.stringify(data)
+    var headers = {headers: {'Content-Type': 'application/json'}}
+
+    $http.post(serverConfig.url + '/api/v2/polls/'+pollID+'/options', payload, headers).then(function(response){
+      console.log(response)
+    })  
+  }
+  // addPollAnswer('answer YES') -> ID: 305
+  // addPollAnswer('answer NO') -> ID: 306
+
   service.publishPoll = function(pollID){
-    var data = {options: [{id: 1, value: 'optionA', payment_amount: 10, is_user_amount: true}, {id: 1, value: 'optionB', payment_amount: 10, is_user_amount: true}]} 
+    // var data = {options: [
+    //   {id: 1, value: 'optionA', payment_amount: 10, is_user_amount: true}, 
+    //   {id: 2, value: 'optionB', payment_amount: 10, is_user_amount: true}]} 
+    var data = {}
       
     var payload = JSON.stringify(data)
     var headers = {headers: {'Content-Type': 'application/json'}}
