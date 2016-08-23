@@ -31,10 +31,6 @@ angular.module('app.services').factory('follows', function ($http,serverConfig, 
       this.roles = _.without(this.roles, role)
     }
 
-    this.isApprovedByCurrentUser = function(){
-      return(this.date_approval != null)
-    }
-
     this.approve = function(){
       this.date_approval = new Date()
       return $http.patch(serverConfig.url + '/api/v2/user/followers/'+this.user_id)

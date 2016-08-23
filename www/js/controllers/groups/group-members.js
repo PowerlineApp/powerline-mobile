@@ -7,9 +7,10 @@ angular.module('app.controllers').controller('group.members',function ($scope, g
     $scope.group = groups.get(groupID);
     $scope.group.members().then(function(members){
       $scope.groupMembers = members
-      follows.loadAndGetFollowing().then(function(thoseFollowedByCurrentUser){
-        var alreadyFollowingIDs = thoseFollowedByCurrentUser.map(function(f){
-          return f.get('user').id
+      follows.load().then(function(){
+
+        var alreadyFollowingIDs = follows.getUsersFollowedByCurrentUser().map(function(f){
+          return f.user_id
         })
 
         $scope.groupMembers.forEach(function(m){
@@ -27,6 +28,7 @@ angular.module('app.controllers').controller('group.members',function ($scope, g
     $scope.group.followAllMembers().then(function(){
       $scope.showToast('Follow all request sent!');
       $scope.followingAll = true
+      follows.load()
       $scope.groupMembers.forEach(function(m){
         m.isFollowed = true
       })
@@ -48,8 +50,8 @@ angular.module('app.controllers').controller('group.members',function ($scope, g
   }
 
   $scope.follow = function(groupMember) {
-    var memberAsFollowable = follows.getByUserId(groupMember.id);
-    memberAsFollowable.follow().then(function () {
+    var memberAsFollowable = follows.getOrCreateUser(groupMember.id);
+    memberAsFollowable.followByCurrentUser().then(function () {
       follows.load()
       $scope.showToast('Follow request sent!');
       groupMember.isFollowed = true
@@ -57,8 +59,8 @@ angular.module('app.controllers').controller('group.members',function ($scope, g
   };
 
   $scope.unfollow = function(groupMember) {
-    var memberAsFollowable = follows.getByUserId(groupMember.id);
-    memberAsFollowable.unfollow().then(function () {
+    var memberAsFollowable = follows.getOrCreateUser(groupMember.id);
+    memberAsFollowable.unFollowByCurrentUser().then(function () {
       follows.load()
       $scope.showToast('Successfully unfollowed user.');
       groupMember.isFollowed = false
@@ -66,8 +68,9 @@ angular.module('app.controllers').controller('group.members',function ($scope, g
   };
   
   $scope.pendingApproval = function(groupMember){
-    var memberAsFollowable = follows.getByUserId(groupMember.id)
-    return groupMember.isFollowed && !memberAsFollowable.isApproved()
+    var notMe = groupMember.id != session.user_id
+    var memberAsFollowable = follows.getOrCreateUser(groupMember.id)
+    return notMe && memberAsFollowable.isFollowedByCurrentUser() && !memberAsFollowable.isApproved()
   }
 
   
