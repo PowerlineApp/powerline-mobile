@@ -11,7 +11,7 @@
       <i bo-class="iconClass"></i>
       <strong bo-bind="full_name" ng-click="navigateTo('owner-profile', activity.get('owner'));$event.stopPropagation();"></strong>
       <strong bo-bind="official_title"></strong>
-      <span bo-if="owner_info_1" bo-bind="owner_info_1"></span>
+      <span ng-if="owner_info_1" ng-bind="owner_info_1"></span>
     </p>
     <p ng-class="{unanswered: activity.isUnanswered()}" bo-if="title" bo-bind="title"></p>
     <i class="time"><time>{{ sent_at_elapsed }}</time></i>
