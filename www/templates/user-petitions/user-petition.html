@@ -46,7 +46,24 @@
             min-height: 200px">
         </textarea>
       </div>
-      <ng-include src="subview"></ng-include>
+      
+      <!-- START TAKE ACTION -->
+
+      <section class="margin-h-10" ng-show="canSignOrUnsign()">
+          <div style="float: left;width: 50%;padding-top: 12px;" class="margin-v-20">
+              <div class="checkbox-privacy" ng-class="{checked: data.privacy}" ng-click="data.privacy = data.privacy ? 0 : 1" guide="privacy-option">
+                  <i></i>
+                  {{ data.privacy ? 'Username hidden' : 'Username visible'  }}
+              </div>
+          </div>
+          <div style="float: left;width: 50%;" class="margin-v-20">
+              <button class="btn-large btn-primary" ng-click="sign()" ng-show="!userPetition.isSignedByMe()">Sign</button>
+              <button class="btn-large btn-primary" ng-click="unsign()" ng-show="userPetition.isSignedByMe()">Unsign</button>
+          </div>
+      </section>
+
+      <!-- END TAKE ACTION -->
+
       <ng-include src="'templates/widget/share.html'"></ng-include>
     </section>
 

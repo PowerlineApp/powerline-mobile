@@ -4,6 +4,7 @@ angular.module('app.services').factory('userPetitions',function ($q, session, se
     this._load = function(data){
       this.body = data.body
       this.html_body = $sce.trustAsHtml(iParse.wrapHashTags(iParse.wrapLinks(data.html_body)))
+      this.signatures = data.signatures
 
       this.owner = {
         id: data.user.id,
@@ -41,6 +42,31 @@ angular.module('app.services').factory('userPetitions',function ($q, session, se
 
     this.delete = function(){
        return $http.delete(serverConfig.url + '/api/v2/user-petitions/' + this.id)     
+    }
+
+    this.isSignedByMe = function(){
+      var mySignature = this.signatures.find(function(signature){
+        return signature.user.id == session.user_id
+      })
+
+      return(mySignature != null)
+    }
+
+    this.sign = function(){
+      // TODO: refresh appropriate activity
+      service.sign(this.id).then(this.reload.bind(this))
+    }
+
+    this.unsign = function(){
+      // TODO: refresh appropriate activity
+      service.unsign(this.id).then(this.reload.bind(this))
+    }
+
+    this.reload = function(){
+      var that = this
+      $http.get(serverConfig.url + '/api/v2/user-petitions/'+this.id).then(function (response) {
+        that._load(response.data)
+      });
     }
   }
 
