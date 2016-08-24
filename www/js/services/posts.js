@@ -65,7 +65,23 @@ angular.module('app.services').factory('posts',function ($q, session, serverConf
       return $http.post(serverConfig.url + '/api/v2/groups/'+groupID+'/posts', payload, headers).then(function(response) {
         return(response)
       })
-    }    
+    },
+
+    upvote: function(postID){
+      var payload = JSON.stringify({option:'upvote'})
+      var headers = {headers: {'Content-Type': 'application/json'}}
+      return $http.post(serverConfig.url + '/api/v2/posts/'+postID+'/vote', payload, headers)
+    },
+
+    downvote: function(postID){
+      var payload = JSON.stringify({option:'downvote'})
+      var headers = {headers: {'Content-Type': 'application/json'}}
+      return $http.post(serverConfig.url + '/api/v2/posts/'+postID+'/vote', payload, headers)
+    },
+
+    unvote: function(postID){
+      return $http.delete(serverConfig.url + '/api/v2/posts/'+postID+'/vote')
+    }
   }
 
   return service

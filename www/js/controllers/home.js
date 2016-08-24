@@ -188,7 +188,7 @@ angular.module('app.controllers').controller('preload', function (topBar, sessio
   }
 });
 
-angular.module('app.controllers').directive('iActivity', function ($rootScope, questions, petitions, discussion, elapsedFilter, follows, session, iParse, $sce, favorite, microPetitions, leaderContentHelper) {
+angular.module('app.controllers').directive('iActivity', function ($rootScope, questions, petitions, discussion, elapsedFilter, follows, session, iParse, $sce, favorite, microPetitions, leaderContentHelper, posts) {
 
   function eventCtrl($scope) {
     $scope.templateSrc = 'templates/home/activities/event.html';
@@ -219,26 +219,36 @@ angular.module('app.controllers').directive('iActivity', function ($rootScope, q
     $scope.currentUserIsActivityOwner = $scope.activity.get('owner').id == session.user_id
     $scope.booster = $scope.activity.get('owner').type === 'group' ? 100 : $scope.activity.getQuorumCompletedPercent();
 
-    $scope.sign = function (optionId) {
+    $scope.upvote = function(){
+      var postID = $scope.activity.get('entity').id
       $scope.sending = true;
-      petitions.answer($scope.activity.get('entity').id, optionId).then(function (answer) {
-        $scope.activity.set('answers', [answer]);
+      posts.upvote(postID).then(function(answer){
+        $scope.activity.setAnswer(answer);
         $scope.sending = false;
-        if (optionId === 1) {
-          $scope.showToast('Post upvoted!');
-        }
-        if (optionId === 2) {
-          $scope.showToast('Post downvoted!');
-        }
-      });
-    };
-    $scope.unsign = function () {
+        $scope.showToast('Post upvoted!');
+      })
+    }
+
+    $scope.downvote = function(){
+      var postID = $scope.activity.get('entity').id
       $scope.sending = true;
-      petitions.unsign($scope.activity.get('entity').id, $scope.activity.get('answer').option_id).then(function () {
-        $scope.activity.set('answered', false).set('answer', null);
+      posts.downvote(postID).then(function(answer){
+        $scope.activity.setAnswer(answer);
         $scope.sending = false;
-      });
-    };  
+        $scope.showToast('Post downvoted!');
+      })
+    }
+
+    $scope.unvote = function(){
+      var postID = $scope.activity.get('entity').id
+      $scope.sending = true;
+      posts.unvote(postID).then(function(answer){
+        $scope.activity.unAnswer();
+        $scope.sending = false;
+        $scope.showToast('Post vote undo successful!');
+      })
+    }
+
   }
 
   function userPetitionCtrl($scope) {

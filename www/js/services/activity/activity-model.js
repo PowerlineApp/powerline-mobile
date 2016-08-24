@@ -40,6 +40,12 @@ angular.module('app.services').factory('ActivityModel',
       isUnanswered: function () {
         return !this.isAnswered()
       },      
+      setAnswer: function(answer){
+        this.set('answers', [answer])
+      },
+      unAnswer: function(){
+        this.set('answers', [])
+      },
       isFollowing: function () {
         var owner = this.get('owner');
         return owner.type === 'user' && follows.some(function (following) {

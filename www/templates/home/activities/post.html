@@ -33,13 +33,13 @@
       <spinner></spinner>
     </div>
     <div class="control" ng-show="activity.isUnanswered() && !sending && !currentUserIsActivityOwner && !activity.isExpired()">
-      <i class="activity-control double-up" ng-click="sign(1)"></i>
+      <i class="activity-control double-up" ng-click="upvote()"></i>
     </div>
     <div class="control" ng-show="activity.isUnanswered() && !sending && !currentUserIsActivityOwner && !activity.isExpired()">
-      <i class="activity-control double-down"  ng-click="sign(2)"></i>
+      <i class="activity-control double-down"  ng-click="downvote()"></i>
     </div>
     <div class="control" ng-show="activity.isAnswered() && !activity.isExpired() && !sending">
-      <a ng-click="unsign()">undo</a>
+      <a ng-click="unvote()">undo</a>
     </div>
     <div class="control"><a ng-click="navigateToActivity(activity, 'add-comment')" class="activity-control reply"></a></div>
     <ng-include src="'templates/home/activities/_follow.html'" ng-show="showFollow"></ng-include>
