@@ -109,6 +109,11 @@ angular.module('app')
       templateUrl: 'templates/user-petitions/user-petition.html',
       controller: 'userPetitionCtrl'
     }, {
+      name: 'Post',
+      url: '/post/:id',
+      templateUrl: 'templates/posts/post.html',
+      controller: 'PostCtrl'
+    }, {
       name: 'discussion',
       url: '/discussion/:entity/:id',
       templateUrl: 'templates/question/discussion.html',

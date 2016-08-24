@@ -1,0 +1,63 @@
+<ion-view view-title="Post">
+  <ion-content class="page-petition content">
+    <section class="q-header margin-10">
+      <div class="avatar" ng-click="navigateTo('owner-profile', post.owner)">
+        <avatar-img img="post.owner.avatar" text="post.owner.name"></avatar-img>
+      </div>
+      <div class="q-info">
+        <div>
+          <i class="icon-responses"></i> Responses <br>
+          <span ng-bind="post.votes_count"></span>
+        </div>
+
+        <div>
+          <i class="icon-calendar"></i> Created <br>
+          <time ng-bind="post.created_at_date | date:'M.d.yy'"></time>
+        </div>
+        <div>
+          <i class="icon-calendar"></i> Expires<br>
+          <time ng-bind="post.expired_at_date | date:'M.d.yy'"></time>
+        </div>
+        <div>
+          Post <br>
+          <i class="icon-post"></i>
+        </div>
+      </div>
+    </section>
+
+    <section class="q-content">
+      <div class="title">
+        <strong ng-bind="post.owner.name" ng-click="navigateTo('owner-profile', post.owner)"></strong>
+
+        <a ng-show="post.ownedByCurrentUser()" ng-click="onEditBtnClicked()"><i ng-class="{'ion-edit':inEditMode==false,'ion-checkmark':inEditMode==true}" style="font-size: 22px;
+          position: absolute; right: 70px;"></i></a>
+        <a ng-show="post.ownedByCurrentUser()" ng-click="showDeleteConfirm()"><i class="button-assertive icon ion-trash-a" style="font-size: 22px;
+          position: absolute; right: 30px;"></i></a>
+
+      </div>
+      
+      <h1 ng-bind="post.title" ng-show="post.title"></h1>
+      <div contenteditable="true">
+        <p ng-hide="inEditMode" ng-bind-html="post.html_body" i-content-link></p>
+        <textarea ng-model="post.body" ng-show="inEditMode" i-tags i-open-system-links style="border: 1px solid grey;
+            margin-left: 10px;
+            width: 90vw;
+            text-align: left;
+            min-height: 200px">
+        </textarea>
+      </div>
+      <ng-include src="subview"></ng-include>
+      <ng-include src="'templates/widget/share.html'"></ng-include>
+    </section>
+
+
+    <tab-panel>
+      <ul class="header">
+        <li ng-click="open($event)">Discussion</li>
+      </ul>
+      <tabs>
+        <tab><discussions id="post.id" entity="'micro-petitions'"></discussions></tab>
+      </tabs>
+    </tab-panel>
+  </ion-content>
+</ion-view>
