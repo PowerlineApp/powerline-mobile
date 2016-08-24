@@ -1,4 +1,4 @@
-angular.module('app.controllers').controller('userPetitionCtrl',function ($scope, topBar, $stateParams, loaded, $cacheFactory, session, $state,
+angular.module('app.controllers').controller('userPetitionCtrl',function ($scope, topBar, $stateParams, loaded, $cacheFactory, $state,
                                    homeCtrlParams, activity, layout, $ionicPopup, $rootScope, userPetitions) {
                                    
   var cache = $cacheFactory.get('petitionController');
@@ -24,19 +24,11 @@ angular.module('app.controllers').controller('userPetitionCtrl',function ($scope
   }
 /////////////////////////////////////////////////////////////////  
 
-  userPetitions.load($stateParams.id).then(function (userPetition) {
+  userPetitions.get($stateParams.id).then(function (userPetition) {
     $scope.hideSpinner();
     $scope.userPetition = userPetition;
-
-    //Check the petitions owner = login user
-    if ($scope.userPetition){
-      if ($scope.userPetition.user.id == session.user_id){
-        $scope.hidden = false;
-      }
-      else {
-        $scope.hidden = true;
-      }
-    }
+    $scope.hidden = !$scope.userPetition.ownedByCurrentUser();
+      
 /////////////////////////////////////////////////////////////////      
 
 //Edit and Delete Button
@@ -50,11 +42,10 @@ angular.module('app.controllers').controller('userPetitionCtrl',function ($scope
     }
     else {
       $scope.editClicked = false;
-      $scope.petition.petition_body_parsed = $scope.petition.petition_body;
+      $scope.userPetition.petition_body_parsed = $scope.userPetition.petition_body;
 //backend operation.      
       
-      petitions.update($scope.petition);
-      
+      userPetitions.update($scope.userPetition);
     }
   };
 
@@ -98,7 +89,7 @@ angular.module('app.controllers').controller('userPetitionCtrl',function ($scope
       $scope.shareBody = userPetition.petition_body;
       $scope.shareTitle = userPetition.title;
       $scope.shareImage = userPetition.share_picture;
-      if ((userPetition.answer_id && userPetition.answer_id !== 3) || userPetition.expired || session.user_id === userPetition.user.id) {
+      if (userPetition.expired() || userPetition.ownedByCurrentUser()) {
           $scope.subview = 'templates/user-petitions/results-long-petition.html';
       } else {
           $scope.subview = 'templates/user-petitions/take-action-long-petition.html';
