@@ -33,22 +33,14 @@ angular.module('app.controllers').controller('userPetitionCtrl',function ($scope
 
 //Edit and Delete Button
 
-  $scope.editClicked = false;
+  $scope.inEditMode = false;
   $scope.deleteClicked = false;
 
   $scope.onEditBtnClicked = function(){
-    if ($scope.editClicked == false){
-      $scope.editClicked = true;
-    }
-    else {
-      $scope.editClicked = false;
-      $scope.userPetition.petition_body_parsed = $scope.userPetition.petition_body;
-//backend operation.      
-      
-      userPetitions.update($scope.userPetition);
-    }
+    $scope.inEditMode = !$scope.inEditMode;
+    if(!$scope.inEditMode)
+      $scope.userPetition.updateBodyText()
   };
-
 
   $scope.showConfirm = function() {
     var confirmPopup = $ionicPopup.confirm({

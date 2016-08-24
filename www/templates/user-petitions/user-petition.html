@@ -29,7 +29,7 @@
       <div class="title">
         <strong ng-bind="userPetition.owner.name" ng-click="navigateTo('owner-profile', userPetition.owner)"></strong>
 
-        <a ng-hide="hidden" ng-click="onEditBtnClicked()"><i ng-class="{'ion-edit':editClicked==false,'ion-checkmark':editClicked==true}" style="font-size: 22px;
+        <a ng-hide="hidden" ng-click="onEditBtnClicked()"><i ng-class="{'ion-edit':inEditMode==false,'ion-checkmark':inEditMode==true}" style="font-size: 22px;
           position: absolute; right: 70px;"></i></a>
         <a ng-hide="hidden" ng-click="showConfirm()"><i class="button-assertive icon ion-trash-a" style="font-size: 22px;
           position: absolute; right: 30px;"></i></a>
@@ -38,8 +38,8 @@
       
       <h1 ng-bind="userPetition.title" ng-show="userPetition.title"></h1>
       <div contenteditable="true">
-        <p ng-hide="editClicked==true" ng-bind-html="userPetition.body_parsed" i-content-link></p>
-        <textarea ng-model="userPetition.body" ng-show="editClicked==true" i-tags i-open-system-links style="border: 1px solid grey;
+        <p ng-hide="inEditMode" ng-bind-html="userPetition.html_body" i-content-link></p>
+        <textarea ng-model="userPetition.body" ng-show="inEditMode" i-tags i-open-system-links style="border: 1px solid grey;
             margin-left: 10px;
             width: 90vw;
             text-align: left;
