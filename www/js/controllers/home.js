@@ -78,13 +78,10 @@ angular.module('app.controllers').controller('home', function ($scope, $timeout,
     $scope.execApply();
   };
 
-  $scope.newPost = function (type) {
-    var types = {
-      1: 'long petition',
-      2: 'quorum'
-    };
-    $scope.path('/micro-petitions/add/' + types[type] + '/' +
-            (homeCtrlParams.filter.selectedGroup ? homeCtrlParams.filter.selectedGroup.id : ''));
+  $scope.createNewContent = function (type) {
+    var selectedGroup = homeCtrlParams.filter.selectedGroup ? homeCtrlParams.filter.selectedGroup.id : ''
+    var p = '/user-petition/create/' + selectedGroup
+    $scope.path(p);
     $scope.showPostWindow = false;
   };
 

@@ -53,6 +53,15 @@ angular.module('app.services').factory('userPetitions',function ($q, session, se
       });  
 
       return d.promise;    
+    },
+
+    create: function(groupID, title, body){
+      var data = {body:body, title: title}
+      var payload = JSON.stringify(data)
+      var headers = {headers: {'Content-Type': 'application/json'}}
+      return $http.post(serverConfig.url + '/api/v2/groups/'+groupID+'/user-petitions', payload, headers).then(function(response) {
+        return(response)
+      })
     }
   }
 

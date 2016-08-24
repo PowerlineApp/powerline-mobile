@@ -1,4 +1,4 @@
-angular.module('app.controllers').controller('userPetitionCtrl',function ($scope, topBar, $stateParams, loaded, $cacheFactory, $state,
+angular.module('app.controllers').controller('getUserPetitionCtrl',function ($scope, topBar, $stateParams, loaded, $cacheFactory, $state,
                                    homeCtrlParams, activity, layout, $ionicPopup, $rootScope, userPetitions) {
                                    
   var cache = $cacheFactory.get('petitionController');

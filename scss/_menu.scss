@@ -102,10 +102,10 @@ $menuBorderBottomColor: #31316e;
       background: url('../images/v2/icons/post-icons.png') no-repeat;
       background-size: 115px auto;
       vertical-align: middle;
-      &.micropetition {
+      &.post {
         background-position: -71px -41px;
       }
-      &.petition {
+      &.user-petition {
         background-position: -30px 9px;
       }
     }
