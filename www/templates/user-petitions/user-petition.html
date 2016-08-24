@@ -1,25 +1,25 @@
 <ion-view view-title="User Petition">
   <ion-content class="page-petition content">
     <section class="q-header margin-10">
-      <div class="avatar" ng-click="navigateTo('owner-profile', petition.owner)">
-        <avatar-img img="petition.owner.avatar" text="petition.owner.name"></avatar-img>
+      <div class="avatar" ng-click="navigateTo('owner-profile', userPetition.owner)">
+        <avatar-img img="userPetition.owner.avatar" text="userPetition.owner.name"></avatar-img>
       </div>
       <div class="q-info">
         <div>
           <i class="icon-responses"></i> Responses <br>
-          <span ng-bind="petition.votes_count"></span>
+          <span ng-bind="userPetition.votes_count"></span>
         </div>
 
         <div>
           <i class="icon-calendar"></i> Created <br>
-          <time ng-bind="petition.created_at_date | date:'M.d.yy'"></time>
+          <time ng-bind="userPetition.created_at_date | date:'M.d.yy'"></time>
         </div>
         <div>
           <i class="icon-calendar"></i> Expires<br>
-          <time ng-bind="petition.expired_at_date | date:'M.d.yy'"></time>
+          <time ng-bind="userPetition.expired_at_date | date:'M.d.yy'"></time>
         </div>
         <div>
-          Petition <br>
+          User Petition <br>
           <i class="icon-post"></i>
         </div>
       </div>
@@ -27,7 +27,7 @@
 
     <section class="q-content">
       <div class="title">
-        <strong ng-bind="petition.owner.name" ng-click="navigateTo('owner-profile', petition.owner)"></strong>
+        <strong ng-bind="userPetition.owner.name" ng-click="navigateTo('owner-profile', userPetition.owner)"></strong>
 
         <a ng-hide="hidden" ng-click="onEditBtnClicked()"><i ng-class="{'ion-edit':editClicked==false,'ion-checkmark':editClicked==true}" style="font-size: 22px;
           position: absolute; right: 70px;"></i></a>
@@ -36,10 +36,10 @@
 
       </div>
       
-      <h1 ng-bind="petition.title" ng-show="petition.title"></h1>
+      <h1 ng-bind="userPetition.title" ng-show="userPetition.title"></h1>
       <div contenteditable="true">
-        <p ng-hide="editClicked==true" ng-bind-html="petition.petition_body_parsed" i-content-link></p>
-        <textarea ng-model="petition.petition_body" ng-show="editClicked==true" i-tags i-open-system-links style="border: 1px solid grey;
+        <p ng-hide="editClicked==true" ng-bind-html="userPetition.petition_body_parsed" i-content-link></p>
+        <textarea ng-model="userPetition.petition_body" ng-show="editClicked==true" i-tags i-open-system-links style="border: 1px solid grey;
             margin-left: 10px;
             width: 90vw;
             text-align: left;
@@ -56,7 +56,7 @@
         <li ng-click="open($event)">Discussion</li>
       </ul>
       <tabs>
-        <tab><discussions id="petition.id" entity="'micro-petitions'"></discussions></tab>
+        <tab><discussions id="userPetition.id" entity="'micro-petitions'"></discussions></tab>
       </tabs>
     </tab-panel>
   </ion-content>

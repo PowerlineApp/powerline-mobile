@@ -44,11 +44,10 @@ angular.module('app.services').factory('userPetitions',function ($q, UserPetitio
   }
 
   function formatInfo(data) {
-    console.log(JSON.stringify(data))
     data.expired = new Date() >= new Date(data.expire_at);
     data.expired_at_date = new Date(data.expire_at);
     data.created_at_date = new Date(data.created_at);
-    data.votes_count = formatOptions([data.options[0], data.options[1]]);
+    data.votes_count = 0 // TODO formatOptions([data.options[0], data.options[1]]);
 
     var petition_body = data.petition_body_html
     if(petition_body == null || petition_body.length == 0)
@@ -79,7 +78,7 @@ angular.module('app.services').factory('userPetitions',function ($q, UserPetitio
 
     loadAll: function () {
       var deferred = $q.defer();
-      PetitionsResource.query(function (data) {
+      UserPetitionsResource.query(function (data) {
         format(data);
         sortGroupPetitions();
         deferred.resolve(data);

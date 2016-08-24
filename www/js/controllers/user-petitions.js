@@ -84,41 +84,35 @@ angular.module('app.controllers').controller('userPetitionCtrl',function ($scope
 
 
 
-    if (petition.answer_id) {
-      $scope.answer_message = 'Your response “' + petition.getOptionLabel(petition.answer_id) + '” was sent to “' + petition.group.official_title + '” group';
+    if (userPetition.answer_id) {
+      $scope.answer_message = 'Your response “' + userPetition.getOptionLabel(userPetition.answer_id) + '” was sent to “' + userPetition.group.official_title + '” group';
     }
-    cache.put($stateParams.id, petition);
+    cache.put($stateParams.id, userPetition);
     layout.focus($stateParams.focus);
   }, function(){
     $scope.hideSpinner();
   });
 
-  $scope.$watch('petition', function (petition) {
-    if (petition && petition.user) { // we need to wait for the real object (and not promise)
-      $scope.shareBody = petition.petition_body;
-      $scope.shareTitle = petition.title;
-      $scope.shareImage = petition.share_picture;
-      if ((petition.answer_id && petition.answer_id !== 3) || petition.expired || session.user_id === petition.user.id) {
-        if(petition.type == 'quorum')
-          $scope.subview = 'templates/petitions/results-quorum.html';
-        else
-          $scope.subview = 'templates/petitions/results-long-petition.html';
+  $scope.$watch('userPetition', function (userPetition) {
+    if (userPetition && userPetition.user) { // we need to wait for the real object (and not promise)
+      $scope.shareBody = userPetition.petition_body;
+      $scope.shareTitle = userPetition.title;
+      $scope.shareImage = userPetition.share_picture;
+      if ((userPetition.answer_id && userPetition.answer_id !== 3) || userPetition.expired || session.user_id === userPetition.user.id) {
+          $scope.subview = 'templates/user-petitions/results-long-petition.html';
       } else {
-        if(petition.type == 'quorum')
-          $scope.subview = 'templates/petitions/take-action-quorum.html';
-        else
-          $scope.subview = 'templates/petitions/take-action-long-petition.html';
+          $scope.subview = 'templates/user-petitions/take-action-long-petition.html';
       }
 
-      if (petition.answer_id && petition.answer_id === 3) {
-        $scope.current = petition.options[2];
+      if (userPetition.answer_id && userPetition.answer_id === 3) {
+        $scope.current = userPetition.options[2];
       }
     }
   });
 
   $scope.answer = function () {
     $scope.showSpinner();
-    microPetitions.signLongPetition($scope.petition.id).then(function(){
+    userPetitions.sign($scope.userPetition.id).then(function(){
       $state.reload()
       homeCtrlParams.loaded = false;
     })
@@ -126,7 +120,7 @@ angular.module('app.controllers').controller('userPetitionCtrl',function ($scope
   
   $scope.unsign = function () {
     $scope.showSpinner();
-    microPetitions.unsignLongPetition($scope.petition.id).then(function(){
+    userPetitions.unsign($scope.userPetition.id).then(function(){
       $state.reload()
       homeCtrlParams.loaded = false;
     })
