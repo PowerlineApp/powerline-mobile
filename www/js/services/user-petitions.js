@@ -62,6 +62,14 @@ angular.module('app.services').factory('userPetitions',function ($q, session, se
       return $http.post(serverConfig.url + '/api/v2/groups/'+groupID+'/user-petitions', payload, headers).then(function(response) {
         return(response)
       })
+    },
+
+    sign: function(userPetitionID){
+      return $http.post(serverConfig.url + '/api/v2/user-petitions/'+userPetitionID+'/sign')
+    },
+
+    unsign: function(userPetitionID){
+      return $http.delete(serverConfig.url + '/api/v2/user-petitions/'+userPetitionID+'/sign')
     }
   }
 

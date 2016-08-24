@@ -188,7 +188,7 @@ angular.module('app.controllers').controller('preload', function (topBar, sessio
   }
 });
 
-angular.module('app.controllers').directive('iActivity', function ($rootScope, questions, petitions, discussion, elapsedFilter, follows, session, iParse, $sce, favorite, microPetitions, leaderContentHelper, posts) {
+angular.module('app.controllers').directive('iActivity', function ($rootScope, questions, petitions, discussion, elapsedFilter, follows, session, iParse, $sce, favorite, microPetitions, leaderContentHelper, posts, userPetitions) {
 
   function eventCtrl($scope) {
     $scope.templateSrc = 'templates/home/activities/event.html';
@@ -252,25 +252,25 @@ angular.module('app.controllers').directive('iActivity', function ($rootScope, q
   }
 
   function userPetitionCtrl($scope) {
-    $scope.templateSrc = 'templates/home/activities/petition.html';
+    $scope.templateSrc = 'templates/home/activities/user-petition.html';
 
     $scope.sign = function () {
-      var microPetitionID = $scope.activity.get('entity').id
+      var userPetitionID = $scope.activity.get('entity').id
       $scope.sending = true
-      microPetitions.signLongPetition(microPetitionID).then(function(){
+      userPetitions.sign(userPetitionID).then(function(){
           $scope.activity.markAsSigned()
           $scope.sending = false;
-          $scope.showToast('Petition signed.');
+          $scope.showToast('User petition signed.');
       })
     };
 
     $scope.unsign = function () {
       $scope.sending = true;
-      var microPetitionID = $scope.activity.get('entity').id;
-      microPetitions.unsignLongPetition(microPetitionID).then(function (response) {
-        $scope.activity.markAsSigned()
+      var userPetitionID = $scope.activity.get('entity').id;
+      userPetitions.unsign(userPetitionID).then(function (response) {
+        $scope.activity.markAsUnsigned()
         $scope.sending = false;
-        $scope.showToast('Petition unsigned.');
+        $scope.showToast('User petition unsigned.');
       });
     };
   }
