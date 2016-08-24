@@ -38,6 +38,10 @@ angular.module('app.services').factory('userPetitions',function ($q, session, se
         that._load(resp.data)
       });
     }
+
+    this.delete = function(){
+       return $http.delete(serverConfig.url + '/api/v2/user-petitions/' + this.id)     
+    }
   }
 
   var service = {

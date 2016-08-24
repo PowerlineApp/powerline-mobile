@@ -116,7 +116,6 @@ angular.module('app.services', [
       if(activityRoute == null)
         console.error('undefined route for activity type: '+activityType)
       var path = activityRoute + activityID;
-      console.log('navigate to '+path)
       if (focus) {
         $location.path(path).search('focus', focus);
       } else {

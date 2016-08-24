@@ -8,31 +8,10 @@ angular.module('app.controllers').controller('userPetitionCtrl',function ($scope
     $scope.showSpinner();
   }
 
-  $scope.select = function (option) {
-    $scope.current = option;
-  };
-
-  
-// mute: notification enabled value (true : disable, false : enable)
-// hidden: show only to author
-  $scope.mute = true;
-  $scope.hidden = true;
-
-  
-  $scope.onClickToggleMute = function(){
-    $scope.mute = !$scope.mute;
-  }
-/////////////////////////////////////////////////////////////////  
-
   userPetitions.get($stateParams.id).then(function (userPetition) {
     $scope.hideSpinner();
     $scope.userPetition = userPetition;
-    $scope.hidden = !$scope.userPetition.ownedByCurrentUser();
       
-/////////////////////////////////////////////////////////////////      
-
-//Edit and Delete Button
-
   $scope.inEditMode = false;
   $scope.deleteClicked = false;
 
@@ -42,22 +21,18 @@ angular.module('app.controllers').controller('userPetitionCtrl',function ($scope
       $scope.userPetition.updateBodyText()
   };
 
-  $scope.showConfirm = function() {
+  $scope.showDeleteConfirm = function() {
     var confirmPopup = $ionicPopup.confirm({
-      title: 'Delete Post',
-      template: 'Are you sure you want to delete this post?'
+      title: 'Delete User Petition',
+      template: 'Are you sure you want to delete this user petition?'
     });
 
     confirmPopup.then(function(res) {
       $scope.navigateTo = $rootScope.navigateTo;
-
-      if(res) {
-
-//Backend part...
-        petitions.delete($scope.petition.id);
+      if(res){
+        $scope.userPetition.delete()
+        // TODO show toast and reload activities
         $scope.back();
-      } else {
-        
       }
     });
   };
@@ -67,7 +42,7 @@ angular.module('app.controllers').controller('userPetitionCtrl',function ($scope
 
 
 
-    if (userPetition.answer_id) {
+  if (userPetition.answer_id) {
       $scope.answer_message = 'Your response “' + userPetition.getOptionLabel(userPetition.answer_id) + '” was sent to “' + userPetition.group.official_title + '” group';
     }
     cache.put($stateParams.id, userPetition);
