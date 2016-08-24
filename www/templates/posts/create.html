@@ -1,0 +1,55 @@
+<ion-view view-title="New User Petition">
+  <ion-nav-buttons side="right">
+    <button class="button button-clear" onclick="angular.element('form[name=postForm] #submitter').trigger('click')">Send</button>
+  </ion-nav-buttons>
+
+  <ion-content class="content has-footer" has-bouncing="false">
+    <section class="dropdown-1">
+      <div class="title" ng-click="data.openChoices = !data.openChoices">
+        <fieldset class="profile-avatar">
+          <avatar-img img="profile.avatar_file_name" text="profile.first_name"></avatar-img>
+        </fieldset>
+        <span>
+          <fieldset class="avatar" ng-show="data.group">
+            <img ng-src="{{ data.group.getIconWhite()}}" />
+          </fieldset>
+          {{ data.group ? data.group.official_title : 'Select a community' }}
+        </span>
+        <i class="icon-post"></i>
+      </div>
+      <ul class="choices" ng-show="data.openChoices">
+        <li ng-repeat="item in groups" ng-click="data.group = item;
+                data.openChoices = false;">
+          <span>
+            <fieldset class="avatar">
+              <avatar-img img="item.getIconWhite()" text="item.official_title"></avatar-img>
+            </fieldset>
+            {{ item.official_title}}
+          </span>
+        </li>
+      </ul>
+    </section>
+
+    <form name="postForm" novalidate ng-class="formClass" autocomplete="off">
+      <fieldset class="add-post">
+          <textarea ng-model="data.petition_body" maxlength="300"
+                    name="petition_body" required placeholder="Type your message here"
+                    ng-init="data.chars_left = 300"
+                    ng-change="data.chars_left = 300 - data.petition_body.length"></textarea>
+      </fieldset>
+
+      <section class="ng-hide">
+        <input type="hidden" ng-model="data.group" name="group">
+      </section>
+      <input type="button" ng-click="create(postForm)" id="submitter" class="ng-hide">
+    </form>
+
+  </ion-content>
+
+  <section class="footer-fixed" style="padding: 18px 12px;">
+    <strong class="right" ng-bind="data.chars_left"></strong>
+    <span ng-show="data.group && data.group.available !== undefined">
+      You have (<strong>{{ data.group.available}}</strong>) petitions left in this group
+    </span>
+  </section>
+</ion-view>

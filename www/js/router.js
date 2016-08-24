@@ -114,10 +114,15 @@ angular.module('app')
       templateUrl: 'templates/user-petitions/create.html',
       controller: 'createUserPetitionCtrl'
     }, {
-      name: 'Post',
+      name: 'getPost',
       url: '/post/:id',
       templateUrl: 'templates/posts/post.html',
-      controller: 'PostCtrl'
+      controller: 'getPostCtrl'
+    },{
+      name: 'createPost',
+      url: '/post/create/:groupID',
+      templateUrl: 'templates/posts/create.html',
+      controller: 'createPostCtrl'
     }, {
       name: 'discussion',
       url: '/discussion/:entity/:id',

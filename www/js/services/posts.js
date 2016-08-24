@@ -57,7 +57,15 @@ angular.module('app.services').factory('posts',function ($q, session, serverConf
       });  
 
       return d.promise;    
-    }
+    },
+    create: function(groupID, body){
+      var data = {body:body}
+      var payload = JSON.stringify(data)
+      var headers = {headers: {'Content-Type': 'application/json'}}
+      return $http.post(serverConfig.url + '/api/v2/groups/'+groupID+'/posts', payload, headers).then(function(response) {
+        return(response)
+      })
+    }    
   }
 
   return service

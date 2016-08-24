@@ -1,4 +1,4 @@
-angular.module('app.controllers').controller('PostCtrl',function ($scope, topBar, $stateParams, loaded, $cacheFactory, $state,
+angular.module('app.controllers').controller('getPostCtrl',function ($scope, topBar, $stateParams, loaded, $cacheFactory, $state,
                                    homeCtrlParams, activity, layout, $ionicPopup, $rootScope, posts) {
                                    
   var cache = $cacheFactory.get('petitionController');

@@ -80,7 +80,7 @@ angular.module('app.controllers').controller('home', function ($scope, $timeout,
 
   $scope.createNewContent = function (type) {
     var selectedGroup = homeCtrlParams.filter.selectedGroup ? homeCtrlParams.filter.selectedGroup.id : ''
-    var p = '/user-petition/create/' + selectedGroup
+    var p = '/'+type+'/create/' + selectedGroup
     $scope.path(p);
     $scope.showPostWindow = false;
   };
