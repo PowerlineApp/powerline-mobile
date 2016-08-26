@@ -6,10 +6,10 @@ angular.module('app.services').factory('leaderContentHelper', function($http, se
   // h.createPoll()
 
   service.createPoll = function(){
-    var data = {subject: 'test Poll no1 subject',
-      title: 'test Poll no1 title',
-      started_at: "2016-08-21 09:52:33", // t.strftime("%Y-%m-%d'%z'%H:%M:%S")
-      finished_at: "2016-08-29 09:52:33",
+    var data = {subject: 'test Poll no2 subject',
+      title: 'test Poll no2 title',
+      started_at: "2016-08-26 09:52:33", // t.strftime("%Y-%m-%d'%z'%H:%M:%S")
+      finished_at: "2016-09-10 09:52:33",
       //petition_title: 'Petition title',
       //petition_body: 'Petition body',
       type: 'event'} 
@@ -26,8 +26,7 @@ angular.module('app.services').factory('leaderContentHelper', function($http, se
 
   // created poll with ID = 194 in group 285 as user Peter10
 
-  service.addPollAnswer = function(value){
-    var pollID = 194
+  service.addPollAnswer = function(pollID, value){
     var data = {value : value}
     var payload = JSON.stringify(data)
     var headers = {headers: {'Content-Type': 'application/json'}}
