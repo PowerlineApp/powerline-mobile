@@ -1942,9 +1942,9 @@ select.choice-filter {
       background: url("../images/v2/icons/post-icons.png") no-repeat;
       background-size: 115px auto;
       vertical-align: middle; }
-      .new-post-window a i.micropetition {
+      .new-post-window a i.post {
         background-position: -71px -41px; }
-      .new-post-window a i.petition {
+      .new-post-window a i.user-petition {
         background-position: -30px 9px; }
     .new-post-window a .text {
       display: inline-block;

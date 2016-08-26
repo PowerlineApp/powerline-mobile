@@ -6,7 +6,7 @@ angular.module('app.services').factory('ActivityModel',
         petition: 'Petition',
         'leader-news': 'News',
         'leader-event': 'Event',
-        'user-petition': 'Petition',
+        'user-petition': 'User Petition',
         'post': 'Post',
         'payment-request': 'Payment',
         'crowdfunding-payment-request': 'Payment'
@@ -40,6 +40,12 @@ angular.module('app.services').factory('ActivityModel',
       isUnanswered: function () {
         return !this.isAnswered()
       },      
+      setAnswer: function(answer){
+        this.set('answers', [answer])
+      },
+      unAnswer: function(){
+        this.set('answers', [])
+      },
       isFollowing: function () {
         var owner = this.get('owner');
         return owner.type === 'user' && follows.some(function (following) {

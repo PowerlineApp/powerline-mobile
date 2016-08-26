@@ -78,13 +78,10 @@ angular.module('app.controllers').controller('home', function ($scope, $timeout,
     $scope.execApply();
   };
 
-  $scope.newPost = function (type) {
-    var types = {
-      1: 'long petition',
-      2: 'quorum'
-    };
-    $scope.path('/micro-petitions/add/' + types[type] + '/' +
-            (homeCtrlParams.filter.selectedGroup ? homeCtrlParams.filter.selectedGroup.id : ''));
+  $scope.createNewContent = function (type) {
+    var selectedGroup = homeCtrlParams.filter.selectedGroup ? homeCtrlParams.filter.selectedGroup.id : ''
+    var p = '/'+type+'/create/' + selectedGroup
+    $scope.path(p);
     $scope.showPostWindow = false;
   };
 
@@ -191,7 +188,7 @@ angular.module('app.controllers').controller('preload', function (topBar, sessio
   }
 });
 
-angular.module('app.controllers').directive('iActivity', function ($rootScope, questions, petitions, discussion, elapsedFilter, follows, session, iParse, $sce, favorite, microPetitions, leaderContentHelper) {
+angular.module('app.controllers').directive('iActivity', function ($rootScope, questions, petitions, discussion, elapsedFilter, follows, session, iParse, $sce, favorite, microPetitions, leaderContentHelper, posts, userPetitions) {
 
   function eventCtrl($scope) {
     $scope.templateSrc = 'templates/home/activities/event.html';
@@ -222,30 +219,64 @@ angular.module('app.controllers').directive('iActivity', function ($rootScope, q
     $scope.currentUserIsActivityOwner = $scope.activity.get('owner').id == session.user_id
     $scope.booster = $scope.activity.get('owner').type === 'group' ? 100 : $scope.activity.getQuorumCompletedPercent();
 
-    $scope.sign = function (optionId) {
+    $scope.upvote = function(){
+      var postID = $scope.activity.get('entity').id
       $scope.sending = true;
-      petitions.answer($scope.activity.get('entity').id, optionId).then(function (answer) {
-        $scope.activity.set('answers', [answer]);
+      posts.upvote(postID).then(function(answer){
+        $scope.activity.setAnswer(answer);
         $scope.sending = false;
-        if (optionId === 1) {
-          $scope.showToast('Post upvoted!');
-        }
-        if (optionId === 2) {
-          $scope.showToast('Post downvoted!');
-        }
-      });
+        $scope.showToast('Post upvoted!');
+      })
+    }
+
+    $scope.downvote = function(){
+      var postID = $scope.activity.get('entity').id
+      $scope.sending = true;
+      posts.downvote(postID).then(function(answer){
+        $scope.activity.setAnswer(answer);
+        $scope.sending = false;
+        $scope.showToast('Post downvoted!');
+      })
+    }
+
+    $scope.unvote = function(){
+      var postID = $scope.activity.get('entity').id
+      $scope.sending = true;
+      posts.unvote(postID).then(function(answer){
+        $scope.activity.unAnswer();
+        $scope.sending = false;
+        $scope.showToast('Post vote undo successful!');
+      })
+    }
+
+  }
+
+  function userPetitionCtrl($scope) {
+    $scope.templateSrc = 'templates/home/activities/user-petition.html';
+
+    $scope.sign = function () {
+      var userPetitionID = $scope.activity.get('entity').id
+      $scope.sending = true
+      userPetitions.sign(userPetitionID).then(function(){
+          $scope.activity.markAsSigned()
+          $scope.sending = false;
+          $scope.showToast('User petition signed.');
+      })
     };
+
     $scope.unsign = function () {
       $scope.sending = true;
-      petitions.unsign($scope.activity.get('entity').id, $scope.activity.get('answer').option_id).then(function () {
-        $scope.activity.set('answered', false).set('answer', null);
+      var userPetitionID = $scope.activity.get('entity').id;
+      userPetitions.unsign(userPetitionID).then(function (response) {
+        $scope.activity.markAsUnsigned()
         $scope.sending = false;
+        $scope.showToast('User petition unsigned.');
       });
-    };  
+    };
   }
 
   function petitionCtrl($scope) {
-    $scope.templateSrc = 'templates/home/activities/petition.html';
+    $scope.templateSrc = 'templates/home/activities/user-petition.html';
 
     $scope.sign = function () {
       var microPetitionID = $scope.activity.get('entity').id
@@ -278,7 +309,7 @@ angular.module('app.controllers').directive('iActivity', function ($rootScope, q
     'crowdfunding-payment-request': paymentCtrl,
     'payment-request': paymentCtrl,
     'post': postCtrl,
-    'user-petition': petitionCtrl,
+    'user-petition': userPetitionCtrl,
     'petition': petitionCtrl,
     'question': questionCtrl
   };
@@ -305,7 +336,6 @@ angular.module('app.controllers').directive('iActivity', function ($rootScope, q
         }
       }
       $scope.navigateToActivity = function (activity, focus, e) {
-        //leaderContentHelper.createPoll()
 
         activity.setRead();
         if (e && e.target.tagName.toLowerCase() === 'hash-tag') {
@@ -315,8 +345,8 @@ angular.module('app.controllers').directive('iActivity', function ($rootScope, q
         }
       };
 
-      // if($scope.activity.get('entity').id == 238)
-      //   console.log(JSON.stringify($scope.activity))
+      // if($scope.activity.get('entity').id == 237)
+      //    console.log(JSON.stringify($scope.activity))
 
       $scope.title = $scope.activity.get('title');
       var description_raw = $scope.activity.get('description_html')

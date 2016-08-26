@@ -104,10 +104,25 @@ angular.module('app')
       templateUrl: 'templates/payment-polls/crowdfunding-payment-request.html',
       controller: 'question.payment-request'
     }, {
-      name: 'petition',
-      url: '/petition/:id',
-      templateUrl: 'templates/petitions/petition.html',
-      controller: 'petition'
+      name: 'getUserPetition',
+      url: '/user-petition/:id',
+      templateUrl: 'templates/user-petitions/user-petition.html',
+      controller: 'getUserPetitionCtrl'
+    },{
+      name: 'createUserPetition',
+      url: '/user-petition/create/:groupID',
+      templateUrl: 'templates/user-petitions/create.html',
+      controller: 'createUserPetitionCtrl'
+    }, {
+      name: 'getPost',
+      url: '/post/:id',
+      templateUrl: 'templates/posts/post.html',
+      controller: 'getPostCtrl'
+    },{
+      name: 'createPost',
+      url: '/post/create/:groupID',
+      templateUrl: 'templates/posts/create.html',
+      controller: 'createPostCtrl'
     }, {
       name: 'discussion',
       url: '/discussion/:entity/:id',
@@ -244,11 +259,6 @@ angular.module('app')
       url: '/messages',
       templateUrl: 'templates/messages/list.html',
       controller: 'messages'
-    }, {
-      name: 'microPetionsAdd',
-      url: '/micro-petitions/add/:type/',
-      templateUrl: 'templates/petitions/add.html',
-      controller: 'petitions.add'
     }, {
       name: 'microPetionsGroupAdd',
       url: '/micro-petitions/add/:type/:group_id',

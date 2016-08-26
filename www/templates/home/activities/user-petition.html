@@ -17,7 +17,7 @@
     <i class="time"><time>{{ sent_at_elapsed }}</time></i>
   </div>
   <div class="item-content">
-    <p ng-click="navigateToActivity(activity, null, $event)"
+    <p ng-click="navigateToActivity(activity)"
       bo-if="activity.get('image_src')" 
       class="picture">
       <img ng-src="{{imagePath}}" zoom-src="{{imagePath}}" zoom-view/>
@@ -26,21 +26,14 @@
       bo-html="description" 
       ng-click="navigateToActivity(activity, null, $event)" i-content-link>
     </p>
-    <ng-include src="'templates/home/activities/_link-preview-metadata.html'" ng-show="activity.hasLinkPreviewMetadata()"></ng-include>
+    <ng-include src="'templates/home/activities/_link-preview-metadata.html'" ng-show="activity.hasLinkPreviewMetadata()">
   </div>
   <div class="item-footer">
     <div class="control" ng-show="sending">
       <spinner></spinner>
     </div>
-    <div class="control" ng-show="activity.isUnanswered() && !sending && !currentUserIsActivityOwner && !activity.isExpired()">
-      <i class="activity-control double-up" ng-click="upvote()"></i>
-    </div>
-    <div class="control" ng-show="activity.isUnanswered() && !sending && !currentUserIsActivityOwner && !activity.isExpired()">
-      <i class="activity-control double-down"  ng-click="downvote()"></i>
-    </div>
-    <div class="control" ng-show="activity.isAnswered() && !activity.isExpired() && !sending">
-      <a ng-click="unvote()">undo</a>
-    </div>
+    <div class="control" ng-show="activity.canBeSigned() && !sending"><a ng-click="sign()">SIGN</a></div>
+    <div class="control" ng-show="activity.canBeUnsigned() && !sending"><a ng-click="unsign()">UNSIGN</a></div>
     <div class="control"><a ng-click="navigateToActivity(activity, 'add-comment')" class="activity-control reply"></a></div>
     <ng-include src="'templates/home/activities/_follow.html'" ng-show="showFollow"></ng-include>
     <div class="control notification">
@@ -51,12 +44,6 @@
         <i class="icon ion-star" ng-class="isBookmarked() ? 'active': ''"></i>
       </a>
     </div>  
-
     <div class="responses" bo-bind="comments_count"></div>
-  </div>
-  <div class="completion-fill-vertical">
-    <div class="process-wrap">
-      <div class="process" ng-style="{height: booster + '%' }"></div>
-    </div>
   </div>
 </article>

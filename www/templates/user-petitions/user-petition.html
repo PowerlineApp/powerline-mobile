@@ -1,0 +1,80 @@
+<ion-view view-title="User Petition">
+  <ion-content class="page-petition content">
+    <section class="q-header margin-10">
+      <div class="avatar" ng-click="navigateTo('owner-profile', userPetition.owner)">
+        <avatar-img img="userPetition.owner.avatar" text="userPetition.owner.name"></avatar-img>
+      </div>
+      <div class="q-info">
+        <div>
+          <i class="icon-responses"></i> Responses <br>
+          <span ng-bind="userPetition.votes_count"></span>
+        </div>
+
+        <div>
+          <i class="icon-calendar"></i> Created <br>
+          <time ng-bind="userPetition.created_at_date | date:'M.d.yy'"></time>
+        </div>
+        <div>
+          <i class="icon-calendar"></i> Expires<br>
+          <time ng-bind="userPetition.expired_at_date | date:'M.d.yy'"></time>
+        </div>
+        <div>
+          User Petition <br>
+          <i class="icon-post"></i>
+        </div>
+      </div>
+    </section>
+
+    <section class="q-content">
+      <div class="title">
+        <strong ng-bind="userPetition.owner.name" ng-click="navigateTo('owner-profile', userPetition.owner)"></strong>
+
+        <a ng-show="userPetition.ownedByCurrentUser()" ng-click="onEditBtnClicked()"><i ng-class="{'ion-edit':inEditMode==false,'ion-checkmark':inEditMode==true}" style="font-size: 22px;
+          position: absolute; right: 70px;"></i></a>
+        <a ng-show="userPetition.ownedByCurrentUser()" ng-click="showDeleteConfirm()"><i class="button-assertive icon ion-trash-a" style="font-size: 22px;
+          position: absolute; right: 30px;"></i></a>
+
+      </div>
+      
+      <h1 ng-bind="userPetition.title" ng-show="userPetition.title"></h1>
+      <div contenteditable="true">
+        <p ng-hide="inEditMode" ng-bind-html="userPetition.html_body" i-content-link></p>
+        <textarea ng-model="userPetition.body" ng-show="inEditMode" i-tags i-open-system-links style="border: 1px solid grey;
+            margin-left: 10px;
+            width: 90vw;
+            text-align: left;
+            min-height: 200px">
+        </textarea>
+      </div>
+      
+      <!-- START TAKE ACTION -->
+
+      <section class="margin-h-10" ng-show="canSignOrUnsign()">
+          <div style="float: left;width: 50%;padding-top: 12px;" class="margin-v-20">
+              <div class="checkbox-privacy" ng-class="{checked: data.privacy}" ng-click="data.privacy = data.privacy ? 0 : 1" guide="privacy-option">
+                  <i></i>
+                  {{ data.privacy ? 'Username hidden' : 'Username visible'  }}
+              </div>
+          </div>
+          <div style="float: left;width: 50%;" class="margin-v-20">
+              <button class="btn-large btn-primary" ng-click="sign()" ng-show="!userPetition.isSignedByMe()">Sign</button>
+              <button class="btn-large btn-primary" ng-click="unsign()" ng-show="userPetition.isSignedByMe()">Unsign</button>
+          </div>
+      </section>
+
+      <!-- END TAKE ACTION -->
+
+      <ng-include src="'templates/widget/share.html'"></ng-include>
+    </section>
+
+
+    <tab-panel>
+      <ul class="header">
+        <li ng-click="open($event)">Discussion</li>
+      </ul>
+      <tabs>
+        <tab><discussions id="userPetition.id" entity="'micro-petitions'"></discussions></tab>
+      </tabs>
+    </tab-panel>
+  </ion-content>
+</ion-view>
