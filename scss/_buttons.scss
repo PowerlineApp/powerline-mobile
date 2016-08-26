@@ -227,6 +227,10 @@
   }
 }
 
+.btn-primary.disabled {
+  background-color: #c1c1c1;
+}
+
 .btn-close {
   display: inline-block;
   background: url("../images/v2/icons/x.png") center center no-repeat;

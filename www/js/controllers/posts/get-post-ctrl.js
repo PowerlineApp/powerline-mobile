@@ -1,20 +1,9 @@
 angular.module('app.controllers').controller('getPostCtrl',function ($scope, topBar, $stateParams, loaded, $cacheFactory, $state,
                                    homeCtrlParams, activity, layout, $ionicPopup, $rootScope, posts) {
-                                   
-  var cache = $cacheFactory.get('petitionController');
-  $scope.petition = cache.get($stateParams.id);
 
-  if (!$scope.post) {
-    $scope.showSpinner();
-  }
-
-  posts.get($stateParams.id).then(function (post) {
-    $scope.hideSpinner();
-    $scope.post = post;
-      
+  $scope.showSpinner();
   $scope.inEditMode = false;
   $scope.deleteClicked = false;
-
   $scope.onEditBtnClicked = function(){
     $scope.inEditMode = !$scope.inEditMode;
     if(!$scope.inEditMode)
@@ -36,8 +25,35 @@ angular.module('app.controllers').controller('getPostCtrl',function ($scope, top
       }
     });
   };
+
+  posts.get($stateParams.id).then(function (post) {
+    $scope.hideSpinner();
+    $scope.post = post;
+    //$scope.activeAnswer
   }, function(){
     $scope.hideSpinner();
   });
+
+  $scope.activeAnswer = null
+  $scope.isAnswerActive = function(answerType){
+    return $scope.activeAnswer == answerType
+  }
+  $scope.chooseAnswer = function(answerType){
+    $scope.activeAnswer = answerType
+  }
+
+  $scope.submitDisabled = function(){
+    return($scope.activeAnswer == null)
+  }
+  $scope.submitAnswer = function(){
+    if(!$scope.submitDisabled()){
+      if($scope.activeAnswer == 'upvote')
+        posts.upvote($scope.post.id)
+      else if($scope.activeAnswer == 'downvote')
+        posts.downvote($scope.post.id)
+      else if($scope.activeAnswer == 'ignore')
+        posts.ignore($scope.post.id)
+    }
+  }
 
 })

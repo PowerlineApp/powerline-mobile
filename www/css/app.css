@@ -1358,6 +1358,9 @@ select.choice-filter {
     background-image: url("../images/icons/hand-dark.png");
     background-size: 23.5px auto; }
 
+.btn-primary.disabled {
+  background-color: #c1c1c1; }
+
 .btn-close {
   display: inline-block;
   background: url("../images/v2/icons/x.png") center center no-repeat;

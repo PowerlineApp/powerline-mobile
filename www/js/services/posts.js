@@ -79,6 +79,12 @@ angular.module('app.services').factory('posts',function ($q, session, serverConf
       return $http.post(serverConfig.url + '/api/v2/posts/'+postID+'/vote', payload, headers)
     },
 
+    ignore: function(postID){
+      var payload = JSON.stringify({option:'ignore'})
+      var headers = {headers: {'Content-Type': 'application/json'}}
+      return $http.post(serverConfig.url + '/api/v2/posts/'+postID+'/vote', payload, headers)
+    },
+
     unvote: function(postID){
       return $http.delete(serverConfig.url + '/api/v2/posts/'+postID+'/vote')
     }
