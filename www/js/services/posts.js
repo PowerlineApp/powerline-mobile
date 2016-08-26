@@ -21,12 +21,25 @@ angular.module('app.services').factory('posts',function ($q, session, serverConf
       this.expired_at_date = new Date(data.expired_at);
       this.title = data.title
       this.id = data.id
+      this.answers = data.answers
     }
 
     this._load(rawData)
 
     this.expired = function(){
       return(this.expired_at_date <= new Date())
+    }
+
+    this.getMyAnswerType = function(){
+      var myAnswer = this.answers.find(function(answers){
+        return answers.user.id == session.user_id
+      })
+
+      // TODO resolve proper attribute
+      if(myAnswer)
+        return myAnswer.value
+      else 
+        return null
     }
 
     this.ownedByCurrentUser = function(){

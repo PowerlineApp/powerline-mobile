@@ -46,31 +46,30 @@
             min-height: 200px">
         </textarea>
       </div>
-      <!-- START TAKE ACTION -->
-      <!-- TODO do not display to owner -->
-      <fieldset>
-          <div class="checkbox-field" ng-class="isAnswerActive('upvote') ? 'active': ''" ng-click="chooseAnswer('upvote')">
-              <span><i></i></span>
-              <p>Upvote</p>
-          </div>
-          <div class="checkbox-field" ng-class="isAnswerActive('downvote') ? 'active': ''" ng-click="chooseAnswer('downvote')">
-              <span><i></i></span>
-              <p>Downvote</p>
-          </div>
-          <div class="checkbox-field" ng-class="isAnswerActive('ignore') ? 'active': ''" ng-click="chooseAnswer('ignore')">
-              <span><i></i></span>
-              <p>Ignore</p>
-          </div>
-      </fieldset>
+      <div ng-show="canAnswer()">
+        <fieldset>
+            <div class="checkbox-field" ng-class="isAnswerActive('upvote') ? 'active': ''" ng-click="chooseAnswer('upvote')">
+                <span><i></i></span>
+                <p>Upvote</p>
+            </div>
+            <div class="checkbox-field" ng-class="isAnswerActive('downvote') ? 'active': ''" ng-click="chooseAnswer('downvote')">
+                <span><i></i></span>
+                <p>Downvote</p>
+            </div>
+            <div class="checkbox-field" ng-class="isAnswerActive('ignore') ? 'active': ''" ng-click="chooseAnswer('ignore')">
+                <span><i></i></span>
+                <p>Ignore</p>
+            </div>
+        </fieldset>
 
-      <fieldset>
-          <div class="padding-10">
-              <button class="btn-large btn-primary" 
-              ng-class="submitDisabled() ? 'disabled' : ''"
-              ng-click="submitAnswer()">Submit</button>
-          </div>
-      </fieldset>
-      <!-- END TAKE ACTION -->
+        <fieldset>
+            <div class="padding-10">
+                <button class="btn-large btn-primary" 
+                ng-class="submitDisabled() ? 'disabled' : ''"
+                ng-click="submitAnswer()">Submit</button>
+            </div>
+        </fieldset>
+      <div>
 
       <ng-include src="'templates/widget/share.html'"></ng-include>
     </section>

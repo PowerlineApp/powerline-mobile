@@ -29,31 +29,35 @@ angular.module('app.controllers').controller('getPostCtrl',function ($scope, top
   posts.get($stateParams.id).then(function (post) {
     $scope.hideSpinner();
     $scope.post = post;
-    //$scope.activeAnswer
+    $scope.activeAnswerType = post.getMyAnswerType()
   }, function(){
     $scope.hideSpinner();
   });
 
-  $scope.activeAnswer = null
+  $scope.activeAnswerType = null
   $scope.isAnswerActive = function(answerType){
-    return $scope.activeAnswer == answerType
+    return $scope.activeAnswerType == answerType
   }
   $scope.chooseAnswer = function(answerType){
-    $scope.activeAnswer = answerType
+    $scope.activeAnswerType = answerType
   }
 
   $scope.submitDisabled = function(){
-    return($scope.activeAnswer == null)
+    return($scope.activeAnswerType == null)
   }
   $scope.submitAnswer = function(){
     if(!$scope.submitDisabled()){
-      if($scope.activeAnswer == 'upvote')
+      if($scope.activeAnswerType == 'upvote')
         posts.upvote($scope.post.id)
-      else if($scope.activeAnswer == 'downvote')
+      else if($scope.activeAnswerType == 'downvote')
         posts.downvote($scope.post.id)
-      else if($scope.activeAnswer == 'ignore')
+      else if($scope.activeAnswerType == 'ignore')
         posts.ignore($scope.post.id)
     }
+  }
+
+  $scope.canAnswer = function(){
+    return $scope.post && !$scope.post.expired() && !$scope.post.ownedByCurrentUser()
   }
 
 })
