@@ -133,16 +133,6 @@ angular.module('app.services').factory('ActivityModel',
           return resp.data;
         });
       },
-
-      changeSubscribe: function(id){
-        $http({
-          method: 'POST',
-          url: serverConfig.url + '/api/users/self/subscriptions',
-          data: {"id": id}
-        }).then(function(resp) {
-          return resp.data;
-        });
-      },
       
       hasLinkPreviewMetadata: function(){
         return !!this.get('metadata');
@@ -167,6 +157,24 @@ angular.module('app.services').factory('ActivityModel',
       markAsUnsigned: function(){
         this.set('answered', false);
         this.set('answers', []);
+      },
+
+      userIsSubscribedToNotifications: function(){
+        var s1 = this.get('petition') && this.get('petition').is_subscribed
+        var s2 = this.get('post') && this.get('post').is_subscribed
+        return s1 || s2
+      },
+      markAsUnsubscribed: function(){
+        if(this.isUserPetitionType())
+          this.set('petition', {is_subscribed: false})
+        else if(this.isUserPostType())
+          this.set('post', {is_subscribed: false})
+      },
+      markAsSubscribed: function(){
+        if(this.isUserPetitionType())
+          this.set('petition', {is_subscribed: true})
+        else if(this.isUserPostType())
+          this.set('post', {is_subscribed: true})
       }
     });
   })

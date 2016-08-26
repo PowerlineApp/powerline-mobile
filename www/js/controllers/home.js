@@ -273,6 +273,22 @@ angular.module('app.controllers').directive('iActivity', function ($rootScope, q
         $scope.showToast('User petition unsigned.');
       });
     };
+
+    $scope.subscribeToNotifications = function(){
+      var userPetitionID = $scope.activity.get('entity').id;
+      userPetitions.subscribeToNotifications(userPetitionID).then(function (response) {
+        $scope.activity.markAsSubscribed()
+        $scope.showToast('Subscribed to petition notifications.');
+      })
+    }
+
+    $scope.unsubscribeFromNotifications = function(){
+      var userPetitionID = $scope.activity.get('entity').id;
+      userPetitions.unsubscribeFromNotifications(userPetitionID).then(function (response) {
+        $scope.activity.markAsUnsubscribed()
+        $scope.showToast('Unsubscribed from petition notifications.');
+      })
+    }    
   }
 
   function petitionCtrl($scope) {
@@ -345,8 +361,8 @@ angular.module('app.controllers').directive('iActivity', function ($rootScope, q
         }
       };
 
-      // if($scope.activity.get('entity').id == 237)
-      //    console.log(JSON.stringify($scope.activity))
+      // if($scope.activity.get('entity').id == 242)
+      //     console.log(JSON.stringify($scope.activity))
 
       $scope.title = $scope.activity.get('title');
       var description_raw = $scope.activity.get('description_html')

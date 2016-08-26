@@ -96,6 +96,13 @@ angular.module('app.services').factory('userPetitions',function ($q, session, se
 
     unsign: function(userPetitionID){
       return $http.delete(serverConfig.url + '/api/v2/user-petitions/'+userPetitionID+'/sign')
+    },
+
+    subscribeToNotifications: function(userPetitionID){
+      return $http.put(serverConfig.url + '/api/v2/user/user-petitions/'+userPetitionID)      
+    },
+    unsubscribeFromNotifications: function(userPetitionID){
+      return $http.delete(serverConfig.url + '/api/v2/user/user-petitions/'+userPetitionID)      
     }
   }
 
