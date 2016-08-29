@@ -6,7 +6,6 @@ angular.module('app.controllers').controller('question',function ($scope, $locat
 
   $scope.loading = true;
   $scope.blockedLoading = false;
-  activity.setEntityRead({id: Number($stateParams.id), type: 'question'});
 
   questions.load($stateParams.id).then(function (question) {
     $scope.loading = false;
