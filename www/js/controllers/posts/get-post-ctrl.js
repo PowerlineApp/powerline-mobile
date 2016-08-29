@@ -26,9 +26,13 @@ angular.module('app.controllers').controller('getPostCtrl',function ($scope, top
     });
   };
 
+  $scope.upvoteResultsInPercents = 0
+  $scope.downvoteResultsInPercents = 0
   posts.get($stateParams.id).then(function (post) {
     $scope.hideSpinner();
     $scope.post = post;
+    $scope.upvoteResultsInPercents = post.getUpvoteResultsInPercents()
+    $scope.downvoteResultsInPercents = post.getDownvoteResultsInPercents()
     $scope.activeAnswerType = post.getMyAnswerType()
   }, function(){
     $scope.hideSpinner();
@@ -59,5 +63,7 @@ angular.module('app.controllers').controller('getPostCtrl',function ($scope, top
   $scope.canAnswer = function(){
     return $scope.post && !$scope.post.expired() && !$scope.post.ownedByCurrentUser()
   }
+
+
 
 })

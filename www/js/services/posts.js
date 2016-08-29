@@ -16,7 +16,7 @@ angular.module('app.services').factory('posts',function ($q, session, serverConf
         name: data.user.first_name + ' ' + data.user.last_name
       }
 
-      this.votes_count = 0
+      this.votes = data.votes
       this.created_at_date = new Date(data.created_at)
       this.expired_at_date = new Date(data.expired_at);
       this.title = data.title
@@ -58,6 +58,14 @@ angular.module('app.services').factory('posts',function ($q, session, serverConf
 
     this.delete = function(){
        return $http.delete(serverConfig.url + '/api/v2/posts/' + this.id)     
+    }
+
+    this.getUpvoteResultsInPercents = function(){
+      return 30
+    }
+
+    this.getDownvoteResultsInPercents = function(){
+      return 70
     }
   }
 

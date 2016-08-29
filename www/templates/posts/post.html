@@ -46,6 +46,7 @@
             min-height: 200px">
         </textarea>
       </div>
+
       <div ng-show="canAnswer()">
         <fieldset>
             <div class="checkbox-field" ng-class="isAnswerActive('upvote') ? 'active': ''" ng-click="chooseAnswer('upvote')">
@@ -69,7 +70,39 @@
                 ng-click="submitAnswer()">Submit</button>
             </div>
         </fieldset>
-      <div>
+      </div>
+
+      <div ng-show="!canAnswer()">
+        <div class="chart">
+          <p class="info-message">Current  Results</p>
+          <ul>
+            <li>
+              <h4>A</h4>
+              <div>
+                <figure>
+                  <i style="background-color: #54c5ff"
+                   ng-style="{width: upvoteResultsInPercents + '%'}"> 
+                    <span>{{upvoteResultsInPercents}}%</span>
+                    </i>
+                </figure>
+              </div>
+              <p class="value">Upvote</p>
+            </li>
+            <li>
+              <h4>B</h4>
+              <div>
+                <figure>
+                  <i style="background-color: #ba3830"
+                   ng-style="{width: downvoteResultsInPercents + '%'}"> 
+                    <span>{{downvoteResultsInPercents}}%</span>
+                    </i>
+                </figure>
+              </div>
+              <p class="value">Downvote</p>
+            </li>
+          </ul>
+        </div>
+      </div>
 
       <ng-include src="'templates/widget/share.html'"></ng-include>
     </section>
