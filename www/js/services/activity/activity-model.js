@@ -1,5 +1,5 @@
 angular.module('app.services').factory('ActivityModel',
-  function (JsModel, groups, $http, follows, iStorage, serverConfig) {
+  function (JsModel, groups, $http, follows, iStorage, serverConfig, session) {
    return JsModel.extend({
       labels: {
         question: 'Question',
@@ -143,7 +143,8 @@ angular.module('app.services').factory('ActivityModel',
         var notExpired = !this.isExpired()
         var notAnsweredOnBackend = this.get('answers').length == 0
         var notAnsweredLocally = !this.get('answered')
-        return notExpired && notAnsweredOnBackend && notAnsweredLocally
+        var notOwnedByMe = !this.isOwn()
+        return notOwnedByMe && notExpired && notAnsweredOnBackend && notAnsweredLocally
       },
       canBeUnsigned: function(){
         var notExpired = !this.isExpired()
