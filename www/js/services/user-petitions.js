@@ -13,7 +13,6 @@ angular.module('app.services').factory('userPetitions',function ($q, session, se
         name: data.user.first_name + ' ' + data.user.last_name
       }
 
-      this.votes_count = 0
       this.created_at_date = new Date(data.created_at)
       this.expired_at_date = new Date(data.expire_at);
       this.title = data.title
@@ -67,6 +66,10 @@ angular.module('app.services').factory('userPetitions',function ($q, session, se
       $http.get(serverConfig.url + '/api/v2/user-petitions/'+this.id).then(function (response) {
         that._load(response.data)
       });
+    }
+
+    this.getSignedResultInPercents = function(){
+      return 10
     }
   }
 
