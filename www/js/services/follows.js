@@ -122,7 +122,7 @@ angular.module('app.services').factory('follows', function ($http,serverConfig, 
   service.getFollowing = service.getUsersFollowedByCurrentUser
 
   service.getUser = function(uID){
-    return service.users.find(function(user){
+    return _.find(service.users, function(user){
       return user.user_id == uID
     })
   }
