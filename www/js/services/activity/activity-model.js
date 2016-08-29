@@ -141,14 +141,14 @@ angular.module('app.services').factory('ActivityModel',
       // makes sense only for micro-petition-long-petition and petition
       canBeSigned: function(){
         var notExpired = !this.isExpired()
-        var notAnsweredOnBackend = this.get('answers').length == 0
+        var notAnsweredOnBackend = this.get('answers')&& this.get('answers').length == 0
         var notAnsweredLocally = !this.get('answered')
         var notOwnedByMe = !this.isOwn()
         return notOwnedByMe && notExpired && notAnsweredOnBackend && notAnsweredLocally
       },
       canBeUnsigned: function(){
         var notExpired = !this.isExpired()
-        var answeredOnBackend = this.get('answers').length > 0
+        var answeredOnBackend = this.get('answers') && this.get('answers').length > 0
         var answeredLocally = this.get('answered')
         return notExpired && (answeredOnBackend || answeredLocally)
       },

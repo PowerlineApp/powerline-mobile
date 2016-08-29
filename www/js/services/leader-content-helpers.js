@@ -5,7 +5,7 @@ angular.module('app.services').factory('leaderContentHelper', function($http, se
   // var h = angular.element(document.body).injector().get('leaderContentHelper')
   // h.createPoll()
 
-  service.createPoll = function(){
+  service.createPollEvent = function(){
     var data = {subject: 'test Poll no2 subject',
       title: 'test Poll no2 title',
       started_at: "2016-08-26 09:52:33", // t.strftime("%Y-%m-%d'%z'%H:%M:%S")
@@ -13,6 +13,22 @@ angular.module('app.services').factory('leaderContentHelper', function($http, se
       //petition_title: 'Petition title',
       //petition_body: 'Petition body',
       type: 'event'} 
+      
+    var payload = JSON.stringify(data)
+    var headers = {headers: {'Content-Type': 'application/json'}}
+
+    var groupID = 285
+
+    $http.post(serverConfig.url + '/api/v2/groups/'+groupID+'/polls', payload, headers).then(function(response){
+      console.log(response)
+    })    
+  }
+
+  service.createPollPetition = function(){
+    var data = {subject: 'I have no idea what is the difference between subject and petition body',
+      petition_title: 'this is Poll of subtype Petition',
+      petition_body: 'Petition body',
+      type: 'petition'} 
       
     var payload = JSON.stringify(data)
     var headers = {headers: {'Content-Type': 'application/json'}}
@@ -50,6 +66,8 @@ angular.module('app.services').factory('leaderContentHelper', function($http, se
       console.log(response)
     })  
   }
+
+
 
   return service
 })
