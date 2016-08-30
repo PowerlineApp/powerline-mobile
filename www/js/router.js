@@ -103,6 +103,11 @@ angular.module('app')
       url: '/payment-polls/crowdfunding-payment-request/:id',
       templateUrl: 'templates/payment-polls/crowdfunding-payment-request.html',
       controller: 'question.payment-request'
+    },{
+      name: 'getPetition',
+      url: '/petition/:id',
+      templateUrl: 'templates/petitions/petition.html',
+      controller: 'getPetitionCtrl'
     }, {
       name: 'getUserPetition',
       url: '/user-petition/:id',

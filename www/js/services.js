@@ -47,7 +47,7 @@ angular.module('app.services', [
     'user-petition': '/user-petition/',
     'post': '/post/',
     'leader-news': '/question/news/',
-    'petition': '/question/leader-petition/',
+    'petition': '/petition/',
     'payment-request': '/payment-polls/payment-request/',
     'leader-event': '/leader-event/',
     'crowdfunding-payment-request': '/payment-polls/crowdfunding-payment-request/'

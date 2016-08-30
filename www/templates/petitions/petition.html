@@ -1,0 +1,84 @@
+<ion-view view-title="Petition">
+  <ion-content class="page-petition content">
+    <section class="q-header margin-10">
+      <div class="avatar" ng-click="navigateTo('owner-profile', petition.owner)">
+        <avatar-img img="petition.owner.avatar" text="petition.owner.name"></avatar-img>
+      </div>
+      <div class="q-info">
+        <div>
+          <i class="icon-responses"></i> Responses <br>
+          <span ng-bind="petition.votes_count"></span>
+        </div>
+
+        <div>
+          <i class="icon-calendar"></i> Created <br>
+          <time ng-bind="petition.created_at_date | date:'M.d.yy'"></time>
+        </div>
+        <div>
+          <i class="icon-calendar"></i> Expires<br>
+          <time ng-bind="petition.expired_at_date | date:'M.d.yy'"></time>
+        </div>
+        <div>
+          Petition <br>
+          <i class="icon-petition"></i>
+        </div>
+      </div>
+    </section>
+
+    <section class="q-content">
+      <div class="title">
+        <strong ng-bind="petition.owner.name" ng-click="navigateTo('owner-profile', petition.owner)"></strong>
+      </div>
+      
+      <h1 ng-bind="petition.title" ng-show="petition.title"></h1>
+      <div>
+        <p ng-bind-html="petition.html_body" i-content-link></p>
+      </div>
+      
+      <section class="margin-h-10" ng-show="canSignOrUnsign()">
+          <div style="float: left;width: 50%;padding-top: 12px;" class="margin-v-20">
+              <div class="checkbox-privacy" ng-class="{checked: data.privacy}" ng-click="data.privacy = data.privacy ? 0 : 1" guide="privacy-option">
+                  <i></i>
+                  {{ data.privacy ? 'Username hidden' : 'Username visible'  }}
+              </div>
+          </div>
+          <div style="float: left;width: 50%;" class="margin-v-20">
+              <button class="btn-large btn-primary" ng-click="sign()" ng-show="!petition.isSignedByMe() && !petition.expired()">Sign</button>
+              <button class="btn-large btn-primary" ng-click="unsign()" ng-show="petition.isSignedByMe()">Unsign</button>
+          </div>
+      </section>
+
+      <div ng-show="petition.expired()">
+        <div class="chart">
+          <p class="info-message">Current  Results</p>
+          <ul>
+            <li>
+              <h4>A</h4>
+              <div>
+                <figure>
+                  <i style="background-color: #54c5ff"
+                   ng-style="{width: signedResultInPercents + '%'}"> 
+                    <span>{{signedResultInPercents}}%</span>
+                    </i>
+                </figure>
+              </div>
+              <p class="value">Signed</p>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <ng-include src="'templates/widget/share.html'"></ng-include>
+    </section>
+
+
+    <tab-panel>
+      <ul class="header">
+        <li ng-click="open($event)">Discussion</li>
+      </ul>
+      <tabs>
+        <tab><discussions id="petition.id" entity="'micro-petitions'"></discussions></tab>
+      </tabs>
+    </tab-panel>
+  </ion-content>
+</ion-view>

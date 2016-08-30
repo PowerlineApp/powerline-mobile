@@ -1,179 +1,107 @@
-angular.module('app.services').factory('petitions',function ($q, PetitionsResource, iStorage, formatOptions,
-  JsCollection, JsModel, serverConfig, $http, iParse, $sce) {
+angular.module('app.services').factory('petitions',function ($q, session, serverConfig, $http, $sce, iParse) {
 
-  var petitions = [],
-    petitionsByGroup = {}
-    ;
-
-  var PetitionModel = JsModel.extend({
-    parsers: {
-      created_at: 'date',
-      expire_at: 'date'
-    }
-  });
-
-  function setOwner(item) {
-    item.owner = {
-      id: item.publish_status ? item.group.id : item.user.id,
-      avatar: item.publish_status ? item.group.avatar_file_path : item.user.avatar_file_name,
-      type: item.publish_status ? 'group' : 'user',
-      name: item.publish_status ? item.group.official_title : item.user.first_name + ' ' + item.user.last_name
-    };
-  }
-
-  function format(data) {
-    petitions = [];
-    petitionsByGroup = {};
-    _(data).each(function (item) {
-      if (!petitionsByGroup[item.group_id]) {
-        petitionsByGroup[item.group_id] = {
-          group: item.group,
-          petitions: []
-        };
+  var PetitionInstance = function(rawData){
+    console.log(rawData)
+    this._load = function(data){
+      this.body = data.petition_body
+      this.html_body = $sce.trustAsHtml(iParse.wrapHashTags(iParse.wrapLinks(data.petition_body)))
+      this.owner = {
+        id: data.group.id,
+        avatar: data.group.avatar_file_path,
+        type: 'group',
+        name: data.group.official_title
       }
-      petitionsByGroup[item.group_id].petitions.push(item);
-      item.created_at_date = new Date(item.created_at);
-      item.expired_at_date = new Date(item.expire_at);
-      if (!item.publish_status) {
-        item.count_to_quorum = Math.max(item.quorum_count - item.responses_count, 1);
-        item.completed_percent = Math.min(item.responses_count / item.quorum_count * 100, 100);
-      }
-      setOwner(item);
-      petitions.push(item);
-    });
-  }
 
-  function formatInfo(data) {
-    data.expired = new Date() >= new Date(data.expire_at);
-    data.expired_at_date = new Date(data.expire_at);
-    data.created_at_date = new Date(data.created_at);
-    data.votes_count = formatOptions([data.options[0], data.options[1]]);
+      this.votingOptions = data.options
+      this.votes_count = this.votingOptions[0].votes_count
 
-    var petition_body = data.petition_body_html
-    if(petition_body == null || petition_body.length == 0)
-      petition_body = data.petition_body
-      
-    data.petition_body_parsed = $sce.trustAsHtml(iParse.wrapHashTags(iParse.wrapLinks(petition_body)));
-    data.getOptionLabel = function (id) {
-      var option = _(this.options).find(function (item) {
-        return item.id === id;
-      });
-      return option ? option.title : '';
-    };
-  }
+      this.created_at_date = new Date(data.published_at)
+      this.expired_at_date = new Date(this.created_at_date.getTime() + 86400000)
+      this.title = data.petition_title
+      this.id = data.id
+      this.myAnswerID = null
+      if(data.answer_entity && data.answer_entity.id)
+        this.myAnswerID = data.answer_entity.id
+    }
 
-  function sortGroupPetitions() {
-    _(petitionsByGroup).each(function (item) {
-      item.petitions = _(item.petitions).sortBy(function (child) {
-        return -child.created_at_date.getTime();
-      });
-    });
-  }
+    this._load(rawData)
 
-  return {
+    this.expired = function(){
+      return(this.expired_at_date <= new Date())
+    }
 
-    getAll: function () {
-      return petitions;
-    },
+    this.ownedByCurrentUser = function(){
+      return(false)
+    }
 
-    loadAll: function () {
-      var deferred = $q.defer();
-      PetitionsResource.query(function (data) {
-        format(data);
-        sortGroupPetitions();
-        deferred.resolve(data);
-      }, function () {
-        deferred.reject();
-      });
-      return deferred.promise;
-    },
-
-    loadByHashTag: function (query) {
-      var deferred = $q.defer();
-      PetitionsResource.searchByHashTag({
-        query: query
-      }, function (data) {
-        format(data);
-        deferred.resolve(data);
-      }, function () {
-        deferred.reject();
-      });
-      return deferred.promise;
-    },
-
-    getAllByGroup: function () {
-      return petitionsByGroup;
-    },
-
-    load: function (id) {
-      var deferred = $q.defer();
-      PetitionsResource.get({id: id}, function (data) {
-        setOwner(data);
-        formatInfo(data);
-        deferred.resolve(data);
-      }, function () {
-        deferred.reject();
-      });
-      return deferred.promise;
-    },
-
-    loadByParams: function (params) {
-      return $http.get(serverConfig.url + '/api/micro-petitions/', {params: params}).then(function (response) {
-        return new JsCollection(response.data, {model: PetitionModel});
-      });
-    },
-
-    getGroupPetitions: function (id) {
-      return petitionsByGroup[id];
-    },
-
-    getGroups: function () {
-      return _(petitionsByGroup).pluck('group');
-    },
-    
-    answer: function(id, optionId) {
-      var option = 'upvote'
-      if(optionId == 2)
-        option = 'downvote'
-
-      var payload = JSON.stringify({option: option})
+    this.updateBodyText = function(){
+      var that = this
+      var data = {body: this.body}
+      var payload = JSON.stringify(data)
       var headers = {headers: {'Content-Type': 'application/json'}}
-      return $http.post(serverConfig.url + '/api/v2/micro-petitions/' + id + '/answer', payload, headers).then(function(resp) {
-        return resp.data;
-      });
-    },
-
-    update: function(microPetition) {
-      var payload = JSON.stringify({petition_body: microPetition.petition_body})
-      var headers = {headers: {'Content-Type': 'application/json'}}
-      return $http.put(serverConfig.url + '/api/v2/micro-petitions/' + microPetition.id, payload, headers).then(function(resp) {
-        return resp.data;
-      });
-    },
-
-    delete: function(id){
-      return $http.delete(serverConfig.url + '/api/v2/micro-petitions/' + id).then(function(resp) {
-        return resp.data;
+      return $http.put(serverConfig.url + '/api/v2/user-petitions/' + this.id, payload, headers).then(function(resp) {
+        that._load(resp.data)
       });
     }
-  };
 
-}).factory('PetitionsResource', function ($resource, serverConfig) {
-  return $resource(serverConfig.url + '/api/micro-petitions/:id', {id: '@id'}, {
-    searchByHashTag: {
-      method: 'GET',
-      isArray: true,
-      url: serverConfig.url + '/api/search/by-hash-tags'
-    },
-    unsign: {
-      method: 'DELETE',
-      params: {id: '@id'},
-      url: serverConfig.url + '/api/v2/micro-petitions/:id/answer'
-    },   
-    update: {
-      method: 'PUT',
-      params: {id: '@id'},
-      url: serverConfig.url + '/api/micro-petitions/:id'
+    this.isSignedByMe = function(){
+      return this.myAnswerID
     }
-  });
-});
+
+    this.sign = function(){
+      // TODO: refresh appropriate activity
+      var privacy = 0
+      var voteOptionID = this.votingOptions[0].id
+      service.sign(this.id, voteOptionID, privacy).then(this.reload.bind(this))
+    }
+
+    this.unsign = function(){
+      // TODO: refresh appropriate activity
+       var voteOptionID = this.votingOptions[0].id
+      service.unsign(this.id, voteOptionID).then(this.reload.bind(this))
+    }
+
+    this.reload = function(){
+      var that = this
+      $http.get(serverConfig.url + '/api/poll/question/'+this.id).then(function (response) {
+        that._load(response.data)
+      });
+    }
+
+    this.getSignedResultInPercents = function(){
+      return 10
+    }
+  }
+
+  var service = {
+    get: function(petitionID){
+      var d = $q.defer();
+      $http.get(serverConfig.url + '/api/poll/question/'+petitionID).then(function (response) {
+        var petition = new PetitionInstance(response.data)
+        d.resolve(petition)
+      });  
+
+      return d.promise;    
+    },
+
+    sign: function(petitionID, voteOptionID, privacy){
+      var data = {privacy: privacy, option_id : voteOptionID, id: petitionID, comment: ''}
+      var payload = JSON.stringify(data)
+      var headers = {headers: {'Content-Type': 'application/json'}}
+      return $http.post(serverConfig.url + '/api/poll/question/' + petitionID + '/answer/add', payload, headers)
+    },
+
+    unsign: function(petitionID, voteOptionID){
+      return $http.delete(serverConfig.url + '/api/petition/' + petitionID + '/answers/' + voteOptionID)
+    },
+
+    subscribeToNotifications: function(petitionID){
+      return $http.put(serverConfig.url + '/api/v2/user/user-petitions/'+petitionID)      
+    },
+    unsubscribeFromNotifications: function(petitionID){
+      return $http.delete(serverConfig.url + '/api/v2/user/user-petitions/'+petitionID)      
+    }
+  }
+
+  return service
+})
