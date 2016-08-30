@@ -1,7 +1,6 @@
 angular.module('app.services').factory('petitions',function ($q, session, serverConfig, $http, $sce, iParse) {
 
   var PetitionInstance = function(rawData){
-    console.log(rawData)
     this._load = function(data){
       this.body = data.petition_body
       this.html_body = $sce.trustAsHtml(iParse.wrapHashTags(iParse.wrapLinks(data.petition_body)))

@@ -86,7 +86,10 @@ angular.module('app.services').factory('ActivityModel',
       getIcon: function () {
         return this.icons[this.get('entity').type];
       },
-
+      isPollPetitionType: function(){
+        var aType = this.get('entity').type
+        return aType == 'petition'
+      },
       isUserPetitionType: function(){
         var aType = this.get('entity').type
         return aType == 'user-petition'
@@ -141,7 +144,12 @@ angular.module('app.services').factory('ActivityModel',
       // makes sense only for micro-petition-long-petition and petition
       canBeSigned: function(){
         var notExpired = !this.isExpired()
-        var notAnsweredOnBackend = this.get('answers')&& this.get('answers').length == 0
+        if(this.isPollPetitionType()){
+          var notAnsweredOnBackend = this.get('answer') == null
+          
+        } else {
+          var notAnsweredOnBackend = this.get('answers')&& this.get('answers').length == 0
+        }
         var notAnsweredLocally = !this.get('answered')
         var notOwnedByMe = !this.isOwn()
         return notOwnedByMe && notExpired && notAnsweredOnBackend && notAnsweredLocally

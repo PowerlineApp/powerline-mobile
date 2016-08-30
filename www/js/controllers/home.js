@@ -292,12 +292,12 @@ angular.module('app.controllers').directive('iActivity', function ($rootScope, q
   }
 
   function petitionCtrl($scope) {
-    $scope.templateSrc = 'templates/home/activities/user-petition.html';
+    $scope.templateSrc = 'templates/home/activities/petition.html';
 
     $scope.sign = function () {
-      var microPetitionID = $scope.activity.get('entity').id
+      var petitionID = $scope.activity.get('entity').id
       $scope.sending = true
-      microPetitions.signLongPetition(microPetitionID).then(function(){
+      petitions.sign(petitionID).then(function(){
           $scope.activity.markAsSigned()
           $scope.sending = false;
           $scope.showToast('Petition signed.');
@@ -306,9 +306,10 @@ angular.module('app.controllers').directive('iActivity', function ($rootScope, q
 
     $scope.unsign = function () {
       $scope.sending = true;
-      var microPetitionID = $scope.activity.get('entity').id;
-      microPetitions.unsignLongPetition(microPetitionID).then(function (response) {
-        $scope.activity.markAsSigned()
+      var petitionID = $scope.activity.get('entity').id;
+      var voteOptionID = $scope.activity.get('answer').option_id
+      petitions.unsign(petitionID, voteOptionID).then(function (response) {
+        $scope.activity.markAsUnsigned()
         $scope.sending = false;
         $scope.showToast('Petition unsigned.');
       });
@@ -361,7 +362,7 @@ angular.module('app.controllers').directive('iActivity', function ($rootScope, q
         }
       };
 
-      // if($scope.activity.get('entity').id == 242)
+      // if($scope.activity.get('entity').id == 197)
       //     console.log(JSON.stringify($scope.activity))
 
       $scope.title = $scope.activity.get('title');

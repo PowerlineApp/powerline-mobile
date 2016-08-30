@@ -32,7 +32,7 @@
     <div class="control" ng-show="sending">
       <spinner></spinner>
     </div>
-    <div class="control" ng-show="activity.canBeSigned() && !sending"><a ng-click="sign()">SIGN</a></div>
+    <div class="control" ng-show="activity.canBeSigned() && !sending"><a ng-click="navigateToActivity(activity)">SIGN</a></div>
     <div class="control" ng-show="activity.canBeUnsigned() && !sending"><a ng-click="unsign()">UNSIGN</a></div>
     <div class="control"><a ng-click="navigateToActivity(activity, 'add-comment')" class="activity-control reply"></a></div>
     <ng-include src="'templates/home/activities/_follow.html'" ng-show="showFollow"></ng-include>
