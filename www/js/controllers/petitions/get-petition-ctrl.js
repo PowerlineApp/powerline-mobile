@@ -5,6 +5,8 @@ angular.module('app.controllers').controller('getPetitionCtrl',function ($scope,
     $scope.showSpinner();
   }
 
+  $scope.data = {privacy: 0}
+
   $scope.canSignOrUnsign = function(){
     if($scope.petition){
       var notOwner = !$scope.petition.ownedByCurrentUser()
@@ -15,7 +17,7 @@ angular.module('app.controllers').controller('getPetitionCtrl',function ($scope,
   }
 
   $scope.sign = function(){
-    $scope.petition.sign()
+    $scope.petition.sign($scope.data.privacy)
   }
 
   $scope.unsign = function(){

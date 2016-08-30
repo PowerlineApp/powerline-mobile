@@ -47,9 +47,8 @@ angular.module('app.services').factory('petitions',function ($q, session, server
       return this.myAnswerID
     }
 
-    this.sign = function(){
+    this.sign = function(privacy){
       // TODO: refresh appropriate activity
-      var privacy = 0
       var voteOptionID = this.votingOptions[0].id
       service.sign(this.id, voteOptionID, privacy).then(this.reload.bind(this))
     }
