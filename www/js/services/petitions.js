@@ -50,13 +50,16 @@ angular.module('app.services').factory('petitions',function ($q, session, server
     this.sign = function(privacy){
       // TODO: refresh appropriate activity
       var voteOptionID = this.votingOptions[0].id
-      service.sign(this.id, voteOptionID, privacy).then(this.reload.bind(this))
+      var data = {privacy: privacy, option_id : voteOptionID, id: this.id, comment: ''}
+      var payload = JSON.stringify(data)
+      var headers = {headers: {'Content-Type': 'application/json'}}
+      return $http.post(serverConfig.url + '/api/poll/question/' + this.id + '/answer/add', payload, headers).then(this.reload.bind(this))
     }
 
     this.unsign = function(){
       // TODO: refresh appropriate activity
        var voteOptionID = this.votingOptions[0].id
-      service.unsign(this.id, voteOptionID).then(this.reload.bind(this))
+       return $http.delete(serverConfig.url + '/api/petition/' + this.id + '/answers/' + voteOptionID).then(this.reload.bind(this))
     }
 
     this.reload = function(){
@@ -78,15 +81,25 @@ angular.module('app.services').factory('petitions',function ($q, session, server
       return d.promise;    
     },
 
-    sign: function(petitionID, voteOptionID, privacy){
-      var data = {privacy: privacy, option_id : voteOptionID, id: petitionID, comment: ''}
-      var payload = JSON.stringify(data)
-      var headers = {headers: {'Content-Type': 'application/json'}}
-      return $http.post(serverConfig.url + '/api/poll/question/' + petitionID + '/answer/add', payload, headers)
+    sign: function(petitionID){
+      var d = $q.defer();
+      this.get(petitionID).then(function(petition){
+        var privacy = 0
+        petition.sign(privacy).then(function(){
+          d.resolve()
+        })
+      })
+      return d.promise;  
     },
 
-    unsign: function(petitionID, voteOptionID){
-      return $http.delete(serverConfig.url + '/api/petition/' + petitionID + '/answers/' + voteOptionID)
+    unsign: function(petitionID){
+      var d = $q.defer();
+      this.get(petitionID).then(function(petition){
+        petition.unsign().then(function(){
+          d.resolve()
+        })
+      })
+      return d.promise;       
     },
 
     subscribeToNotifications: function(petitionID){

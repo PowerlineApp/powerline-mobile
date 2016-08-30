@@ -307,8 +307,7 @@ angular.module('app.controllers').directive('iActivity', function ($rootScope, q
     $scope.unsign = function () {
       $scope.sending = true;
       var petitionID = $scope.activity.get('entity').id;
-      var voteOptionID = $scope.activity.get('answer').option_id
-      petitions.unsign(petitionID, voteOptionID).then(function (response) {
+      petitions.unsign(petitionID).then(function (response) {
         $scope.activity.markAsUnsigned()
         $scope.sending = false;
         $scope.showToast('Petition unsigned.');
@@ -364,6 +363,7 @@ angular.module('app.controllers').directive('iActivity', function ($rootScope, q
 
       // if($scope.activity.get('entity').id == 197)
       //     console.log(JSON.stringify($scope.activity))
+      // else return
 
       $scope.title = $scope.activity.get('title');
       var description_raw = $scope.activity.get('description_html')
