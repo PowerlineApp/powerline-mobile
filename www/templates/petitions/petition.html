@@ -51,20 +51,7 @@
       <div ng-show="petition.expired()">
         <div class="chart">
           <p class="info-message">Current  Results</p>
-          <ul>
-            <li>
-              <h4>A</h4>
-              <div>
-                <figure>
-                  <i style="background-color: #54c5ff"
-                   ng-style="{width: signedResultInPercents + '%'}"> 
-                    <span>{{signedResultInPercents}}%</span>
-                    </i>
-                </figure>
-              </div>
-              <p class="value">Signed</p>
-            </li>
-          </ul>
+          <p>Votes for this petition: {{petition.votes_count}} </p>
         </div>
       </div>
 

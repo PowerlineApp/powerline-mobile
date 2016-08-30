@@ -26,7 +26,7 @@ angular.module('app.services').factory('petitions',function ($q, session, server
     this._load(rawData)
 
     this.expired = function(){
-      return(this.expired_at_date <= new Date())
+      return (this.expired_at_date <= new Date())
     }
 
     this.ownedByCurrentUser = function(){
@@ -65,10 +65,6 @@ angular.module('app.services').factory('petitions',function ($q, session, server
       $http.get(serverConfig.url + '/api/poll/question/'+this.id).then(function (response) {
         that._load(response.data)
       });
-    }
-
-    this.getSignedResultInPercents = function(){
-      return 10
     }
   }
 
