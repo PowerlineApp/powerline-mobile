@@ -146,7 +146,6 @@ angular.module('app.services').factory('ActivityModel',
         var notExpired = !this.isExpired()
         if(this.isPollPetitionType()){
           var notAnsweredOnBackend = this.get('answer') == null
-          
         } else {
           var notAnsweredOnBackend = this.get('answers')&& this.get('answers').length == 0
         }
