@@ -287,23 +287,19 @@ angular.module('app.controllers').directive('iActivity', function ($rootScope, q
     $scope.templateSrc = 'templates/home/activities/petition.html';
 
     $scope.sign = function () {
-      var petitionID = $scope.activity.get('entity').id
       $scope.sending = true
-      petitions.sign(petitionID).then(function(){
-          $scope.activity.markAsSigned()
+      $scope.activity.sign().then(function(){
           $scope.sending = false;
           $scope.showToast('Petition signed.');
       })
     };
 
     $scope.unsign = function () {
-      $scope.sending = true;
-      var petitionID = $scope.activity.get('entity').id;
-      petitions.unsign(petitionID).then(function (response) {
-        $scope.activity.markAsUnsigned()
-        $scope.sending = false;
-        $scope.showToast('Petition unsigned.');
-      });
+      $scope.sending = true
+      $scope.activity.unsign().then(function(){
+          $scope.sending = false;
+          $scope.showToast('Petition unsigned.');
+      })
     };
   }
 
@@ -353,7 +349,7 @@ angular.module('app.controllers').directive('iActivity', function ($rootScope, q
         }
       };
 
-      // if($scope.activity.get('entity').id == 241)
+      // if($scope.activity.get('entity').id == 197)
       //     console.log(JSON.stringify($scope.activity))
       // else return
 

@@ -1,5 +1,39 @@
 angular.module('app.services').factory('ActivityModel',
-  function (JsModel, groups, $http, follows, iStorage, serverConfig, session, userPetitions) {
+  function (JsModel, groups, $http, follows, iStorage, serverConfig, session, userPetitions, petitions) {
+
+    function PollPetitionMixin(){
+      this.canSign = function(){
+        var notExpired = !this.isExpired()
+        var notOwnedByMe = !this.isOwn()
+        var notSignedByMe = !this.isSignedbyMe()
+
+        return notExpired && notOwnedByMe && notSignedByMe       
+      }
+
+      this.canUnsign = function(){
+        return this.isSignedbyMe()
+      }
+
+      this.isSignedbyMe = function(){
+        return this.get('answered')
+      }
+
+      this.sign = function(){
+        var petitionID = this.get('entity').id
+        var that = this
+        return petitions.sign(petitionID).then(function(){
+          that.set('answered', true)
+        })
+      }
+
+      this.unsign = function(){
+        var petitionID = this.get('entity').id
+        var that = this
+        return petitions.unsign(petitionID).then(function(){
+          that.set('answered', false)
+        })
+      }
+    }
 
     function UserPetitionMixin() {
       this.getIcon = function () {
@@ -7,8 +41,8 @@ angular.module('app.services').factory('ActivityModel',
       }
 
       this.isSignedbyMe = function(){
-      var isSigned = (this.get('answers') && this.get('answers').length > 0)
-      return(isSigned)
+        var isSigned = (this.get('answers') && this.get('answers').length > 0)
+        return(isSigned)
       }
 
       this.canSign = function(){
@@ -16,7 +50,7 @@ angular.module('app.services').factory('ActivityModel',
         var notOwnedByMe = !this.isOwn()
         var notSignedByMe = !this.isSignedbyMe()
         
-        return notExpired && notOwnedByMe && notSignedByMe && !this.locallyMarkedAsSigned
+        return notExpired && notOwnedByMe && notSignedByMe
       }
 
       this.sign = function(){
@@ -109,7 +143,8 @@ angular.module('app.services').factory('ActivityModel',
       prepare: function () {
         if(this.dataType() == 'user-petition')
           $.extend(this, new UserPetitionMixin())
-
+        else if(this.dataType() == 'petition')
+          $.extend(this, new PollPetitionMixin())
 
         if (this.get('entity').group_id) {
           var userGroup = groups.get(this.get('entity').group_id);
