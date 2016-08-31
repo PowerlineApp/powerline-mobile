@@ -22,11 +22,15 @@ angular.module('app.services').factory('userPetitions',function ($q, session, se
     this._load(rawData)
 
     this.expired = function(){
-      return(this.expired_at_date <= new Date())
+      return (this.expired_at_date <= new Date())
     }
 
     this.ownedByCurrentUser = function(){
       return(session.user_id === this.owner.id)
+    }
+
+    this.signedForPetitionCount = function(){
+      return(this.signatures.length)
     }
 
     this.updateBodyText = function(){
@@ -53,12 +57,12 @@ angular.module('app.services').factory('userPetitions',function ($q, session, se
 
     this.sign = function(){
       // TODO: refresh appropriate activity
-      service.sign(this.id).then(this.reload.bind(this))
+      return service.sign(this.id).then(this.reload.bind(this))
     }
 
     this.unsign = function(){
       // TODO: refresh appropriate activity
-      service.unsign(this.id).then(this.reload.bind(this))
+      return service.unsign(this.id).then(this.reload.bind(this))
     }
 
     this.reload = function(){

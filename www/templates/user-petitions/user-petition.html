@@ -7,7 +7,7 @@
       <div class="q-info">
         <div>
           <i class="icon-responses"></i> Responses <br>
-          <span ng-bind="userPetition.votes_count"></span>
+          <span ng-bind="userPetition.signedForPetitionCount()"></span>
         </div>
 
         <div>
@@ -46,8 +46,15 @@
             min-height: 200px">
         </textarea>
       </div>
-      
-      <section class="margin-h-10" ng-show="canSignOrUnsign()">
+
+      <div ng-show="userPetition.expired()">
+        <div class="chart">
+          <p class="info-message">Current  Results</p>
+          <p>Votes for this petition: {{userPetition.signedForPetitionCount() + 1}} </p>
+        </div>
+      </div>
+
+      <section class="margin-h-10" >
           <div style="float: left;width: 50%;padding-top: 12px;" class="margin-v-20">
               <div class="checkbox-privacy" ng-class="{checked: data.privacy}" ng-click="data.privacy = data.privacy ? 0 : 1" guide="privacy-option">
                   <i></i>
@@ -55,30 +62,10 @@
               </div>
           </div>
           <div style="float: left;width: 50%;" class="margin-v-20">
-              <button class="btn-large btn-primary" ng-click="sign()" ng-show="!userPetition.isSignedByMe() && !userPetition.expired()">Sign</button>
+              <button class="btn-large btn-primary" ng-click="sign()" ng-show="!userPetition.isSignedByMe() && !userPetition.expired() && !userPetition.ownedByCurrentUser()">Sign</button>
               <button class="btn-large btn-primary" ng-click="unsign()" ng-show="userPetition.isSignedByMe()">Unsign</button>
           </div>
       </section>
-
-      <div ng-show="userPetition.expired()">
-        <div class="chart">
-          <p class="info-message">Current  Results</p>
-          <ul>
-            <li>
-              <h4>A</h4>
-              <div>
-                <figure>
-                  <i style="background-color: #54c5ff"
-                   ng-style="{width: signedResultInPercents + '%'}"> 
-                    <span>{{signedResultInPercents}}%</span>
-                    </i>
-                </figure>
-              </div>
-              <p class="value">Signed</p>
-            </li>
-          </ul>
-        </div>
-      </div>
 
       <ng-include src="'templates/widget/share.html'"></ng-include>
     </section>

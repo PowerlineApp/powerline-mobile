@@ -5,21 +5,16 @@ angular.module('app.controllers').controller('getUserPetitionCtrl',function ($sc
     $scope.showSpinner();
   }
 
-  $scope.canSignOrUnsign = function(){
-    if($scope.userPetition){
-      var notOwner = !$scope.userPetition.ownedByCurrentUser()
-      var notExpired = !$scope.userPetition.expired()
-      return(notOwner && notExpired)
-    } else
-      return false
-  }
-
   $scope.sign = function(){
-    $scope.userPetition.sign()
+    $scope.userPetition.sign().then(function(){
+      $scope.showToast('User petition signed!');
+    })
   }
 
   $scope.unsign = function(){
-    $scope.userPetition.unsign()
+    $scope.userPetition.unsign().then(function(){
+      $scope.showToast('User petition unsigned!');
+    })
   }
 
   $scope.inEditMode = false;
