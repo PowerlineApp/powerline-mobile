@@ -255,10 +255,8 @@ angular.module('app.controllers').directive('iActivity', function ($rootScope, q
     $scope.templateSrc = 'templates/home/activities/user-petition.html';
 
     $scope.sign = function () {
-      var userPetitionID = $scope.activity.get('entity').id
       $scope.sending = true
-      userPetitions.sign(userPetitionID).then(function(){
-          $scope.activity.markAsSigned()
+      $scope.activity.sign().then(function(){
           $scope.sending = false;
           $scope.showToast('User petition signed.');
       })
@@ -266,27 +264,21 @@ angular.module('app.controllers').directive('iActivity', function ($rootScope, q
 
     $scope.unsign = function () {
       $scope.sending = true;
-      var userPetitionID = $scope.activity.get('entity').id;
-      userPetitions.unsign(userPetitionID).then(function (response) {
-        $scope.activity.markAsUnsigned()
+      $scope.activity.unsign().then(function (response) {
         $scope.sending = false;
         $scope.showToast('User petition unsigned.');
       });
     };
 
     $scope.subscribeToNotifications = function(){
-      var userPetitionID = $scope.activity.get('entity').id;
-      userPetitions.subscribeToNotifications(userPetitionID).then(function (response) {
-        $scope.activity.markAsSubscribed()
-        $scope.showToast('Subscribed to petition notifications.');
+      $scope.activity.subscribeToNotifications().then(function (response) {
+        $scope.showToast('Subscribed to user petition notifications.');
       })
     }
 
     $scope.unsubscribeFromNotifications = function(){
-      var userPetitionID = $scope.activity.get('entity').id;
-      userPetitions.unsubscribeFromNotifications(userPetitionID).then(function (response) {
-        $scope.activity.markAsUnsubscribed()
-        $scope.showToast('Unsubscribed from petition notifications.');
+      $scope.activity.unsubscribeFromNotifications().then(function (response) {
+        $scope.showToast('Unsubscribed to user petition notifications.');
       })
     }    
   }
@@ -361,9 +353,9 @@ angular.module('app.controllers').directive('iActivity', function ($rootScope, q
         }
       };
 
-      // if($scope.activity.get('entity').id == 197)
-      //     console.log(JSON.stringify($scope.activity))
-      // else return
+      if($scope.activity.get('entity').id == 241)
+          console.log(JSON.stringify($scope.activity))
+      else return
 
       $scope.title = $scope.activity.get('title');
       var description_raw = $scope.activity.get('description_html')

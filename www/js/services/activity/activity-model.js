@@ -1,22 +1,71 @@
 angular.module('app.services').factory('ActivityModel',
-  function (JsModel, groups, $http, follows, iStorage, serverConfig, session) {
+  function (JsModel, groups, $http, follows, iStorage, serverConfig, session, userPetitions) {
+
+    function UserPetitionMixin() {
+      this.getIcon = function () {
+        return 'petition'
+      }
+
+      this.isSignedbyMe = function(){
+      var isSigned = (this.get('answers') && this.get('answers').length > 0)
+      return(isSigned)
+      }
+
+      this.canSign = function(){
+        var notExpired = !this.isExpired()
+        var notOwnedByMe = !this.isOwn()
+        var notSignedByMe = !this.isSignedbyMe()
+        
+        return notExpired && notOwnedByMe && notSignedByMe && !this.locallyMarkedAsSigned
+      }
+
+      this.sign = function(){
+        var userPetitionID = this.get('entity').id
+        var that = this
+        return userPetitions.sign(userPetitionID).then(function(){
+          that.set('answers', ['whatever'])
+        })
+      }
+
+      this.canUnsign = function(){
+        return this.isSignedbyMe()
+      }
+
+      this.unsign = function(){
+        var userPetitionID = this.get('entity').id
+        var that = this
+        return userPetitions.unsign(userPetitionID).then(function(){
+          that.set('answers', [])
+        })
+      }
+
+      this.userIsSubscribedToNotifications = function(){
+        return this.get('petition') && this.get('petition').is_subscribed
+      }
+
+      this.subscribeToNotifications = function(){
+        var userPetitionID = this.get('entity').id
+        var that = this
+        return userPetitions.subscribeToNotifications(userPetitionID).then(function (response) {
+          that.set('petition', {is_subscribed: true})
+        })
+      }
+
+      this.unsubscribeFromNotifications = function(){
+        var userPetitionID = this.get('entity').id
+        var that = this
+        return userPetitions.subscribeToNotifications(userPetitionID).then(function (response) {
+          that.set('petition', {is_subscribed: false})
+        })
+      }
+    }
+
    return JsModel.extend({
-      labels: {
-        question: 'Question',
-        petition: 'Petition',
-        'leader-news': 'News',
-        'leader-event': 'Event',
-        'user-petition': 'User Petition',
-        'post': 'Post',
-        'payment-request': 'Payment',
-        'crowdfunding-payment-request': 'Payment'
-      },
       icons: {
         question: 'poll',
         petition: 'petition',
         'leader-news': 'discussion',
         'leader-event': 'event',
-        'user-petition': 'petition',
         'post': 'post',
         'payment-request': 'fundraiser',
         'crowdfunding-payment-request': 'fundraiser'
@@ -56,7 +105,12 @@ angular.module('app.services').factory('ActivityModel',
       dataType: function(){
         return this.get('entity').type
       },
+
       prepare: function () {
+        if(this.dataType() == 'user-petition')
+          $.extend(this, new UserPetitionMixin())
+
+
         if (this.get('entity').group_id) {
           var userGroup = groups.get(this.get('entity').group_id);
           this.set('owner_info_1', userGroup ? userGroup.official_title : null);
@@ -79,9 +133,6 @@ angular.module('app.services').factory('ActivityModel',
       getQuorumCompletedPercent: function () {
         return this.get('quorum') ?
           Math.min(this.get('responses_count') / this.get('quorum') * 100, 100) : 0;
-      },
-      getLabel: function () {
-        return this.labels[this.get('entity').type];
       },
       getIcon: function () {
         return this.icons[this.get('entity').type];
@@ -168,21 +219,14 @@ angular.module('app.services').factory('ActivityModel',
       },
 
       userIsSubscribedToNotifications: function(){
-        var s1 = this.get('petition') && this.get('petition').is_subscribed
         var s2 = this.get('post') && this.get('post').is_subscribed
-        return s1 || s2
+        return s2
       },
       markAsUnsubscribed: function(){
-        if(this.isUserPetitionType())
-          this.set('petition', {is_subscribed: false})
-        else if(this.isUserPostType())
-          this.set('post', {is_subscribed: false})
+        this.set('post', {is_subscribed: false})
       },
       markAsSubscribed: function(){
-        if(this.isUserPetitionType())
-          this.set('petition', {is_subscribed: true})
-        else if(this.isUserPostType())
-          this.set('post', {is_subscribed: true})
+        this.set('post', {is_subscribed: true})
       }
     });
   })

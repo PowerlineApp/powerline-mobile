@@ -13,7 +13,7 @@
       <strong bo-bind="official_title"></strong>
       <span ng-if="owner_info_1" ng-bind="owner_info_1"></span>
     </p>
-    <p ng-class="{unanswered: activity.isUnanswered()}" bo-if="title" bo-bind="title"></p>
+    <p ng-class="{unanswered: !activity.isSignedbyMe()}" bo-if="title" bo-bind="title"></p>
     <i class="time"><time>{{ sent_at_elapsed }}</time></i>
   </div>
   <div class="item-content">
@@ -22,7 +22,7 @@
       class="picture">
       <img ng-src="{{imagePath}}" zoom-src="{{imagePath}}" zoom-view/>
     </p>
-    <p ng-class="{unanswered: activity.isUnanswered() && !title}" 
+    <p ng-class="{unanswered: !activity.isSignedbyMe() && !title}" 
       bo-html="description" 
       ng-click="navigateToActivity(activity, null, $event)" i-content-link>
     </p>
@@ -32,8 +32,8 @@
     <div class="control" ng-show="sending">
       <spinner></spinner>
     </div>
-    <div class="control" ng-show="activity.canBeSigned() && !sending"><a ng-click="sign()">SIGN</a></div>
-    <div class="control" ng-show="activity.canBeUnsigned() && !sending"><a ng-click="unsign()">UNSIGN</a></div>
+    <div class="control" ng-show="activity.canSign() && !sending"><a ng-click="sign()">SIGN</a></div>
+    <div class="control" ng-show="activity.canUnsign() && !sending"><a ng-click="unsign()">UNSIGN</a></div>
     <div class="control"><a ng-click="navigateToActivity(activity, 'add-comment')" class="activity-control reply"></a></div>
     <ng-include src="'templates/home/activities/_follow.html'" ng-show="showFollow"></ng-include>
     <div class="control notification">
