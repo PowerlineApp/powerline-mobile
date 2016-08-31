@@ -1,5 +1,50 @@
 angular.module('app.services').factory('ActivityModel',
-  function (JsModel, groups, $http, follows, iStorage, serverConfig, session, userPetitions, petitions) {
+  function (JsModel, groups, $http, follows, iStorage, serverConfig, session, userPetitions, petitions, posts) {
+
+    function PostMixin(){
+      this.isAnswered = function(){
+        return(this.get('answers') && this.get('answers').length > 0)
+      }
+      this.isUnanswered = function(){
+        return !this.isAnswered()
+      }
+
+      this.canVote = function(){
+        var notAnswered = this.isUnanswered()
+        var notExpired = !this.isExpired()
+        var notOwnedByMe = !this.isOwn()
+
+        return notAnswered && notExpired && notOwnedByMe
+      } 
+
+      this.canUndoVote = function(){
+        return this.isAnswered() && !this.isExpired()
+      }
+
+      this.upvote = function(){
+        var postID = this.get('entity').id
+        var that = this
+        return posts.upvote(postID).then(function(){
+           that.set('answers', ['whatever'])
+        })
+      }
+
+      this.downvote = function(){
+        var postID = this.get('entity').id
+        var that = this
+        return posts.downvote(postID).then(function(){
+           that.set('answers', ['whatever'])
+        })
+      }
+
+      this.undoVote = function(){
+        var postID = this.get('entity').id
+        var that = this
+        return posts.unvote(postID).then(function(answer){
+          that.set('answers', [])
+        })
+      }
+    }
 
     function PollPetitionMixin(){
       this.canSign = function(){
@@ -126,9 +171,6 @@ angular.module('app.services').factory('ActivityModel',
       setAnswer: function(answer){
         this.set('answers', [answer])
       },
-      unAnswer: function(){
-        this.set('answers', [])
-      },
       isFollowing: function () {
         var owner = this.get('owner');
         return owner.type === 'user' && follows.some(function (following) {
@@ -145,6 +187,8 @@ angular.module('app.services').factory('ActivityModel',
           $.extend(this, new UserPetitionMixin())
         else if(this.dataType() == 'petition')
           $.extend(this, new PollPetitionMixin())
+        else if(this.dataType() == 'post')
+          $.extend(this, new PostMixin())
 
         if (this.get('entity').group_id) {
           var userGroup = groups.get(this.get('entity').group_id);

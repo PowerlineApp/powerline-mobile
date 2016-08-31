@@ -220,30 +220,24 @@ angular.module('app.controllers').directive('iActivity', function ($rootScope, q
     $scope.booster = $scope.activity.get('owner').type === 'group' ? 100 : $scope.activity.getQuorumCompletedPercent();
 
     $scope.upvote = function(){
-      var postID = $scope.activity.get('entity').id
       $scope.sending = true;
-      posts.upvote(postID).then(function(answer){
-        $scope.activity.setAnswer(answer);
+      $scope.activity.upvote().then(function(answer){
         $scope.sending = false;
         $scope.showToast('Post upvoted!');
       })
     }
 
     $scope.downvote = function(){
-      var postID = $scope.activity.get('entity').id
       $scope.sending = true;
-      posts.downvote(postID).then(function(answer){
-        $scope.activity.setAnswer(answer);
+      $scope.activity.downvote().then(function(answer){
         $scope.sending = false;
         $scope.showToast('Post downvoted!');
       })
     }
 
-    $scope.unvote = function(){
-      var postID = $scope.activity.get('entity').id
+    $scope.undoVote = function(){
       $scope.sending = true;
-      posts.unvote(postID).then(function(answer){
-        $scope.activity.unAnswer();
+      $scope.activity.undoVote.then(function(answer){
         $scope.sending = false;
         $scope.showToast('Post vote undo successful!');
       })
@@ -349,7 +343,7 @@ angular.module('app.controllers').directive('iActivity', function ($rootScope, q
         }
       };
 
-      // if($scope.activity.get('entity').id == 197)
+      // if($scope.activity.get('entity').id == 243)
       //     console.log(JSON.stringify($scope.activity))
       // else return
 
