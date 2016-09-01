@@ -5,10 +5,10 @@ angular.module('app.services').factory('leaderContentHelper', function($http, se
   // var h = angular.element(document.body).injector().get('leaderContentHelper')
   // h.createPoll()
 
-  service.createPollEvent = function(){
-    var data = {subject: 'test Poll no2 subject',
-      title: 'test Poll no2 title',
-      started_at: "2016-08-26 09:52:33", // t.strftime("%Y-%m-%d'%z'%H:%M:%S")
+  service.createPollEvent = function(subject, title){
+    var data = {subject: subject,
+      title: title,
+      started_at: "2016-09-01 09:52:33", // t.strftime("%Y-%m-%d'%z'%H:%M:%S")
       finished_at: "2016-09-10 09:52:33",
       //petition_title: 'Petition title',
       //petition_body: 'Petition body',
@@ -24,10 +24,10 @@ angular.module('app.services').factory('leaderContentHelper', function($http, se
     })    
   }
 
-  service.createPollPetition = function(){
+  service.createPollPetition = function(title, body){
     var data = {subject: 'I have no idea what is the difference between subject and petition body',
-      petition_title: 'this is Poll of subtype Petition',
-      petition_body: 'Petition body',
+      petition_title: title,
+      petition_body: body,
       type: 'petition'} 
       
     var payload = JSON.stringify(data)

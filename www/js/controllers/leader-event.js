@@ -7,8 +7,6 @@ angular.module('app.controllers')
       privacy: 0
     };
 
-    activity.setEntityRead({id: Number($stateParams.id), type: 'leader-event'});
-
     $scope.showSpinner();
     questions.load($stateParams.id).then(function (question) {
       $scope.hideSpinner();
