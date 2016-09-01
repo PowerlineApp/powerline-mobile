@@ -55,6 +55,8 @@ angular.module('app.controllers')
       if(window.plugins && window.plugins.calendar){
         window.plugins.calendar.createEventInteractively($scope.q.title, '', $scope.q.subject,
         $scope.q.started_at_date, $scope.q.finished_at_date, angular.noop, angular.noop);
+      } else {
+        alert('window.plugins.calendar not defined. If you are using browser this is expected behaviour, if you use smartphone, this is bug.')
       }
     };
   });
