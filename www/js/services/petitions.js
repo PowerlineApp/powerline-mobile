@@ -118,10 +118,10 @@ angular.module('app.services').factory('petitions',function ($q, session, server
     },
 
     subscribeToNotifications: function(petitionID){
-      return $http.put(serverConfig.url + '/api/v2/user/user-petitions/'+petitionID)      
+      return $http.put(serverConfig.url + '/api/v2/user/polls/'+petitionID)      
     },
     unsubscribeFromNotifications: function(petitionID){
-      return $http.delete(serverConfig.url + '/api/v2/user/user-petitions/'+petitionID)      
+      return $http.delete(serverConfig.url + '/api/v2/user/polls/'+petitionID)      
     }
   }
 

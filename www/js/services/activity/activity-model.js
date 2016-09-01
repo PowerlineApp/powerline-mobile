@@ -98,6 +98,26 @@ angular.module('app.services').factory('ActivityModel',
           that.set('answered', false)
         })
       }
+
+      this.userIsSubscribedToNotifications = function(){
+        return false // TODO
+      }
+
+      this.subscribeToNotifications = function(){
+        var petitionID = this.get('entity').id
+        var that = this
+        return petitions.subscribeToNotifications(petitionID).then(function (response) {
+          // TODO
+        })
+      }
+
+      this.unsubscribeFromNotifications = function(){
+        var petitionID = this.get('entity').id
+        var that = this
+        return petitions.subscribeToNotifications(petitionID).then(function (response) {
+          // TODO
+        })
+      }
     }
 
     function UserPetitionMixin() {
