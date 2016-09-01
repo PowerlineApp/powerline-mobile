@@ -7,15 +7,6 @@ angular.module('app.controllers').controller('getPetitionCtrl',function ($scope,
 
   $scope.data = {privacy: 0}
 
-  $scope.canSignOrUnsign = function(){
-    if($scope.petition){
-      var notOwner = !$scope.petition.ownedByCurrentUser()
-      var notExpired = !$scope.petition.expired()
-      return(notOwner && notExpired)
-    } else
-      return false
-  }
-
   $scope.sign = function(){
     $scope.petition.sign($scope.data.privacy)
   }

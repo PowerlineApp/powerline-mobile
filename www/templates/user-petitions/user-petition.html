@@ -47,14 +47,14 @@
         </textarea>
       </div>
 
-      <div ng-show="userPetition.expired()">
+      <div ng-show="userPetition.canSeeResults()">
         <div class="chart">
           <p class="info-message">Current  Results</p>
           <p>Votes for this petition: {{userPetition.signedForPetitionCount() + 1}} </p>
         </div>
       </div>
 
-      <section class="margin-h-10" >
+      <section class="margin-h-10" ng-show="userPetition.canBeSigned() || userPetition.canBeUnsigned()">
           <div style="float: left;width: 50%;padding-top: 12px;" class="margin-v-20">
               <div class="checkbox-privacy" ng-class="{checked: data.privacy}" ng-click="data.privacy = data.privacy ? 0 : 1" guide="privacy-option">
                   <i></i>
@@ -62,8 +62,8 @@
               </div>
           </div>
           <div style="float: left;width: 50%;" class="margin-v-20">
-              <button class="btn-large btn-primary" ng-click="sign()" ng-show="!userPetition.isSignedByMe() && !userPetition.expired() && !userPetition.ownedByCurrentUser()">Sign</button>
-              <button class="btn-large btn-primary" ng-click="unsign()" ng-show="userPetition.isSignedByMe()">Unsign</button>
+              <button class="btn-large btn-primary" ng-click="sign()" ng-show="userPetition.canBeSigned()">Sign</button>
+              <button class="btn-large btn-primary" ng-click="unsign()" ng-show="userPetition.canBeUnsigned()">Unsign</button>
           </div>
       </section>
 

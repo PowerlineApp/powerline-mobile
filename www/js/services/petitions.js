@@ -12,7 +12,6 @@ angular.module('app.services').factory('petitions',function ($q, session, server
       }
 
       this.votingOptions = data.options
-      this.votes_count = this.votingOptions[0].votes_count
 
       this.created_at_date = new Date(data.published_at)
       this.expired_at_date = new Date(this.created_at_date.getTime() + 86400000)
@@ -33,6 +32,10 @@ angular.module('app.services').factory('petitions',function ($q, session, server
       return(false)
     }
 
+    this.signedForPetitionCount = function(){
+      return(this.votingOptions[0].votes_count)
+    }
+
     this.updateBodyText = function(){
       var that = this
       var data = {body: this.body}
@@ -45,6 +48,18 @@ angular.module('app.services').factory('petitions',function ($q, session, server
 
     this.isSignedByMe = function(){
       return this.myAnswerID
+    }
+
+    this.canBeSigned = function(){
+      return !this.isSignedByMe() && !this.expired() && !this.ownedByCurrentUser()
+    }
+
+    this.canBeUnsigned = function(){
+      return this.isSignedByMe()
+    }
+
+    this.canSeeResults = function(){
+      return this.ownedByCurrentUser() || this.expired()
     }
 
     this.sign = function(privacy){

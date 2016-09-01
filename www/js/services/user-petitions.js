@@ -55,6 +55,18 @@ angular.module('app.services').factory('userPetitions',function ($q, session, se
       return(mySignature != null)
     }
 
+    this.canBeSigned = function(){
+      return !this.isSignedByMe() && !this.expired() && !this.ownedByCurrentUser()
+    }
+
+    this.canBeUnsigned = function(){
+      return this.isSignedByMe()
+    }
+
+    this.canSeeResults = function(){
+      return this.ownedByCurrentUser() || this.expired()
+    }
+
     this.sign = function(){
       // TODO: refresh appropriate activity
       return service.sign(this.id).then(this.reload.bind(this))
@@ -70,10 +82,6 @@ angular.module('app.services').factory('userPetitions',function ($q, session, se
       $http.get(serverConfig.url + '/api/v2/user-petitions/'+this.id).then(function (response) {
         that._load(response.data)
       });
-    }
-
-    this.getSignedResultInPercents = function(){
-      return 10
     }
   }
 

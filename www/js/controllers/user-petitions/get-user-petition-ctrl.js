@@ -45,7 +45,6 @@ angular.module('app.controllers').controller('getUserPetitionCtrl',function ($sc
   userPetitions.get($stateParams.id).then(function (userPetition) {
     $scope.hideSpinner();
     $scope.userPetition = userPetition;
-    $scope.signedResultInPercents = userPetition.getSignedResultInPercents()
     layout.focus($stateParams.focus);
   }, function(){
     $scope.hideSpinner();

@@ -7,7 +7,7 @@
       <div class="q-info">
         <div>
           <i class="icon-responses"></i> Responses <br>
-          <span ng-bind="petition.votes_count"></span>
+          <span ng-bind="petition.signedForPetitionCount()"></span>
         </div>
 
         <div>
@@ -34,26 +34,26 @@
       <div>
         <p ng-bind-html="petition.html_body" i-content-link></p>
       </div>
-      
-      <section class="margin-h-10" ng-show="canSignOrUnsign()">
-          <div style="float: left;width: 50%;padding-top: 12px;" class="margin-v-20">
+
+      <div ng-show="petition.canSeeResults()">
+        <div class="chart">
+          <p class="info-message">Current  Results</p>
+          <p>Votes for this petition: {{petition.signedForPetitionCount() + 1}} </p>
+        </div>
+      </div>
+
+      <section class="margin-h-10" ng-show="petition.canBeSigned() || petition.canBeUnsigned()">
+          <div  style="float: left;width: 50%;padding-top: 12px;" class="margin-v-20">
               <div class="checkbox-privacy" ng-class="{checked: data.privacy}" ng-click="data.privacy = data.privacy ? 0 : 1" guide="privacy-option">
                   <i></i>
                   {{ data.privacy ? 'Username hidden' : 'Username visible'  }}
               </div>
           </div>
           <div style="float: left;width: 50%;" class="margin-v-20">
-              <button class="btn-large btn-primary" ng-click="sign()" ng-show="!petition.isSignedByMe() && !petition.expired()">Sign</button>
-              <button class="btn-large btn-primary" ng-click="unsign()" ng-show="petition.isSignedByMe()">Unsign</button>
+              <button class="btn-large btn-primary" ng-click="sign()" ng-show="petition.canBeSigned()">Sign</button>
+              <button class="btn-large btn-primary" ng-click="unsign()" ng-show="petition.canBeUnsigned()">Unsign</button>
           </div>
       </section>
-
-      <div ng-show="petition.expired()">
-        <div class="chart">
-          <p class="info-message">Current  Results</p>
-          <p>Votes for this petition: {{petition.votes_count}} </p>
-        </div>
-      </div>
 
       <ng-include src="'templates/widget/share.html'"></ng-include>
     </section>
