@@ -262,19 +262,7 @@ angular.module('app.controllers').directive('iActivity', function ($rootScope, q
         $scope.sending = false;
         $scope.showToast('User petition unsigned.');
       });
-    };
-
-    $scope.subscribeToNotifications = function(){
-      $scope.activity.subscribeToNotifications().then(function (response) {
-        $scope.showToast('Subscribed to user petition notifications.');
-      })
-    }
-
-    $scope.unsubscribeFromNotifications = function(){
-      $scope.activity.unsubscribeFromNotifications().then(function (response) {
-        $scope.showToast('Unsubscribed to user petition notifications.');
-      })
-    }    
+    };    
   }
 
   function petitionCtrl($scope) {
@@ -343,7 +331,7 @@ angular.module('app.controllers').directive('iActivity', function ($rootScope, q
         }
       };
 
-      // if($scope.activity.get('entity').id == 243)
+      // if($scope.activity.get('entity').id == 245)
       //     console.log(JSON.stringify($scope.activity))
       // else return
 
@@ -398,6 +386,18 @@ angular.module('app.controllers').directive('iActivity', function ($rootScope, q
           return ['icon ion-person', 'icon ion-android-time calm']
         else
           return ['icon ion-person', 'icon ion-plus-circled calm']
+      }
+
+      $scope.subscribeToNotifications = function(){
+        $scope.activity.subscribeToNotifications().then(function (response) {
+          $scope.showToast('Subscribed to item notifications.');
+        })
+      }
+
+      $scope.unsubscribeFromNotifications = function(){
+        $scope.activity.unsubscribeFromNotifications().then(function (response) {
+          $scope.showToast('Unsubscribed from item notifications.');
+        })
       }
 
       var activityType = $scope.activity.dataType()

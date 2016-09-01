@@ -1,0 +1,8 @@
+    <div class="control notification">
+      <a ng-click="subscribeToNotifications()" ng-show="!activity.userIsSubscribedToNotifications()">
+        <i class="icon ion-android-notifications" style="font-size: 22px;"></i>
+      </a>
+      <a ng-click="unsubscribeFromNotifications()" ng-show="activity.userIsSubscribedToNotifications()">
+        <i class="icon ion-android-notifications active" style="font-size: 22px;"></i>
+      </a>
+    </div>

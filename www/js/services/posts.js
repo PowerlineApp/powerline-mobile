@@ -108,6 +108,13 @@ angular.module('app.services').factory('posts',function ($q, session, serverConf
 
     unvote: function(postID){
       return $http.delete(serverConfig.url + '/api/v2/posts/'+postID+'/vote')
+    },
+
+    subscribeToNotifications: function(postID){
+      return $http.put(serverConfig.url + '/api/v2/user/posts/'+postID)      
+    },
+    unsubscribeFromNotifications: function(postID){
+      return $http.delete(serverConfig.url + '/api/v2/user/posts/'+postID)      
     }
   }
 

@@ -44,6 +44,26 @@ angular.module('app.services').factory('ActivityModel',
           that.set('answers', [])
         })
       }
+
+      this.userIsSubscribedToNotifications = function(){
+        return this.get('post') && this.get('post').is_subscribed
+      }
+
+      this.subscribeToNotifications = function(){
+        var postID = this.get('entity').id
+        var that = this
+        return posts.subscribeToNotifications(postID).then(function (response) {
+          that.set('post', {is_subscribed: true})
+        })
+      }
+
+      this.unsubscribeFromNotifications = function(){
+        var postID = this.get('entity').id
+        var that = this
+        return posts.subscribeToNotifications(postID).then(function (response) {
+          that.set('post', {is_subscribed: false})
+        })
+      }
     }
 
     function PollPetitionMixin(){
