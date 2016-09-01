@@ -1,4 +1,4 @@
-angular.module('app.services').factory('userPetitions',function ($q, session, serverConfig, $http, $sce, iParse) {
+angular.module('app.services').factory('userPetitions',function ($q, session, serverConfig, $http, $sce, iParse, $rootScope) {
 
   var UserPetitionInstance = function(rawData){
     this._load = function(data){
@@ -68,13 +68,19 @@ angular.module('app.services').factory('userPetitions',function ($q, session, se
     }
 
     this.sign = function(){
-      // TODO: refresh appropriate activity
-      return service.sign(this.id).then(this.reload.bind(this))
+      var that = this
+      return service.sign(this.id).then(function(){
+        that.reload()
+        $rootScope.$emit('userPetition.signed', that.id);
+      })
     }
 
     this.unsign = function(){
-      // TODO: refresh appropriate activity
-      return service.unsign(this.id).then(this.reload.bind(this))
+      var that = this
+      return service.unsign(this.id).then(function(){
+        that.reload()
+        $rootScope.$emit('userPetition.unsigned', that.id);
+      })
     }
 
     this.reload = function(){

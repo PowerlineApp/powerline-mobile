@@ -1,5 +1,5 @@
 angular.module('app.services').factory('ActivityCollection',
-  function (JsCollection, ActivityModel, representatives, iStorage, $http, serverConfig, session) {
+  function (JsCollection, ActivityModel, representatives, iStorage, $http, serverConfig, session, $rootScope) {
     var activityCollectionTemplate = JsCollection.extend({
       setAnsweredMicroPetitions: function (answers) {
         var answerByPetition = {};
@@ -112,5 +112,23 @@ angular.module('app.services').factory('ActivityCollection',
       return p
     };
 
+    aCollection.getUserPetitionActivityByID = function(userPetitionID){
+      var activity = aCollection.models.find(function(activity){
+        return activity.isUserPetitionType() && activity.get('entity').id == userPetitionID
+      })
+      return activity
+    }
+
+    $rootScope.$on('userPetition.signed', function(event, userPetitionID) {
+      var activity = aCollection.getUserPetitionActivityByID(userPetitionID)
+      if(activity)
+        activity.markAsSigned()
+    })
+    $rootScope.$on('userPetition.unsigned', function(event, userPetitionID) {
+      var activity = aCollection.getUserPetitionActivityByID(userPetitionID)
+      if(activity)
+        activity.markAsUnsigned()
+    });
+    
     return aCollection
 })

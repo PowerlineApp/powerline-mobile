@@ -138,11 +138,19 @@ angular.module('app.services').factory('ActivityModel',
         return notExpired && notOwnedByMe && notSignedByMe
       }
 
+      this.markAsSigned = function(){
+        this.set('answers', ['whatever'])
+      }
+
+      this.markAsUnsigned = function(){
+        this.set('answers', [])
+      }
+
       this.sign = function(){
         var userPetitionID = this.get('entity').id
         var that = this
         return userPetitions.sign(userPetitionID).then(function(){
-          that.set('answers', ['whatever'])
+          that.markAsSigned()
         })
       }
 
@@ -154,7 +162,7 @@ angular.module('app.services').factory('ActivityModel',
         var userPetitionID = this.get('entity').id
         var that = this
         return userPetitions.unsign(userPetitionID).then(function(){
-          that.set('answers', [])
+          that.markAsUnsigned()
         })
       }
 
