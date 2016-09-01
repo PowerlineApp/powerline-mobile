@@ -237,7 +237,7 @@ angular.module('app.controllers').directive('iActivity', function ($rootScope, q
 
     $scope.undoVote = function(){
       $scope.sending = true;
-      $scope.activity.undoVote.then(function(answer){
+      $scope.activity.undoVote().then(function(answer){
         $scope.sending = false;
         $scope.showToast('Post vote undo successful!');
       })
