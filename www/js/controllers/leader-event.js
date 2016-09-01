@@ -52,7 +52,9 @@ angular.module('app.controllers')
     };
 
     $scope.addToCalendar = function () {
-      window.plugins.calendar.createEventInteractively($scope.q.title, '', $scope.q.subject,
+      if(window.plugins && window.plugins.calendar){
+        window.plugins.calendar.createEventInteractively($scope.q.title, '', $scope.q.subject,
         $scope.q.started_at_date, $scope.q.finished_at_date, angular.noop, angular.noop);
+      }
     };
   });

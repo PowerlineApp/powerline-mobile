@@ -117,13 +117,11 @@ angular.module('app.services').factory('questions',function (QuestionResource,
   }
 
   function answer(data) {
-    return $http({
-      method: 'POST',
-      url: serverConfig.url + '/api/poll/question/' + this.id + '/answer/add',
-      data: angular.element.param(data)
-    }).then(function(resp) {
-      return resp.data;
-    });
+    var payload = JSON.stringify(data)
+    var headers = {headers: {'Content-Type': 'application/json'}}
+    return $http.post(serverConfig.url + '/api/poll/question/' + this.id + '/answer/add', payload, headers).then(function(response){
+      return(response.data)
+    })
   }
 
   return service;
