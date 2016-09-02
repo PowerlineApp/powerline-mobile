@@ -17,11 +17,12 @@ angular.module('app.controllers').controller('getPostCtrl',function ($scope, top
     });
 
     confirmPopup.then(function(res) {
-      $scope.navigateTo = $rootScope.navigateTo;
       if(res){
-        $scope.post.delete()
-        // TODO show toast and reload activities
-        $scope.back();
+        $scope.post.delete().then(function(){
+          activity.youShouldRefreshActivities()
+          $scope.showToast('Post deleted.');
+          $scope.back();
+        })
       }
     });
   };

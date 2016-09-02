@@ -14,6 +14,7 @@ angular.module('app.services').factory('activity',
        *    - clearAndLoad
        */
       load: function (loadType) {
+        this._doRefresh = false
         loadType = loadType || 'all';
 
         var originalSize = ActivityCollection.size();
@@ -84,6 +85,14 @@ angular.module('app.services').factory('activity',
       
       getDefaultLimit: function(){
         return defaultLimit;
+      },
+
+      youShouldRefreshActivities: function(){
+        this._doRefresh = true
+      },
+
+      shouldRefreshActivities: function(){
+        return this._doRefresh == true
       }
     };
   });

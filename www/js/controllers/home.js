@@ -147,7 +147,7 @@ angular.module('app.controllers').controller('home', function ($scope, $timeout,
       profile.load();
     }
 
-    if (!homeCtrlParams.loaded) {
+    if (!homeCtrlParams.loaded || activity.shouldRefreshActivities()) {
       if (activityCollection.size() === 0) {
         $scope.isLoadMore = true;
       } else {
