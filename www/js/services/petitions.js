@@ -1,4 +1,4 @@
-angular.module('app.services').factory('petitions',function ($q, session, serverConfig, $http, $sce, iParse) {
+angular.module('app.services').factory('petitions',function ($q, session, serverConfig, $http, $sce, iParse, $rootScope) {
 
   var PetitionInstance = function(rawData){
     this._load = function(data){
@@ -63,18 +63,24 @@ angular.module('app.services').factory('petitions',function ($q, session, server
     }
 
     this.sign = function(privacy){
-      // TODO: refresh appropriate activity
       var voteOptionID = this.votingOptions[0].id
       var data = {privacy: privacy, option_id : voteOptionID, id: this.id, comment: ''}
       var payload = JSON.stringify(data)
       var headers = {headers: {'Content-Type': 'application/json'}}
-      return $http.post(serverConfig.url + '/api/poll/question/' + this.id + '/answer/add', payload, headers).then(this.reload.bind(this))
+      var that = this
+      return $http.post(serverConfig.url + '/api/poll/question/' + this.id + '/answer/add', payload, headers).then(function(){
+        that.reload()
+        $rootScope.$emit('petition.signed', that.id);
+      })
     }
 
     this.unsign = function(){
-      // TODO: refresh appropriate activity
        var voteOptionID = this.votingOptions[0].id
-       return $http.delete(serverConfig.url + '/api/petition/' + this.id + '/answers/' + voteOptionID).then(this.reload.bind(this))
+       var that = this
+       return $http.delete(serverConfig.url + '/api/petition/' + this.id + '/answers/' + voteOptionID).then(function(){
+        that.reload()
+        $rootScope.$emit('petition.unsigned', that.id);
+      })
     }
 
     this.reload = function(){

@@ -119,6 +119,13 @@ angular.module('app.services').factory('ActivityCollection',
       return activity
     }
 
+    aCollection.getPetitionActivityByID = function(petitionID){
+      var activity = aCollection.models.find(function(activity){
+        return activity.isPollPetitionType() && activity.get('entity').id == petitionID
+      })
+      return activity
+    }
+
     $rootScope.$on('userPetition.signed', function(event, userPetitionID) {
       var activity = aCollection.getUserPetitionActivityByID(userPetitionID)
       if(activity)
@@ -126,6 +133,16 @@ angular.module('app.services').factory('ActivityCollection',
     })
     $rootScope.$on('userPetition.unsigned', function(event, userPetitionID) {
       var activity = aCollection.getUserPetitionActivityByID(userPetitionID)
+      if(activity)
+        activity.markAsUnsigned()
+    });
+    $rootScope.$on('petition.signed', function(event, petitionID) {
+      var activity = aCollection.getPetitionActivityByID(petitionID)
+      if(activity)
+        activity.markAsSigned()
+    })
+    $rootScope.$on('petition.unsigned', function(event, petitionID) {
+      var activity = aCollection.getPetitionActivityByID(petitionID)
       if(activity)
         activity.markAsUnsigned()
     });

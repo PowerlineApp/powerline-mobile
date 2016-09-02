@@ -83,11 +83,19 @@ angular.module('app.services').factory('ActivityModel',
         return this.get('answered')
       }
 
+      this.markAsSigned = function(){
+        this.set('answered', true)
+      }
+
+      this.markAsUnsigned = function(){
+        this.set('answered', false)
+      }
+
       this.sign = function(){
         var petitionID = this.get('entity').id
         var that = this
         return petitions.sign(petitionID).then(function(){
-          that.set('answered', true)
+          that.markAsSigned()
         })
       }
 
@@ -95,19 +103,19 @@ angular.module('app.services').factory('ActivityModel',
         var petitionID = this.get('entity').id
         var that = this
         return petitions.unsign(petitionID).then(function(){
-          that.set('answered', false)
+          that.markAsUnsigned()
         })
       }
 
       this.userIsSubscribedToNotifications = function(){
-        return false // TODO
+        return false // waiting for #202
       }
 
       this.subscribeToNotifications = function(){
         var petitionID = this.get('entity').id
         var that = this
         return petitions.subscribeToNotifications(petitionID).then(function (response) {
-          // TODO
+          // TODO waiting for #202
         })
       }
 
@@ -115,7 +123,7 @@ angular.module('app.services').factory('ActivityModel',
         var petitionID = this.get('entity').id
         var that = this
         return petitions.subscribeToNotifications(petitionID).then(function (response) {
-          // TODO
+          // TODO waiting for #202
         })
       }
     }
