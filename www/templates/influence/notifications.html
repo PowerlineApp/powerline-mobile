@@ -23,11 +23,11 @@
       <tabs style="background: #fff;border-right: solid 1px #dae3e6;" ng-style="{'min-height': (minContentHeight - 130) + 'px'}">
         <tab class="sa-items">
           <sa-item ng-repeat="item in tabYou.get('activities')"></sa-item>
-          <p ng-hide="tabYou.get('activities').length || loading" class="no-results">No results</p>
+          <p ng-hide="tabYou.get('activities').length || loading" class="no-results">Seems quiet in here. Are you following anyone?</p>
         </tab>
         <tab class="sa-items">
           <sa-item ng-repeat="item in tabFollowing.get('activities')"></sa-item>
-          <p ng-hide="tabFollowing.get('activities').length || loading" class="no-results">No results</p>
+          <p ng-hide="tabFollowing.get('activities').length || loading" class="no-results">Seems quiet in here. Are you following anyone?</p>
         </tab>
       </tabs>
     </tab-panel>

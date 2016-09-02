@@ -71,9 +71,8 @@
       pulling-text="Pull to refresh..."
       on-refresh="pullToRefresh()">
     </ion-refresher>
-    <p class="info-message" ng-show="!loading && !activities.length && !filter.selectedGroup">
-      Hmm - Your newsfeed is empty! Looks like a great opportunity to take a stand, start a discussion,
-      or improve your community by creating a post or petition. Use the button in the upper-right corner of the screen!
+    <p class="info-message" ng-show="!loading && !activities.length">
+      The world belongs to those who speak up! Be the first to create a post!
     </p>
     <section class="activity-list-wrap" ng-include=" 'templates/home/activities.html'"></section>
     

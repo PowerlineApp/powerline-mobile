@@ -60,7 +60,10 @@
                       shareImage = announcement.share_picture"
           ng-include="'templates/widget/share.html'" class="margin-8"></div>
       </li>
-    </ul>
 
+    </ul>
+    <tab class="sa-items" ng-show="announcements.length == 0">
+      <p class="no-results" style="padding-top: 20px">The only announcement right now is that there are no announcements.</p>
+    </tab>
   </ion-content>
 </ion-view>
