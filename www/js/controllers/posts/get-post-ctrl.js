@@ -7,7 +7,10 @@ angular.module('app.controllers').controller('getPostCtrl',function ($scope, top
   $scope.onEditBtnClicked = function(){
     $scope.inEditMode = !$scope.inEditMode;
     if(!$scope.inEditMode)
-      $scope.post.updateBodyText()
+      $scope.post.updateBodyText().then(function(){
+        activity.youShouldRefreshActivities()
+        $scope.showToast('Post description updated.');       
+      })
   };
 
   $scope.showDeleteConfirm = function() {

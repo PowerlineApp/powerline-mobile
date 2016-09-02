@@ -31,7 +31,6 @@ angular.module('app.controllers').controller('createUserPetitionCtrl',function (
 
       userPetitions.create(groupID, title, body).then(function(){
         homeCtrlParams.loaded = false;
-        // TODO: refresh activities because user petition was successfully create and this new activity should appear
         $scope.hideSpinner();
         $rootScope.showToast('User petition successfully created!');
         $rootScope.back();

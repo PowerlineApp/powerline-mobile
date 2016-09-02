@@ -1,5 +1,5 @@
 angular.module('app.controllers').controller('getUserPetitionCtrl',function ($scope,  $stateParams,
-                                   layout, $ionicPopup, $rootScope, userPetitions) {
+                                   layout, $ionicPopup, $rootScope, userPetitions, activity) {
                                    
   if (!$scope.userPetition) {
     $scope.showSpinner();
@@ -21,7 +21,10 @@ angular.module('app.controllers').controller('getUserPetitionCtrl',function ($sc
   $scope.onEditBtnClicked = function(){
     $scope.inEditMode = !$scope.inEditMode;
     if(!$scope.inEditMode)
-      $scope.userPetition.updateBodyText()
+      $scope.userPetition.updateBodyText().then(function(){
+          activity.youShouldRefreshActivities()
+          $scope.showToast('User petition description updated.');        
+      })
   }
 
   $scope.deleteClicked = false;
@@ -34,9 +37,11 @@ angular.module('app.controllers').controller('getUserPetitionCtrl',function ($sc
     confirmPopup.then(function(res) {
       $scope.navigateTo = $rootScope.navigateTo;
       if(res){
-        $scope.userPetition.delete()
-        // TODO show toast and reload activities
-        $scope.back();
+        $scope.userPetition.delete().then(function(){
+          activity.youShouldRefreshActivities()
+          $scope.showToast('User petition deleted.');
+          $scope.back();
+        })
       }
     });
   };
