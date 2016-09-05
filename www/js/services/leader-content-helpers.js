@@ -5,6 +5,19 @@ angular.module('app.services').factory('leaderContentHelper', function($http, se
   // var h = angular.element(document.body).injector().get('leaderContentHelper')
   // h.createPoll()
 
+  service.createAndPublishPollPetition = function(subject, title, answer1, answer2){
+    service.createPollPetition(subject, title).then(function(response){
+      var pollID = response.data.id
+      service.addPollAnswer(pollID, answer1).then(function(){
+        service.addPollAnswer(pollID, answer2).then(function(){
+          service.publishPoll(pollID).then(function(){
+            console.log('poll:petition published, ID: '+pollID)
+          })
+        })        
+      })
+    })
+  }
+
   service.createPollEvent = function(subject, title){
     var data = {subject: subject,
       title: title,
@@ -35,9 +48,7 @@ angular.module('app.services').factory('leaderContentHelper', function($http, se
 
     var groupID = 285
 
-    $http.post(serverConfig.url + '/api/v2/groups/'+groupID+'/polls', payload, headers).then(function(response){
-      console.log(response)
-    })    
+    return $http.post(serverConfig.url + '/api/v2/groups/'+groupID+'/polls', payload, headers)
   }
 
   // created poll with ID = 194 in group 285 as user Peter10
@@ -47,9 +58,7 @@ angular.module('app.services').factory('leaderContentHelper', function($http, se
     var payload = JSON.stringify(data)
     var headers = {headers: {'Content-Type': 'application/json'}}
 
-    $http.post(serverConfig.url + '/api/v2/polls/'+pollID+'/options', payload, headers).then(function(response){
-      console.log(response)
-    })  
+    return $http.post(serverConfig.url + '/api/v2/polls/'+pollID+'/options', payload, headers)
   }
   // addPollAnswer('answer YES') -> ID: 305
   // addPollAnswer('answer NO') -> ID: 306
@@ -62,9 +71,7 @@ angular.module('app.services').factory('leaderContentHelper', function($http, se
       
     var payload = JSON.stringify(data)
     var headers = {headers: {'Content-Type': 'application/json'}}
-    $http.patch(serverConfig.url + '/api/v2/polls/'+pollID, payload, headers).then(function(response){
-      console.log(response)
-    })  
+    return $http.patch(serverConfig.url + '/api/v2/polls/'+pollID, payload, headers) 
   }
 
 

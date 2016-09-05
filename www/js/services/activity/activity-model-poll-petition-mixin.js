@@ -1,4 +1,4 @@
-function PollPetitionMixin(){
+function PollPetitionMixin(petitions){
   this.canSign = function(){
     var notExpired = !this.isExpired()
     var notOwnedByMe = !this.isOwn()
@@ -40,14 +40,16 @@ function PollPetitionMixin(){
   }
 
   this.userIsSubscribedToNotifications = function(){
-    return false // waiting for #202
+    return this.get('poll').is_subscribed
   }
 
   this.subscribeToNotifications = function(){
     var petitionID = this.get('entity').id
     var that = this
     return petitions.subscribeToNotifications(petitionID).then(function (response) {
-      // TODO waiting for #202
+      var pollInfo = that.get('poll')
+      pollInfo.is_subscribed = true
+      that.set('poll', pollInfo)
     })
   }
 
@@ -55,7 +57,9 @@ function PollPetitionMixin(){
     var petitionID = this.get('entity').id
     var that = this
     return petitions.subscribeToNotifications(petitionID).then(function (response) {
-      // TODO waiting for #202
+      var pollInfo = that.get('poll')
+      pollInfo.is_subscribed = false
+      that.set('poll', pollInfo)
     })
   }
 }
