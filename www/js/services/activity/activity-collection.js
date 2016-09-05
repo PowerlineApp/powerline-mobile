@@ -106,6 +106,9 @@ angular.module('app.services').factory('ActivityCollection',
             activity.prepare()
           })
           resolve(that)
+        }, function(error){
+          console.log('failed to fetch or process activities')
+          console.log(error)
         });
       })
 

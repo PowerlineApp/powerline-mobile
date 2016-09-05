@@ -49,6 +49,8 @@ angular.module('app.services').factory('ActivityModel',
           $.extend(this, new UserPetitionMixin())
         else if(this.dataType() == 'petition')
           $.extend(this, new PollPetitionMixin(petitions))
+        else if(this.dataType() == 'leader-event')
+          $.extend(this, new PollEventMixin(serverConfig))
         else if(this.dataType() == 'post')
           $.extend(this, new PostMixin())
 
