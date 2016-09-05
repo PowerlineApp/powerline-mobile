@@ -104,6 +104,8 @@ angular.module('app.services').factory('petitions',function ($q, session, server
 
     sign: function(petitionID){
       var d = $q.defer();
+      // see https://github.com/PowerlineApp/powerline-mobile/issues/195#issuecomment-243477778
+      // for details why we make two http request in sign/unsign
       this.get(petitionID).then(function(petition){
         var privacy = 0
         petition.sign(privacy).then(function(){
