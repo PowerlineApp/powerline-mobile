@@ -28,7 +28,7 @@
     <ng-include src="'templates/home/activities/_link-preview-metadata.html'" ng-show="activity.hasLinkPreviewMetadata()">   
   </div>
   <div class="item-footer">
-    <div class="control"><a ng-click="navigateToActivity(activity)">RSVP</a></div>
+    <div class="control" ng-show="!activity.isOwn()"><a ng-click="navigateToActivity(activity)">RSVP</a></div>
     <div class="control"><a ng-click="navigateToActivity(activity, 'add-comment')" class="activity-control reply"></a></div>
     <ng-include src="'templates/home/activities/_follow.html'" ng-show="showFollow"></ng-include>
     <ng-include src="'templates/home/activities/_subscribe_to_notifications.html'"></ng-include>

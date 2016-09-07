@@ -101,10 +101,7 @@ angular.module('app.services').factory('ActivityCollection',
       var page = parseInt((offset / 20) + 1)
       var p = new Promise(function(resolve, reject){
         $http.get(serverConfig.url + '/api/v2/activities?page='+page).then(function (response) {
-          var activities = that.add(response.data.payload);
-          activities.forEach(function(activity){
-            activity.prepare()
-          })
+          that.add(response.data.payload)
           resolve(that)
         }, function(error){
           console.log('failed to fetch or process activities')

@@ -22,7 +22,8 @@ angular.module('app.services').factory('ActivityModel',
         }
       },
       isOwn: function () {
-        return this.get('owner').type === 'user' && this.get('owner').id === session.user_id;
+        // this.getCreator()  may be null for leader items created before 2016-09-07
+        return this.getCreator() && this.getCreator().id === session.user_id;
       },
       isAnswered: function(){
         return this.get('answers') && this.get('answers').length > 0
