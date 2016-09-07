@@ -1,4 +1,4 @@
-angular.module('app.services').factory('discussion',function (serverConfig, Comment, $http, posts) {
+angular.module('app.services').factory('discussion',function (serverConfig, Comment, $http, posts, userPetitions) {
 
   var statusByAction = {
     'up': 1,
@@ -59,6 +59,8 @@ angular.module('app.services').factory('discussion',function (serverConfig, Comm
       var getCommentsRequest;
       if(entity == 'posts')
         getCommentsRequest = posts.getComments(id)
+      else if(entity == 'user-petitions')
+        getCommentsRequest = userPetitions.getComments(id)
       else
         getCommentsRequest = $http.get(getUrl(entity, id)).then(function(response){
           return response.data
@@ -74,6 +76,8 @@ angular.module('app.services').factory('discussion',function (serverConfig, Comm
     createComment: function (entity, id, data) {
       if(entity == 'posts')
         return posts.addComment(id, data.parent_comment, data.comment_body)
+      else if(entity == 'user-petitions')
+        return userPetitions.addComment(id, data.parent_comment, data.comment_body)
       else
         return $http.post(getUrl(entity, id), data).then(function (response) {
           return response.data;
@@ -94,6 +98,8 @@ angular.module('app.services').factory('discussion',function (serverConfig, Comm
     update: function(entity, id, comment){
       if(entity == 'posts')
         return posts.updateComment(comment.id, comment.comment_body)
+      else if(entity == 'user-petitions')
+        return userPetitions.updateComment(comment.id, comment.comment_body)
       else
         return $http.put(serverConfig.url + '/api/' + entity + '/' + id + '/comments/' + comment.id, {comment_body: comment.comment_body});
     },
@@ -101,6 +107,8 @@ angular.module('app.services').factory('discussion',function (serverConfig, Comm
     delete: function(entity, id, comment_id){
       if(entity == 'posts')
         return posts.deleteComment(comment_id)
+      else if(entity == 'user-petitions')
+        return userPetitions.deleteComment(comment_id)
       else
         return $http.delete(serverConfig.url + '/api/' + entity + '/' + id + '/comments/' + comment_id);
     }

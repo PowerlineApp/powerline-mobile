@@ -124,6 +124,33 @@ angular.module('app.services').factory('userPetitions',function ($q, session, se
     },
     unsubscribeFromNotifications: function(userPetitionID){
       return $http.delete(serverConfig.url + '/api/v2/user/user-petitions/'+userPetitionID)      
+    },
+
+    getComments: function(userPetitionID){
+      return $http.get(serverConfig.url + '/api/v2/user-petitions/'+userPetitionID+'/comments').then(function(response){
+        return response.data.payload
+      })
+    },
+
+    addComment: function(userPetitionID, parentCommentID, commentText){
+      var payload = JSON.stringify({
+        comment_body:commentText,
+        parent_comment: parentCommentID
+      })
+      var headers = {headers: {'Content-Type': 'application/json'}}
+      return $http.post(serverConfig.url + '/api/v2/user-petitions/'+userPetitionID+'/comments', payload, headers)
+    },
+
+    deleteComment: function(commentID){
+      return $http.delete(serverConfig.url + '/api/v2/user-petition-comments/'+commentID) 
+    },
+
+    updateComment: function(commentID, commentText){
+      var payload = JSON.stringify({
+        comment_body:commentText,
+      })
+      var headers = {headers: {'Content-Type': 'application/json'}}
+      return $http.put(serverConfig.url + '/api/v2/user-petition-comments/'+commentID, payload, headers)
     }
   }
 
