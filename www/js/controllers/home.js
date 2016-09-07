@@ -348,10 +348,14 @@ angular.module('app.controllers').directive('iActivity', function ($rootScope, q
       $scope.comments_count = ($scope.activity.get('comments_count') || 0);
       $scope.isDefaultAvatar = $rootScope.isDefaultAvatar($scope.avatar_file_path);
 
-      var activityOwnerID = $scope.activity.get('owner').id
-      var activityOwnerFollow = follows.getOrCreateUser(activityOwnerID);
+      var activityOwnerID = null, activityOwnerFollow = null;
+      
+      if($scope.activity.getCreator()){
+        activityOwnerID = $scope.activity.getCreator().id
+        activityOwnerFollow = follows.getOrCreateUser(activityOwnerID);
+      }
 
-      $scope.showFollow = follows.loaded && activityOwnerID != session.user_id
+      $scope.showFollow = follows.loaded && !$scope.activity.isOwn()
       $scope.followClicked = function(){
         if(activityOwnerFollow && activityOwnerFollow.isFollowedByCurrentUser() && activityOwnerFollow.isApproved())
           $scope.showToast('You are following this user');
