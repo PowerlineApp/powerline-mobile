@@ -12,9 +12,8 @@ angular.module('app.services').factory('petitions',function ($q, session, server
       }
 
       this.votingOptions = data.options
-
       this.created_at_date = new Date(data.published_at)
-      this.expired_at_date = new Date(this.created_at_date.getTime() + 86400000)
+      this.expired_at_date = new Date(data.expire_at)
       this.title = data.petition_title
       this.id = data.id
       this.myAnswerID = null
