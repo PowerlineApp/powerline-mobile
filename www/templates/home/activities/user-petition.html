@@ -2,16 +2,15 @@
 
   <figure ng-click="navigateTo('owner-profile', activity.get('owner'));$event.stopPropagation();">
     <img bo-show="avatar_file_path" bo-src="avatar_file_path" ng-if="!isDefaultAvatar">
-    <ng-letter-avatar data="{{(full_name| trim) || (official_title| trim)}}" ng-if="isDefaultAvatar"></ng-letter-avatar>
+    <ng-letter-avatar data="{{(activity.creatorName()| trim)}}" ng-if="isDefaultAvatar"></ng-letter-avatar>
     <span ng-show="activity.isInPriorityZone()"></span>
   </figure>
 
   <div class="item-title">
     <p class="first-line">
       <i bo-class="iconClass"></i>
-      <strong bo-bind="full_name" ng-click="navigateTo('owner-profile', activity.get('owner'));$event.stopPropagation();"></strong>
-      <strong bo-bind="official_title"></strong>
-      <span ng-if="owner_info_1" ng-bind="owner_info_1"></span>
+      <strong bo-bind="activity.creatorName()" ng-click="navigateTo('owner-profile', activity.getCreator());$event.stopPropagation();"></strong>
+      <span ng-bind="activity.groupName()"></span>
     </p>
     <p ng-class="{unanswered: !activity.isSignedbyMe()}" bo-if="title" bo-bind="title"></p>
     <i class="time"><time>{{ sent_at_elapsed }}</time></i>

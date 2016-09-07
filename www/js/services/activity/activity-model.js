@@ -46,7 +46,7 @@ angular.module('app.services').factory('ActivityModel',
 
       prepare: function () {
         if(this.dataType() == 'user-petition')
-          $.extend(this, new UserPetitionMixin(userPetitions))
+          $.extend(this, new UserPetitionMixin(userPetitions, groups))
         else if(this.dataType() == 'petition')
           $.extend(this, new PollPetitionMixin(petitions))
         else if(this.dataType() == 'leader-event')
@@ -54,12 +54,7 @@ angular.module('app.services').factory('ActivityModel',
         else if(this.dataType() == 'question')
           $.extend(this, new PollOtherMixin(serverConfig, $http))
         else if(this.dataType() == 'post')
-          $.extend(this, new PostMixin(posts))
-
-        if (this.get('entity').group_id) {
-          var userGroup = groups.get(this.get('entity').group_id);
-          this.set('owner_info_1', userGroup ? userGroup.official_title : null);
-        }
+          $.extend(this, new PostMixin(posts, groups))
       },
       setRead: function () {
         if (this.isUnread()) {

@@ -3,7 +3,7 @@ angular.module('app.services').factory('leaderContentHelper', function($http, se
 
   // usage in console:
   // var h = angular.element(document.body).injector().get('leaderContentHelper')
-  // h.createPoll()
+  // h.createAndPublishPollPetition('title', 'bodytext', 'a1', 'a2')
 
   service.createAndPublishPollPetition = function(subject, title, answer1, answer2){
     service.createPollPetition(subject, title).then(function(response){
@@ -18,11 +18,24 @@ angular.module('app.services').factory('leaderContentHelper', function($http, se
     })
   }
 
+  service.createAndPublishPollEvent = function(subject, title, answer1, answer2){
+    service.createPollEvent(subject, title).then(function(response){
+      var pollID = response.data.id
+      service.addPollAnswer(pollID, answer1).then(function(){
+        service.addPollAnswer(pollID, answer2).then(function(){
+          service.publishPoll(pollID).then(function(){
+            console.log('poll:event published, ID: '+pollID)
+          })
+        })        
+      })
+    })
+  }
+
   service.createPollEvent = function(subject, title){
     var data = {subject: subject,
       title: title,
-      started_at: "2016-09-01 09:52:33", // t.strftime("%Y-%m-%d'%z'%H:%M:%S")
-      finished_at: "2016-09-10 09:52:33",
+      started_at: "2016-09-07 09:52:33", // t.strftime("%Y-%m-%d'%z'%H:%M:%S")
+      finished_at: "2016-09-20 09:52:33",
       //petition_title: 'Petition title',
       //petition_body: 'Petition body',
       type: 'event'} 
@@ -32,9 +45,7 @@ angular.module('app.services').factory('leaderContentHelper', function($http, se
 
     var groupID = 285
 
-    $http.post(serverConfig.url + '/api/v2/groups/'+groupID+'/polls', payload, headers).then(function(response){
-      console.log(response)
-    })    
+    return $http.post(serverConfig.url + '/api/v2/groups/'+groupID+'/polls', payload, headers)   
   }
 
   service.createPollPetition = function(title, body){

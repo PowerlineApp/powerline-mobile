@@ -1,4 +1,4 @@
-function UserPetitionMixin(userPetitions) {
+function UserPetitionMixin(userPetitions, groups) {
   this.getIcon = function () {
     return 'petition'
   }
@@ -62,5 +62,19 @@ function UserPetitionMixin(userPetitions) {
     return userPetitions.subscribeToNotifications(userPetitionID).then(function (response) {
       that.set('petition', {is_subscribed: false})
     })
+  }
+
+  this.creatorName = function(){
+    var name = this.get('owner').first_name + ' ' + this.get('owner').last_name
+    return name
+  }
+
+  this.groupName = function(){
+    var userGroup = groups.get(this.get('entity').group_id);
+    return userGroup.official_title
+  }
+
+  this.getCreator = function(){
+    return this.get('owner')
   }
 }

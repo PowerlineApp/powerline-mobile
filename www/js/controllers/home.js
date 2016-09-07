@@ -331,7 +331,7 @@ angular.module('app.controllers').directive('iActivity', function ($rootScope, q
         }
       };
 
-      // if($scope.activity.get('entity').id == 254)
+      // if($scope.activity.get('entity').id == 208)
       //     console.log(JSON.stringify($scope.activity))
       // else return
 
@@ -342,9 +342,6 @@ angular.module('app.controllers').directive('iActivity', function ($rootScope, q
       $scope.description = iParse.wrapHashTags(description_raw)
       $scope.avatar_file_path = $scope.activity.get('owner').avatar_file_path;
       $scope.iconClass = $scope.activity.getIcon();
-      $scope.official_title = $scope.activity.get('owner').official_title;
-      $scope.full_name = [$scope.activity.get('owner').first_name, $scope.activity.get('owner').last_name].join(' ');
-      $scope.owner_info_1 = $scope.activity.get('owner_info_1');
       $scope.sent_at_elapsed = elapsedFilter($scope.activity.get('sent_at'));
       $scope.responses_count = $scope.activity.get('responses_count');
       $scope.comments_count = ($scope.activity.get('comments_count') || 0);

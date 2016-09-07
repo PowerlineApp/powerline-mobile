@@ -1,4 +1,4 @@
-function PostMixin(posts){
+function PostMixin(posts, groups){
   this.isAnswered = function(){
     return(this.get('answers') && this.get('answers').length > 0)
   }
@@ -60,5 +60,19 @@ function PostMixin(posts){
     return posts.subscribeToNotifications(postID).then(function (response) {
       that.set('post', {is_subscribed: false})
     })
+  }
+
+  this.creatorName = function(){
+    var name = this.get('owner').first_name + ' ' + this.get('owner').last_name
+    return name
+  }
+
+  this.groupName = function(){
+    var userGroup = groups.get(this.get('entity').group_id);
+    return userGroup.official_title
+  }
+
+  this.getCreator = function(){
+    return this.get('owner')
   }
 }

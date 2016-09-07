@@ -22,4 +22,19 @@ function PollOtherMixin(serverConfig, $http){
   this.userIsSubscribedToNotifications = function(){
     return this.get('poll').is_subscribed
   }
+
+  this.creatorName = function(){
+    if(this.get('user'))
+      return this.get('user').official_title
+    else
+      return this.groupName()
+  }
+
+  this.groupName = function(){
+    return this.get('owner').official_title
+  }
+
+  this.getCreator = function(){
+    return this.get('user')
+  }
 }
