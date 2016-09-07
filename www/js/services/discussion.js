@@ -1,4 +1,4 @@
-angular.module('app.services').factory('discussion',function (serverConfig, Comment, $http) {
+angular.module('app.services').factory('discussion',function (serverConfig, Comment, $http, posts) {
 
   var statusByAction = {
     'up': 1,
@@ -51,29 +51,33 @@ angular.module('app.services').factory('discussion',function (serverConfig, Comm
   }
 
   function getUrl(entity, id) {
-    return serverConfig.url + '/api/' + entity + '/' + id + '/comments/';
+      return serverConfig.url + '/api/' + entity + '/' + id + '/comments/';
   }
 
   return {
     loadTree: function (entity, id) {
+      var getCommentsRequest;
+      if(entity == 'posts')
+        getCommentsRequest = posts.getComments(id)
+      else
+        getCommentsRequest = $http.get(getUrl(entity, id)).then(function(response){
+          return response.data
+        })
 
-      return $http.get(getUrl(entity, id)).then(function (response) {
-        return buildTree(_(response.data).map(function (item) {
+      return getCommentsRequest.then(function (comments) {
+        return buildTree(_(comments).map(function (item) {
           return new Comment(item);
         }));
       });
     },
 
-    loadRoot: function(entity, id) {
-      return $http.get(getUrl(entity, id) + '?root').then(function (response) {
-        return new Comment(response.data);
-      });
-    },
-
     createComment: function (entity, id, data) {
-      return $http.post(getUrl(entity, id), data).then(function (response) {
-        return response.data;
-      });
+      if(entity == 'posts')
+        return posts.addComment(id, data.parent_comment, data.comment_body)
+      else
+        return $http.post(getUrl(entity, id), data).then(function (response) {
+          return response.data;
+        });
     },
 
     rate: function (comment, action) {
@@ -88,11 +92,17 @@ angular.module('app.services').factory('discussion',function (serverConfig, Comm
     },
 
     update: function(entity, id, comment){
-      return $http.put(serverConfig.url + '/api/' + entity + '/' + id + '/comments/' + comment.id, {comment_body: comment.comment_body});
+      if(entity == 'posts')
+        return posts.updateComment(comment.id, comment.comment_body)
+      else
+        return $http.put(serverConfig.url + '/api/' + entity + '/' + id + '/comments/' + comment.id, {comment_body: comment.comment_body});
     },
 
     delete: function(entity, id, comment_id){
-      return $http.delete(serverConfig.url + '/api/' + entity + '/' + id + '/comments/' + comment_id);
+      if(entity == 'posts')
+        return posts.deleteComment(comment_id)
+      else
+        return $http.delete(serverConfig.url + '/api/' + entity + '/' + id + '/comments/' + comment_id);
     }
   };
 }).factory('Comment', function () {

@@ -115,6 +115,33 @@ angular.module('app.services').factory('posts',function ($q, session, serverConf
     },
     unsubscribeFromNotifications: function(postID){
       return $http.delete(serverConfig.url + '/api/v2/user/posts/'+postID)      
+    },
+
+    getComments: function(postID){
+      return $http.get(serverConfig.url + '/api/v2/posts/'+postID+'/comments').then(function(response){
+        return response.data.payload
+      })
+    },
+
+    addComment: function(postID, parentCommentID, commentText){
+      var payload = JSON.stringify({
+        comment_body:commentText,
+        parent_comment: parentCommentID
+      })
+      var headers = {headers: {'Content-Type': 'application/json'}}
+      return $http.post(serverConfig.url + '/api/v2/posts/'+postID+'/comments', payload, headers)
+    },
+
+    deleteComment: function(commentID){
+      return $http.delete(serverConfig.url + '/api/v2/post-comments/'+commentID) 
+    },
+
+    updateComment: function(commentID, commentText){
+      var payload = JSON.stringify({
+        comment_body:commentText,
+      })
+      var headers = {headers: {'Content-Type': 'application/json'}}
+      return $http.put(serverConfig.url + '/api/v2/post-comments/'+commentID, payload, headers)
     }
   }
 
