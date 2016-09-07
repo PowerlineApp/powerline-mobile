@@ -36,7 +36,6 @@ angular.module('app.services').factory('posts',function ($q, session, serverConf
       this.expired_at_date = new Date(data.expired_at);
       this.title = data.title
       this.id = data.id
-      this.answers = data.answers
     }
 
     this._load(rawData)
@@ -46,7 +45,7 @@ angular.module('app.services').factory('posts',function ($q, session, serverConf
     }
 
     this.getMyAnswerType = function(){
-      var myAnswer = this.answers.find(function(answers){
+      var myAnswer = this.votes.find(function(answers){
         return answers.user.id == session.user_id
       })
 
