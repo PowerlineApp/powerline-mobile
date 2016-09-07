@@ -17,6 +17,21 @@ angular.module('app.services').factory('posts',function ($q, session, serverConf
       }
 
       this.votes = data.votes
+      this.upvoteResultsInPercents = 0
+      this.downvoteResultsInPercents = 0
+      var upvoteCount = 0
+      var downvoteCount = 0
+      this.votes.forEach(function(vote){
+        if(vote.option == 1)
+          upvoteCount++
+        else if(vote.option == 2)
+          downvoteCount++
+      })
+      if(upvoteCount + downvoteCount > 0){
+        this.upvoteResultsInPercents = parseInt(upvoteCount / (upvoteCount + downvoteCount ) * 100)
+        this.downvoteResultsInPercents = parseInt(downvoteCount / (upvoteCount + downvoteCount ) * 100)
+      }
+
       this.created_at_date = new Date(data.created_at)
       this.expired_at_date = new Date(data.expired_at);
       this.title = data.title
@@ -85,14 +100,6 @@ angular.module('app.services').factory('posts',function ($q, session, serverConf
         else
           console.log('post.vote -- unknown answer type: '+answerType)
       })
-    }
-
-    this.getUpvoteResultsInPercents = function(){
-      return 30
-    }
-
-    this.getDownvoteResultsInPercents = function(){
-      return 70
     }
   }
 
