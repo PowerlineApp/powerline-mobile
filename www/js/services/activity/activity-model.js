@@ -50,9 +50,11 @@ angular.module('app.services').factory('ActivityModel',
         else if(this.dataType() == 'petition')
           $.extend(this, new PollPetitionMixin(petitions))
         else if(this.dataType() == 'leader-event')
-          $.extend(this, new PollEventMixin(serverConfig))
+          $.extend(this, new PollEventMixin(serverConfig, $http))
+        else if(this.dataType() == 'question')
+          $.extend(this, new PollOtherMixin(serverConfig, $http))
         else if(this.dataType() == 'post')
-          $.extend(this, new PostMixin())
+          $.extend(this, new PostMixin(posts))
 
         if (this.get('entity').group_id) {
           var userGroup = groups.get(this.get('entity').group_id);

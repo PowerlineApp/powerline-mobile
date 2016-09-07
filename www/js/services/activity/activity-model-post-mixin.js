@@ -1,4 +1,4 @@
-function PostMixin(){
+function PostMixin(posts){
   this.isAnswered = function(){
     return(this.get('answers') && this.get('answers').length > 0)
   }

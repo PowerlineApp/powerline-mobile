@@ -1,4 +1,4 @@
-function PollEventMixin(serverConfig, $http){
+function PollOtherMixin(serverConfig, $http){
   this.subscribeToNotifications = function(){
     var eventID = this.get('entity').id
     var that = this
