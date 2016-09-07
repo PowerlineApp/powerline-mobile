@@ -45,14 +45,14 @@ function UserPetitionMixin(userPetitions, groups) {
   }
 
   this.userIsSubscribedToNotifications = function(){
-    return this.get('petition') && this.get('petition').is_subscribed
+    return this.get('user_petition') && this.get('user_petition').is_subscribed
   }
 
   this.subscribeToNotifications = function(){
     var userPetitionID = this.get('entity').id
     var that = this
     return userPetitions.subscribeToNotifications(userPetitionID).then(function (response) {
-      that.set('petition', {is_subscribed: true})
+      that.set('user_petition', {is_subscribed: true})
     })
   }
 
@@ -60,7 +60,7 @@ function UserPetitionMixin(userPetitions, groups) {
     var userPetitionID = this.get('entity').id
     var that = this
     return userPetitions.subscribeToNotifications(userPetitionID).then(function (response) {
-      that.set('petition', {is_subscribed: false})
+      that.set('user_petition', {is_subscribed: false})
     })
   }
 
