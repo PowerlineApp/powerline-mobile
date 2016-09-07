@@ -54,14 +54,10 @@ angular.module('app.controllers').controller('getPostCtrl',function ($scope, top
     return($scope.activeAnswerType == null)
   }
   $scope.submitAnswer = function(){
-    if(!$scope.submitDisabled()){
-      if($scope.activeAnswerType == 'upvote')
-        posts.upvote($scope.post.id)
-      else if($scope.activeAnswerType == 'downvote')
-        posts.downvote($scope.post.id)
-      else if($scope.activeAnswerType == 'ignore')
-        posts.ignore($scope.post.id)
-    }
+    if(!$scope.submitDisabled())
+      $scope.post.vote($scope.activeAnswerType).then(function(){
+        $scope.showToast('Your vote was recorded.');  
+      })
   }
 
   $scope.canAnswer = function(){

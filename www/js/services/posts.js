@@ -36,8 +36,14 @@ angular.module('app.services').factory('posts',function ($q, session, serverConf
       })
 
       // TODO resolve proper attribute
-      if(myAnswer)
-        return myAnswer.value
+      if(myAnswer){
+        if(myAnswer.option == 1)
+          return 'upvote'
+        else if(myAnswer.option == 2)
+          return 'downvote'
+        else 
+          return 'ignore'
+      }
       else 
         return null
     }
@@ -58,6 +64,27 @@ angular.module('app.services').factory('posts',function ($q, session, serverConf
 
     this.delete = function(){
        return $http.delete(serverConfig.url + '/api/v2/posts/' + this.id)     
+    }
+
+    this.vote = function(answerType){
+      var postID = this.id
+      var alreadyAnswered = this.getMyAnswerType()
+      var unvoteRequest;
+      if(alreadyAnswered)
+        unvoteRequest = service.unvote(postID)
+      else
+        unvoteRequest = $q.resolve();
+
+      return unvoteRequest.then(function(){
+        if(answerType == 'upvote')
+          return service.upvote(postID)
+        else if(answerType == 'downvote')
+          return service.downvote(postID)
+        else if(answerType == 'ignore')
+          return service.ignore(postID)
+        else
+          console.log('post.vote -- unknown answer type: '+answerType)
+      })
     }
 
     this.getUpvoteResultsInPercents = function(){
