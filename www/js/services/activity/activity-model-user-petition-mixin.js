@@ -1,4 +1,4 @@
-function UserPetitionMixin() {
+function UserPetitionMixin(userPetitions) {
   this.getIcon = function () {
     return 'petition'
   }
