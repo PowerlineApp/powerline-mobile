@@ -99,6 +99,14 @@ angular.module('app.services').factory('ActivityModel',
       isInPriorityZone: function() {
         return (this.get('zone') == 'prioritized')
       },
+      getCommentCount: function(){
+        var cc = 0
+        if(this.get('comments_count'))
+          cc = this.get('comments_count') - 1 // minus one due to root comment
+        if(cc < 0)
+          cc = 0
+        return cc
+      },
       getSortMultiplier: function () {
         if (this.isExpired()) {
           return 0;

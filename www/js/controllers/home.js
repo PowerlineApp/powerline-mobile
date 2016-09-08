@@ -345,7 +345,7 @@ angular.module('app.controllers').directive('iActivity', function ($rootScope, q
       $scope.iconClass = $scope.activity.getIcon();
       $scope.sent_at_elapsed = elapsedFilter($scope.activity.get('sent_at'));
       $scope.responses_count = $scope.activity.get('responses_count');
-      $scope.comments_count = ($scope.activity.get('comments_count') || 0);
+      $scope.comments_count = $scope.activity.getCommentCount()
       $scope.isDefaultAvatar = $rootScope.isDefaultAvatar($scope.avatar_file_path);
 
       var activityOwnerID = null, activityOwnerFollow = null;
