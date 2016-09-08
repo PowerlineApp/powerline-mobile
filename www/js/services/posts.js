@@ -1,4 +1,4 @@
-angular.module('app.services').factory('posts',function ($q, session, serverConfig, $http, $sce, iParse) {
+angular.module('app.services').factory('posts',function ($q, session, serverConfig, $http, $sce, iParse, $rootScope) {
 
   var PostInstance = function(rawData){
     this._load = function(data){
@@ -90,6 +90,8 @@ angular.module('app.services').factory('posts',function ($q, session, serverConf
         unvoteRequest = $q.resolve();
 
       return unvoteRequest.then(function(){
+        $rootScope.$emit('post.voted', postID);
+
         if(answerType == 'upvote')
           return service.upvote(postID)
         else if(answerType == 'downvote')

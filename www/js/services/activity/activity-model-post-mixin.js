@@ -22,7 +22,7 @@ function PostMixin(posts, groups){
     var postID = this.get('entity').id
     var that = this
     return posts.upvote(postID).then(function(){
-        that.set('answers', ['whatever'])
+      that.markAsVoted()
     })
   }
 
@@ -30,15 +30,23 @@ function PostMixin(posts, groups){
     var postID = this.get('entity').id
     var that = this
     return posts.downvote(postID).then(function(){
-        that.set('answers', ['whatever'])
+      that.markAsVoted()
     })
+  }
+
+  this.markAsVoted = function(){
+    this.set('answers', ['whatever'])
+  }
+
+  this.markAsNotVoted = function(){
+    this.set('answers', [])
   }
 
   this.undoVote = function(){
     var postID = this.get('entity').id
     var that = this
     return posts.unvote(postID).then(function(answer){
-      that.set('answers', [])
+      that.markAsNotVoted()
     })
   }
 

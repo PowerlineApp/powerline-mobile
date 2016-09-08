@@ -71,7 +71,8 @@ function UserPetitionMixin(userPetitions, groups) {
 
   this.groupName = function(){
     var userGroup = groups.get(this.get('entity').group_id);
-    return userGroup.official_title
+    if(userGroup)
+      return userGroup.official_title
   }
 
   this.getCreator = function(){

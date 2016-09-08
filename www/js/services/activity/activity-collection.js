@@ -126,6 +126,13 @@ angular.module('app.services').factory('ActivityCollection',
       return activity
     }
 
+    aCollection.getPostActivityByID = function(postID){
+      var activity = aCollection.models.find(function(activity){
+        return activity.isUserPostType() && activity.get('entity').id == postID
+      })
+      return activity
+    }
+
     $rootScope.$on('userPetition.signed', function(event, userPetitionID) {
       var activity = aCollection.getUserPetitionActivityByID(userPetitionID)
       if(activity)
@@ -146,6 +153,10 @@ angular.module('app.services').factory('ActivityCollection',
       if(activity)
         activity.markAsUnsigned()
     });
-    
+    $rootScope.$on('post.voted', function(event, postID) {
+      var activity = aCollection.getPostActivityByID(postID)
+      if(activity)
+        activity.markAsVoted()
+    });    
     return aCollection
 })
