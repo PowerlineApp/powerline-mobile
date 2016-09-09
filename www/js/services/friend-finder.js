@@ -45,8 +45,8 @@ angular.module('app.services').factory('FriendFinder', function ($http, serverCo
     return deferred.promise
   }
 
-  var unfollowedFriends = function(friends, following){
-      followingIDs = following.map(function(fo){return fo.get('user').id})
+  var unfollowedFriends = function(friends, usersFollowedByCurrentUser){
+      followingIDs = usersFollowedByCurrentUser.map(function(fo){return fo.user_id})
       uf = []
       friends.forEach(function(friend){
         if(followingIDs.indexOf(friend.id) == -1)
@@ -98,10 +98,9 @@ angular.module('app.services').factory('FriendFinder', function ($http, serverCo
        
         $q.all(searchRequests).then(function () {
           friendsWithPowerlineAccount = _.flatten(friendsWithPowerlineAccount)
-            follows.loadAndGetFollowing().then(function(following){
-              var unFollowedFriendsWithPowerlineAccount = unfollowedFriends(friendsWithPowerlineAccount, following)
-              deferred.resolve(unFollowedFriendsWithPowerlineAccount)
-            })
+          var usersFollowedByCurrentUser = follows.getUsersFollowedByCurrentUser()
+          var unFollowedFriendsWithPowerlineAccount = unfollowedFriends(friendsWithPowerlineAccount, usersFollowedByCurrentUser)
+          deferred.resolve(unFollowedFriendsWithPowerlineAccount)
         });
       })
 
@@ -109,8 +108,8 @@ angular.module('app.services').factory('FriendFinder', function ($http, serverCo
     },
 
     follow: function(friend){
-      var friendAsFollowable = follows.getByUserId(friend.id);
-      return friendAsFollowable.follow().then(function () {
+      var friendAsFollowable = follows.getOrCreateUser(friend.id);
+      return friendAsFollowable.followByCurrentUser().then(function () {
         follows.load()
       });   
     }

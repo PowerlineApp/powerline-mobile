@@ -18,7 +18,10 @@
         </figure>
         <p ng-click="navigateTo('path', 'influence/profile', friend.id)">{{ friend.username}}</p>
         <p><span>{{ friend.first_name}} {{ friend.last_name}}</span></p>
-        <p class="btn-add" ng-click="add(friend)" ng-show="!friend.followButtonClicked"></p>
+        <a class="follow-action" ng-click="add(friend)" ng-show="!friend.followButtonClicked">
+          <i class="icon ion-person" style="color: #adb7c6"></i>
+          <i class="icon ion-plus-circled calm"></i> 
+        </a>
       </li>
     </ul>
   </section>
