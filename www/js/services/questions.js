@@ -67,6 +67,10 @@ angular.module('app.services').factory('questions',function (QuestionResource,
         method: 'DELETE',
         url: serverConfig.url + '/api/petition/' + id + '/answers/' + answer_id
       });
+    },
+
+    hasEduContent: function(){
+      return educational_context || educational_context.length > 0
     }
   };
 
@@ -114,6 +118,8 @@ angular.module('app.services').factory('questions',function (QuestionResource,
     _(question.options).each(function (item) {
       question.optionsById[item.id] = item;
     });
+
+
   }
 
   function answer(data) {

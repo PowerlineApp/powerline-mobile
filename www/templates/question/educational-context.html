@@ -1,4 +1,7 @@
 <div class="groups-1">
+  <div style="text-align: center" ng-show="!q.hasEduContent()">
+    No attachments
+  </div>
   <div class="group-1" i-groups="0" ng-show="q.educationalContextByTypes.text.length">
       <h3 ng-click="toggle()" >Information <i></i></h3>
       <ul i-toggle-elem style="display: none">
