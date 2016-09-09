@@ -65,6 +65,7 @@ angular.module('app.services').factory('ActivityModel',
           var headers = {headers: {'Content-Type': 'application/json'}}
           $http.patch(serverConfig.url + '/api/v2/activities', payload, headers).then(function(){
             that.set('read', true);
+            that.set('zone', 'non_prioritized')
           })
         }
       },
