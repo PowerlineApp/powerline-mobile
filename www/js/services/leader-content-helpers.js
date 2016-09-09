@@ -3,10 +3,10 @@ angular.module('app.services').factory('leaderContentHelper', function($http, se
 
   // usage in console:
   // var h = angular.element(document.body).injector().get('leaderContentHelper')
-  // h.createAndPublishPollPetition('title', 'bodytext', 'a1', 'a2')
+  // h.createAndPublishPollPetition('title', 'bodytext', 'a1', 'a2', 285)
 
-  service.createAndPublishPollPetition = function(subject, title, answer1, answer2){
-    service.createPollPetition(subject, title).then(function(response){
+  service.createAndPublishPollPetition = function(subject, title, answer1, answer2, groupID){
+    service.createPollPetition(subject, title, groupID).then(function(response){
       var pollID = response.data.id
       service.addPollAnswer(pollID, answer1).then(function(){
         service.addPollAnswer(pollID, answer2).then(function(){
@@ -18,8 +18,8 @@ angular.module('app.services').factory('leaderContentHelper', function($http, se
     })
   }
 
-  service.createAndPublishPollEvent = function(subject, title, answer1, answer2){
-    service.createPollEvent(subject, title).then(function(response){
+  service.createAndPublishPollEvent = function(subject, title, answer1, answer2, started_at, finished_at, groupID){
+    service.createPollEvent(subject, title, started_at, finished_at, groupID).then(function(response){
       var pollID = response.data.id
       service.addPollAnswer(pollID, answer1).then(function(){
         service.addPollAnswer(pollID, answer2).then(function(){
@@ -31,11 +31,11 @@ angular.module('app.services').factory('leaderContentHelper', function($http, se
     })
   }
 
-  service.createPollEvent = function(subject, title){
+  service.createPollEvent = function(subject, title, started_at, finished_at, groupID){
     var data = {subject: subject,
       title: title,
-      started_at: "2016-09-07 09:52:33", // t.strftime("%Y-%m-%d'%z'%H:%M:%S")
-      finished_at: "2016-09-20 09:52:33",
+      started_at: started_at, //"2016-09-07 09:52:33", // t.strftime("%Y-%m-%d'%z'%H:%M:%S")
+      finished_at: finished_at, //"2016-09-20 09:52:33",
       //petition_title: 'Petition title',
       //petition_body: 'Petition body',
       type: 'event'} 
@@ -43,12 +43,12 @@ angular.module('app.services').factory('leaderContentHelper', function($http, se
     var payload = JSON.stringify(data)
     var headers = {headers: {'Content-Type': 'application/json'}}
 
-    var groupID = 285
+    //var groupID = 285
 
     return $http.post(serverConfig.url + '/api/v2/groups/'+groupID+'/polls', payload, headers)   
   }
 
-  service.createPollPetition = function(title, body){
+  service.createPollPetition = function(title, body, groupID){
     var data = {subject: 'I have no idea what is the difference between subject and petition body',
       petition_title: title,
       petition_body: body,
@@ -56,8 +56,6 @@ angular.module('app.services').factory('leaderContentHelper', function($http, se
       
     var payload = JSON.stringify(data)
     var headers = {headers: {'Content-Type': 'application/json'}}
-
-    var groupID = 285
 
     return $http.post(serverConfig.url + '/api/v2/groups/'+groupID+'/polls', payload, headers)
   }
