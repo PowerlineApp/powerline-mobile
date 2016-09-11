@@ -91,9 +91,6 @@ angular.module('app.services').factory('ActivityModel',
       isUnread: function(){
         return(!this.get('read'))
       },
-      isBoosted: function(){
-        return(this.get('publish_status') == 1)
-      },
       isExpired: function(){
         return this.get('expire_at') && Date.now() > this.get('expire_at').getTime()
       },

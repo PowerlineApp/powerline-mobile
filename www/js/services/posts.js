@@ -34,6 +34,7 @@ angular.module('app.services').factory('posts',function ($q, session, serverConf
 
       this.created_at_date = new Date(data.created_at)
       this.expired_at_date = new Date(data.expired_at);
+      this._isBoosted = data.boosted
       this.title = data.title
       this.id = data.id
     }
@@ -42,6 +43,10 @@ angular.module('app.services').factory('posts',function ($q, session, serverConf
 
     this.expired = function(){
       return(this.expired_at_date <= new Date())
+    }
+
+    this.isBoosted = function(){
+      return this._isBoosted
     }
 
     this.getMyAnswerType = function(){

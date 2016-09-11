@@ -15,6 +15,7 @@ angular.module('app.services').factory('userPetitions',function ($q, session, se
 
       this.created_at_date = new Date(data.created_at)
       this.expired_at_date = new Date(data.expire_at);
+      this._isBoosted = data.boosted
       this.title = data.title
       this.id = data.id
     }
@@ -23,6 +24,10 @@ angular.module('app.services').factory('userPetitions',function ($q, session, se
 
     this.expired = function(){
       return (this.expired_at_date <= new Date())
+    }
+
+    this.isBoosted = function(){
+      return this._isBoosted
     }
 
     this.ownedByCurrentUser = function(){

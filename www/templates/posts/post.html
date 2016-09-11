@@ -29,7 +29,7 @@
       <div class="title">
         <strong ng-bind="post.owner.name" ng-click="navigateTo('owner-profile', post.owner)"></strong>
 
-        <a ng-show="post.ownedByCurrentUser()" ng-click="onEditBtnClicked()"><i ng-class="{'ion-edit':inEditMode==false,'ion-checkmark':inEditMode==true}" style="font-size: 22px;
+        <a ng-show="post.ownedByCurrentUser() && !post.isBoosted()" ng-click="onEditBtnClicked()"><i ng-class="{'ion-edit':inEditMode==false,'ion-checkmark':inEditMode==true}" style="font-size: 22px;
           position: absolute; right: 70px;"></i></a>
         <a ng-show="post.ownedByCurrentUser()" ng-click="showDeleteConfirm()"><i class="button-assertive icon ion-trash-a" style="font-size: 22px;
           position: absolute; right: 30px;"></i></a>
