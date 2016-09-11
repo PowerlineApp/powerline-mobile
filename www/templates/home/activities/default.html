@@ -11,7 +11,7 @@
       <strong bo-bind="activity.creatorName()" ng-click="navigateTo('owner-profile', activity.getCreator());$event.stopPropagation();"></strong>
       <span ng-bind="activity.groupName()"></span>
     </p>
-    <p ng-class="{unanswered: activity.isUnanswered()}" bo-if="title" bo-bind="title"></p>
+    <p ng-class="{unanswered: activity.isUnanswered()}" bo-if="title" bo-bind="title" ng-click="navigateToActivity(activity)"></p>
     <i class="time"><time>{{ sent_at_elapsed }}</time></i>
   </div>
   <div class="item-content">
