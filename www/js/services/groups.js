@@ -1,4 +1,4 @@
-angular.module('app.services').factory('groups',function ($resource, serverConfig, $q, $http, PermissionsModel, iStorage, GroupModel, $rootScope) {
+angular.module('app.services').factory('groups',function ($resource, serverConfig, $q, $http, PermissionsModel, iStorage, GroupModel, $rootScope, follows) {
   var GROUPS_CACHE_ID = 'group-items';
   
 //        GROUP_TYPE_COUNTRY = 1,
@@ -104,6 +104,16 @@ angular.module('app.services').factory('groups',function ($resource, serverConfi
       return _(result).sortBy(function (item) {
         return -item.group_type;
       });
+    },
+
+    inviteAllFollowers: function (groupID) {
+      var usernamesOfMyFollowers = follows.getUsersFollowingCurrentUser().map(function(follower){
+        return follower.username
+      })
+      var data = {users: usernamesOfMyFollowers};
+      var payload = JSON.stringify(data)
+      var headers = {headers: {'Content-Type': 'application/json'}}
+      return $http.put(serverConfig.url + '/api/v2/groups/'+groupID+'/users', payload, headers)
     },
 
     search: function(query){

@@ -10,12 +10,6 @@ angular.module('app.services').factory('invites', function (JsCollection, $http,
     get: function () {
       return invites;
     },
-    invite: function (id, usernames) {
-      var data = {users: usernames};
-      var payload = JSON.stringify(data)
-      var headers = {headers: {'Content-Type': 'application/json'}}
-      return $http.put(serverConfig.url + '/api/v2/groups/'+id+'/users', payload, headers)
-    },
 
     remove: function (invite) {
       invites.models = invites.without(invite);

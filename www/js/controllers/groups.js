@@ -85,7 +85,7 @@ angular.module('app.controllers').controller('groups',function ($scope, groups, 
   $scope.$watch(groups.getNewGroups, function (newValue) {
     $scope.newItems = newValue;
   });
-}).controller('groups.profile',function ($scope, topBar, groups, $stateParams, $state, activity, favorite, invites, follows, homeCtrlParams, $rootScope, $location) {
+}).controller('groups.profile',function ($scope, topBar, groups, $stateParams, $state, activity, favorite, follows, homeCtrlParams, $rootScope, $location) {
   
   follows.load();
   $scope.favoriteService = favorite
@@ -103,17 +103,15 @@ angular.module('app.controllers').controller('groups',function ($scope, groups, 
   }
 
   $scope.invite = function () {
+    var groupID = $scope.data.id
     $scope.confirmAction('Are you sure you want to invite all of your followers to join this group?').then(function () {
-      var followersUsernames = follow.getUsersFollowingCurrentUser().map(function (followerItem) {
-        return(followerItem.username);
-      });
       $scope.showPostWindow = false;
       $scope.showSpinner();
-      invites.invite(id, followersUsernames).finally(function () {
+      groups.inviteAllFollowers(groupID).then(function(){
         $scope.hideSpinner();
-        $scope.showToast('Invites sent!')
-      });
-    });
+        $scope.showToast('Invites sent!')        
+      })
+    })
   };
 
   $scope.join = function () {
@@ -178,7 +176,7 @@ angular.module('app.controllers').controller('groups',function ($scope, groups, 
   }, function (newValue) {
     $scope.data = newValue;
   });
-}).controller('groups.join', function ($scope, $stateParams, groups, groupsInvites, homeCtrlParams, $rootScope) {
+}).controller('groups.join', function ($scope, $stateParams, groups, homeCtrlParams, $rootScope) {
 
   $scope.showSpinner();
   $scope.data = {};
