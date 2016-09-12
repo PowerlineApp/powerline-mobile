@@ -37,4 +37,8 @@ function PollOtherMixin(serverConfig, $http){
   this.getCreator = function(){
     return this.get('user')
   }
+
+  this.refreshPriorityZone = function(){
+    // TODO
+  }
 }

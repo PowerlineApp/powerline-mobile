@@ -36,6 +36,7 @@ function PostMixin(posts, groups){
 
   this.markAsVoted = function(){
     this.set('answers', ['whatever'])
+    this.refreshPriorityZone()
   }
 
   this.markAsNotVoted = function(){
@@ -83,5 +84,10 @@ function PostMixin(posts, groups){
 
   this.getCreator = function(){
     return this.get('owner')
+  }
+
+  this.refreshPriorityZone = function(){
+    if(this.isAnswered() || !this.isUnread())
+      this.removeFromPriorityZone()
   }
 }
