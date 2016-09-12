@@ -18,10 +18,12 @@ function UserPetitionMixin(userPetitions, groups) {
 
   this.markAsSigned = function(){
     this.set('answers', ['whatever'])
+    this.refreshPriorityZone()
   }
 
   this.markAsUnsigned = function(){
     this.set('answers', [])
+    this.refreshPriorityZone()
   }
 
   this.sign = function(){
@@ -77,5 +79,10 @@ function UserPetitionMixin(userPetitions, groups) {
 
   this.getCreator = function(){
     return this.get('owner')
+  }
+
+  this.refreshPriorityZone = function(){
+    if(this.isSignedbyMe() || !this.isUnread())
+      this.removeFromPriorityZone()
   }
 }

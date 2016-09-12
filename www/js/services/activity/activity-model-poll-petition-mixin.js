@@ -15,11 +15,18 @@ function PollPetitionMixin(petitions){
     return this.get('answered')
   }
 
+  this.refreshPriorityZone = function(){
+    if(this.isSignedbyMe() || !this.isUnread())
+      this.removeFromPriorityZone()
+  }
+
   this.markAsSigned = function(){
+    this.refreshPriorityZone()
     this.set('answered', true)
   }
 
   this.markAsUnsigned = function(){
+    this.refreshPriorityZone()
     this.set('answered', false)
   }
 
