@@ -39,6 +39,7 @@ function PollOtherMixin(serverConfig, $http){
   }
 
   this.refreshPriorityZone = function(){
-    // TODO
+    if(!this.isUnread())
+      this.removeFromPriorityZone()
   }
 }
