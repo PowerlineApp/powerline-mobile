@@ -9,8 +9,6 @@ angular.module('app.services').factory('notifications', function ($window, devic
       "ios": {"alert": "true", "badge": "true", "sound": "true"}
     });
     push.on('registration', function(data) {
-      console.log('registration push notification arrived')
-      console.log(data)
       notificationsData.$apply(function(){
         if(device.isAndroid){
           notificationsData.regId = data.registrationId;
@@ -21,8 +19,6 @@ angular.module('app.services').factory('notifications', function ($window, devic
     });
     
     push.on('notification', function(data) {
-      console.log('push notification arrived: ')
-      console.log(data)
       if(device.isAndroid){
         onNotificationGCM(data);
       }else{
@@ -33,7 +29,6 @@ angular.module('app.services').factory('notifications', function ($window, devic
 
   return {
     init: function () {
-      console.log('initializing push notifications')
       notificationsData.pushPlugin = $window.PushNotification;
       register();
     }
@@ -60,7 +55,7 @@ angular.module('app.services').factory('notifications', function ($window, devic
       (notificationsData.actions[data.additionalData.type] || angular.noop)(!Number(data.additionalData.foreground), entity || target);
       if (Number(data.additionalData.foreground)) {
         navigator.notification.beep(1);
-        navigator.notification.vibrate(500);
+        navigator.vibrate(500);
       }
     });
   };

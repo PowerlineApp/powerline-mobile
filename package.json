@@ -32,7 +32,8 @@
       "locator": "https://github.com/jeduan/cordova-plugin-facebook4.git",
       "id": "cordova-plugin-facebook4"
     },
-    "cordova-plugin-statusbar"
+    "cordova-plugin-statusbar",
+    "cordova-plugin-vibration"
   ],
   "cordovaPlatforms": [
     "ios",
