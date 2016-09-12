@@ -45,6 +45,10 @@ angular.module('app.services').factory('posts',function ($q, session, serverConf
       return(this.expired_at_date <= new Date())
     }
 
+    this.votesCount = function(){
+      return this.votes.length
+    }
+
     this.isBoosted = function(){
       return this._isBoosted
     }
