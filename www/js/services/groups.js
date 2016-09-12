@@ -193,6 +193,7 @@ angular.module('app.services').factory('groups',function ($resource, serverConfi
   }
 
   function _createGroupModels(rawGroupsData) {
+    groupsById = []
     rawGroupsData.forEach(function (rawGroupData) {
         var group = new GroupModel()
         if(rawGroupData.official_title){
