@@ -113,30 +113,30 @@ angular.module('app.services').factory('ActivityCollection',
     };
 
     aCollection.getUserPetitionActivityByID = function(userPetitionID){
-      var activity = aCollection.models.find(function(activity){
+      var activity = aCollection.models.filter(function(activity){
         return activity.isUserPetitionType() && activity.get('entity').id == userPetitionID
-      })
+      })[0]
       return activity
     }
 
     aCollection.getPetitionActivityByID = function(petitionID){
-      var activity = aCollection.models.find(function(activity){
+      var activity = aCollection.models.filter(function(activity){
         return activity.isPollPetitionType() && activity.get('entity').id == petitionID
-      })
+      })[0]
       return activity
     }
 
     aCollection.getPostActivityByID = function(postID){
-      var activity = aCollection.models.find(function(activity){
+      var activity = aCollection.models.filter(function(activity){
         return activity.isUserPostType() && activity.get('entity').id == postID
-      })
+      })[0]
       return activity
     }
 
     aCollection.getPollEventActivityByID = function(pollEventID){
-      var activity = aCollection.models.find(function(activity){
+      var activity = aCollection.models.filter(function(activity){
         return activity.isPollEventType() && activity.get('entity').id == pollEventID
-      })
+      })[0]
       return activity
     }
 
