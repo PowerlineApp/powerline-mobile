@@ -22,6 +22,8 @@ angular.module('app.services').factory('follows', function ($http,serverConfig, 
       return(_.include(this.roles, 'isFollowedByCurrentUser'))
     }
 
+    this.isApprovedByCurrentUser = this.isFollowingCurrentUser
+
     this.addRole = function(role){
       this.roles.push(role)
       this.roles = _.uniq(this.roles)
