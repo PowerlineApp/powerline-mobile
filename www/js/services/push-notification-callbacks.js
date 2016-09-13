@@ -3,59 +3,45 @@ function ($location, $timeout, follows, posts, userPetitions) {
   // we must use global app.* variable to store callbacks
   // becuase push notification plugin is from phonegap, which uses 'app'
 
+  var visitMainPageAndThen = function(url){
+    $location.path('/main') // tweak to have back button in detail
+    $timeout(function(){
+      $location.path(url);
+    }, 0);    
+  }
+
   app = {
     view: function(data){
-      console.log('app.view callback fired')
-      console.log(JSON.stringify(data))
-      console.log(data)
-
-      if(data.additionalData.entity.target.type == 'post'){
-        $location.path('/main') // tweak to have back button in detail
-        $timeout(function(){
-          $location.path('/post/' + data.additionalData.entity.target.id);
-        }, 0);
-      }
+      var t = data.additionalData.entity.target.type
+      var eid = data.additionalData.entity.target.id
+      if(t == 'post')
+        visitMainPageAndThen('/post/' + eid)
+      else if(t == 'user-petition')
+        visitMainPageAndThen('/user-petition/' + eid)        
     },
 
     mute: function(data){
-      console.log('app.mute callback fired')
-      console.log(JSON.stringify(data))
-      console.log(data)      
+      if(data.additionalData.entity.target.type == 'post'){
+        var postID = data.additionalData.entity.target.id
+        posts.unsubscribeFromNotifications(postID)
+      } 
     },
 
     approve: function(data){
       var userID = data.additionalData.entity.target.id
       follows.getOrCreateUser(userID).approve()
-
-      $location.path('/main')
-      $timeout(function(){
-        $location.path('/influences');
-      }, 0);         
+      visitMainPageAndThen('/influences');
     },
 
     ignore: function(data){
-      // TODO follow request ignore
-      // TODO user petition ignore
-
-      if(data.additionalData.entity.target.type == 'post'){
-        var postID = data.additionalData.entity.target.id
-        posts.ignore(postID).then(function(){
-          $location.path('/main')
-          $timeout(function(){
-            $location.path('/post/' + postID);
-          }, 0);
-        })
-      }
+      ionic.Platform.exitApp();
     },
 
     upvote: function(data){
       if(data.additionalData.entity.target.type == 'post'){
         var postID = data.additionalData.entity.target.id
         posts.upvote(postID).then(function(){
-          $location.path('/main')
-          $timeout(function(){
-            $location.path('/post/' + postID);
-          }, 0);
+          visitMainPageAndThen('/post/' + postID);
         })
       }
     },
@@ -64,10 +50,7 @@ function ($location, $timeout, follows, posts, userPetitions) {
       if(data.additionalData.entity.target.type == 'user-petition'){
         var userPetitionID = data.additionalData.entity.target.id
         userPetitions.sign(userPetitionID).then(function(){
-          $location.path('/main')
-          $timeout(function(){
-            $location.path('/user-petition/' + userPetitionID);
-          }, 0);
+          visitMainPageAndThen('/user-petition/' + userPetitionID);
         })
       }
     }
