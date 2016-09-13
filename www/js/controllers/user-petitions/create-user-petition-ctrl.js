@@ -1,4 +1,4 @@
-angular.module('app.controllers').controller('createUserPetitionCtrl',function ($scope, $stateParams, $document, userPetitions, groups, profile, homeCtrlParams, $rootScope) {
+angular.module('app.controllers').controller('createUserPetitionCtrl',function ($scope, $stateParams, $document, userPetitions, groups, profile, homeCtrlParams, $rootScope, camelcase2underscore) {
   $scope.groupID = $stateParams.groupID;
 
   // TODO: show only groups for which user has not exceeded number of posts per month
@@ -40,16 +40,8 @@ angular.module('app.controllers').controller('createUserPetitionCtrl',function (
           $scope.alert('Your limit of petitions per month is reached for this group', null, 'Error', 'OK');
           return;
         }
-        if (response.data && response.data.errors) {
-          _(response.data.errors).each(function (error) {
-            var property = camelcase2underscore(error.property);
-            if (petitionForm[property]) {
-              petitionForm[property].$setValidity('required', false);
-            }
-          });
-          if (response.data.errors.length) {
-            $scope.alert(response.data.errors[0].message, null, 'Error', 'OK');
-          }
+        if (response.data && response.data.errors && response.data.errors.errors) {
+            $scope.alert(response.data.errors.errors[0], null, 'Error', 'OK');
           $scope.formClass = 'error';
         } else {
           $scope.alert('Error occurred', null, 'Error', 'OK');
