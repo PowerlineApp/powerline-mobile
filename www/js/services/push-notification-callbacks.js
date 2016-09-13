@@ -1,4 +1,5 @@
-angular.module('app.services').factory('pushNotificationCallbacks', function ($location, $timeout, follows, posts) {
+angular.module('app.services').factory('pushNotificationCallbacks', 
+function ($location, $timeout, follows, posts, userPetitions) {
   // we must use global app.* variable to store callbacks
   // becuase push notification plugin is from phonegap, which uses 'app'
 
@@ -34,6 +35,7 @@ angular.module('app.services').factory('pushNotificationCallbacks', function ($l
 
     ignore: function(data){
       // TODO follow request ignore
+      // TODO user petition ignore
 
       if(data.additionalData.entity.target.type == 'post'){
         var postID = data.additionalData.entity.target.id
@@ -53,6 +55,18 @@ angular.module('app.services').factory('pushNotificationCallbacks', function ($l
           $location.path('/main')
           $timeout(function(){
             $location.path('/post/' + postID);
+          }, 0);
+        })
+      }
+    },
+
+    sign: function(data){
+      if(data.additionalData.entity.target.type == 'user-petition'){
+        var userPetitionID = data.additionalData.entity.target.id
+        userPetitions.sign(userPetitionID).then(function(){
+          $location.path('/main')
+          $timeout(function(){
+            $location.path('/user-petition/' + userPetitionID);
           }, 0);
         })
       }

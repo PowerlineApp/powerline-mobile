@@ -53,9 +53,9 @@ angular.module('app.services').factory('userPetitions',function ($q, session, se
     }
 
     this.isSignedByMe = function(){
-      var mySignature = this.signatures.find(function(signature){
+      var mySignature = this.signatures.filter(function(signature){
         return signature.user.id == session.user_id
-      })
+      })[0]
 
       return(mySignature != null)
     }
