@@ -22,8 +22,6 @@ angular.module('app.services').factory('follows', function ($http,serverConfig, 
       return(_.include(this.roles, 'isFollowedByCurrentUser'))
     }
 
-    this.isApprovedByCurrentUser = this.isFollowingCurrentUser
-
     this.addRole = function(role){
       this.roles.push(role)
       this.roles = _.uniq(this.roles)
@@ -56,6 +54,8 @@ angular.module('app.services').factory('follows', function ($http,serverConfig, 
     this.isApproved = function(){
       return(this.date_approval != null)
     }
+
+    this.isApprovedByCurrentUser = this.isApproved
   }
 
   var service = {}
