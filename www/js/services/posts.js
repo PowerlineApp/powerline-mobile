@@ -54,11 +54,10 @@ angular.module('app.services').factory('posts',function ($q, session, serverConf
     }
 
     this.getMyAnswerType = function(){
-      var myAnswer = this.votes.find(function(answers){
+      var myAnswer = this.votes.filter(function(answers){
         return answers.user.id == session.user_id
-      })
+      })[0]
 
-      // TODO resolve proper attribute
       if(myAnswer){
         if(myAnswer.option == 1)
           return 'upvote'

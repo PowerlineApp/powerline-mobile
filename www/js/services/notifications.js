@@ -37,6 +37,9 @@ angular.module('app.services').factory('notifications', function ($window, devic
 }).factory('onNotificationGCM', function (notificationsData) {
 
   return function (data) {
+    // console.log('onNotificationGCM')
+    // console.log(data)
+    // console.log(JSON.stringify(data))
     notificationsData.$apply(function () {
       (notificationsData.actions[data.additionalData.type] || angular.noop)(!data.additionalData.foreground, data.additionalData.entity);
       if (data.additionalData.foreground) {

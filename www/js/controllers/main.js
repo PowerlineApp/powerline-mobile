@@ -37,6 +37,8 @@ angular.module('app.controllers', []).controller('AppCtrl', function($scope, mai
   return function () {
     scope.loading = false;
     scope.hideSpinner();
+    console.log('main.js callback')
+    console.log(callback)
     if (_.isFunction(callback)) {
       callback.apply(this, arguments);
     }

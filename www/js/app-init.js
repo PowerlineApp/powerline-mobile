@@ -1,6 +1,6 @@
 angular.module('app').run(function ($location, layout, spinnerIndicator, $rootScope,
         $window, iStorageMemory, $cacheFactory, $state, $ionicPlatform, navigateTo, $q,
-        groupsInvites, announcements, invites, follows, ionicToast) {
+        groupsInvites, announcements, invites, follows, ionicToast, $timeout) {
 
   $ionicPlatform.ready(function () {
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
@@ -11,11 +11,16 @@ angular.module('app').run(function ($location, layout, spinnerIndicator, $rootSc
     if (window.StatusBar) {
       StatusBar.styleDefault();
     }
+
+    
   });
 
+  new PushNotificationCallbacks($location, $timeout)
   $rootScope.checkURLState = function (stateName) {
     return $state.includes('app.' + stateName);
   };
+
+
 
   angular.element($window).bind('resize', function () {
     $rootScope.$broadcast('resize');

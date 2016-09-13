@@ -32,9 +32,7 @@
     <script src="lib/ionic.scroll.sista_modified.js"></script>
     <script src="lib/ngletteravatar_customized.js"></script>
     <script src="lib/ionic-toast/ionic-toast.js"></script>
-<!--     <script src="lib/ionic-zoom-view/dist/ionic-zoom-view.js"></script>
-    <script src="lib/ionic-zoom-view/src/ionic-zoom-view.js"></script>
- -->
+
       <!-- build:remove -->
 <!--      <script src="cordova_dev.js"></script>-->
       <!-- endbuild -->
@@ -91,6 +89,8 @@
       <script src="js/services/friend-finder.js"></script>
       <script src="js/services/micro-petitions.js"></script>
       <script src="js/services/leader-content-helpers.js"></script>
+      <script src="js/push-notification-callbacks.js"></script>
+
 
       <!-- Controllers -->
       <script src="js/controllers/main.js"></script>
@@ -150,26 +150,8 @@
       <script src="js/directives/avatar-img.js"></script>
       <!-- endbuild -->
 
-      <!-- weinre debug console for older androids -->
-      <!--<script src="http://litava.eu:7744/target/target-script-min.js#powerline">
-      </script>-->
   </head>
-  
-  <!--<body ng-class="bodyClass">
-    <div id="container" ng-class="containerClass">
-      <header class="top-bar" ng-controller="topBar" ng-class="{'left-260': !isMenuClosed()}" ng-include="'templates/top-bar.html'">
-
-      </header>
-      <nav class="nav" ng-class="{'left-260': !isMenuClosed()}" ng-controller="mainMenu">
-        <section ng-include="'templates/main-menu.html'"></section>
-      </nav>
-      <div class="content" ng-view ng-style="{'height': minContentHeight}"></div>
-      <div class="content-overlay" ng-show="!isMenuClosed()" ng-click="closeMenu()" i-swipe i-swipe-left="closeMenu()"></div>
-
-    </div>
-  </body>-->
   <body>
     <ion-nav-view id="container"></ion-nav-view>
-    <!--<div class="wrap-center spinner-wrap wrap-animate" ng-show="isSpinnerShow"><spinner></spinner></div>-->
   </body>
 </html>
