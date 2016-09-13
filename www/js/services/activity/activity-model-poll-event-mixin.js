@@ -38,8 +38,17 @@ function PollEventMixin(serverConfig, $http){
     return this.get('user')
   }
 
+  this.markAsAnswered = function(){
+    this.set('answered', true)
+    this.refreshPriorityZone()
+  }
+
+  this.isAnswered = function(){
+    this.get('answered')
+  }
+
   this.refreshPriorityZone = function(){
-    if(!this.isUnread())
+    if(this.isAnswered())
       this.removeFromPriorityZone()
   }
 }

@@ -89,6 +89,10 @@ angular.module('app.services').factory('ActivityModel',
         var aType = this.get('entity').type
         return aType == 'post'
       },
+      isPollEventType: function(){
+        var aType = this.get('entity').type
+        return aType == 'leader-event'
+      },
       isUnread: function(){
         return(!this.get('read'))
       },

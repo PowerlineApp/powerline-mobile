@@ -133,6 +133,13 @@ angular.module('app.services').factory('ActivityCollection',
       return activity
     }
 
+    aCollection.getPollEventActivityByID = function(pollEventID){
+      var activity = aCollection.models.find(function(activity){
+        return activity.isPollEventType() && activity.get('entity').id == pollEventID
+      })
+      return activity
+    }
+
     $rootScope.$on('userPetition.signed', function(event, userPetitionID) {
       var activity = aCollection.getUserPetitionActivityByID(userPetitionID)
       if(activity)
@@ -157,6 +164,12 @@ angular.module('app.services').factory('ActivityCollection',
       var activity = aCollection.getPostActivityByID(postID)
       if(activity)
         activity.markAsVoted()
-    });    
+    });   
+
+    $rootScope.$on('poll-event.answered', function(event, pollEventID) {
+      var activity = aCollection.getPollEventActivityByID(pollEventID)
+      if(activity)
+        activity.markAsAnswered()
+    });   
     return aCollection
 })

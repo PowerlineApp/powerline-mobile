@@ -1,5 +1,5 @@
 angular.module('app.services').factory('questions',function (QuestionResource,
-  serverConfig, $q, $http, youtube, questionCache, formatOptions, JsModel) {
+  serverConfig, $q, $http, youtube, questionCache, formatOptions, JsModel, $rootScope) {
 
   var Charge = JsModel.extend({
     parsers: {
@@ -123,9 +123,11 @@ angular.module('app.services').factory('questions',function (QuestionResource,
   }
 
   function answer(data) {
+    var that = this
     var payload = JSON.stringify(data)
     var headers = {headers: {'Content-Type': 'application/json'}}
     return $http.post(serverConfig.url + '/api/poll/question/' + this.id + '/answer/add', payload, headers).then(function(response){
+      $rootScope.$emit('poll-event.answered', that.id);
       return(response.data)
     })
   }
