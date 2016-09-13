@@ -21,13 +21,13 @@ function PollPetitionMixin(petitions){
   }
 
   this.markAsSigned = function(){
-    this.refreshPriorityZone()
     this.set('answered', true)
+    this.refreshPriorityZone()
   }
 
   this.markAsUnsigned = function(){
-    this.refreshPriorityZone()
     this.set('answered', false)
+    this.refreshPriorityZone()
   }
 
   this.sign = function(){
