@@ -31,7 +31,7 @@ angular.module('app.controllers').controller('createPostCtrl',function ($scope, 
       posts.create(groupID, body).then(function(){
         homeCtrlParams.loaded = false;
         $scope.hideSpinner();
-        $rootScope.showToast('User petition successfully created!');
+        $rootScope.showToast('Post successfully created!');
         $rootScope.back();
       }).catch(function(response){
         $scope.hideSpinner();
