@@ -52,7 +52,7 @@ angular.module('app.services').factory('ActivityModel',
           $.extend(this, new PollPetitionMixin(petitions))
         else if(this.dataType() == 'leader-event')
           $.extend(this, new PollEventMixin(serverConfig, $http))
-        else if(this.dataType() == 'question' || this.dataType() == 'leader-news' || this.dataType() ==  'payment-request')
+        else if(this.dataType() == 'question' || this.dataType() == 'leader-news' || this.dataType() ==  'payment-request'  || this.dataType() == 'crowdfunding-payment-request')
           $.extend(this, new PollOtherMixin(serverConfig, $http))
         else if(this.dataType() == 'post')
           $.extend(this, new PostMixin(posts, groups))

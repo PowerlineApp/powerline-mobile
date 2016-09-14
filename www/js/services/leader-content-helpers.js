@@ -153,5 +153,32 @@ angular.module('app.services').factory('leaderContentHelper', function($http, se
     return $http.post(serverConfig.url + '/api/v2/groups/'+groupID+'/polls', payload, headers)
   }
 
+  service.createAndPublishPollCrowfudingPayment = function(title, subject, answer1, answer2, crowdfunding_goal_amount, crowdfunding_deadline, groupID){
+    service.createPollCrowfudingPayment(subject, title, crowdfunding_goal_amount, crowdfunding_deadline, groupID).then(function(response){
+      var pollID = response.data.id
+      service.addPollAnswer(pollID, answer1).then(function(){
+        service.addPollAnswer(pollID, answer2).then(function(){
+          service.publishPoll(pollID).then(function(){
+            console.log('poll:payment published, ID: '+pollID)
+          })
+        })        
+      })
+    })
+  }
+
+  service.createPollCrowfudingPayment = function(subject, title, crowdfunding_goal_amount, crowdfunding_deadline, groupID){
+    var data = {subject: subject,
+      title: title,
+      is_crowdfunding: true,
+      crowdfunding_goal_amount: crowdfunding_goal_amount,
+      crowdfunding_deadline: crowdfunding_deadline,
+      type: 'payment_request'} 
+      
+    var payload = JSON.stringify(data)
+    var headers = {headers: {'Content-Type': 'application/json'}}
+
+    return $http.post(serverConfig.url + '/api/v2/groups/'+groupID+'/polls', payload, headers)
+  }
+
   return service
 })
