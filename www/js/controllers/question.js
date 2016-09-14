@@ -87,8 +87,6 @@ angular.module('app.controllers').controller('question',function ($scope, $locat
   
 }).controller('question.news',function ($scope, $location, $stateParams, questions, iJoinFilter, activity, layout) {
   
-  activity.setEntityRead({id: Number($stateParams.id), type: 'leader-news'});
-
   $scope.showSpinner();
   questions.load($stateParams.id).then(function (question) {
     $scope.hideSpinner();

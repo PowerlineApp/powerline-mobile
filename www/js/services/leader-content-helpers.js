@@ -106,5 +106,28 @@ angular.module('app.services').factory('leaderContentHelper', function($http, se
     return $http.post(serverConfig.url + '/api/v2/groups/'+groupID+'/polls', payload, headers)
   }
 
+  service.createAndPublishPollNews = function(subject, answer1, answer2, groupID){
+    service.createPollNews(subject, groupID).then(function(response){
+      var pollID = response.data.id
+      service.addPollAnswer(pollID, answer1).then(function(){
+        service.addPollAnswer(pollID, answer2).then(function(){
+          service.publishPoll(pollID).then(function(){
+            console.log('poll:news published, ID: '+pollID)
+          })
+        })        
+      })
+    })
+  }
+
+  service.createPollNews = function(subject, groupID){
+    var data = {subject: subject,
+      type: 'news'} 
+      
+    var payload = JSON.stringify(data)
+    var headers = {headers: {'Content-Type': 'application/json'}}
+
+    return $http.post(serverConfig.url + '/api/v2/groups/'+groupID+'/polls', payload, headers)
+  }
+
   return service
 })
