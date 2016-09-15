@@ -180,5 +180,31 @@ angular.module('app.services').factory('leaderContentHelper', function($http, se
     return $http.post(serverConfig.url + '/api/v2/groups/'+groupID+'/polls', payload, headers)
   }
 
+  service.createAndPublishAnnouncement = function(){
+
+  }
+
+  service.createAnnouncement = function(content, groupID){
+    var data = {content: content} 
+      
+    var payload = JSON.stringify(data)
+    var headers = {headers: {'Content-Type': 'application/json'}}
+
+    return $http.post(serverConfig.url + '/api/v2/groups/'+groupID+'/announcements', payload, headers)
+  }
+
+  service.publishAnnouncement = function(aID){
+    return $http.patch(serverConfig.url + '/api/v2/announcements/'+aID)
+  }  
+
+  service.createAndPublishAnnouncement = function(content, groupID){
+    service.createAnnouncement(content, groupID).then(function(response){
+      var aid = response.data.id
+      service.publishAnnouncement(aid).then(function(){
+        console.log('announcement published, ID: '+aid)
+      })
+    })
+  }
+
   return service
 })
