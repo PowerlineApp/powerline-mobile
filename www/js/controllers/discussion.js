@@ -62,17 +62,17 @@ angular.module('app.controllers').controller('discussion',function ($scope, topB
 
   $scope.up = function (comment) {
     if (comment.rate_status === 1) {
-      discussion.rate(comment, 'delete');
+      discussion.rate(comment, 'delete', $scope.entity);
     } else {
-      discussion.rate(comment, 'up');
+      discussion.rate(comment, 'up', $scope.entity);
     }
   };
 
   $scope.down = function (comment) {
     if (comment.rate_status === -1) {
-      discussion.rate(comment, 'delete');
+      discussion.rate(comment, 'delete', $scope.entity);
     } else {
-      discussion.rate(comment, 'down');
+      discussion.rate(comment, 'down', $scope.entity);
     }
   };
 

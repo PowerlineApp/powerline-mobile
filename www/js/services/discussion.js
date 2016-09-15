@@ -84,15 +84,22 @@ angular.module('app.services').factory('discussion',function (serverConfig, Comm
         });
     },
 
-    rate: function (comment, action) {
+    rate: function (comment, action, entityType) {
       comment.rate_status = statusByAction[action];
 
-      return $http.post(serverConfig.url + '/api/poll/comments/rate/' + comment.id + '/' + action).then(function (response) {
+      var onRateCallback = function(response){
         for (var prop in response.data) {
           comment[prop] = response.data[prop];
         }
         return comment.setup();
-      });
+      }
+
+      var headers = {headers: {'Content-Type': 'application/json'}}
+      if(entityType == 'posts'){
+        var payload = JSON.stringify({rate_value:action})
+        return $http.post(serverConfig.url + '/api/v2/post-comments/'+comment.id+'/rate', payload, headers).then(onRateCallback)
+      } else 
+        return $http.post(serverConfig.url + '/api/poll/comments/rate/' + comment.id + '/' + action).then(onRateCallback);
     },
 
     update: function(entity, id, comment){
