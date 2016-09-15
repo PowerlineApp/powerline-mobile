@@ -35,28 +35,13 @@ angular.module('app.controllers').controller('createPostCtrl',function ($scope, 
         $rootScope.back();
       }).catch(function(response){
         $scope.hideSpinner();
-        if (response.status === 406) {
-          $scope.alert('Your limit of petitions per month is reached for this group', null, 'Error', 'OK');
-          return;
-        }
-        if (response.data && response.data.errors) {
-          _(response.data.errors).each(function (error) {
-            var property = camelcase2underscore(error.property);
-            if (postForm[property]) {
-              postForm[property].$setValidity('required', false);
-            }
-          });
-          if (response.data.errors.length) {
-            $scope.alert(response.data.errors[0].message, null, 'Error', 'OK');
-          }
+        if (response.data && response.data.errors && response.data.errors.errors) {
+            $scope.alert(response.data.errors.errors[0], null, 'Error', 'OK');
           $scope.formClass = 'error';
         } else {
           $scope.alert('Error occurred', null, 'Error', 'OK');
-        }        
+        }       
       })
-
-
-
     }
   }
 

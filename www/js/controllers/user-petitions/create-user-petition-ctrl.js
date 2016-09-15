@@ -36,10 +36,6 @@ angular.module('app.controllers').controller('createUserPetitionCtrl',function (
         $rootScope.back();
       }).catch(function(response){
         $scope.hideSpinner();
-        if (response.status === 406) {
-          $scope.alert('Your limit of petitions per month is reached for this group', null, 'Error', 'OK');
-          return;
-        }
         if (response.data && response.data.errors && response.data.errors.errors) {
             $scope.alert(response.data.errors.errors[0], null, 'Error', 'OK');
           $scope.formClass = 'error';
