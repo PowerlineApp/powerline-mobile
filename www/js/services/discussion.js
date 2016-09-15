@@ -95,10 +95,12 @@ angular.module('app.services').factory('discussion',function (serverConfig, Comm
       }
 
       var headers = {headers: {'Content-Type': 'application/json'}}
-      if(entityType == 'posts'){
-        var payload = JSON.stringify({rate_value:action})
+      var payload = JSON.stringify({rate_value:action})
+      if(entityType == 'posts')
         return $http.post(serverConfig.url + '/api/v2/post-comments/'+comment.id+'/rate', payload, headers).then(onRateCallback)
-      } else 
+      else if(entityType == 'user-petitions')
+        return $http.post(serverConfig.url + '/api/v2/user-petition-comments/'+comment.id+'/rate', payload, headers).then(onRateCallback)
+      else 
         return $http.post(serverConfig.url + '/api/poll/comments/rate/' + comment.id + '/' + action).then(onRateCallback);
     },
 
