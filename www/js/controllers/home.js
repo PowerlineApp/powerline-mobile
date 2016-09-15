@@ -199,7 +199,8 @@ angular.module('app.controllers').directive('iActivity', function ($rootScope, q
     $scope.entity = $scope.activity.get('entity');
     $scope.rate = function (action) {
       $scope.sending = true;
-      discussion.loadRoot('poll', $scope.entity.id).then(function (comment) {
+      discussion.loadTree('poll', $scope.entity.id).then(function (discussionTree) {
+        var comment = discussionTree.root
         discussion.rate(comment, action).then(function (comment) {
           $scope.activity.set('rate_up', comment.rate_up).set('rate_down', comment.rate_down);
           $scope.sending = false;
