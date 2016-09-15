@@ -47,7 +47,7 @@ function PollPetitionMixin(petitions){
   }
 
   this.userIsSubscribedToNotifications = function(){
-    return this.get('poll').is_subscribed
+    return this.get('poll') && this.get('poll').is_subscribed
   }
 
   this.subscribeToNotifications = function(){
