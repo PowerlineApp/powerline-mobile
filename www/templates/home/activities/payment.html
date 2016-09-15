@@ -31,15 +31,14 @@
     <div class="control"><a ng-click="navigateToActivity(activity)">Pay</a></div>
     <div class="control"><a ng-click="navigateToActivity(activity, 'add-comment')" class="activity-control reply"></a></div>
     <ng-include src="'templates/home/activities/_follow.html'" ng-show="showFollow"></ng-include>
-    <div class="control notification">
-      <a ng-click="onSubscribeBtnClicked()"><i ng-class="'ion-android-notifications'" style="font-size: 22px;" ng-style="mutingStyle"></i></a>
-    </div>
+    <ng-include src="'templates/home/activities/_subscribe_to_notifications.html'"></ng-include>
+
     <div class="control bookmark">
       <a ng-click="bookmarkButtonClicked()">
         <i class="icon ion-star" ng-class="isBookmarked() ? 'active': ''"></i>
       </a>
     </div>  
+    
+      <div class="responses" bo-bind="comments_count"></div>
     </div>
-    <div class="responses" bo-bind="comments_count"></div>
-  </div>
 </article>
