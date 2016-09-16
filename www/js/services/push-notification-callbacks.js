@@ -43,10 +43,12 @@ function ($location, $timeout, follows, posts, userPetitions, petitions) {
     },
     donate: function(data){
       var isPollPayment = data.additionalData.type == 'group_payment_request'
-      if(isPollPayment){
-        var pID = data.additionalData.entity.id
+      var isCrowdfundPayment = data.additionalData.type == 'group_payment_request_crowdfunding'
+      var pID = data.additionalData.entity.id
+      if(isPollPayment)
         visitMainPageAndThen('/payment-polls/payment-request/' + pID) 
-      }
+       else if (isCrowdfundPayment)
+        visitMainPageAndThen('/payment-polls/crowdfunding-payment-request/' + pID) 
     },
     respond: function(data){
       var t = data.additionalData.type
