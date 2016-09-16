@@ -66,7 +66,7 @@ function PostMixin(posts, groups){
   this.unsubscribeFromNotifications = function(){
     var postID = this.get('entity').id
     var that = this
-    return posts.subscribeToNotifications(postID).then(function (response) {
+    return posts.unsubscribeFromNotifications(postID).then(function (response) {
       that.set('post', {is_subscribed: false})
     })
   }

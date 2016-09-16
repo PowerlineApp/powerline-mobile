@@ -63,7 +63,7 @@ function PollPetitionMixin(petitions){
   this.unsubscribeFromNotifications = function(){
     var petitionID = this.get('entity').id
     var that = this
-    return petitions.subscribeToNotifications(petitionID).then(function (response) {
+    return petitions.unsubscribeFromNotifications(petitionID).then(function (response) {
       var pollInfo = that.get('poll')
       pollInfo.is_subscribed = false
       that.set('poll', pollInfo)
