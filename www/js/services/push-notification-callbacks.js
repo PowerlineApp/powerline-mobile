@@ -26,7 +26,13 @@ function ($location, $timeout, follows, posts, userPetitions, petitions) {
         var petitionID = data.additionalData.entity.id
         visitMainPageAndThen('/petition/' + petitionID)
       }
-             
+    },
+    open: function(data){
+      var isPollNews = data.additionalData.type == 'group_news'
+      if(isPollNews){
+        var nID = data.additionalData.entity.id
+        visitMainPageAndThen('/question/news/' + nID) 
+      }
     },
     respond: function(data){
       var t = data.additionalData.type
