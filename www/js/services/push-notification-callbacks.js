@@ -34,6 +34,13 @@ function ($location, $timeout, follows, posts, userPetitions, petitions) {
         visitMainPageAndThen('/question/news/' + nID) 
       }
     },
+    rsvp: function(data){
+      var isPollEvent = data.additionalData.type == 'group_event'
+      if(isPollEvent){
+        var pID = data.additionalData.entity.id
+        visitMainPageAndThen('/leader-event/' + pID) 
+      }
+    },
     respond: function(data){
       var t = data.additionalData.type
       var eid = data.additionalData.entity.id
