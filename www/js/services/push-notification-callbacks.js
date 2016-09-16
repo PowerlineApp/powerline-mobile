@@ -41,6 +41,13 @@ function ($location, $timeout, follows, posts, userPetitions, petitions) {
         visitMainPageAndThen('/leader-event/' + pID) 
       }
     },
+    donate: function(data){
+      var isPollPayment = data.additionalData.type == 'group_payment_request'
+      if(isPollPayment){
+        var pID = data.additionalData.entity.id
+        visitMainPageAndThen('/payment-polls/payment-request/' + pID) 
+      }
+    },
     respond: function(data){
       var t = data.additionalData.type
       var eid = data.additionalData.entity.id
