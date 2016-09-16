@@ -1,5 +1,5 @@
 angular.module('app.services').factory('pushNotificationCallbacks', 
-function ($location, $timeout, follows, posts, userPetitions) {
+function ($location, $timeout, follows, posts, userPetitions, petitions) {
   // we must use global app.* variable to store callbacks
   // becuase push notification plugin is from phonegap, which uses 'app'
 
@@ -12,12 +12,21 @@ function ($location, $timeout, follows, posts, userPetitions) {
 
   app = {
     view: function(data){
-      var t = data.additionalData.entity.target.type
-      var eid = data.additionalData.entity.target.id
-      if(t == 'post')
+      var isPost = data.additionalData.entity && data.additionalData.entity.target && data.additionalData.entity.target.type == 'post'
+      var isUserPetition = data.additionalData.entity && data.additionalData.entity.target && data.additionalData.entity.target.type == 'user-petition'
+      var isPetition = data.additionalData.type == 'group_petition'
+      
+      if(isPost){
+        var eid = data.additionalData.entity.target.id
         visitMainPageAndThen('/post/' + eid)
-      else if(t == 'user-petition')
-        visitMainPageAndThen('/user-petition/' + eid)        
+      } else if(isUserPetition){
+        var eid = data.additionalData.entity.target.id
+        visitMainPageAndThen('/user-petition/' + eid)   
+      } else if(isPetition){
+        var petitionID = data.additionalData.entity.id
+        visitMainPageAndThen('/petition/' + petitionID)
+      }
+             
     },
     respond: function(data){
       var t = data.additionalData.type
@@ -52,10 +61,17 @@ function ($location, $timeout, follows, posts, userPetitions) {
     },
 
     sign: function(data){
-      if(data.additionalData.entity.target.type == 'user-petition'){
+      var isUserPetition = data.additionalData.entity && data.additionalData.entity.target && data.additionalData.entity.target.type == 'user-petition'
+      var isPetition = data.additionalData.type == 'group_petition'
+      if(isUserPetition){
         var userPetitionID = data.additionalData.entity.target.id
         userPetitions.sign(userPetitionID).then(function(){
           visitMainPageAndThen('/user-petition/' + userPetitionID);
+        })
+      } else if (isPetition){
+        var petitionID = data.additionalData.entity.id
+        petitions.sign(petitionID).then(function(){
+          visitMainPageAndThen('/petition/' + petitionID)
         })
       }
     }
