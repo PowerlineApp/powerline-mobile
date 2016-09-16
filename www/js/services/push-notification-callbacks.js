@@ -19,7 +19,12 @@ function ($location, $timeout, follows, posts, userPetitions) {
       else if(t == 'user-petition')
         visitMainPageAndThen('/user-petition/' + eid)        
     },
-
+    respond: function(data){
+      var t = data.additionalData.type
+      var eid = data.additionalData.entity.id
+      if(t == 'group_question')
+        visitMainPageAndThen('/questions/' + eid)        
+    },
     mute: function(data){
       if(data.additionalData.entity.target.type == 'post'){
         var postID = data.additionalData.entity.target.id
