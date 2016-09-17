@@ -43,7 +43,7 @@ function ($location, $timeout, follows, posts, userPetitions, petitions, groups)
     },
     join: function(data){
       var groupID = data.additionalData.entity.id
-      groups.join(groupID).then(function(){
+      groups.join(groupID).finally(function(){
         visitMainPageAndThen('/group/' + groupID)
       })
     },
