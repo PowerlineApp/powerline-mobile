@@ -1,5 +1,5 @@
 angular.module('app.services').factory('pushNotificationCallbacks', 
-function ($location, $timeout, follows, posts, userPetitions, petitions) {
+function ($location, $timeout, follows, posts, userPetitions, petitions, groups) {
   // we must use global app.* variable to store callbacks
   // becuase push notification plugin is from phonegap, which uses 'app'
 
@@ -40,6 +40,12 @@ function ($location, $timeout, follows, posts, userPetitions, petitions) {
         var pID = data.additionalData.entity.id
         visitMainPageAndThen('/leader-event/' + pID) 
       }
+    },
+    join: function(data){
+      var groupID = data.additionalData.entity.id
+      groups.join(groupID).then(function(){
+        visitMainPageAndThen('/group/' + groupID)
+      })
     },
     donate: function(data){
       var isPollPayment = data.additionalData.type == 'group_payment_request'

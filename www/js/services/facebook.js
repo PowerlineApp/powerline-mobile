@@ -91,7 +91,7 @@ angular.module('app.services').factory('facebook', function ($window, $q, $rootS
       }, function (error) {
         console.log('facebook login failed with error:')
         console.log(error)
-        deferred.reject('Facebook login failed');
+        deferred.reject('Facebook login failed: '+error.errorMessage);
       });
 
       return deferred.promise;
