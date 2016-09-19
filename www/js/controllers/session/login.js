@@ -40,24 +40,21 @@ angular.module('app.controllers').controller('session.login',function ($scope, h
   };
 
   $scope.facebookLogin = function () {
-    var promise = $timeout(function () {
-      $scope.loading = false;
-    }, 2000);
-    $scope.loading = true;
+    $scope.showSpinner();
     facebook.login().then(function (params) {
-      $timeout.cancel(promise);
-      $scope.loading = true;
       // this is sort of hack -- we don't know if user is registered or not
       // so that we try to register him, and disregarding the outcome (success == was not registered yet, failure == is already registered)
       // we login the user
       session.registerUserFromFacebook(params).finally(function(){
         session.facebookLogin(params).then(function () {
+          $scope.hideSpinner();
           if (!session.is_registration_complete) {
             $scope.path('/profile');
           } else {
             $scope.path('/main');
           }
         }, function (response) {
+          $scope.hideSpinner();
           if (302 === response.status) {
             facebook.setRegistrationFormData(params).then(function () {
               $scope.path('/registration');
@@ -65,17 +62,18 @@ angular.module('app.controllers').controller('session.login',function ($scope, h
               $scope.path('/registration');
             });
           } else if (400 === response.status) {
+            $scope.hideSpinner();
             $scope.alert('Facebook login failed', null, 'Error', 'OK');
           } 
-          $scope.loading = false;
+          
         });
       })
 
     }, function (error) {
+      $scope.hideSpinner();
       console.log('facebook.login failed with:')
       console.log(error)
       $scope.alert(error, null, 'Error', 'OK');
-      $scope.loading = false;
     });
 
   };
