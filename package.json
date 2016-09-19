@@ -25,6 +25,12 @@
     "cordova-plugin-calendar",
     "cordova-plugin-camera",
     {
+      "variables": {
+        "SENDER_ID": "354736666363"
+      },
+      "locator": "phonegap-plugin-push"
+    },
+    {
       "locator": "https://git-wip-us.apache.org/repos/asf/cordova-plugin-inappbrowser.git",
       "id": "cordova-plugin-inappbrowser"
     },
@@ -33,7 +39,14 @@
       "id": "cordova-plugin-facebook4"
     },
     "cordova-plugin-statusbar",
-    "cordova-plugin-vibration"
+    "cordova-plugin-vibration",
+    {
+      "variables": {
+        "SENDER_ID": "354736666363"
+      },
+      "locator": "phonegap-plugin-push",
+      "id": "phonegap-plugin-push"
+    }
   ],
   "cordovaPlatforms": [
     "ios",

@@ -25,6 +25,12 @@ angular.module('app.services').factory('notifications', function ($window, devic
         onNotificationAPN(data);
       }
     });
+
+    push.on('error', function(error) {
+    alert(JSON.stringify(error))
+        console.log("push notification plugin error:");
+        console.log(error);
+    });
   }
 
   return {
@@ -50,8 +56,10 @@ angular.module('app.services').factory('notifications', function ($window, devic
   };
 
 }).factory('onNotificationAPN', function (notificationsData) {
-
   return function (data) {
+    console.log('onNotificationAPN')
+    console.log(data)
+    console.log(JSON.stringify(data))
     var entity = angular.isString(data.additionalData.entity) ? angular.fromJson(data.additionalData.entity) : data.additionalData.entity;
     var target = angular.isString(data.additionalData.target) ? angular.fromJson(data.additionalData.target) : data.additionalData.target;
     notificationsData.$apply(function () {
