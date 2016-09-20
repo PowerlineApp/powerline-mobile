@@ -53,7 +53,6 @@ var PushNotification = function(options) {
 
     // triggered on error
     var fail = function(msg) {
-        alert(msg)
         var e = (typeof msg === 'string') ? new Error(msg) : msg;
         that.emit('error', e);
     };

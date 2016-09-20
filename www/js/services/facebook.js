@@ -4,8 +4,9 @@ angular.module('app.services').factory('facebook', function ($window, $q, $rootS
 
   function loadProfile(params) {
     var deferred = $q.defer();
+    var privileges = ['public_profile', 'email']
     FB.api(uid + '/?fields=email,first_name,last_name,picture,gender,location,hometown,birthday,link',
-            ['public_profile', 'email', 'user_friends'], function (fu) {
+           privileges , function (fu) {
       var data = {
         facebook_id: params.facebook_id,
         facebook_token: params.facebook_token,
@@ -61,13 +62,16 @@ angular.module('app.services').factory('facebook', function ($window, $q, $rootS
     },
     // use this when you experience on login: "Error validating access token: Session does not match current stored session. This may be because the user changed the password since the time the session was created or may be due to a system error."
     logout: function(){
+      var deferred = $q.defer();
+      this.init()
       FB.logout(function(resp){
-        console.log('facebook logout successful')
-        console.log(resp)
+        deferred.resolve(resp)
       }, function(error){
         console.log('facebook logout failed')
         console.log(error)
+        deferred.fail(error)
       })
+      return deferred.promise
     },
     login: function () {
       var deferred = $q.defer();
@@ -121,7 +125,7 @@ angular.module('app.services').factory('facebook', function ($window, $q, $rootS
       return deferred.promise;
     },
     loadFriends: function () {
-      FB.api('/me/friends', [], function (response) {
+      FB.api('/me/friends', ['user_friends'], function (response) {
         if (response.data) {
           friends = _.pluck(response.data, 'id');
         }

@@ -27,7 +27,6 @@ angular.module('app.services').factory('notifications', function ($window, devic
     });
 
     push.on('error', function(error) {
-    alert(JSON.stringify(error))
         console.log("push notification plugin error:");
         console.log(error);
     });
