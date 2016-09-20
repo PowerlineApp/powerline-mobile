@@ -7,7 +7,7 @@ function ($location, $timeout, follows, posts, userPetitions, petitions, groups)
     $location.path('/main') // tweak to have back button in detail
     $timeout(function(){
       $location.path(url);
-    }, 1000);    
+    }, 2000);    
   }
 
   app = {
