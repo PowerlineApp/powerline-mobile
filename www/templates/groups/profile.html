@@ -51,6 +51,10 @@
           <p><span>Total Members</span></p>
           <p ng-bind="data.total_members"></p>
         </li>
+        <li ng-show="permissionsForHumans">
+          <p><span>Permissions</span></p>
+          <p ng-bind="permissionsForHumans.join(', ')"></p>
+        </li>
       </ul>
     </section>
 

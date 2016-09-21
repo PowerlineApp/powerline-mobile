@@ -181,9 +181,10 @@ angular.module('app.services').factory('groups',function ($resource, serverConfi
     loadPermissions: function (id) {
       var that = this
       return $http.get(serverConfig.url + '/api/v2/groups/'+id+'/permission-settings').then(function (response) {
-        var model = new PermissionsModel(response.data);
-        model.set('group',that.get(id));
-        return model;
+        var pModel = new PermissionsModel(response.data);
+        var group = that.get(id)
+        pModel.set('group', group);
+        return pModel;
       });
     }
   }

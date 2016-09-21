@@ -93,7 +93,6 @@ angular.module('app.controllers').controller('groups',function ($scope, groups, 
   var id = parseInt($stateParams.id, 10);
 
   $scope.data = groups.get(id);
-  //$scope.data.setPermissions(['permissions_name', 'permissions_country'])
   $scope.isChangeAvailable = function () {
     return $scope.data && $scope.data.group_type === 0;
   };
@@ -148,6 +147,11 @@ angular.module('app.controllers').controller('groups',function ($scope, groups, 
   function checkPermissions() {
     var group = groups.get(id);
     return groups.loadPermissions(id).then(function (permissionModel) {
+      $scope.permissionsForHumans = permissionModel.get('required_permissions').map(function(p){
+        var humanPermName = groups.permissionsLabels[p]
+        return humanPermName
+      })
+
       if (group.joined && permissionModel.hasNew()) {
         var message = 'The group requests new permissions: ';
         _(permissionModel.getNew()).each(function (key) {

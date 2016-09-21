@@ -215,5 +215,14 @@ angular.module('app.services').factory('leaderContentHelper', function($http, se
     })
   }
 
+  service.setGroupPermissions = function(permissions, groupID){ //['permissions_name', 'permissions_country']
+    var data = {required_permissions: permissions}
+    var payload = JSON.stringify(data)
+    var headers = {headers: {'Content-Type': 'application/json'}}
+    return $http.put(serverConfig.url + '/api/v2/groups/'+groupID+'/permission-settings', payload, headers).then(function(response){
+      console.log('permissions changed successfully')
+      return(response)
+    })     
+  }
   return service
 })

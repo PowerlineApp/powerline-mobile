@@ -93,15 +93,6 @@ angular.module('app.services').factory('GroupModel', function(groupsInvites, $ht
         return $http.put(serverConfig.url + '/api/v2/groups/'+this.id+'/membership', payload, headers).then(function(response){
           return(response)
         })
-    },
-
-    this.setPermissions = function(permissions){ //['permissions_name', 'permissions_country']
-         var data = {required_permissions: permissions}
-        var payload = JSON.stringify(data)
-        var headers = {headers: {'Content-Type': 'application/json'}}
-        return $http.put(serverConfig.url + '/api/v2/groups/'+this.id+'/permission-settings', payload, headers).then(function(response){
-          return(response)
-        })     
     }
   }
 
