@@ -206,5 +206,14 @@ angular.module('app.services').factory('leaderContentHelper', function($http, se
     })
   }
 
+  service.inviteUserToGroup = function(userLogin, groupID){
+    var data = {users: [userLogin]} 
+    var payload = JSON.stringify(data)
+    var headers = {headers: {'Content-Type': 'application/json'}}
+    $http.put(serverConfig.url + '/api/v2/groups/'+groupID+'/users', payload, headers).then(function(resp){
+      console.log('user '+userLogin +' invited to group '+groupID)
+    })
+  }
+
   return service
 })
