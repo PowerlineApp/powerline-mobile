@@ -1,5 +1,10 @@
 <ion-view view-title="User Petition">
   <ion-content class="page-petition content">
+    <ion-refresher
+      pulling-text="Pull to refresh..."
+      on-refresh="pullToRefresh()">
+    </ion-refresher>
+    
     <section class="q-header margin-10">
       <div class="avatar" ng-click="navigateTo('owner-profile', userPetition.owner)">
         <avatar-img img="userPetition.owner.avatar" text="userPetition.owner.name"></avatar-img>

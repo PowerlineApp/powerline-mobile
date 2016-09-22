@@ -5,6 +5,11 @@ angular.module('app.controllers').controller('getUserPetitionCtrl',function ($sc
     $scope.showSpinner();
   }
 
+  $scope.pullToRefresh = function(){
+    $scope.$broadcast('discussion.comments-refresh')
+    $scope.$broadcast('scroll.refreshComplete');
+  };
+
   $scope.sign = function(){
     $scope.userPetition.sign().then(function(){
       $scope.showToast('User petition signed!');

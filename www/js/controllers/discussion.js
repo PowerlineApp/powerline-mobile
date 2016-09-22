@@ -1,4 +1,4 @@
-angular.module('app.controllers').controller('discussion',function ($scope, topBar, discussion, $stateParams, $cacheFactory, $ionicPopup, $sce) {
+angular.module('app.controllers').controller('discussion',function ($scope, topBar, discussion, $stateParams, $cacheFactory, $ionicPopup, $sce, $rootScope) {
 
   var isWidget = !/^\/discussion/.test($scope.path());
   
@@ -40,6 +40,10 @@ angular.module('app.controllers').controller('discussion',function ($scope, topB
     //}
   });
 
+  $scope.$on('discussion.comments-refresh', function () {
+    loadComments();
+  });
+
   $scope.getRateClass = function (val) {
     return val ? (val > 0 ? 'green' : 'red') : '';
   };
@@ -77,13 +81,9 @@ angular.module('app.controllers').controller('discussion',function ($scope, topB
   };
 
   function loadComments(scrollToBottom) {
-    $scope.showSpinner();
     discussion.loadTree($scope.entity, $scope.id).then(function (data) {
-      $scope.hideSpinner();
       cache.put($scope.id, data);
-    }, function(){
-      $scope.hideSpinner();
-    });
+    })
   }
 
   $scope.editClicked = [];
@@ -134,7 +134,7 @@ angular.module('app.controllers').controller('discussion',function ($scope, topB
     });
   };
 
-}).controller('discussion.comment-form',function ($scope, discussion, $state, homeCtrlParams) {
+}).controller('discussion.comment-form',function ($scope, discussion, $state, homeCtrlParams, $rootScope) {
 
   $scope.data = {
     comment: '',
@@ -149,13 +149,13 @@ angular.module('app.controllers').controller('discussion',function ($scope, topB
       comment_body: $scope.data.comment,
       privacy: $scope.data.privacy
     };
-    $scope.showSpinner();
+    $rootScope.showSpinner();
     homeCtrlParams.loaded = false;
     discussion.createComment($scope.entity, $scope.id, data).then(function () {
       $scope.$emit('discussion.comment-added');
       $scope.data.comment = '';
     }, function(){
-      $scope.hideSpinner();
+      $rootScope.hideSpinner();
     });
   };
 
