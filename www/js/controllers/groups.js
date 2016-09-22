@@ -147,20 +147,15 @@ angular.module('app.controllers').controller('groups',function ($scope, groups, 
   function checkPermissions() {
     var group = groups.get(id);
     return groups.loadPermissions(id).then(function (permissionModel) {
-      $scope.permissionsForHumans = permissionModel.get('required_permissions').map(function(p){
-        var humanPermName = groups.permissionsLabels[p]
-        return humanPermName
-      })
+      $scope.permissionsForHumans = permissionModel.getPermissionsRequiredByGroupForHumans()
 
-      if (group.joined && permissionModel.hasNew()) {
+      if (group.joined && permissionModel.getPermissionsToConfirmByUserForHumans().length > 0) {
         var message = 'The group requests new permissions: ';
-        _(permissionModel.getNew()).each(function (key) {
-          message += '\n ' + (groups.permissionsLabels[key] || key);
-        });
+        message += permissionModel.getPermissionsToConfirmByUserForHumans().join("\n")
         $scope.confirmAction(message, 'Permissions', ['OK','Cancel']).then(function () {
-          permissionModel.approveNew().save();
+          permissionModel.confirmPermissions()
         }, function () {
-          permissionModel.save();
+          // nothing to do
         });
       }
     });

@@ -179,13 +179,17 @@ angular.module('app.services').factory('groups',function ($resource, serverConfi
     },
 
     loadPermissions: function (id) {
-      var that = this
-      return $http.get(serverConfig.url + '/api/v2/groups/'+id+'/permission-settings').then(function (response) {
+      var deferred = $q.defer();
+      var group = this.get(id)
+      $http.get(serverConfig.url + '/api/v2/groups/'+id+'/permission-settings').then(function (response) {
         var pModel = new PermissionsModel(response.data);
-        var group = that.get(id)
         pModel.set('group', group);
-        return pModel;
+        $http.get(serverConfig.url + '/api/v2/groups/'+id+'/permissions').then(function (response) {
+          pModel.setUnconfirmedPermission(response.data)
+          deferred.resolve(pModel)
+        })
       });
+      return deferred.promise
     }
   }
 

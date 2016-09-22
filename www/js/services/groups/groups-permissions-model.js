@@ -1,4 +1,17 @@
 angular.module('app.services').factory('PermissionsModel', function (JsModel, $http, serverConfig) {
+    var permissionsLabels = {
+      permissions_name: 'Name',
+      permissions_contacts: 'Contact information',
+      permissions_responses: 'Responses',
+      permissions_address: 'Street Address',
+      permissions_city: 'City',
+      permissions_state: 'State',
+      permissions_country: 'Country',
+      permissions_zip_code: 'Zip Code',
+      permissions_email: 'Email',
+      permissions_phone: 'Phone Number'
+    }
+
   return JsModel.extend({
     keys: ['permissions_name', 'permissions_contacts', 'permissions_responses'],
 
@@ -17,6 +30,34 @@ angular.module('app.services').factory('PermissionsModel', function (JsModel, $h
     },
     hasPermissions: function(){
       return this.get('required_permissions') && this.get('required_permissions').length > 0;
+    },
+    setUnconfirmedPermission: function(permissionsHash){
+      var permissionsRequidedByGroup = this.get('required_permissions')
+      var permissionsConfirmedByUser = []
+      _.each(permissionsHash,function(isConfirmed, permission){
+        if(isConfirmed == true)
+          permissionsConfirmedByUser.push(permission)
+      })
+      this._permissionsToConfirmByUser = _.difference(permissionsRequidedByGroup, permissionsConfirmedByUser)
+    },
+    getPermissionsToConfirmByUserForHumans: function(){
+      return this._permissionsToConfirmByUser.map(function(perm){
+        return permissionsLabels[perm]
+      })
+    },
+    getPermissionsRequiredByGroupForHumans: function(){
+      return this.get('required_permissions').map(function(p){
+        return permissionsLabels[p]
+      })
+    },
+    confirmPermissions: function(){
+      var data = {}
+      this._permissionsToConfirmByUser.forEach(function(p){
+        data[p] = true
+      })
+      var payload = JSON.stringify(data)
+      var headers = {headers: {'Content-Type': 'application/json'}}
+      return $http.put(serverConfig.url + '/api/v2/groups/'+this.get('group').id+'/permissions', payload, headers)
     },
     getNew: function () {
       var self = this;
