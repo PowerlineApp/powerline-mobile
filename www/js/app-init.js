@@ -52,6 +52,12 @@ angular.module('app').run(function ($location, layout, spinnerIndicator, $rootSc
 
   $rootScope.navigateTo = navigateTo;
 
+  $rootScope.pullToRefresh = function(){
+    $rootScope.$broadcast('discussion.comments-refresh')
+    // otherwise the pull wont return automatically back
+    $rootScope.$broadcast('scroll.refreshComplete');
+  };
+
   // show/hide spinner globally
   $rootScope.showSpinner = function (indicator) {
     spinnerIndicator.show(indicator);

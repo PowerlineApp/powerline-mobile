@@ -83,6 +83,9 @@ angular.module('app.controllers').controller('discussion',function ($scope, topB
   function loadComments(scrollToBottom) {
     discussion.loadTree($scope.entity, $scope.id).then(function (data) {
       cache.put($scope.id, data);
+      $rootScope.hideSpinner();
+    }, function(){
+      $rootScope.hideSpinner();
     })
   }
 

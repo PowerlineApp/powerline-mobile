@@ -75,14 +75,14 @@ angular.module('app.controllers').controller('question',function ($scope, $locat
     });
   };
   
-}).controller('question.influences',function ($scope, $stateParams, questions, questionCache, loaded) {
+}).controller('question.influences',function ($scope, $stateParams, questions, questionCache, loaded, $rootScope) {
   $scope.q = questionCache.get($stateParams.id);
-  $scope.showSpinner();
+  $rootScope.showSpinner();
   questions.loadAnswers($stateParams.id).then(function (answers) {
-    $scope.hideSpinner();
+    $rootScope.hideSpinner();
     $scope.answers = answers;
   }, function(){
-    $scope.hideSpinner();
+    $rootScope.hideSpinner();
   });
   
 }).controller('question.news',function ($scope, $location, $stateParams, questions, iJoinFilter, activity, layout) {
