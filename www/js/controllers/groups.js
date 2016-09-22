@@ -221,11 +221,8 @@ angular.module('app.controllers').controller('groups',function ($scope, groups, 
 
       groups.loadPermissions(id).then(function (permissionModel) {
         if (permissionModel.hasPermissions()) {
-          var permissions = permissionModel.get('required_permissions')
           var message = 'The next information will be shared with the group leader: ';
-          _(permissions).each(function (key) {
-            message += '\n ' + groups.permissionsLabels[key];
-          });
+          message += permissionModel.getPermissionsToConfirmByUserForHumans().join("\n")
           $scope.confirmAction(message, 'Permissions',['OK','Cancel']).then(function(){
             join(joinForm);
           })
