@@ -69,7 +69,7 @@ angular.module('app.services').factory('facebook', function ($window, $q, $rootS
       }, function(error){
         console.log('facebook logout failed')
         console.log(error)
-        deferred.fail(error)
+        deferred.reject(error)
       })
       return deferred.promise
     },
@@ -95,7 +95,7 @@ angular.module('app.services').factory('facebook', function ($window, $q, $rootS
       }, function (error) {
         console.log('facebook login failed with error:')
         console.log(error)
-        deferred.reject('Facebook login failed: '+error);
+        deferred.reject('Facebook login failed: '+JSON.stringify(error));
       });
 
       return deferred.promise;

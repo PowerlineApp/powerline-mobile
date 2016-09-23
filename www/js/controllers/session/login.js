@@ -74,7 +74,7 @@ angular.module('app.controllers').controller('session.login',function ($scope, h
         $scope.hideSpinner();
         console.log('facebook.login failed with:')
         console.log(error)
-        $scope.alert(error, null, 'Error', 'OK');
+        $scope.alert(JSON.stringify(error), null, 'Error', 'OK');
       });
     })
   };
