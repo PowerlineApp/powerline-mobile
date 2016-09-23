@@ -9,6 +9,7 @@ angular.module('app.services').factory('notifications', function ($window, devic
       "ios": {"alert": "true", "badge": "true", "sound": "true"}
     });
     push.on('registration', function(data) {
+      console.log('succesfully registered to push notifications with ID: '+data.registrationId+' using senderID: '+serverConfig.senderID)
       notificationsData.$apply(function(){
         if(device.isAndroid){
           notificationsData.regId = data.registrationId;
