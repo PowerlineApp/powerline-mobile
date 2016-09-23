@@ -141,7 +141,8 @@ angular.module('app').run(function ($location, layout, spinnerIndicator, $rootSc
       if (confirm(message)) {
         deferred.resolve();
         $rootScope.execApply();
-      }
+      } else 
+        deferred.reject();
     }
     return deferred.promise;
   };

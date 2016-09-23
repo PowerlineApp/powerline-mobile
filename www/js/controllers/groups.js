@@ -117,8 +117,7 @@ angular.module('app.controllers').controller('groups',function ($scope, groups, 
     $scope.navigateTo('group-join', $scope.data);
   };
 
-  $scope.unjoin = function () {
-    $scope.confirmAction('Are you sure?').then(function () {
+  var doUnjoin = function(){
       homeCtrlParams.loaded = false;
       $scope.showSpinner();
       groups.unjoin($scope.data.id).then(function () {
@@ -131,6 +130,11 @@ angular.module('app.controllers').controller('groups',function ($scope, groups, 
         $rootScope.$broadcast('groups-updated');
         $state.reload();
       });
+  }
+
+  $scope.unjoin = function () {
+    $scope.confirmAction('Are you sure?').then(function () {
+      doUnjoin()
     });
   };
 
@@ -155,7 +159,8 @@ angular.module('app.controllers').controller('groups',function ($scope, groups, 
         $scope.confirmAction(message, 'Permissions', ['OK','Cancel']).then(function () {
           permissionModel.confirmPermissions()
         }, function () {
-          // nothing to do
+          console.log('unjoin')
+          doUnjoin()
         });
       }
     });
