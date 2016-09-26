@@ -8,8 +8,8 @@ angular.module('app.services').factory('leaderContentHelper', function($http, se
   service.createAndPublishPollPetition = function(subject, title, answer1, answer2, groupID){
     service.createPollPetition(subject, title, groupID).then(function(response){
       var pollID = response.data.id
-      service.addPollAnswer(pollID, answer1).then(function(){
-        service.addPollAnswer(pollID, answer2).then(function(){
+      service.addOptionToPoll(pollID, answer1).then(function(){
+        service.addOptionToPoll(pollID, answer2).then(function(){
           service.publishPoll(pollID).then(function(){
             console.log('poll:petition published, ID: '+pollID)
           })
@@ -21,8 +21,8 @@ angular.module('app.services').factory('leaderContentHelper', function($http, se
   service.createAndPublishPollEvent = function(subject, title, answer1, answer2, started_at, finished_at, groupID){
     service.createPollEvent(subject, title, started_at, finished_at, groupID).then(function(response){
       var pollID = response.data.id
-      service.addPollAnswer(pollID, answer1).then(function(){
-        service.addPollAnswer(pollID, answer2).then(function(){
+      service.addOptionToPoll(pollID, answer1).then(function(){
+        service.addOptionToPoll(pollID, answer2).then(function(){
           service.publishPoll(pollID).then(function(){
             console.log('poll:event published, ID: '+pollID)
           })
@@ -62,15 +62,24 @@ angular.module('app.services').factory('leaderContentHelper', function($http, se
 
   // created poll with ID = 194 in group 285 as user Peter10
 
-  service.addPollAnswer = function(pollID, value){
+  service.addOptionToPoll = function(pollID, value){
     var data = {value : value}
     var payload = JSON.stringify(data)
     var headers = {headers: {'Content-Type': 'application/json'}}
 
     return $http.post(serverConfig.url + '/api/v2/polls/'+pollID+'/options', payload, headers)
   }
-  // addPollAnswer('answer YES') -> ID: 305
-  // addPollAnswer('answer NO') -> ID: 306
+
+  service.addPaymentOptionToPoll = function(pollID, amount, desc, is_user_amount){
+    var data = {value : desc, payment_amount: amount, is_user_amount: !!is_user_amount}
+    var payload = JSON.stringify(data)
+    var headers = {headers: {'Content-Type': 'application/json'}}
+
+    return $http.post(serverConfig.url + '/api/v2/polls/'+pollID+'/options', payload, headers)
+  }
+
+  // addOptionToPoll('answer YES') -> ID: 305
+  // addOptionToPoll('answer NO') -> ID: 306
 
   service.publishPoll = function(pollID){
     // var data = {options: [
@@ -86,8 +95,8 @@ angular.module('app.services').factory('leaderContentHelper', function($http, se
   service.createAndPublishPollPoll = function(subject, answer1, answer2, groupID){
     service.createPollPoll(subject, groupID).then(function(response){
       var pollID = response.data.id
-      service.addPollAnswer(pollID, answer1).then(function(){
-        service.addPollAnswer(pollID, answer2).then(function(){
+      service.addOptionToPoll(pollID, answer1).then(function(){
+        service.addOptionToPoll(pollID, answer2).then(function(){
           service.publishPoll(pollID).then(function(){
             console.log('poll:poll published, ID: '+pollID)
           })
@@ -109,8 +118,8 @@ angular.module('app.services').factory('leaderContentHelper', function($http, se
   service.createAndPublishPollNews = function(subject, answer1, answer2, groupID){
     service.createPollNews(subject, groupID).then(function(response){
       var pollID = response.data.id
-      service.addPollAnswer(pollID, answer1).then(function(){
-        service.addPollAnswer(pollID, answer2).then(function(){
+      service.addOptionToPoll(pollID, answer1).then(function(){
+        service.addOptionToPoll(pollID, answer2).then(function(){
           service.publishPoll(pollID).then(function(){
             console.log('poll:news published, ID: '+pollID)
           })
@@ -129,13 +138,15 @@ angular.module('app.services').factory('leaderContentHelper', function($http, se
     return $http.post(serverConfig.url + '/api/v2/groups/'+groupID+'/polls', payload, headers)
   }
 
-  service.createAndPublishPollPayment = function(title, subject, answer1, answer2, groupID){
+  service.createAndPublishPollPayment = function(title, subject, answer1, answer1desc, answer2, answer2desc, groupID){
     service.createPollPayment(subject, title, groupID).then(function(response){
       var pollID = response.data.id
-      service.addPollAnswer(pollID, answer1).then(function(){
-        service.addPollAnswer(pollID, answer2).then(function(){
-          service.publishPoll(pollID).then(function(){
-            console.log('poll:payment published, ID: '+pollID)
+      service.addPaymentOptionToPoll(pollID, answer1, answer1desc).then(function(){
+        service.addPaymentOptionToPoll(pollID, answer2, answer2desc).then(function(){
+          service.addPaymentOptionToPoll(pollID, 99, 'this is user amount', true).then(function(){
+            service.publishPoll(pollID).then(function(){
+              console.log('poll:payment published, ID: '+pollID)
+            })
           })
         })        
       })
@@ -153,13 +164,15 @@ angular.module('app.services').factory('leaderContentHelper', function($http, se
     return $http.post(serverConfig.url + '/api/v2/groups/'+groupID+'/polls', payload, headers)
   }
 
-  service.createAndPublishPollCrowfudingPayment = function(title, subject, answer1, answer2, crowdfunding_goal_amount, crowdfunding_deadline, groupID){
+  service.createAndPublishPollCrowfudingPayment = function(title, subject, amount1, amount1desc, amount2, amount2desc, crowdfunding_goal_amount, crowdfunding_deadline, groupID){
     service.createPollCrowfudingPayment(subject, title, crowdfunding_goal_amount, crowdfunding_deadline, groupID).then(function(response){
       var pollID = response.data.id
-      service.addPollAnswer(pollID, answer1).then(function(){
-        service.addPollAnswer(pollID, answer2).then(function(){
-          service.publishPoll(pollID).then(function(){
-            console.log('poll:payment published, ID: '+pollID)
+      service.addPaymentOptionToPoll(pollID, amount1, amount1desc).then(function(){
+        service.addPaymentOptionToPoll(pollID, amount2, amount2desc).then(function(){
+          service.addPaymentOptionToPoll(pollID, 99, 'this is user amount', true).then(function(){
+            service.publishPoll(pollID).then(function(){
+              console.log('poll:crowdfund payment published, ID: '+pollID)
+            })
           })
         })        
       })
