@@ -193,10 +193,6 @@ angular.module('app.services').factory('leaderContentHelper', function($http, se
     return $http.post(serverConfig.url + '/api/v2/groups/'+groupID+'/polls', payload, headers)
   }
 
-  service.createAndPublishAnnouncement = function(){
-
-  }
-
   service.createAnnouncement = function(content, groupID){
     var data = {content: content} 
       

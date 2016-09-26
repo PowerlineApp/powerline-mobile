@@ -41,6 +41,9 @@ function ($location, $timeout, follows, posts, userPetitions, petitions, groups)
         visitMainPageAndThen('/leader-event/' + pID) 
       }
     },
+    share: function(data){
+      visitMainPageAndThen('/messages') 
+    },
     join: function(data){
       var groupID = data.additionalData.entity.id
       groups.join(groupID).finally(function(){
