@@ -117,5 +117,13 @@
         "variables": {
             "SENDER_ID": "354736666363"
         }
+    },
+    "cordova-plugin-datepicker": {
+        "source": {
+            "type": "registry",
+            "id": "cordova-plugin-datepicker"
+        },
+        "is_top_level": true,
+        "variables": {}
     }
 }

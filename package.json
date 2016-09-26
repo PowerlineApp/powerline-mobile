@@ -46,7 +46,8 @@
       },
       "locator": "phonegap-plugin-push",
       "id": "phonegap-plugin-push"
-    }
+    },
+    "cordova-plugin-datepicker"
   ],
   "cordovaPlatforms": [
     "ios",
