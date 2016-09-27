@@ -1,5 +1,5 @@
 angular.module('app.services').factory('pushNotificationCallbacks', 
-function ($location, $timeout, follows, posts, userPetitions, petitions, groups) {
+function ($location, $timeout, follows, posts, userPetitions, petitions, groups, $rootScope) {
   // we must use global app.* variable to store callbacks
   // becuase push notification plugin is from phonegap, which uses 'app'
 
@@ -87,6 +87,7 @@ function ($location, $timeout, follows, posts, userPetitions, petitions, groups)
         var postID = data.additionalData.entity.target.id
         posts.upvote(postID).then(function(){
           visitMainPageAndThen('/post/' + postID);
+          $rootScope.showToast('Your vote was recorded.')
         })
       }
     },

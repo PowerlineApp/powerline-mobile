@@ -166,6 +166,12 @@ angular.module('app.services').factory('ActivityCollection',
         activity.markAsVoted()
     });   
 
+    $rootScope.$on('post.unvoted', function(event, postID) {
+      var activity = aCollection.getPostActivityByID(postID)
+      if(activity)
+        activity.markAsNotVoted()
+    }); 
+
     $rootScope.$on('poll-event.answered', function(event, pollEventID) {
       var activity = aCollection.getPollEventActivityByID(pollEventID)
       if(activity)

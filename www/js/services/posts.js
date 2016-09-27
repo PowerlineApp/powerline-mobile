@@ -110,6 +110,14 @@ angular.module('app.services').factory('posts',function ($q, session, serverConf
           console.log('post.vote -- unknown answer type: '+answerType)
       })
     }
+
+    this.unvote = function(){
+      var postID = this.id
+      var that = this
+      return service.unvote(postID).then(function(){
+        $rootScope.$emit('post.unvoted', postID);
+      })
+    }
   }
 
   var service = {

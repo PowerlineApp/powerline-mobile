@@ -69,10 +69,14 @@
         </fieldset>
 
         <fieldset>
-            <div class="padding-10">
+            <div class="padding-10" ng-hide="selectedAlreadyAnsweredAnswer()">
                 <button class="btn-large btn-primary" 
                 ng-class="submitDisabled() ? 'disabled' : ''"
                 ng-click="submitAnswer()">Submit</button>
+            </div>
+            <div class="padding-10" ng-show="selectedAlreadyAnsweredAnswer()">
+                <button class="btn-large btn-primary" 
+                ng-click="undoAnswer()">Undo</button>
             </div>
         </fieldset>
       </div>    

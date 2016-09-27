@@ -30,13 +30,17 @@ angular.module('app.controllers').controller('getPostCtrl',function ($scope, top
     });
   };
 
-  posts.get($stateParams.id).then(function (post) {
-    $scope.hideSpinner();
-    $scope.post = post;
-    $scope.activeAnswerType = post.getMyAnswerType()
-  }, function(){
-    $scope.hideSpinner();
-  });
+  var loadPost = function(){
+    posts.get($stateParams.id).then(function (post) {
+      $scope.hideSpinner();
+      $scope.post = post;
+      $scope.activeAnswerType = post.getMyAnswerType()
+    }, function(){
+      $scope.hideSpinner();
+    });
+  }
+
+  loadPost()
 
   $scope.activeAnswerType = null
   $scope.isAnswerActive = function(answerType){
@@ -53,13 +57,24 @@ angular.module('app.controllers').controller('getPostCtrl',function ($scope, top
     if(!$scope.submitDisabled())
       $scope.post.vote($scope.activeAnswerType).then(function(){
         $scope.showToast('Your vote was recorded.');  
+        loadPost()
       })
   }
+
+  $scope.undoAnswer = function(){
+    $scope.post.unvote().then(function(){
+      $scope.showToast('Your vote was removed.');  
+      loadPost()
+    })
+  }  
 
   $scope.canAnswer = function(){
     return $scope.post && !$scope.post.expired() && !$scope.post.ownedByCurrentUser()
   }
 
+  $scope.selectedAlreadyAnsweredAnswer = function(){
+    return $scope.post && $scope.post.getMyAnswerType() && $scope.post.getMyAnswerType() == $scope.activeAnswerType
+  }
 
 
 })
