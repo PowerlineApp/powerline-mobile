@@ -3,11 +3,15 @@ function ($location, $timeout, follows, posts, userPetitions, petitions, groups,
   // we must use global app.* variable to store callbacks
   // becuase push notification plugin is from phonegap, which uses 'app'
 
-  var visitMainPageAndThen = function(url){
-    $location.path('/main') // tweak to have back button in detail
+  var visitAandThenB = function(urlA, urlB){
+    $location.path(urlA) // tweak to have back button in detail
     $timeout(function(){
-      $location.path(url);
+      $location.path(urlB);
     }, 2000);    
+  }
+
+  var visitMainPageAndThen = function(url){   
+    visitAandThenB('/main', url)
   }
 
   app = {
@@ -29,9 +33,13 @@ function ($location, $timeout, follows, posts, userPetitions, petitions, groups,
     },
     open: function(data){
       var isPollNews = data.additionalData.type == 'group_news'
+      var isGroup = data.additionalData.type == 'group-permissions-changed'
       if(isPollNews){
         var nID = data.additionalData.entity.id
         visitMainPageAndThen('/question/news/' + nID) 
+      } else if(isGroup){
+        var gID = data.additionalData.entity.target.id
+        visitMainPageAndThen('/group/' + gID) 
       }
     },
     rsvp: function(data){
