@@ -123,10 +123,12 @@ angular.module('app.services').factory('questions',function (QuestionResource,
   }
 
   function answer(data) {
+    var optionID = data['option_id']
+    delete data['option_id']
     var that = this
     var payload = JSON.stringify(data)
     var headers = {headers: {'Content-Type': 'application/json'}}
-    return $http.post(serverConfig.url + '/api/poll/question/' + this.id + '/answer/add', payload, headers).then(function(response){
+    return $http.put(serverConfig.url + '/api/v2/polls/' + this.id + '/answers/'+optionID, payload, headers).then(function(response){
       $rootScope.$emit('poll-event.answered', that.id);
       return(response.data)
     })
