@@ -123,10 +123,7 @@ angular.module('app.services').factory('facebook', function ($window, $q, $rootS
       return deferred.promise;
     },
     loadFriends: function () {
-      console.log('about to loadFriends ')
       FB.api( "/me/friends", ['user_friends'], function (response) {
-        console.log('response')
-        console.log(JSON.stringify(response))
         if (response.data) {
           friends = _.pluck(response.data, 'id');
         }
