@@ -18,7 +18,7 @@ angular.module('app.controllers')
       $scope.shareLink = serverConfig.shareLink + '/payment-request/' + question.id;
       $scope.shareImage = question.share_picture;
 
-      if (question.answer_entity) {
+      if (question.answer_entity && !$scope.q.is_crowdfunding) {
         questions.loadCharge(question.answer_entity.id).then(function(charge) {
           $scope.charge = charge;
         });
