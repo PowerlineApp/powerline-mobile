@@ -41,6 +41,9 @@ angular.module('app.services').factory('ActivityModel',
         });
       },
 
+      dataID: function(){
+        return this.get('entity').id
+      },
       dataType: function(){
         return this.get('entity').type
       },

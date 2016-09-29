@@ -112,6 +112,15 @@ angular.module('app.services').factory('ActivityCollection',
       return p
     };
 
+    aCollection.getActivityByTypeAndID = function(aType, aID){
+      var activity = aCollection.models.filter(function(activity){
+        var idMatch = activity.dataID() == aID
+        var typeMatch = activity.dataType() == aType
+        return typeMatch && idMatch
+      })[0]
+      return activity
+    }
+
     aCollection.getUserPetitionActivityByID = function(userPetitionID){
       var activity = aCollection.models.filter(function(activity){
         return activity.isUserPetitionType() && activity.get('entity').id == userPetitionID
@@ -176,6 +185,18 @@ angular.module('app.services').factory('ActivityCollection',
       var activity = aCollection.getPollEventActivityByID(pollEventID)
       if(activity)
         activity.markAsAnswered()
-    });   
+    }); 
+
+    $rootScope.$on('activity.mark-as-subscribed', function(event, activityType, activityID) {
+      var activity = aCollection.getActivityByTypeAndID(activityType, activityID)
+      if(activity)
+        activity.markAsSubscribed()
+    }); 
+
+    $rootScope.$on('activity.mark-as-unsubscribed', function(event, activityType, activityID) {
+      var activity = aCollection.getActivityByTypeAndID(activityType, activityID)
+      if(activity)
+        activity.markAsUnsubscribed()
+    }); 
     return aCollection
 })

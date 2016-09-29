@@ -109,6 +109,7 @@ angular.module('app.services').factory('facebook', function ($window, $q, $rootS
       });
     },
     share: function (params) {
+      console.log(params)
       var deferred = $q.defer();
 
       FB.ui({

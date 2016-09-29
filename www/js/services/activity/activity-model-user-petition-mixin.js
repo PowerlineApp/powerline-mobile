@@ -54,7 +54,7 @@ function UserPetitionMixin(userPetitions, groups) {
     var userPetitionID = this.get('entity').id
     var that = this
     return userPetitions.subscribeToNotifications(userPetitionID).then(function (response) {
-      that.set('user_petition', {is_subscribed: true})
+      that.markAsSubscribed()
     })
   }
 
@@ -62,8 +62,16 @@ function UserPetitionMixin(userPetitions, groups) {
     var userPetitionID = this.get('entity').id
     var that = this
     return userPetitions.subscribeToNotifications(userPetitionID).then(function (response) {
-      that.set('user_petition', {is_subscribed: false})
+      that.markAsUnsubscribed()
     })
+  }
+
+  this.markAsSubscribed = function(){
+      this.set('user_petition', {is_subscribed: true})
+  }
+
+  this.markAsUnsubscribed = function(){
+      this.set('user_petition', {is_subscribed: false})
   }
 
   this.creatorName = function(){

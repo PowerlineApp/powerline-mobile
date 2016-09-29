@@ -59,7 +59,7 @@ function PostMixin(posts, groups){
     var postID = this.get('entity').id
     var that = this
     return posts.subscribeToNotifications(postID).then(function (response) {
-      that.set('post', {is_subscribed: true})
+      that.markAsSubscribed()
     })
   }
 
@@ -67,8 +67,16 @@ function PostMixin(posts, groups){
     var postID = this.get('entity').id
     var that = this
     return posts.unsubscribeFromNotifications(postID).then(function (response) {
-      that.set('post', {is_subscribed: false})
+      that.markAsUnsubscribed()
     })
+  }
+
+  this.markAsSubscribed = function(){
+      this.set('post', {is_subscribed: true})
+  }
+
+  this.markAsUnsubscribed = function(){
+      this.set('post', {is_subscribed: false})
   }
 
   this.creatorName = function(){

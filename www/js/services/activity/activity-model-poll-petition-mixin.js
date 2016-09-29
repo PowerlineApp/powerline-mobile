@@ -54,9 +54,7 @@ function PollPetitionMixin(petitions){
     var petitionID = this.get('entity').id
     var that = this
     return petitions.subscribeToNotifications(petitionID).then(function (response) {
-      var pollInfo = that.get('poll')
-      pollInfo.is_subscribed = true
-      that.set('poll', pollInfo)
+      that.markAsSubscribed()
     })
   }
 
@@ -64,10 +62,20 @@ function PollPetitionMixin(petitions){
     var petitionID = this.get('entity').id
     var that = this
     return petitions.unsubscribeFromNotifications(petitionID).then(function (response) {
-      var pollInfo = that.get('poll')
-      pollInfo.is_subscribed = false
-      that.set('poll', pollInfo)
+      that.markAsUnsubscribed()
     })
+  }
+
+  this.markAsSubscribed = function(){
+      var pollInfo = this.get('poll')
+      pollInfo.is_subscribed = true
+      this.set('poll', pollInfo)
+  }
+
+  this.markAsUnsubscribed = function(){
+      var pollInfo = this.get('poll')
+      pollInfo.is_subscribed = false
+      this.set('poll', pollInfo)
   }
 
   this.creatorName = function(){

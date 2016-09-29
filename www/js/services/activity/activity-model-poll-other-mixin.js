@@ -3,9 +3,7 @@ function PollOtherMixin(serverConfig, $http){
     var eventID = this.get('entity').id
     var that = this
     return $http.put(serverConfig.url + '/api/v2/user/polls/'+eventID) .then(function(){
-      var pollInfo = that.get('poll')
-      pollInfo.is_subscribed = true
-      that.set('poll', pollInfo)
+      that.markAsSubscribed()
     })
   }
 
@@ -13,10 +11,20 @@ function PollOtherMixin(serverConfig, $http){
     var eventID = this.get('entity').id
     var that = this
     return $http.delete(serverConfig.url + '/api/v2/user/polls/'+eventID) .then(function(){
-      var pollInfo = that.get('poll')
-      pollInfo.is_subscribed = false
-      that.set('poll', pollInfo)
+      that.markAsUnsubscribed()
     })
+  }
+
+  this.markAsSubscribed = function(){
+      var pollInfo = this.get('poll')
+      pollInfo.is_subscribed = true
+      this.set('poll', pollInfo)
+  }
+
+  this.markAsUnsubscribed = function(){
+      var pollInfo = this.get('poll')
+      pollInfo.is_subscribed = false
+      this.set('poll', pollInfo)
   }
 
   this.userIsSubscribedToNotifications = function(){

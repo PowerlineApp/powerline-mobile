@@ -394,12 +394,15 @@ angular.module('app.controllers').directive('iActivity', function ($rootScope, q
       $scope.subscribeToNotifications = function(){
         $scope.activity.subscribeToNotifications().then(function (response) {
           $scope.showToast('Subscribed to item notifications.');
+          // due to https://github.com/PowerlineApp/powerline-mobile/issues/248#issuecomment-248547358
+          $rootScope.$emit('activity.mark-as-subscribed',$scope.activity.dataType(), $scope.activity.dataID());
         })
       }
 
       $scope.unsubscribeFromNotifications = function(){
         $scope.activity.unsubscribeFromNotifications().then(function (response) {
           $scope.showToast('Unsubscribed from item notifications.');
+          $rootScope.$emit('activity.mark-as-unsubscribed',$scope.activity.dataType(), $scope.activity.dataID());
         })
       }
 
