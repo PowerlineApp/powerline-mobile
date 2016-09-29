@@ -71,7 +71,9 @@ angular.module('app.services', [
     'representative_event': '/leader-event/',
     'group_event': '/leader-event/',
     'group': '/group/',
-    'user': '/influence/profile/'
+    'user': '/influence/profile/',
+    'user-petition': '/user-petition/',
+    'post': '/post/'
   };
 
   var calls = {
