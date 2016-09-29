@@ -48,7 +48,7 @@ angular.module('app.controllers')
         option_id: $scope.data.option.id,
         comment: $scope.data.comment,
         privacy: $scope.data.privacy,
-        payment_amount: $scope.data.option.payment_amount
+        payment_amount:  $scope.data.payment_amount || $scope.data.option.payment_amount
       }).then(function () {
         homeCtrlParams.loaded = false;
         $state.reload();

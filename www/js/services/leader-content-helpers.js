@@ -71,7 +71,9 @@ angular.module('app.services').factory('leaderContentHelper', function($http, se
   }
 
   service.addPaymentOptionToPoll = function(pollID, amount, desc, is_user_amount){
-    var data = {value : desc, payment_amount: amount, is_user_amount: !!is_user_amount}
+    var data = {value : desc, is_user_amount: !!is_user_amount}
+    if(amount)
+     data['payment_amount'] = amount
     var payload = JSON.stringify(data)
     var headers = {headers: {'Content-Type': 'application/json'}}
 
@@ -143,7 +145,7 @@ angular.module('app.services').factory('leaderContentHelper', function($http, se
       var pollID = response.data.id
       service.addPaymentOptionToPoll(pollID, answer1, answer1desc).then(function(){
         service.addPaymentOptionToPoll(pollID, answer2, answer2desc).then(function(){
-          service.addPaymentOptionToPoll(pollID, 99, 'this is user amount', true).then(function(){
+          service.addPaymentOptionToPoll(pollID, null, 'this is user amount', true).then(function(){
             service.publishPoll(pollID).then(function(){
               console.log('poll:payment published, ID: '+pollID)
             })
@@ -169,7 +171,7 @@ angular.module('app.services').factory('leaderContentHelper', function($http, se
       var pollID = response.data.id
       service.addPaymentOptionToPoll(pollID, amount1, amount1desc).then(function(){
         service.addPaymentOptionToPoll(pollID, amount2, amount2desc).then(function(){
-          service.addPaymentOptionToPoll(pollID, 99, 'this is user amount', true).then(function(){
+          service.addPaymentOptionToPoll(pollID, null, 'this is user amount', true).then(function(){
             service.publishPoll(pollID).then(function(){
               console.log('poll:crowdfund payment published, ID: '+pollID)
             })
