@@ -12,7 +12,7 @@
     </ion-refresher>
     <hr>
 
-    <h2 class="section-title margin-v-10" ng-show="items.length">Group Invites</h2>
+    <h2 class="section-title margin-v-10" ng-show="items.length > 0 || invites.models.length > 0">Group Invites</h2>
 
     <ul class="request-list" i-radio-list-class="'active'">
       <li ng-repeat="item in items" i-radio-list-item>
@@ -62,7 +62,7 @@
       </li>
 
     </ul>
-    <tab class="sa-items" ng-show="announcements.length == 0">
+    <tab class="sa-items" ng-show="announcements.length + items.length + invites.models.length == 0">
       <p class="no-results" style="padding-top: 20px">The only announcement right now is that there are no announcements.</p>
     </tab>
   </ion-content>
