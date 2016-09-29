@@ -31,20 +31,16 @@ angular.module('app.controllers').controller('influences.search',function ($scop
     load();
   };
 
-  $scope.follow = function (item) {
-    item.followByCurrentUser()
-    $scope.results = _($scope.results).without(item);
+  $scope.follow = function (user) {
+    user.followByCurrentUser()
+    $scope.results = _($scope.results).without(user);
     $scope.showToast('Follow request sent!');
   };
 
-  $scope.facebookFollow = function (item) {
-    $scope.showSpinner();
-    item.$changeStatus({status: 'follow'}, function () {
-      follows.loadSuggested(facebook.getFriends()).then(function (suggested) {
-        $scope.hideSpinner();
-        $scope.suggested = suggested;
-      }, loaded);
-    }, loaded);
+  $scope.facebookFollow = function (facebookFriend) {
+    var user = follows.getOrCreateUser(facebookFriend.id)
+    $scope.follow(user)
+    $scope.suggested = _($scope.suggested).without(facebookFriend);
   };
 
   function load() {

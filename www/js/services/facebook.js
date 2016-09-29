@@ -42,8 +42,6 @@ angular.module('app.services').factory('facebook', function ($window, $q, $rootS
       deferred.resolve(data);
       $rootScope.execApply();
     }, function (error) {
-      console.log('')
-      console.log(error)
       var data = {
         facebook_id: params.facebook_id,
         facebook_token: params.facebook_token
@@ -125,7 +123,10 @@ angular.module('app.services').factory('facebook', function ($window, $q, $rootS
       return deferred.promise;
     },
     loadFriends: function () {
-      FB.api('/me/friends', ['user_friends'], function (response) {
+      console.log('about to loadFriends ')
+      FB.api( "/me/friends", ['user_friends'], function (response) {
+        console.log('response')
+        console.log(JSON.stringify(response))
         if (response.data) {
           friends = _.pluck(response.data, 'id');
         }
