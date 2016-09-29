@@ -21,7 +21,7 @@ angular.module('app.services').factory('search', function ($http, serverConfig, 
   var _isSearchingUsers = false;
   return {
     load: function (query) {
-      return (query && '#' === query[0]) ? petitionSearch(query) : profileSearch(query);
+        return profileSearch(query);
     },
     searchUsers: function (query) {
       if (_isSearchingUsers && _lastUserSearchDefer) {
