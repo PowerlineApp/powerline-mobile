@@ -1662,7 +1662,7 @@ select.choice-filter {
       .q-header .q-info .icon-fundraiser.icon-poll, .q-header .q-info .icon-event.icon-poll, .q-header .q-info .icon-petition.icon-poll, .q-header .q-info .icon-discussion.icon-poll, .q-header .q-info .icon-poll.icon-poll, .q-header .q-info .icon-post.icon-poll {
         background-position: -2px -6px; }
       .q-header .q-info .icon-fundraiser.icon-petition, .q-header .q-info .icon-event.icon-petition, .q-header .q-info .icon-petition.icon-petition, .q-header .q-info .icon-discussion.icon-petition, .q-header .q-info .icon-poll.icon-petition, .q-header .q-info .icon-post.icon-petition {
-        background-position: -38px -6px; }
+        background-position: -79px -46px; }
       .q-header .q-info .icon-fundraiser.icon-discussion, .q-header .q-info .icon-event.icon-discussion, .q-header .q-info .icon-petition.icon-discussion, .q-header .q-info .icon-discussion.icon-discussion, .q-header .q-info .icon-poll.icon-discussion, .q-header .q-info .icon-post.icon-discussion {
         background-position: -74px -6px; }
       .q-header .q-info .icon-fundraiser.icon-event, .q-header .q-info .icon-event.icon-event, .q-header .q-info .icon-petition.icon-event, .q-header .q-info .icon-discussion.icon-event, .q-header .q-info .icon-poll.icon-event, .q-header .q-info .icon-post.icon-event {
@@ -1952,7 +1952,7 @@ select.choice-filter {
         background-size: 18px auto;
         background-position: 18px 16px; }
       .new-post-window a i.user-petition {
-        background-position: -30px 9px; }
+        background-position: -72px -42px; }
     .new-post-window a .text {
       display: inline-block;
       margin-left: 15px; }
@@ -2871,7 +2871,7 @@ asterisk {
       .activities-list .item .item-title i.poll {
         background-position: -2px -4px; }
       .activities-list .item .item-title i.petition {
-        background-position: -31px -4px; }
+        background-position: -58px -37px; }
       .activities-list .item .item-title i.discussion {
         background-position: -57px -4px; }
       .activities-list .item .item-title i.event {
