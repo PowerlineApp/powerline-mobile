@@ -146,8 +146,10 @@ angular.module('app.services').factory('leaderContentHelper', function($http, se
       service.addPaymentOptionToPoll(pollID, answer1, answer1desc).then(function(){
         service.addPaymentOptionToPoll(pollID, answer2, answer2desc).then(function(){
           service.addPaymentOptionToPoll(pollID, null, 'this is user amount', true).then(function(){
-            service.publishPoll(pollID).then(function(){
-              console.log('poll:payment published, ID: '+pollID)
+            service.addOptionToPoll(pollID, "I don't want to donate. Mark as read.").then(function(){
+              service.publishPoll(pollID).then(function(){
+                console.log('poll:payment payment published, ID: '+pollID)
+              })
             })
           })
         })        
@@ -172,8 +174,10 @@ angular.module('app.services').factory('leaderContentHelper', function($http, se
       service.addPaymentOptionToPoll(pollID, amount1, amount1desc).then(function(){
         service.addPaymentOptionToPoll(pollID, amount2, amount2desc).then(function(){
           service.addPaymentOptionToPoll(pollID, null, 'this is user amount', true).then(function(){
-            service.publishPoll(pollID).then(function(){
-              console.log('poll:crowdfund payment published, ID: '+pollID)
+            service.addOptionToPoll(pollID, "I don't want to donate. Mark as read.").then(function(){
+              service.publishPoll(pollID).then(function(){
+                console.log('poll:crowdfund payment published, ID: '+pollID)
+              })
             })
           })
         })        

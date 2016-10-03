@@ -45,7 +45,7 @@
               <div class="checkbox-field-long" ng-repeat="option in q.options" ng-class="{active: data.option === option}"
                    ng-click="select(option)">
                   <span><i></i></span>
-                  <p>{{ option.is_user_amount ? '' : '$' + option.payment_amount + ' - ' }}{{ option.value }}</p>
+                  <p>{{ option.payment_amount ? '$' + option.payment_amount + ' - ' : '' }}{{ option.value }}</p>
               </div>
           </fieldset>
       </section>
@@ -89,7 +89,7 @@
               <a class="text-close" ng-click="data.showAnswerForm = false;data.option = null;">Cancel</a>
               <p class="section-title">
                   <strong>Submit?</strong>
-                  <span>{{ data.option.value }}{{ data.option.is_user_amount ? '' : ' for $' + data.option.payment_amount }}</span>
+                  <span>{{ data.option.value }}{{ data.option.payment_amount ?  ' - for $' + data.option.payment_amount : '' }}</span>
               </p>
               <div class="text-field-2" ng-if="data.option.is_user_amount">
                   <input type="number" ng-model="data.payment_amount" required name="payment_amount" placeholder="Enter custom amount here (number only)" />
