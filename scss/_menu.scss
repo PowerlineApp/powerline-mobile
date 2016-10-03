@@ -103,7 +103,9 @@ $menuBorderBottomColor: #31316e;
       background-size: 115px auto;
       vertical-align: middle;
       &.post {
-        background-position: -71px -41px;
+        background: url('../images/v2/icons/post-icons-flag.png') no-repeat;
+        background-size: 18px auto;
+        background-position: 18px 16px;
       }
       &.user-petition {
         background-position: -30px 9px;

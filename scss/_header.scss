@@ -204,9 +204,13 @@
       &.icon-poll {background-position: -2px -6px;}
       &.icon-petition {background-position: -38px -6px;}
       &.icon-discussion {background-position: -74px -6px;}
-      &.icon-post {background-position: -76px -48px;}
       &.icon-event {background-position: -36px -48px;}
       &.icon-fundraiser {background-position: 0px -48px;}
+      &.icon-post {
+        background: url('../images/v2/icons/post-icons-flag.png') no-repeat;
+        background-size: 14px auto;
+        background-position-x: 3px;
+      }
     }
   }
 }

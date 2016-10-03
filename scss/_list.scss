@@ -790,9 +790,13 @@
         &.poll {background-position: -2px -4px;}
         &.petition {background-position: -31px -4px;}
         &.discussion {background-position: -57px -4px;}
-        &.post {background-position: -57px -38px;}
         &.event {background-position: -29px -38px;}
         &.fundraiser {background-position: -2px -38px;}
+        &.post {
+          background: url('../images/v2/icons/post-icons-flag.png') no-repeat;
+          background-size: 12px auto;
+          background-position-x: 2px;
+        }
       }
 
       i.time {

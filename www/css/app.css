@@ -1665,12 +1665,14 @@ select.choice-filter {
         background-position: -38px -6px; }
       .q-header .q-info .icon-fundraiser.icon-discussion, .q-header .q-info .icon-event.icon-discussion, .q-header .q-info .icon-petition.icon-discussion, .q-header .q-info .icon-discussion.icon-discussion, .q-header .q-info .icon-poll.icon-discussion, .q-header .q-info .icon-post.icon-discussion {
         background-position: -74px -6px; }
-      .q-header .q-info .icon-fundraiser.icon-post, .q-header .q-info .icon-event.icon-post, .q-header .q-info .icon-petition.icon-post, .q-header .q-info .icon-discussion.icon-post, .q-header .q-info .icon-poll.icon-post, .q-header .q-info .icon-post.icon-post {
-        background-position: -76px -48px; }
       .q-header .q-info .icon-fundraiser.icon-event, .q-header .q-info .icon-event.icon-event, .q-header .q-info .icon-petition.icon-event, .q-header .q-info .icon-discussion.icon-event, .q-header .q-info .icon-poll.icon-event, .q-header .q-info .icon-post.icon-event {
         background-position: -36px -48px; }
       .q-header .q-info .icon-fundraiser.icon-fundraiser, .q-header .q-info .icon-event.icon-fundraiser, .q-header .q-info .icon-petition.icon-fundraiser, .q-header .q-info .icon-discussion.icon-fundraiser, .q-header .q-info .icon-poll.icon-fundraiser, .q-header .q-info .icon-post.icon-fundraiser {
         background-position: 0px -48px; }
+      .q-header .q-info .icon-fundraiser.icon-post, .q-header .q-info .icon-event.icon-post, .q-header .q-info .icon-petition.icon-post, .q-header .q-info .icon-discussion.icon-post, .q-header .q-info .icon-poll.icon-post, .q-header .q-info .icon-post.icon-post {
+        background: url("../images/v2/icons/post-icons-flag.png") no-repeat;
+        background-size: 14px auto;
+        background-position-x: 3px; }
 
 .p-header {
   padding: 14px 8px 14px 112px;
@@ -1946,7 +1948,9 @@ select.choice-filter {
       background-size: 115px auto;
       vertical-align: middle; }
       .new-post-window a i.post {
-        background-position: -71px -41px; }
+        background: url("../images/v2/icons/post-icons-flag.png") no-repeat;
+        background-size: 18px auto;
+        background-position: 18px 16px; }
       .new-post-window a i.user-petition {
         background-position: -30px 9px; }
     .new-post-window a .text {
@@ -2870,12 +2874,14 @@ asterisk {
         background-position: -31px -4px; }
       .activities-list .item .item-title i.discussion {
         background-position: -57px -4px; }
-      .activities-list .item .item-title i.post {
-        background-position: -57px -38px; }
       .activities-list .item .item-title i.event {
         background-position: -29px -38px; }
       .activities-list .item .item-title i.fundraiser {
         background-position: -2px -38px; }
+      .activities-list .item .item-title i.post {
+        background: url("../images/v2/icons/post-icons-flag.png") no-repeat;
+        background-size: 12px auto;
+        background-position-x: 2px; }
     .activities-list .item .item-title i.time {
       display: block;
       position: absolute;
