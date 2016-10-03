@@ -22,18 +22,20 @@ angular.module('app.controllers').controller('widget.share', function ($scope, s
   };
 
   $scope.share = function (key) {
-    prepare();
-    $window.open(links[key](), '_system', 'location=yes');
+    $scope.alert('This feature is temporarily unavailable.');
+    //prepare();
+    //$window.open(links[key](), '_system', 'location=yes');
   };
 
   $scope.FBShare = function () {
-    prepare();
-    facebook.share({
-      name: title,
-      link: $scope.shareLink || serverConfig.shareLink,
-      picture: $scope.shareImage || serverConfig.shareImage,
-      description: body
-    });
+    $scope.alert('This feature is temporarily unavailable.');
+    // prepare();
+    // facebook.share({
+    //   name: title,
+    //   link: $scope.shareLink || serverConfig.shareLink,
+    //   picture: $scope.shareImage || serverConfig.shareImage,
+    //   description: body
+    // });
   };
 
   function prepare() {
