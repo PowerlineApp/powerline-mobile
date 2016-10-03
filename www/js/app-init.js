@@ -10,6 +10,7 @@ angular.module('app').run(function ($location, layout, spinnerIndicator, $rootSc
     }
     if (window.StatusBar) {
       StatusBar.styleDefault();
+      StatusBar.overlaysWebView(false);
     }
   });
 
