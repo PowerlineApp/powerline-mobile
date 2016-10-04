@@ -143,7 +143,7 @@ angular.module('app.services').factory('session', function (serverConfig, $http,
 
   var service = {
     isCurrentUserLeader: function(){
-      return profile && (profile.first_name == 'Peter10' || profile.first_name == 'JTest1')
+      return profile && (profile.first_name == 'Peter10' || profile.username == 'jtest1')
     },
     get: function () {
       return profile;
