@@ -3,6 +3,7 @@ angular.module('app.controllers').controller('profile', function ($scope, profil
   $scope.view = {editMode: false};
 
   $scope.profile = profile.get();
+  console.log($scope.profile)
   $scope.profileManager = profile;
   $scope.isDefaultAvatar = function(){
     if($scope.profile)

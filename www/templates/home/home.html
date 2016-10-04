@@ -10,6 +10,7 @@
   <section ng-show="showPostWindow" class="new-post-window" ng-click="$event.stopPropagation()">
     <a ng-click="createNewContent('post')"><i class="post"></i>New Post</a>
     <a ng-click="createNewContent('user-petition')"><i class="user-petition"></i>New Petition</a>
+    <a ng-show="isLeader()" ng-click="createNewContent('poll-question')"><i class="poll-question"></i>Make a Poll</a>
   </section>
   <section ng-include="'templates/notifications.html'"></section>
   <section class="groups-filter-panel">

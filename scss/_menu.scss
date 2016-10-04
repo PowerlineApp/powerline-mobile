@@ -110,6 +110,9 @@ $menuBorderBottomColor: #31316e;
       &.user-petition {
         background-position: -72px -42px;
       }
+      &.poll-question {
+        background-position: 13px 7px;
+      }
     }
     .text{
       display: inline-block;

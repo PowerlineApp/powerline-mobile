@@ -71,6 +71,31 @@ angular.module('app.services').factory('questions',function (QuestionResource,
 
     hasEduContent: function(){
       return educational_context || educational_context.length > 0
+    },
+
+    createPollQuestion: function(groupID, questionText){
+      var data = {subject: questionText,
+        type: 'group'} 
+        
+      var payload = JSON.stringify(data)
+      var headers = {headers: {'Content-Type': 'application/json'}}
+
+      return $http.post(serverConfig.url + '/api/v2/groups/'+groupID+'/polls', payload, headers)
+    },
+
+    addOptionToPoll: function(pollID, optionText){
+      var data = {value : optionText}
+      var payload = JSON.stringify(data)
+      var headers = {headers: {'Content-Type': 'application/json'}}
+
+      return $http.post(serverConfig.url + '/api/v2/polls/'+pollID+'/options', payload, headers)
+    },
+
+    publishPoll: function(pollID){
+      var data = {}
+      var payload = JSON.stringify(data)
+      var headers = {headers: {'Content-Type': 'application/json'}}
+      return $http.patch(serverConfig.url + '/api/v2/polls/'+pollID, payload, headers) 
     }
   };
 

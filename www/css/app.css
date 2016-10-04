@@ -1953,6 +1953,8 @@ select.choice-filter {
         background-position: 18px 16px; }
       .new-post-window a i.user-petition {
         background-position: -72px -42px; }
+      .new-post-window a i.poll-question {
+        background-position: 13px 7px; }
     .new-post-window a .text {
       display: inline-block;
       margin-left: 15px; }

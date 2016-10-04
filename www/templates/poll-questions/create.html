@@ -1,0 +1,76 @@
+<ion-view view-title="Make a Poll">
+  <ion-nav-buttons side="right">
+    <button class="button button-clear" ng-click="send()">Send</button>
+  </ion-nav-buttons>
+
+  <ion-content class="content has-footer" has-bouncing="false">
+    <section class="dropdown-1">
+      <div class="title" ng-click="data.openChoices = !data.openChoices">
+        <fieldset class="profile-avatar">
+          <avatar-img img="profile.avatar_file_name" text="profile.first_name"></avatar-img>
+        </fieldset>
+        <span>
+          <fieldset class="avatar" ng-show="data.group">
+            <img ng-src="{{ data.group.getIconWhite()}}" />
+          </fieldset>
+          {{ data.group ? data.group.official_title : 'Select a community' }}
+        </span>
+        <i class="icon-post"></i>
+      </div>
+      <ul class="choices" ng-show="data.openChoices">
+        <li ng-repeat="item in groups" ng-click="data.group = item;
+                data.openChoices = false;">
+          <span>
+            <fieldset class="avatar">
+              <avatar-img img="item.getIconWhite()" text="item.official_title"></avatar-img>
+            </fieldset>
+            {{ item.official_title}}
+          </span>
+        </li>
+      </ul>
+    </section>
+
+    <form name="pollQuestionForm" novalidate ng-class="formClass" autocomplete="off">
+      <fieldset class="add-post">
+        <div class="title-field" ng-class="invalidClass(pollQuestionForm.question_text.$invalid)">
+            <input ng-model="data.question_text" name="question_text" maxlength="255" required placeholder="Type question here" />
+        </div>
+
+        <div ng-repeat="answer in answers track by $index">
+          <button style="float:right; position: relative; top: -5px;" 
+          class="button icon ion-close-circled button-clear"
+          ng-click="removeAnswer($index)">
+          </button>
+          <div style="overflow: hidden;">
+            <input class="title-field" 
+            style="" 
+            ng-model="answer.answer_text" 
+            name="question_text" 
+            maxlength="255" 
+            required placeholder="Type answer here" />
+          </div>
+        </div>
+    <div style="width: 200px;" class="margin-v-20">
+      <button class="btn-large btn-primary icon-left ion-plus-circled"
+      ng-click="addAnswer()">
+        Add answer
+      </button>
+    </div>
+    </fieldset>
+
+
+      <section class="ng-hide">
+        <input type="hidden" ng-model="data.group" name="group">
+      </section>
+      <input type="button" ng-click="create(petitionForm)" id="submitter" class="ng-hide">
+    </form>
+
+  </ion-content>
+
+  <section class="footer-fixed" style="padding: 18px 12px;">
+    <strong class="right" ng-bind="data.chars_left"></strong>
+    <span ng-show="data.group && data.group.available !== undefined">
+      You have (<strong>{{ data.group.available}}</strong>) polls left in this group
+    </span>
+  </section>
+</ion-view>

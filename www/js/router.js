@@ -143,6 +143,11 @@ angular.module('app')
       url: '/questions/:id',
       templateUrl: 'templates/question/layout.html',
       controller: 'question'
+    },{
+      name: 'createPollQuestion',
+      url: '/poll-question/create/:groupID',
+      templateUrl: 'templates/poll-questions/create.html',
+      controller: 'createPollQuestionCtrl'
     }, {
       name: 'questionNews',
       url: '/question/news/:id',

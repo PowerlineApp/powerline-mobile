@@ -19,6 +19,10 @@ angular.module('app.controllers').controller('home', function ($scope, $timeout,
 
   }
 
+  $scope.isLeader = function(){
+    return profile.isCurrentUserLeader()
+  }
+
   function refreshListOfActivities() {
     if(homeCtrlParams.filter.selectedGroup)
       $scope.activities = homeCtrlParams.filter.selectedGroup.activities

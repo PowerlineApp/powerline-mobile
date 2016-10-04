@@ -142,6 +142,9 @@ angular.module('app.services').factory('session', function (serverConfig, $http,
   var profile;
 
   var service = {
+    isCurrentUserLeader: function(){
+      return profile && profile.first_name == 'Peter10'
+    },
     get: function () {
       return profile;
     },
