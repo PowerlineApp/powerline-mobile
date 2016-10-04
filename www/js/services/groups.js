@@ -181,7 +181,6 @@ angular.module('app.services').factory('groups',function ($resource, serverConfi
     loadPermissions: function (id) {
       var deferred = $q.defer();
       var group = this.get(id)
-      console.log()
       $http.get(serverConfig.url + '/api/v2/groups/'+id+'/permission-settings').then(function (response) {
         var pModel = new PermissionsModel(response.data);
         pModel.set('group', group);
