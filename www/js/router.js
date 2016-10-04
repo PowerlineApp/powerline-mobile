@@ -311,6 +311,11 @@ angular.module('app')
       url: '/followgroup/profile/:id',
       templateUrl: 'templates/followgroup/profile.html',
       controller: 'followgroup.profile'
+    },{
+      name: 'createAnnouncement',
+      url: '/announcement/create/:groupID',
+      templateUrl: 'templates/announcements/create.html',
+      controller: 'createAnnouncementCtrl'
     }];
 
   states.forEach(function (state) {

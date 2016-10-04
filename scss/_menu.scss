@@ -113,6 +113,11 @@ $menuBorderBottomColor: #31316e;
       &.poll-question {
         background-position: 13px 7px;
       }
+      &.announcement {
+        background: url('../images/v2/icons/post-icons-announcement.png') no-repeat;
+        background-size: 19px auto;
+        background-position: 20px 15px;
+      }
     }
     .text{
       display: inline-block;
