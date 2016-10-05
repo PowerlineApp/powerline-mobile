@@ -55,11 +55,11 @@ angular.module('app.controllers').controller('question',function ($scope, $locat
       $scope.hideSpinner();
     }
   });
-}).controller('question.answer-form',function ($scope, $state, iStorageMemory, homeCtrlParams) {
+}).controller('question.answer-form',function ($scope, $state, iStorageMemory, homeCtrlParams, $rootScope) {
 
   $scope.answer = function () {
 
-    $scope.showSpinner();
+    $rootScope.showSpinner();
     $scope.$parent.q.answer($scope.data).then(function () {
       homeCtrlParams.loaded = false;
       $scope.hideSpinner();
@@ -70,7 +70,7 @@ angular.module('app.controllers').controller('question',function ($scope, $locat
       $state.reload();
 
     }, function () {
-      $scope.hideSpinner();
+      $rootScope.hideSpinner();
       $state.reload();
     });
   };
