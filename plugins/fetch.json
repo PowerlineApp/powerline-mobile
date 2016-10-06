@@ -108,16 +108,6 @@
         "is_top_level": true,
         "variables": {}
     },
-    "phonegap-plugin-push": {
-        "source": {
-            "type": "registry",
-            "id": "phonegap-plugin-push@1.6.0"
-        },
-        "is_top_level": true,
-        "variables": {
-            "SENDER_ID": "354736666363"
-        }
-    },
     "cordova-plugin-datepicker": {
         "source": {
             "type": "registry",
@@ -133,5 +123,15 @@
         },
         "is_top_level": true,
         "variables": {}
+    },
+    "phonegap-plugin-push": {
+        "source": {
+            "type": "registry",
+            "id": "phonegap-plugin-push@1.8.2"
+        },
+        "is_top_level": true,
+        "variables": {
+            "SENDER_ID": "354736666363"
+        }
     }
 }

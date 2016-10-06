@@ -40,14 +40,14 @@
     },
     "cordova-plugin-statusbar",
     "cordova-plugin-vibration",
+    "cordova-plugin-datepicker",
     {
       "variables": {
         "SENDER_ID": "354736666363"
       },
-      "locator": "phonegap-plugin-push",
+      "locator": "phonegap-plugin-push@1.8.2",
       "id": "phonegap-plugin-push"
-    },
-    "cordova-plugin-datepicker"
+    }
   ],
   "cordovaPlatforms": [
     "ios",

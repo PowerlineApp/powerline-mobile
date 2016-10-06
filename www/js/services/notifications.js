@@ -24,7 +24,7 @@ angular.module('app.services').factory('notifications', function ($window, devic
       console.log(JSON.stringify(data))
 
       if(data.count){
-        push.setApplicationIconBadgeNumber(function() {
+        push.setApplicationIconBadgeNumber(function(response) {
           // success
         }, function(error) {
           console.log('push notification: setApplicationIconBadgeNumber failed: ');
