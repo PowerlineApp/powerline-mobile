@@ -1,4 +1,28 @@
-angular.module('app.services').factory('notifications', function ($window, device, serverConfig) {
+angular.module('app.services').factory('notifications', function ($window, device, serverConfig, $http) {
+    function getEndpoints() {
+      return $http.get(serverConfig.url + '/api/endpoints/').then(function (response) {
+        return response.data;
+      });
+    }
+
+    function registerDevice(deviceType, token) {
+      getEndpoints().then(function (endpoints) {
+        if (!_(endpoints).chain().pluck('token').include(token).value()) {
+          console.log('my token is not yet registered, about to proceed')
+          $http.post(serverConfig.url + '/api/endpoints/', {type: deviceType, token: token}).then(function(response){
+            console.log('token successfully registered')
+          },function (response) {
+            console.error('Cannot add notification token');
+            if (response.data) {
+              console.error(angular.toJson(response.data));
+            }
+          });
+        } else {
+          console.log('my token was already registered')
+        }
+      });
+    }
+
   function init() {
     push = $window.PushNotification.init({
       "android": {"senderID": serverConfig.senderID, "icon": "notification_icon"},
@@ -16,7 +40,12 @@ angular.module('app.services').factory('notifications', function ($window, devic
       }}}
     });
     push.on('registration', function(data) {
-      console.log('succesfully registered to push notifications with ID: '+data.registrationId+' using senderID: '+serverConfig.senderID)
+      var token = data.registrationId
+      console.log('succesfully registered to push notifications with token: '+token+' using senderID: '+serverConfig.senderID)
+      if(device.isAndroid)
+        registerDevice('android', token)
+      else
+        registerDevice('ios', token)
     });
     
     push.on('notification', function(data) {
