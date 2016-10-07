@@ -87,13 +87,23 @@ function ($location, $timeout, follows, posts, userPetitions, petitions, groups,
     },
 
     ignore: function(data){
-      ionic.Platform.exitApp();
+      // do nothing
     },
 
     upvote: function(data){
       if(data.additionalData.entity.target.type == 'post'){
         var postID = data.additionalData.entity.target.id
         posts.upvote(postID).then(function(){
+          visitMainPageAndThen('/post/' + postID);
+          $rootScope.showToast('Your vote was recorded.')
+        })
+      }
+    },
+
+    downvote: function(data){
+      if(data.additionalData.entity.target.type == 'post'){
+        var postID = data.additionalData.entity.target.id
+        posts.downvote(postID).then(function(){
           visitMainPageAndThen('/post/' + postID);
           $rootScope.showToast('Your vote was recorded.')
         })

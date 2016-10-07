@@ -27,17 +27,90 @@ angular.module('app.services').factory('notifications', function ($window, devic
     push = $window.PushNotification.init({
       "android": {"senderID": serverConfig.senderID, "icon": "notification_icon"},
       "ios": {"alert": "true", "badge": "true", "sound": "true", "categories": {
-            "own-post-commented": {
-                "yes": {
-                    "callback": "app.accept", "title": "Accept", "foreground": true, "destructive": false
-                },
-                "no": {
-                    "callback": "app.reject", "title": "Reject", "foreground": true, "destructive": false
-                },
-                "maybe": {
-                    "callback": "app.maybe", "title": "Maybe", "foreground": true, "destructive": false
-                }
-      }}}
+        // https://github.com/PowerlineApp/powerline-mobile/issues/226 
+        "comment-mentioned": {
+          "yes": {"callback": "app.view", "title": "Open", "foreground": true, "destructive": false},
+          "no": {"callback": "app.ignore", "title": "Ignore", "foreground": false, "destructive": false}
+        },
+        "influence": { // user wants to follow you
+          "yes": {"callback": "app.approve", "title": "Approve", "foreground": true, "destructive": false},
+          "no": {"callback": "app.ignore", "title": "Ignore", "foreground": false, "destructive": false}
+        },
+        "post-created": { // followed user created a Post
+          "yes": {"callback": "app.upvote", "title": "Upvote", "foreground": true, "destructive": false},
+          "no": {"callback": "app.ignore", "title": "Ignore", "foreground": false, "destructive": false}
+        },
+        "user-petition-created": { // followed user created an User Petition
+          "yes": {"callback": "app.sign", "title": "Sign", "foreground": true, "destructive": false},
+          "no": {"callback": "app.ignore", "title": "Ignore", "foreground": false, "destructive": false}
+        },
+        "post": { // post is boosted
+          "yes": {"callback": "app.upvote", "title": "Upvote", "foreground": true, "destructive": false},
+          "no": {"callback": "app.downvote", "title": "Downvote", "foreground": true, "destructive": false}
+        },
+        "user_petition": { // user petition is boosted
+          "yes": {"callback": "app.sign", "title": "Sign", "foreground": true, "destructive": false},
+          "no": {"callback": "app.ignore", "title": "Ignore", "foreground": false, "destructive": false}
+        },
+        "invite": { // you were been invited to group
+          "yes": {"callback": "app.join", "title": "Join", "foreground": true, "destructive": false},
+          "no": {"callback": "app.ignore", "title": "Ignore", "foreground": true, "destructive": false}
+        },
+        "group-permissions-changed": {
+          "yes": {"callback": "app.open", "title": "Open", "foreground": true, "destructive": false},
+          "no": {"callback": "app.ignore", "title": "Ignore", "foreground": true, "destructive": false}
+        },
+        "own-user-petition-commented": {
+          "yes": {"callback": "app.view", "title": "View", "foreground": true, "destructive": false},
+          "no": {"callback": "app.mute", "title": "Mute", "foreground": false, "destructive": false}
+        },
+        "own-post-commented": {
+          "yes": {"callback": "app.view", "title": "View", "foreground": true, "destructive": false},
+          "no": {"callback": "app.mute", "title": "Mute", "foreground": false, "destructive": false}
+        },
+        "follow-user-petition-commented": {
+          "yes": {"callback": "app.view", "title": "View", "foreground": true, "destructive": false},
+          "no": {"callback": "app.mute", "title": "Mute", "foreground": false, "destructive": false}
+        },        
+        "follow-post-commented": {
+          "yes": {"callback": "app.view", "title": "View", "foreground": true, "destructive": false},
+          "no": {"callback": "app.mute", "title": "Mute", "foreground": false, "destructive": false}
+        },
+        // is seems there is no own-user-petition-signed
+        "own-post-voted": {
+          "yes": {"callback": "app.view", "title": "View", "foreground": true, "destructive": false},
+          "no": {"callback": "app.mute", "title": "Mute", "foreground": false, "destructive": false}
+        },
+        //// LEADER CONTENT ///////////////////////////////////////
+        "announcement": {
+          "yes": {"callback": "app.share", "title": "Share", "foreground": true, "destructive": false},
+          "no": {"callback": "app.ignore", "title": "Ignore", "foreground": false, "destructive": false}
+        },
+        "group_question": {
+          "yes": {"callback": "app.respond", "title": "Respond", "foreground": true, "destructive": false},
+          "no": {"callback": "app.ignore", "title": "Ignore", "foreground": false, "destructive": false}
+        },
+        "group_petition": {
+          "yes": {"callback": "app.sign", "title": "Sign", "foreground": true, "destructive": false},
+          "no": {"callback": "app.view", "title": "View", "foreground": false, "destructive": false}
+        },
+        "group_news": {
+          "yes": {"callback": "app.open", "title": "Open", "foreground": true, "destructive": false},
+          "no": {"callback": "app.ignore", "title": "Ignore", "foreground": false, "destructive": false}
+        },
+        "group_event": {
+          "yes": {"callback": "app.rsvp", "title": "RSVP", "foreground": true, "destructive": false},
+          "no": {"callback": "app.ignore", "title": "Ignore", "foreground": false, "destructive": false}
+        },
+        "group_payment_request": {
+          "yes": {"callback": "app.donate", "title": "Donate", "foreground": true, "destructive": false},
+          "no": {"callback": "app.ignore", "title": "Ignore", "foreground": false, "destructive": false}
+        },
+        "group_payment_request_crowdfunding": {
+          "yes": {"callback": "app.donate", "title": "Donate", "foreground": true, "destructive": false},
+          "no": {"callback": "app.ignore", "title": "Ignore", "foreground": false, "destructive": false}
+        }
+     }}
     });
     push.on('registration', function(data) {
       var token = data.registrationId
