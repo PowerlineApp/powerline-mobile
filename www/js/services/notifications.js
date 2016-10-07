@@ -125,13 +125,13 @@ angular.module('app.services').factory('notifications', function ($window, devic
       console.log('received push notification:')
       console.log(JSON.stringify(data))
 
-      if(data.count){
+      if(data.additionalData && data.additionalData.badgeCount){
         push.setApplicationIconBadgeNumber(function(response) {
           // success
         }, function(error) {
           console.log('push notification: setApplicationIconBadgeNumber failed: ');
           console.log(error)
-        }, data.count);        
+        }, data.additionalData.badgeCount);        
       }
 
       if (data.additionalData && Number(data.additionalData.foreground)) {
