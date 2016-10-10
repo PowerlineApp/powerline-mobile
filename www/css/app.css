@@ -1593,6 +1593,9 @@ select.choice-filter {
     background: url("../images/v2/icons/back-blue.png") center center no-repeat;
     background-size: 17px 23px; }
 
+ion-header-bar .button.back-button.header-item {
+  padding-right: 20px; }
+
 .q-header {
   border-radius: 2px;
   background: #023a73;
