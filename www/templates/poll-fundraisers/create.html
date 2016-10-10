@@ -1,0 +1,130 @@
+<ion-view view-title="Create Fundraiser">
+  <ion-nav-buttons side="right">
+    <button class="button button-clear" ng-click="send()">Send</button>
+  </ion-nav-buttons>
+
+  <ion-content class="content has-footer" has-bouncing="false">
+    <section class="dropdown-1">
+      <div class="title" ng-click="data.openChoices = !data.openChoices">
+        <fieldset class="profile-avatar">
+          <avatar-img img="profile.avatar_file_name" text="profile.first_name"></avatar-img>
+        </fieldset>
+        <span>
+          <fieldset class="avatar" ng-show="data.group">
+            <img ng-src="{{ data.group.getIconWhite()}}" />
+          </fieldset>
+          {{ data.group ? data.group.official_title : 'Select a community' }}
+        </span>
+        <i class="icon-post"></i>
+      </div>
+      <ul class="choices" ng-show="data.openChoices">
+        <li ng-repeat="item in groups" ng-click="data.group = item;
+                data.openChoices = false;">
+          <span>
+            <fieldset class="avatar">
+              <avatar-img img="item.getIconWhite()" text="item.official_title"></avatar-img>
+            </fieldset>
+            {{ item.official_title}}
+          </span>
+        </li>
+      </ul>
+    </section>
+
+    <form name="fundraiserForm" novalidate ng-class="formClass" autocomplete="off">
+      <fieldset class="add-post">
+        <div class="title-field" ng-class="invalidClass(pollQuestionForm.question_text.$invalid)">
+            <input ng-model="data.title_text" name="title_text" maxlength="255" required placeholder="Fundraiser title" />
+        </div>
+        <textarea ng-model="data.description_text" maxlength="250" name="description_text"
+                  required placeholder="Type your description here"
+                  ng-init="data.chars_left = 250"
+                  ng-change="data.chars_left = 250 - data.description_text.length"
+                  style="background-color: white; padding: 6px; margin-bottom: 14px;"></textarea>
+        </textarea>
+        <div style="margin-bottom: 15px;">
+          <ion-toggle-custom ng-model="data.is_crowdfunding" 
+          toggle-class="toggle-calm"><p style=" font-size: 17px;">Is crowdfunding</p></ion-toggle-custom>  
+        </div> 
+        <div class="title-field">
+          <span class="input-label">Goal Amount in USD</span>
+            <input style="font-size: 15px;" ng-model="data.goal_amount" name="goal_amount" maxlength="50" required placeholder="e.g. 1000" />
+        </div>
+        <div class="title-field">
+          <div class="item-floating-label text-field-1" style="background-color: white; border: 0; padding: 0 30px 0 0px;">
+            <span class="input-label" style="font-size: 16px">End of Event (day)</span>
+            <i class="icon-field icon-date"></i>
+            <input type="idate" 
+            style="font-size: 15px; padding-top: 19px;"
+            ng-model="data.end_of_event_date" 
+            i-date name="end_of_event_date"/>
+          </div>
+        </div>
+        <div class="title-field">
+          <div class="item-floating-label text-field-1"  style="background-color: white; border: 0; padding: 0 30px 0 0px;">
+            <span class="input-label"  style="font-size: 16px">End of Event (hour)</span>
+            <select 
+            style="font-weight: 900; color: black"
+            ng-model="data.end_of_event_hour" name="end_of_event_hour" 
+            ng-options="h for h in hours">
+            </select>
+          </div>
+        </div>
+
+        <div style="width: 200px;" class="margin-v-20">
+          <button class="btn-large btn-primary icon-left ion-plus-circled"
+          ng-click="addAnswer()">
+            Add answer
+          </button>
+        </div>
+        <div ng-repeat="answer in answers track by $index">
+          <button style="float:right; position: relative; top: -5px;" 
+          class="button icon ion-close-circled button-clear"
+          ng-click="removeAnswer($index)">
+          </button>
+          <div style="overflow: hidden;">
+            <input class="title-field" 
+            style="width: 30%" 
+            ng-model="answer.amount" 
+            name="answer_amount" 
+            maxlength="10" 
+            required placeholder="Amount" />
+            <input class="title-field" 
+            style="width: 69%; float; right" 
+            ng-model="answer.answer_text" 
+            name="answer_text" 
+            maxlength="255" 
+            required placeholder="Description" />
+          </div>
+        </div>
+        <div style="margin-bottom: 15px">
+          <ion-toggle-custom ng-model="data.custom_amount_enabled" 
+          toggle-class="toggle-calm"><p style=" font-size: 17px;">Custom Amount Answer</p></ion-toggle-custom>  
+        </div> 
+        <button style="float:right; position: relative; top: -5px; opacity: 0" 
+          class="button icon ion-close-circled button-clear">
+        </button>          
+        <div style="overflow: hidden;" ng-show="data.custom_amount_enabled">
+          <input class="title-field" 
+          disabled="true"
+          style="width: 30%" 
+          value="Custom Amount"
+          name="custom_answer_amount" />
+          <input class="title-field" 
+          style="width: 69%; float; right" 
+          ng-model="data.custom_amount_answer_text" 
+          name="custom_amount_answer_text" 
+          maxlength="255" 
+          required placeholder="Description" />
+        </div>
+      </fieldset>
+    </form>
+
+  </ion-content>
+
+  <section class="footer-fixed" style="padding: 18px 12px;">
+    <strong class="right" ng-bind="data.chars_left"></strong>
+    <span ng-show="data.group && data.group.available !== undefined">
+      You have (<strong>{{ data.group.available}}</strong>) fundraisers left in this group
+    </span>
+  </section>
+</ion-view>

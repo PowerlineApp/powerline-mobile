@@ -1955,6 +1955,8 @@ select.choice-filter {
         background-position: -72px -42px; }
       .new-post-window a i.poll-question {
         background-position: 13px 7px; }
+      .new-post-window a i.poll-fundraiser {
+        background-position: 16px -42px; }
       .new-post-window a i.announcement {
         background: url("../images/v2/icons/post-icons-announcement.png") no-repeat;
         background-size: 19px auto;
