@@ -19,7 +19,7 @@ function ($location, $timeout, follows, posts, userPetitions, petitions, groups,
       var isPost = data.additionalData.entity && data.additionalData.entity.target && data.additionalData.entity.target.type == 'post'
       var isUserPetition = data.additionalData.entity && data.additionalData.entity.target && data.additionalData.entity.target.type == 'user-petition'
       var isPetition = data.additionalData.type == 'group_petition'
-      
+
       if(isPost){
         var eid = data.additionalData.entity.target.id
         visitMainPageAndThen('/post/' + eid)
