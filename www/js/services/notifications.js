@@ -139,7 +139,6 @@ angular.module('app.services').factory('notifications', function ($window, devic
         navigator.vibrate(500);
       }
 
-      console.log(service)
       service.confirmNotificationIsProcessed(data)
     });
 
