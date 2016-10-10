@@ -23,8 +23,10 @@ angular.module('app.services')
               .then(function (response) {
                 deferred.resolve(new JsModel(response.data));
               })
-              .catch(function () {
-                deferred.reject('Server Error');
+              .catch(function (error) {
+                console.log('error while adding credit card:')
+                console.log(error)
+                deferred.reject('Server error while adding a card: '+JSON.stringify(error));
               })
             ;
           }
