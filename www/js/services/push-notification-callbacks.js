@@ -1,5 +1,5 @@
 angular.module('app.services').factory('pushNotificationCallbacks', 
-function ($location, $timeout, follows, posts, userPetitions, petitions, groups, $rootScope) {
+function ($location, $timeout, follows, posts, userPetitions, petitions, groups, $rootScope, notifications) {
   // we must use global app.* variable to store callbacks
   // becuase push notification plugin is from phonegap, which uses 'app'
 
@@ -30,6 +30,7 @@ function ($location, $timeout, follows, posts, userPetitions, petitions, groups,
         var petitionID = data.additionalData.entity.id
         visitMainPageAndThen('/petition/' + petitionID)
       }
+      notifications.confirmNotificationIsProcessed(data)
     },
     open: function(data){
       var isPollNews = data.additionalData.type == 'group_news'
@@ -41,6 +42,7 @@ function ($location, $timeout, follows, posts, userPetitions, petitions, groups,
         var gID = data.additionalData.entity.target.id
         visitMainPageAndThen('/group/' + gID) 
       }
+      notifications.confirmNotificationIsProcessed(data)
     },
     rsvp: function(data){
       var isPollEvent = data.additionalData.type == 'group_event'
@@ -48,15 +50,18 @@ function ($location, $timeout, follows, posts, userPetitions, petitions, groups,
         var pID = data.additionalData.entity.id
         visitMainPageAndThen('/leader-event/' + pID) 
       }
+      notifications.confirmNotificationIsProcessed(data)
     },
     share: function(data){
-      visitMainPageAndThen('/messages') 
+      visitMainPageAndThen('/messages')
+      notifications.confirmNotificationIsProcessed(data)
     },
     join: function(data){
       var groupID = data.additionalData.entity.id
       groups.join(groupID).finally(function(){
         visitMainPageAndThen('/group/' + groupID)
       })
+      notifications.confirmNotificationIsProcessed(data)
     },
     donate: function(data){
       var isPollPayment = data.additionalData.type == 'group_payment_request'
@@ -66,28 +71,34 @@ function ($location, $timeout, follows, posts, userPetitions, petitions, groups,
         visitMainPageAndThen('/payment-polls/payment-request/' + pID) 
        else if (isCrowdfundPayment)
         visitMainPageAndThen('/payment-polls/crowdfunding-payment-request/' + pID) 
+      
+      notifications.confirmNotificationIsProcessed(data)
     },
     respond: function(data){
       var t = data.additionalData.type
       var eid = data.additionalData.entity.id
       if(t == 'group_question')
-        visitMainPageAndThen('/questions/' + eid)        
+        visitMainPageAndThen('/questions/' + eid)     
+      notifications.confirmNotificationIsProcessed(data)   
     },
     mute: function(data){
       if(data.additionalData.entity.target.type == 'post'){
         var postID = data.additionalData.entity.target.id
         posts.unsubscribeFromNotifications(postID)
       } 
+      notifications.confirmNotificationIsProcessed(data)
     },
 
     approve: function(data){
       var userID = data.additionalData.entity.target.id
       follows.getOrCreateUser(userID).approve()
       visitMainPageAndThen('/influences');
+      notifications.confirmNotificationIsProcessed(data)
     },
 
     ignore: function(data){
       // do nothing
+      notifications.confirmNotificationIsProcessed(data)
     },
 
     upvote: function(data){
@@ -98,6 +109,7 @@ function ($location, $timeout, follows, posts, userPetitions, petitions, groups,
           $rootScope.showToast('Your vote was recorded.')
         })
       }
+      notifications.confirmNotificationIsProcessed(data)
     },
 
     downvote: function(data){
@@ -108,6 +120,7 @@ function ($location, $timeout, follows, posts, userPetitions, petitions, groups,
           $rootScope.showToast('Your vote was recorded.')
         })
       }
+      notifications.confirmNotificationIsProcessed(data)
     },
 
     sign: function(data){
@@ -124,6 +137,7 @@ function ($location, $timeout, follows, posts, userPetitions, petitions, groups,
           visitMainPageAndThen('/petition/' + petitionID)
         })
       }
+      notifications.confirmNotificationIsProcessed(data)
     }
 
   }

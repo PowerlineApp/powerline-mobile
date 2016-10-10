@@ -138,6 +138,9 @@ angular.module('app.services').factory('notifications', function ($window, devic
         navigator.notification.beep(1);
         navigator.vibrate(500);
       }
+
+      console.log(service)
+      service.confirmNotificationIsProcessed(data)
     });
 
     push.on('error', function(error) {
@@ -146,7 +149,23 @@ angular.module('app.services').factory('notifications', function ($window, devic
     });
   }
 
-  return {
-    init: init
-  };
+  var service = {
+    init: init,
+    confirmNotificationIsProcessed: function(data){
+      var notificationID = null
+      if(data.additionalData && data.additionalData.additionalData && data.additionalData.additionalData.notId)
+        notificationID = data.additionalData.additionalData.notId
+ 
+      if(!device.isAndroid && notificationID){
+        push.finish(function() {
+           // success
+        }, function(error) {
+            console.log('error while confirming notification with id' +notificationID);
+            console.log(error)
+        }, notificationID);
+      }
+    }
+  }
+
+  return service
 })
