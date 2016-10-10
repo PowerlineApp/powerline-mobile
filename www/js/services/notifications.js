@@ -7,7 +7,8 @@ angular.module('app.services').factory('notifications', function ($window, devic
 
     function registerDevice(deviceType, token) {
       getEndpoints().then(function (endpoints) {
-        if (!_(endpoints).chain().pluck('token').include(token).value()) {
+        var tokenNotRegistered = !_(endpoints).chain().pluck('token').include(token).value()
+        if (tokenNotRegistered) {
           console.log('my token is not yet registered, about to proceed')
           $http.post(serverConfig.url + '/api/endpoints/', {type: deviceType, token: token}).then(function(response){
             console.log('token successfully registered')
@@ -16,10 +17,13 @@ angular.module('app.services').factory('notifications', function ($window, devic
             if (response.data) {
               console.error(angular.toJson(response.data));
             }
+            alert('failed to registed device '+token+' to push notifications: '+JSON.stringify(response))
           });
         } else {
           console.log('my token was already registered')
         }
+      }, function(error){
+        alert('failed to registed device '+token+' to push notifications due to :'+JSON.stringify(error))
       });
     }
 
