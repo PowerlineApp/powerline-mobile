@@ -93,12 +93,15 @@ angular.module('app.services').factory('topBar',function ($location) {
       new MenuItem('Other Apps', '/other-services', 'other-item'),
       new MenuItem('Take Tour', '/guide', 'help-item'),
       new MenuItem('Share this App', null, 'share-item', function() {
-        $window.window.plugins.socialsharing.share(
-          'I came across this app Powerline and think you will like it. Visit www.powerli.ne or download it on Google or Apple.',
-          'check this out',
-          null,
-          'https://powerli.ne'
-        );
+        if($window.window.plugins && $window.window.plugins.socialsharing)
+          $window.window.plugins.socialsharing.share(
+            'I came across this app Powerline and think you will like it. Visit www.powerli.ne or download it on Google or Apple.',
+            'check this out',
+            null,
+            'https://powerli.ne'
+          );
+        else 
+          alert('Social sharing is not supposed to work in browser. If you experience this on smartphone, please report us a bug.')
       }),
       new MenuItem('Logout', '/logout', 'logout-item')
     ]

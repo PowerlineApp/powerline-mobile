@@ -47,7 +47,8 @@
       },
       "locator": "phonegap-plugin-push@1.8.2",
       "id": "phonegap-plugin-push"
-    }
+    },
+    "cordova-plugin-x-socialsharing"
   ],
   "cordovaPlatforms": [
     "ios",

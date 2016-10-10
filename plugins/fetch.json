@@ -133,5 +133,13 @@
         "variables": {
             "SENDER_ID": "354736666363"
         }
+    },
+    "cordova-plugin-x-socialsharing": {
+        "source": {
+            "type": "registry",
+            "id": "cordova-plugin-x-socialsharing"
+        },
+        "is_top_level": true,
+        "variables": {}
     }
 }
