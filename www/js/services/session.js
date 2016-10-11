@@ -1,4 +1,4 @@
-angular.module('app.services').factory('session', function (serverConfig, $http, $q, iStorage, $rootScope, $location, $window, facebook) {
+angular.module('app.services').factory('session', function (notifications, serverConfig, $http, $q, iStorage, $rootScope, $location, $window, facebook) {
 
   var session = {
     login: function (data, keepLogged) {
@@ -17,6 +17,7 @@ angular.module('app.services').factory('session', function (serverConfig, $http,
         session.token = data.token;
         session.user_id = data.id;
         session.is_registration_complete = data.is_registration_complete;
+        notifications.init()
         deferred.resolve(data);
       }).error(function (data, status) {
         deferred.reject(status);
@@ -50,6 +51,7 @@ angular.module('app.services').factory('session', function (serverConfig, $http,
         session.token = response.data.token;
         session.user_id = response.data.id;
         session.is_registration_complete = response.data.is_registration_complete;
+        notifications.init()
         return response;
       });
     },

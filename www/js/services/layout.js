@@ -107,7 +107,7 @@ angular.module('app.services').factory('topBar',function ($location) {
     ]
   };
 
-}).factory('layout', function ($rootScope, $document, device, $location, $window, notifications, facebook, $timeout) {
+}).factory('layout', function ($rootScope, $document, device, $location, $window, facebook, $timeout) {
 
   var $body, $content;
   var layout = {
@@ -153,7 +153,6 @@ angular.module('app.services').factory('topBar',function ($location) {
 
   $document.bind('deviceready', function () {
     device.init();
-    notifications.init();
     facebook.init();
 
     if (device.isAndroid) {

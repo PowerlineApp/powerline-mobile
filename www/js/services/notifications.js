@@ -28,6 +28,9 @@ angular.module('app.services').factory('notifications', function ($window, devic
     }
 
   function init() {
+    if($window.PushNotification == null)
+      return false // we are in browser (or plugin not installed)
+
     push = $window.PushNotification.init({
       "android": {"senderID": serverConfig.senderID, "icon": "notification_icon"},
       "ios": {"alert": "true", "badge": "true", "sound": "true", "categories": {

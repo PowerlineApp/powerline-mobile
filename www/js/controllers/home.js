@@ -175,9 +175,10 @@ angular.module('app.controllers').run(function (homeCtrlParams, $document, $root
   });
 });
 
-angular.module('app.controllers').controller('preload', function (topBar, session, profile, $location) {
+angular.module('app.controllers').controller('preload', function (topBar, session, profile, $location, notifications) {
   if (session.token) {
     if (session.is_registration_complete) {
+      notifications.init()
       profile.load().then(function () {
         profile.checkRemind();
       });
