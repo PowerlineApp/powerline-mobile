@@ -53,10 +53,11 @@
           <div class="item-floating-label text-field-1" style="background-color: white; border: 0; padding: 0 30px 0 0px;">
             <span class="input-label" style="font-size: 16px">End of Event (day)</span>
             <i class="icon-field icon-date"></i>
-            <input type="idate" 
-            style="font-size: 15px; padding-top: 19px;"
+            <input 
+            type="date"
             ng-model="data.end_of_event_date" 
-            i-date name="end_of_event_date"/>
+            name="end_of_event_date" 
+            maxlength="10" placeholder="ahoj" />
           </div>
         </div>
         <div class="title-field"  ng-show="data.is_crowdfunding">
