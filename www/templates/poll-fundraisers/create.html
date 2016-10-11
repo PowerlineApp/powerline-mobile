@@ -45,11 +45,11 @@
           <ion-toggle-custom ng-model="data.is_crowdfunding" 
           toggle-class="toggle-calm"><p style=" font-size: 17px;">Is crowdfunding</p></ion-toggle-custom>  
         </div> 
-        <div class="title-field">
+        <div class="title-field" ng-show="data.is_crowdfunding">
           <span class="input-label">Goal Amount in USD</span>
-            <input style="font-size: 15px;" ng-model="data.goal_amount" name="goal_amount" maxlength="50" required placeholder="e.g. 1000" />
+            <input type="number" style="font-size: 15px;" ng-model="data.goal_amount" name="goal_amount" maxlength="50" required placeholder="e.g. 1000" />
         </div>
-        <div class="title-field">
+        <div class="title-field" ng-show="data.is_crowdfunding">
           <div class="item-floating-label text-field-1" style="background-color: white; border: 0; padding: 0 30px 0 0px;">
             <span class="input-label" style="font-size: 16px">End of Event (day)</span>
             <i class="icon-field icon-date"></i>
@@ -59,7 +59,7 @@
             i-date name="end_of_event_date"/>
           </div>
         </div>
-        <div class="title-field">
+        <div class="title-field"  ng-show="data.is_crowdfunding">
           <div class="item-floating-label text-field-1"  style="background-color: white; border: 0; padding: 0 30px 0 0px;">
             <span class="input-label"  style="font-size: 16px">End of Event (hour)</span>
             <select 
@@ -83,15 +83,16 @@
           </button>
           <div style="overflow: hidden;">
             <input class="title-field" 
-            style="width: 30%" 
+            type="number"
+            style="width: 30%; display: inline;" 
             ng-model="answer.amount" 
             name="answer_amount" 
             maxlength="10" 
             required placeholder="Amount" />
             <input class="title-field" 
             style="width: 69%; float; right" 
-            ng-model="answer.answer_text" 
-            name="answer_text" 
+            ng-model="answer.amount_desc" 
+            name="amount_desc" 
             maxlength="255" 
             required placeholder="Description" />
           </div>
@@ -111,8 +112,8 @@
           name="custom_answer_amount" />
           <input class="title-field" 
           style="width: 69%; float; right" 
-          ng-model="data.custom_amount_answer_text" 
-          name="custom_amount_answer_text" 
+          ng-model="data.custom_amount_amount_desc" 
+          name="custom_amount_amount_desc" 
           maxlength="255" 
           required placeholder="Description" />
         </div>
