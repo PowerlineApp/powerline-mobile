@@ -19,7 +19,9 @@ angular.module('app.services')
           if (response.error) {
             deferred.reject(response.error.message);
           } else {
-            $http.post(serverConfig.url + '/api/cards/', {source: response.id})
+            var payload = JSON.stringify({source: response.id})
+            var headers = {headers: {'Content-Type': 'application/json'}}
+            $http.post(serverConfig.url + '/api/v2/cards', payload, headers)
               .then(function (response) {
                 deferred.resolve(new JsModel(response.data));
               })
