@@ -116,7 +116,11 @@ angular.module('app.services').factory('notifications', function ($window, devic
         "group_payment_request_crowdfunding": {
           "yes": {"callback": "app.donate", "title": "Donate", "foreground": true, "destructive": false},
           "no": {"callback": "app.ignore", "title": "Ignore", "foreground": false, "destructive": false}
-        }
+        },
+        "comment-replied":  {
+          "yes": {"callback": "app.reply", "title": "Reply", "foreground": true, "destructive": false},
+          "no": {"callback": "app.ignore", "title": "Ignore", "foreground": false, "destructive": false}
+        },
      }}
     });
     push.on('registration', function(data) {
