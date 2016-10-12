@@ -19,6 +19,7 @@ function ($location, $timeout, follows, posts, userPetitions, petitions, groups,
       var isPost = data.additionalData.entity && data.additionalData.entity.target && data.additionalData.entity.target.type == 'post'
       var isUserPetition = data.additionalData.entity && data.additionalData.entity.target && data.additionalData.entity.target.type == 'user-petition'
       var isPetition = data.additionalData.type == 'group_petition'
+      var isNews = data.additionalData.type == 'group_news'
 
       if(isPost){
         var eid = data.additionalData.entity.target.id
@@ -29,7 +30,11 @@ function ($location, $timeout, follows, posts, userPetitions, petitions, groups,
       } else if(isPetition){
         var petitionID = data.additionalData.entity.id
         visitMainPageAndThen('/petition/' + petitionID)
+      } else if(isNews){
+        var newsID = data.additionalData.entity.id
+        visitMainPageAndThen('/question/news/' + newsID)
       }
+
       notifications.confirmNotificationIsProcessed(data)
     },
     open: function(data){
