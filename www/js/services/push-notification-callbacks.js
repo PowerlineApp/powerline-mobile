@@ -4,8 +4,10 @@ function ($location, $timeout, follows, posts, userPetitions, petitions, groups,
   // becuase push notification plugin is from phonegap, which uses 'app'
 
   var visitAandThenB = function(urlA, urlB){
+    $rootScope.showSpinner()
     $location.path(urlA) // tweak to have back button in detail
     $timeout(function(){
+      $rootScope.hideSpinner()
       $location.path(urlB);
     }, 2000);    
   }
