@@ -34,7 +34,10 @@ angular.module('app.services').factory('SocialActivityModel', function (iStorage
         var icon = typeToIcons[this.get('type')];
         this.set('sa-icon', typeof icon === 'function' ? icon(this) : icon);
         if (this.isFollowRequest()) {
-          this.set('userFollow', follows.getOrCreateUser(this.get('following').id));
+          var userWhoWantsToFollowMeDetails = this.get('following')
+          if(userWhoWantsToFollowMeDetails == null)
+            var userWhoWantsToFollowMeDetails = this.get('target')
+          this.set('userFollow', follows.getOrCreateUser(userWhoWantsToFollowMeDetails.id));
         }
       },
       isRequest: function () {
