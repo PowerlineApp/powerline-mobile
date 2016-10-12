@@ -42,13 +42,21 @@ function ($location, $timeout, follows, posts, userPetitions, petitions, groups,
     open: function(data){
       var isPollNews = data.additionalData.type == 'group_news'
       var isGroup = data.additionalData.type == 'group-permissions-changed'
+      var isPost = data.additionalData.entity && data.additionalData.entity.target && data.additionalData.entity.target.type == 'post'
+      var isUserPetition = data.additionalData.entity && data.additionalData.entity.target && data.additionalData.entity.target.type == 'user-petition'
       if(isPollNews){
         var nID = data.additionalData.entity.id
         visitMainPageAndThen('/question/news/' + nID) 
       } else if(isGroup){
         var gID = data.additionalData.entity.target.id
         visitMainPageAndThen('/group/' + gID) 
-      }
+      } else if(isPost){
+        var eid = data.additionalData.entity.target.id
+        visitMainPageAndThen('/post/' + eid)
+      } else if(isUserPetition){
+        var eid = data.additionalData.entity.target.id
+        visitMainPageAndThen('/user-petition/' + eid)
+      } 
       notifications.confirmNotificationIsProcessed(data)
     },
     rsvp: function(data){
