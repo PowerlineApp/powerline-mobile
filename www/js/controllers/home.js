@@ -186,7 +186,7 @@ angular.module('app.controllers').controller('preload', function (topBar, sessio
         $location.path('/main');
       }
     } else {
-      $location.path('/profile');
+      $location.path('/profile-for-facebook-newscomers');
     }
   } else {
     $location.path('/login');

@@ -249,6 +249,11 @@ angular.module('app')
       url: '/profile',
       templateUrl: 'templates/profile/profile.html',
       controller: 'profile'
+    },{
+      name: 'profileForFacebookNewscomers',
+      url: '/profile-for-facebook-newscomers',
+      templateUrl: 'templates/profile/profile-for-facebook-newscomers.html',
+      controller: 'profileForFacebookNewscomersCtrl'
     }, {
       name: 'profile2',
       url: '/profile-2',
