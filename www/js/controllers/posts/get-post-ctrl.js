@@ -76,5 +76,10 @@ angular.module('app.controllers').controller('getPostCtrl',function ($scope, top
     return $scope.post && $scope.post.getMyAnswerType() && $scope.post.getMyAnswerType() == $scope.activeAnswerType
   }
 
+  $scope.searchByTag = function(e){
+    if (e && e.target.tagName.toLowerCase() === 'hash-tag') {
+      $rootScope.openTag(angular.element(e.target).text());
+    }
+  }
 
 })

@@ -43,7 +43,7 @@
       
       <h1 ng-bind="post.title" ng-show="post.title"></h1>
       <div contenteditable="true">
-        <p ng-hide="inEditMode" ng-bind-html="post.html_body" i-content-link></p>
+        <p ng-click="searchByTag($event)" ng-hide="inEditMode" ng-bind-html="post.html_body" i-content-link></p>
         <textarea ng-model="post.body" ng-show="inEditMode" i-tags i-open-system-links style="border: 1px solid grey;
             margin-left: 10px;
             width: 90vw;

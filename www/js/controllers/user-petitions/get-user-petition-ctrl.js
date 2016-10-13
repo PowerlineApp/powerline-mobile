@@ -55,4 +55,10 @@ angular.module('app.controllers').controller('getUserPetitionCtrl',function ($sc
     $scope.hideSpinner();
   });
 
+  $scope.searchByTag = function(e){
+    if (e && e.target.tagName.toLowerCase() === 'hash-tag') {
+      $rootScope.openTag(angular.element(e.target).text());
+    }
+  }
+
 })
