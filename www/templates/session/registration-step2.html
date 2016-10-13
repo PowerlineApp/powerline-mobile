@@ -44,16 +44,7 @@
             <i class="icon-field icon-email"></i>
             <input type="email" ng-model="data.email_confirm" name="email_confirm" required i-repeat="email"/>
           </div>
-          <div class="item-floating-label text-field-1" ng-class="{invalid: registrationForm.phone.$invalid && registrationForm.$filled}">
-            <span class="input-label">Phone<asterisk>*</asterisk></span>
-            <i class="icon-field icon-phone"></i>
-            <input type="text" ng-model="data.phone" name="phone" required/>
-          </div>
-          <div class="item-floating-label text-field-1" ng-class="{invalid: registrationForm.birth.$invalid && registrationForm.$filled}">
-            <span class="input-label" ng-class="{'has-input': data.birth}">Birthday<asterisk>*</asterisk></span>
-            <i class="icon-field icon-date"></i>
-            <input type="idate" ng-model="data.birth" i-date name="birth" required/>
-          </div>
+           <ion-toggle-custom ng-model="age.iAmAdult" toggle-class="toggle-calm"><p>I am 13 or older</p></ion-toggle-custom>
         </fieldset>
         <p class="comment-message" style="text-align: left;">
         <asterisk>*</asterisk>Powerline requires this information to link you to your communities and, if available, your specific elected leaders. This helps prove you are real and not a robot. We may also aggregate this information for anonymous reporting purposes.

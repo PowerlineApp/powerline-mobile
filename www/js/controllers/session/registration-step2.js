@@ -4,6 +4,7 @@ angular.module('app.controllers').controller('session.registration-step2',
 
     $scope.states = profile.states;
     $scope.countries = profile.countries;
+    $scope.age = {iAmAdult: false}
 
     $scope.data = iStorageMemory.get('registration-form-data');
 
@@ -12,6 +13,11 @@ angular.module('app.controllers').controller('session.registration-step2',
     });
 
     $scope.next = function (registrationForm) {
+      if(!$scope.age.iAmAdult){
+        alert('You must be 13 or older to register to Powerline.')
+        return
+      }
+
       registrationForm.$filled = true;
       if (registrationForm.$invalid) {
         $scope.alert('Correct the errors and try again', null, 'Error', 'OK');
