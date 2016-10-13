@@ -1,28 +1,29 @@
 angular.module('app.controllers').controller('search', function ($scope, $ionicScrollDelegate, search, layout, $cacheFactory) {
   
   var cache = $cacheFactory.get('searchController');
-
-  $scope.query = cache.get('query');
-  $scope.data = cache.get('data');
-
+  
   $scope.search = function (query) {
     $scope.data = null;
+    $scope.lastUsedQuery = null
     $scope.showSpinner();;
     search.load(query).then(function (data) {
       $scope.data = data;
       $scope.hideSpinner();;
-      cache.put('query', query);
-      cache.put('data', data);
       $ionicScrollDelegate.resize();
       $ionicScrollDelegate.scrollTop(true);
+      $scope.lastUsedQuery = query
     }, function () {
       $scope.hideSpinner();;
     });
   };
 
-  if ($scope.query && !$scope.data) {
-    $scope.search($scope.query);
-  }
+  $scope.$on('$ionicView.enter', function() {
+    $scope.lastUsedQuery = null
+    $scope.query = cache.get('query');
+    $scope.data = null
+    if ($scope.query)
+      $scope.search($scope.query);
+  })
 
   layout.setContainerClass('search-screen');
 });

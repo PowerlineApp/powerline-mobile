@@ -12,8 +12,8 @@
   
   <ion-content class="content has-subheader" scroll-sista="subheader">
 
-    <p class="info-message" ng-hide="!data || data.users.length || data.groups.length || data.representatives.length || data.posts.length  || data['user-petitions'].length">
-      That's strange. Looks like we couldn't find anything for <strong>{{ query}}</strong>
+    <p class="info-message" ng-hide="!lastUsedQuery || lastUsedQuery.length == 0 || !data || data.users.length || data.groups.length || data.representatives.length || data.posts.length  || data['user-petitions'].length">
+      That's strange. Looks like we couldn't find anything for <strong>{{ lastUsedQuery}}</strong>
     </p>
 
     <ul ng-show="data.users.length" class="margin-10 profiles-list-two">
