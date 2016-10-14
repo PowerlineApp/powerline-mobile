@@ -16,18 +16,6 @@ function ($location, $timeout, follows, posts, userPetitions, petitions, groups,
     visitAandThenB('/main', url)
   }
 
-  var visitAThenBThenC = function(urlA, urlB,urlC){
-    $rootScope.showSpinner()
-    $location.path(urlA)
-    $timeout(function(){
-      $location.path(urlB);
-      $timeout(function(){
-        $rootScope.hideSpinner()
-        $location.path(urlC);
-      }, 1500); 
-    }, 2000);    
-  }
-
 
   app = {
     view: function(data){
@@ -169,20 +157,7 @@ function ($location, $timeout, follows, posts, userPetitions, petitions, groups,
     },
 
     reply: function(data){
-      isUserPetition = data.additionalData.entity &&  data.additionalData.entity.target && data.additionalData.entity.target.type == 'user-petition'
-      isPost = data.additionalData.entity &&  data.additionalData.entity.target && data.additionalData.entity.target.type == 'post'
-
-      if(isPost){
-        var eid = data.additionalData.entity.target.id
-        var cid = data.additionalData.entity.target.comment_id
-        visitAThenBThenC('/main', '/post/' + eid, '/discussion/posts/'+eid+'/'+cid)
-      } else if(isUserPetition){
-        var eid = data.additionalData.entity.target.id
-        var cid = data.additionalData.entity.target.comment_id
-        visitAThenBThenC('/main', '/user-petition/' + eid, '/discussion/user-petition/'+eid+'/'+cid)
-      }
-
-      notifications.confirmNotificationIsProcessed(data)
+      app.view(data)
     }
 
   }
