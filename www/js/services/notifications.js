@@ -62,7 +62,11 @@ angular.module('app.services').factory('notifications', function ($window, devic
         "boosted_post": { // post is boosted
           "yes": {"callback": "app.upvote", "title": "Upvote", "foreground": true, "destructive": false},
           "no": {"callback": "app.downvote", "title": "Downvote", "foreground": true, "destructive": false}
-        },        
+        },       
+        "boosted_user_petition": {
+          "yes": {"callback": "app.sign", "title": "Sign", "foreground": true, "destructive": false},
+          "no": {"callback": "app.ignore", "title": "Ignore", "foreground": false, "destructive": false}
+        },
         "invite": { // you were been invited to group
           "yes": {"callback": "app.join", "title": "Join", "foreground": true, "destructive": false},
           "no": {"callback": "app.ignore", "title": "Ignore", "foreground": true, "destructive": false}

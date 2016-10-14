@@ -118,29 +118,25 @@ function ($location, $timeout, follows, posts, userPetitions, petitions, groups,
     },
 
     upvote: function(data){
-      if(data.additionalData.entity.target.type == 'post'){
-        var postID = data.additionalData.entity.target.id
-        posts.upvote(postID).then(function(){
-          visitMainPageAndThen('/post/' + postID);
-          $rootScope.showToast('Your vote was recorded.')
-        })
-      }
+      var postID = data.additionalData.entity.target.id
+      posts.upvote(postID).then(function(){
+        visitMainPageAndThen('/post/' + postID);
+        $rootScope.showToast('Your vote was recorded.')
+      })
       notifications.confirmNotificationIsProcessed(data)
     },
 
     downvote: function(data){
-      if(data.additionalData.entity.target.type == 'post'){
-        var postID = data.additionalData.entity.target.id
-        posts.downvote(postID).then(function(){
-          visitMainPageAndThen('/post/' + postID);
-          $rootScope.showToast('Your vote was recorded.')
-        })
-      }
+      var postID = data.additionalData.entity.target.id
+      posts.downvote(postID).then(function(){
+        visitMainPageAndThen('/post/' + postID);
+        $rootScope.showToast('Your vote was recorded.')
+      })
       notifications.confirmNotificationIsProcessed(data)
     },
 
     sign: function(data){
-      var isUserPetition = data.additionalData.entity && data.additionalData.entity.target && data.additionalData.entity.target.type == 'user-petition'
+      var isUserPetition = data.additionalData.entity && data.additionalData.entity.target && (data.additionalData.entity.target.type == 'user-petition' || data.additionalData.entity.target.type == 'user-petition-boosted')
       var isPetition = data.additionalData.type == 'group_petition'
       if(isUserPetition){
         var userPetitionID = data.additionalData.entity.target.id
