@@ -45,9 +45,19 @@ function ($location, $timeout, follows, posts, userPetitions, petitions, groups,
       var isGroup = data.additionalData.type == 'group-permissions-changed'
       var isPost = data.additionalData.entity && data.additionalData.entity.target && data.additionalData.entity.target.type == 'post'
       var isUserPetition = data.additionalData.entity && data.additionalData.entity.target && data.additionalData.entity.target.type == 'user-petition'
+      var isCrowdfunding = data.additionalData.entity && data.additionalData.entity.target && data.additionalData.entity.target.type == 'group_payment_request_crowdfunding'
+      var isPollNewsFromMention = data.additionalData.entity && data.additionalData.entity.target && data.additionalData.entity.target.type == 'group_news'
+      var isPayment = data.additionalData.entity && data.additionalData.entity.target && data.additionalData.entity.target.type == 'group_payment_request'
+      var isEvent = data.additionalData.entity && data.additionalData.entity.target && data.additionalData.entity.target.type == 'group_event'
+      var isPetition = data.additionalData.entity && data.additionalData.entity.target && data.additionalData.entity.target.type == 'group_petition'
+      var isQuestion = data.additionalData.entity && data.additionalData.entity.target && data.additionalData.entity.target.type == 'group_question'
+
       if(isPollNews){
         var nID = data.additionalData.entity.id
         visitMainPageAndThen('/question/news/' + nID) 
+      } else if(isPollNewsFromMention){
+        var eid = data.additionalData.entity.target.id
+        visitMainPageAndThen('/question/news/' + eid) 
       } else if(isGroup){
         var gID = data.additionalData.entity.target.id
         visitMainPageAndThen('/group/' + gID) 
@@ -57,7 +67,22 @@ function ($location, $timeout, follows, posts, userPetitions, petitions, groups,
       } else if(isUserPetition){
         var eid = data.additionalData.entity.target.id
         visitMainPageAndThen('/user-petition/' + eid)
-      } 
+      }  else if(isCrowdfunding){
+        var eid = data.additionalData.entity.target.id
+        visitMainPageAndThen('/payment-polls/crowdfunding-payment-request/' + eid)
+      }  else if(isPayment){
+        var eid = data.additionalData.entity.target.id
+        visitMainPageAndThen('/payment-polls/payment-request/' + eid)
+      }  else if(isEvent){
+        var eid = data.additionalData.entity.target.id
+        visitMainPageAndThen('/leader-event/' + eid)
+      } else if(isPetition){
+        var eid = data.additionalData.entity.target.id
+        visitMainPageAndThen('/petition/' + eid)
+      } else if(isQuestion){
+        var eid = data.additionalData.entity.target.id
+        visitMainPageAndThen('/questions/' + eid)
+      }
       notifications.confirmNotificationIsProcessed(data)
     },
     rsvp: function(data){

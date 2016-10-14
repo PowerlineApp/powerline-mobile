@@ -51,7 +51,7 @@ angular.module('app.services').factory('discussion',function (serverConfig, Comm
   }
 
   function getUrl(entity, id) {
-      return serverConfig.url + '/api/' + entity + '/' + id + '/comments/';
+      return serverConfig.url + '/api/v2/polls/' + id + '/comments';
   }
 
   return {
@@ -63,7 +63,7 @@ angular.module('app.services').factory('discussion',function (serverConfig, Comm
         getCommentsRequest = userPetitions.getComments(id)
       else
         getCommentsRequest = $http.get(getUrl(entity, id)).then(function(response){
-          return response.data
+          return response.data.payload
         })
 
       return getCommentsRequest.then(function (comments) {
@@ -74,14 +74,18 @@ angular.module('app.services').factory('discussion',function (serverConfig, Comm
     },
 
     createComment: function (entity, id, data) {
+      
+      var headers = {headers: {'Content-Type': 'application/json'}}
       if(entity == 'posts')
         return posts.addComment(id, data.parent_comment, data.comment_body)
       else if(entity == 'user-petitions')
         return userPetitions.addComment(id, data.parent_comment, data.comment_body)
-      else
-        return $http.post(getUrl(entity, id), data).then(function (response) {
+      else{
+        delete data['privacy'];
+        return $http.post(getUrl(entity, id), data, headers).then(function (response) {
           return response.data;
         });
+      }
     },
 
     rate: function (comment, action, entityType) {
@@ -110,7 +114,7 @@ angular.module('app.services').factory('discussion',function (serverConfig, Comm
       else if(entity == 'user-petitions')
         return userPetitions.updateComment(comment.id, comment.comment_body)
       else
-        return $http.put(serverConfig.url + '/api/' + entity + '/' + id + '/comments/' + comment.id, {comment_body: comment.comment_body});
+        return $http.put(serverConfig.url + '/api/v2/poll-comments/'+comment.id, {comment_body: comment.comment_body});
     },
 
     delete: function(entity, id, comment_id){
@@ -119,7 +123,7 @@ angular.module('app.services').factory('discussion',function (serverConfig, Comm
       else if(entity == 'user-petitions')
         return userPetitions.deleteComment(comment_id)
       else
-        return $http.delete(serverConfig.url + '/api/' + entity + '/' + id + '/comments/' + comment_id);
+        return $http.delete(serverConfig.url + '/api/v2/poll-comments/'+comment_id);
     }
   };
 }).factory('Comment', function () {
