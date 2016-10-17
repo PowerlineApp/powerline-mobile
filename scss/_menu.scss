@@ -116,6 +116,9 @@ $menuBorderBottomColor: #31316e;
       &.poll-fundraiser {
         background-position: 16px -42px;
       }
+      &.poll-discussion {
+        background-position: -70px 9px;
+      }
       &.announcement {
         background: url('../images/v2/icons/post-icons-announcement.png') no-repeat;
         background-size: 19px auto;

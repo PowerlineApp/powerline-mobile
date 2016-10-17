@@ -1960,6 +1960,8 @@ ion-header-bar .button.back-button.header-item {
         background-position: 13px 7px; }
       .new-post-window a i.poll-fundraiser {
         background-position: 16px -42px; }
+      .new-post-window a i.poll-discussion {
+        background-position: -70px 9px; }
       .new-post-window a i.announcement {
         background: url("../images/v2/icons/post-icons-announcement.png") no-repeat;
         background-size: 19px auto;

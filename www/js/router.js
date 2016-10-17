@@ -326,6 +326,11 @@ angular.module('app')
       url: '/poll-fundraiser/create/:groupID',
       templateUrl: 'templates/poll-fundraisers/create.html',
       controller: 'createPollFundraiserCtrl'
+    },{
+      name: 'createPollDiscussion',
+      url: '/poll-discussion/create/:groupID',
+      templateUrl: 'templates/poll-discussions/create.html',
+      controller: 'createPollDiscussionCtrl'
     }];
 
   states.forEach(function (state) {
