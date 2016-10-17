@@ -51,22 +51,30 @@ angular.module('app.services').factory('notifications', function ($window, devic
           "yes": {"callback": "app.sign", "title": "Sign", "foreground": true, "destructive": false},
           "no": {"callback": "app.ignore", "title": "Ignore", "foreground": false, "destructive": false}
         },
-        "post": { // post is boosted
+        "post": { 
           "yes": {"callback": "app.upvote", "title": "Upvote", "foreground": true, "destructive": false},
           "no": {"callback": "app.downvote", "title": "Downvote", "foreground": true, "destructive": false}
         },
-        "user_petition": { // user petition is boosted
+        "user_petition": {
           "yes": {"callback": "app.sign", "title": "Sign", "foreground": true, "destructive": false},
           "no": {"callback": "app.ignore", "title": "Ignore", "foreground": false, "destructive": false}
         },
-        "boosted_post": { // post is boosted
+        "post-is-boosted": { 
           "yes": {"callback": "app.upvote", "title": "Upvote", "foreground": true, "destructive": false},
           "no": {"callback": "app.downvote", "title": "Downvote", "foreground": true, "destructive": false}
-        },       
-        "boosted_user_petition": {
+        }, 
+        "own-post-is-boosted": {
+          "yes": {"callback": "app.view", "title": "Open", "foreground": true, "destructive": false},
+          "no": {"callback": "app.ignore", "title": "Ignore", "foreground": false, "destructive": false}
+        },    
+        "user-petition-is-boosted": {
           "yes": {"callback": "app.sign", "title": "Sign", "foreground": true, "destructive": false},
           "no": {"callback": "app.ignore", "title": "Ignore", "foreground": false, "destructive": false}
         },
+        "own-user-petition-is-boosted": {
+          "yes": {"callback": "app.view", "title": "Open", "foreground": true, "destructive": false},
+          "no": {"callback": "app.ignore", "title": "Ignore", "foreground": false, "destructive": false}
+        }, 
         "invite": { // you were been invited to group
           "yes": {"callback": "app.join", "title": "Join", "foreground": true, "destructive": false},
           "no": {"callback": "app.ignore", "title": "Ignore", "foreground": true, "destructive": false}

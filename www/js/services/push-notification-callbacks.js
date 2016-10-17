@@ -19,8 +19,13 @@ function ($location, $timeout, follows, posts, userPetitions, petitions, groups,
 
   app = {
     view: function(data){
-      var isPost = data.additionalData.entity && data.additionalData.entity.target && data.additionalData.entity.target.type == 'post'
-      var isUserPetition = data.additionalData.entity && data.additionalData.entity.target && data.additionalData.entity.target.type == 'user-petition'
+      var isPost = false
+      var isUserPetition = false
+      if(data.additionalData.entity && data.additionalData.entity.target){
+        var targetType = data.additionalData.entity.target.type
+        isPost = (targetType == 'post' || targetType == 'post-boosted')
+        isUserPetition = (targetType == 'user-petition' || targetType == 'user-petition-boosted')
+      }
       var isPetition = data.additionalData.type == 'group_petition'
       var isNews = data.additionalData.type == 'group_news'
 
