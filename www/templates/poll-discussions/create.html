@@ -33,7 +33,7 @@
     <form name="pollNewsForm" novalidate ng-class="formClass" autocomplete="off">
       <fieldset class="add-post">
           <textarea ng-model="data.discussion_description" maxlength="300"
-                    name="petition_body" required placeholder="Type your message here"
+                    name="petition_body" required placeholder="Enter your topic"
                     ng-init="data.chars_left = 300"
                     ng-change="data.chars_left = 300 - data.discussion_description.length"></textarea>
       </fieldset>
