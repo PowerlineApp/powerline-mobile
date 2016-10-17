@@ -1,4 +1,4 @@
-angular.module('app.controllers').controller('createPollDiscussionCtrl',function ($scope, $stateParams,questions, groups, profile, $http, serverConfig) {
+angular.module('app.controllers').controller('createPollDiscussionCtrl',function ($scope, $stateParams,questions, groups, profile, $http, serverConfig, $rootScope) {
   $scope.groupID = $stateParams.groupID;
   $scope.groups = groups.groupsJoinedByCurrentUser();
   $scope.data = {discussion_description: ''}
