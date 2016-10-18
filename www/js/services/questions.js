@@ -83,6 +83,26 @@ angular.module('app.services').factory('questions',function (QuestionResource,
       return $http.post(serverConfig.url + '/api/v2/groups/'+groupID+'/polls', payload, headers)
     },
 
+    toBackendUTCDateTimeString: function(localDateTime){
+      var utcDT = localDateTime.toISOString().split('T') // ["2016-10-18", "15:02:59.920Z"]
+      var d = utcDT[0] 
+      var t = utcDT[1].split('.')[0]
+      return d + ' ' + t
+    },
+
+    createPollEvent: function(groupID, title, desc, started_at, finished_at ){
+      var data = {subject: desc,
+        title: title,
+        started_at: service.toBackendUTCDateTimeString(started_at),  // "2016-09-20 09:52:33"
+        finished_at: service.toBackendUTCDateTimeString(finished_at),
+        type: 'event'} 
+        
+      var payload = JSON.stringify(data)
+      var headers = {headers: {'Content-Type': 'application/json'}}
+
+      return $http.post(serverConfig.url + '/api/v2/groups/'+groupID+'/polls', payload, headers)
+    },
+
     addOptionToPoll: function(pollID, optionText){
       var data = {value : optionText}
       var payload = JSON.stringify(data)

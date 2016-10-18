@@ -30,9 +30,84 @@
       </ul>
     </section>
 
-    <form name="pollNewsForm" novalidate ng-class="formClass" autocomplete="off">
-      TODO
+    <form novalidate autocomplete="off">
+      <fieldset class="add-post">
+        <div class="title-field" ng-class="invalidClass(pollQuestionForm.question_text.$invalid)">
+            <input ng-model="data.title" name="title_text" maxlength="255" required placeholder="Event title" />
+        </div>
+        <textarea ng-model="data.desc" maxlength="250" name="description_text"
+                  required placeholder="Type your description here"
+                  ng-init="data.chars_left = 250"
+                  ng-change="data.chars_left = 250 - data.desc.length"
+                  style="background-color: white; padding: 6px; margin-bottom: 14px;"></textarea>
+        </textarea>
+        <div style="padding-left: 9px; padding-bottom: 10px;">
+          Start and end time in your local time ({{local_time_offset}})
+        </div>
+        <div class="title-field">
+          <div class="item-floating-label text-field-1" style="background-color: white; border: 0; padding: 0 30px 0 0px;">
+            <span class="input-label" style="font-size: 16px">Start of Event (day)</span>
+            <i class="icon-field icon-date"></i>
+            <input 
+            type="date"
+            ng-model="data.start_day" 
+            name="start_of_event_date" 
+            maxlength="10" placeholder="" />
+          </div>
+        </div>
+        <div class="title-field">
+          <div class="item-floating-label text-field-1"  style="background-color: white; border: 0; padding: 0 30px 0 0px;">
+            <span class="input-label"  style="font-size: 16px">Start of Event (hour)</span>
+            <select 
+            style="font-weight: 900; color: black"
+            ng-model="data.start_hour" name="start_of_event_hour" 
+            ng-options="h for h in hours">
+            </select>
+          </div>
+        </div>
+        <div class="title-field">
+          <div class="item-floating-label text-field-1" style="background-color: white; border: 0; padding: 0 30px 0 0px;">
+            <span class="input-label" style="font-size: 16px">End of Event (day)</span>
+            <i class="icon-field icon-date"></i>
+            <input 
+            type="date"
+            ng-model="data.end_day" 
+            name="end_of_event_date" 
+            maxlength="10" placeholder="" />
+          </div>
+        </div>
+        <div class="title-field"  style="margin-bottom: 25px">
+          <div class="item-floating-label text-field-1"  style="background-color: white; border: 0; padding: 0 30px 0 0px;">
+            <span class="input-label"  style="font-size: 16px">End of Event (hour)</span>
+            <select 
+            style="font-weight: 900; color: black"
+            ng-model="data.end_hour" name="end_of_event_hour" 
+            ng-options="h for h in hours">
+            </select>
+          </div>
+        </div>
 
+        <div ng-repeat="answer in answers track by $index">
+          <button style="float:right; position: relative; top: -5px;" 
+          class="button icon ion-close-circled button-clear"
+          ng-click="removeAnswer($index)">
+          </button>
+          <div style="overflow: hidden;">
+            <input class="title-field" 
+            style="" 
+            ng-model="answer.desc" 
+            name="question_text" 
+            maxlength="255" 
+            required placeholder="Type RSVP answer here" />
+          </div>
+        </div>
+        <div style="width: 200px;" class="margin-v-20">
+          <button class="btn-large btn-primary icon-left ion-plus-circled"
+          ng-click="addAnswer()">
+            Add RSVP Response
+          </button>
+        </div>
+      </fieldset>
     </form>
 
   </ion-content>
