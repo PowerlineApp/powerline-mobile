@@ -134,9 +134,12 @@ angular.module('app.services').factory('questions',function (QuestionResource,
   function format(question) {
     question.published_at_date = new Date(question.published_at);
     if (question.started_at) {
-      question.started_at_date = new Date(question.started_at);
-      question.finished_at_date = new Date(question.finished_at);
+      question.started_at_date = new Date()
+      question.started_at_date.setTime(Date.parse(question.started_at) - (question.started_at_date.getTimezoneOffset() * 60000))
+      question.finished_at_date = new Date()
+      question.finished_at_date.setTime(Date.parse(question.finished_at) - (question.finished_at_date.getTimezoneOffset() * 60000))
     }
+
     question.expired_at = new Date(question.expire_at ? question.expire_at : question.published_at_date.getTime() + 86400000);
 
     /* 1 day */

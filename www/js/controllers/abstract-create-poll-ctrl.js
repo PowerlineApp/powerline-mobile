@@ -21,7 +21,7 @@ angular.module('app.controllers').controller('abstractCreatePollCtrl',function (
         $scope.hideSpinner();
         var memberCount = members.length
         var msg = 'You are about to send this to all '+memberCount+' group members. Are you sure?'
-        $scope.confirmAction(msg).then(function () {
+        $scope.confirmAction(msg, 'Warning').then(function () {
           $scope.send()
         });
       })
