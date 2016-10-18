@@ -129,6 +129,54 @@ angular.module('app.services').factory('petitions',function ($q, session, server
     },
     unsubscribeFromNotifications: function(petitionID){
       return $http.delete(serverConfig.url + '/api/v2/user/polls/'+petitionID)      
+    },
+
+    create: function(title, description, groupID){
+      var data = {petition_title: title, 
+        petition_body: description, 
+        subject: '.', // not sure what is this, but backend will fail to create petition wihtout it
+        type: 'petition'} 
+      var payload = JSON.stringify(data)
+      var headers = {headers: {'Content-Type': 'application/json'}}
+      var createPetitionRequest = $http.post(serverConfig.url + '/api/v2/groups/'+groupID+'/polls', payload, headers)
+      var d = $q.defer();
+
+      createPetitionRequest.then(function(response){
+        var petitionID = response.data.id
+        var addOptionsRequests = []
+        addOptionsRequests.push(service.addOption(petitionID, 'sign'))
+        addOptionsRequests.push(service.addOption(petitionID, 'unsign'))
+        $q.all(addOptionsRequests).then(function(){
+          service.publish(petitionID).then(function(){
+            d.resolve(petitionID)
+          }, function(error){
+            console.log('failed to publish petition')
+            console.log(error)
+            d.reject(error)
+          })
+        })
+      }, function(error){
+          console.log('failed to create petition')
+          console.log(error)
+        d.reject(error)
+      })
+
+      return d.promise
+    },
+
+    addOption: function(petitionID, optionName){
+      var data = {value : optionName}
+      var payload = JSON.stringify(data)
+      var headers = {headers: {'Content-Type': 'application/json'}}
+
+      return $http.post(serverConfig.url + '/api/v2/polls/'+petitionID+'/options', payload, headers)
+    },
+
+    publish: function(petitionID){
+      var data = {}
+      var payload = JSON.stringify(data)
+      var headers = {headers: {'Content-Type': 'application/json'}}
+      return $http.patch(serverConfig.url + '/api/v2/polls/'+petitionID, payload, headers)
     }
   }
 

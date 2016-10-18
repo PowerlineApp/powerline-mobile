@@ -336,6 +336,11 @@ angular.module('app')
       url: '/poll-event/create/:groupID',
       templateUrl: 'templates/poll-events/create.html',
       controller: 'createPollEventCtrl'
+    },{
+      name: 'createPetition',
+      url: '/petition/create/:groupID',
+      templateUrl: 'templates/petitions/create.html',
+      controller: 'createPetitionCtrl'
     }];
 
   states.forEach(function (state) {
