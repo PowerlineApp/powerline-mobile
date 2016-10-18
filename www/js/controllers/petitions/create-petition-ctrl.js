@@ -1,14 +1,9 @@
-angular.module('app.controllers').controller('createPetitionCtrl',function ($scope, $stateParams,petitions, groups, profile, $http, serverConfig, $rootScope) {
-  $scope.groupID = $stateParams.groupID;
-  $scope.groups = groups.groupsJoinedByCurrentUser();
-  $scope.data = {title: '', petition_body: ''}
+angular.module('app.controllers').controller('createPetitionCtrl',function ($scope, $stateParams,petitions, groups, $http, serverConfig, $rootScope, $controller) {
+  $controller('abstractCreatePollCtrl', {$scope: $scope});
+  $scope.data.title = ''
+  $scope.data.petition_body = ''
 
-  if ($scope.groupID) 
-    $scope.data.group = groups.getGroup($scope.groupID)
-  else 
-    $scope.data.openChoices = true;
-
-  $scope.send = function(){
+  $scope.validate = function(){
     if($scope.data.title.length == 0){
       alert('Petition title cannot be blank.')
       return false
@@ -17,7 +12,10 @@ angular.module('app.controllers').controller('createPetitionCtrl',function ($sco
       alert('Petition text cannot be blank.')
       return false
     }
+    return true
+  }
 
+  $scope.send = function(){
     var groupID = $scope.data.group.id
     $scope.showSpinner();
     petitions.create($scope.data.title,$scope.data.petition_body,groupID).then(function(response){

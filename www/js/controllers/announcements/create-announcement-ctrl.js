@@ -1,17 +1,16 @@
-angular.module('app.controllers').controller('createAnnouncementCtrl',function ($scope, $stateParams, $document, questions, groups, profile, homeCtrlParams, $rootScope, $q, serverConfig, $http) {
-  $scope.groupID = $stateParams.groupID;
-  $scope.groups = groups.groupsJoinedByCurrentUser();
-  $scope.data = {announcement_text: ''}
+angular.module('app.controllers').controller('createAnnouncementCtrl',function ($scope, $controller, $rootScope, $q, serverConfig, $http) {
+  $controller('abstractCreatePollCtrl', {$scope: $scope});
+  $scope.data.announcement_text = ''
 
-  if ($scope.groupID) 
-    $scope.data.group = groups.getGroup($scope.groupID)
-  else 
-    $scope.data.openChoices = true;
+  $scope.validate = function(){
+    if($scope.data.announcement_text.length == 0){
+      $scope.alert('Announcement message cannot be blank.')
+      return false
+    }
+    return true
+  }
 
   $scope.send = function(){
-    if($scope.data.announcement_text.length == 0)
-      $scope.alert('Announcement message cannot be blank.')
-
     $scope.showSpinner();
     createAnnouncement($scope.data.announcement_text, $scope.data.group.id).then(function(response){
       var aID = response.data.id

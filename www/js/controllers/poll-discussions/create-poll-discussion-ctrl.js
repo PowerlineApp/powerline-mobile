@@ -1,19 +1,16 @@
-angular.module('app.controllers').controller('createPollDiscussionCtrl',function ($scope, $stateParams,questions, groups, profile, $http, serverConfig, $rootScope) {
-  $scope.groupID = $stateParams.groupID;
-  $scope.groups = groups.groupsJoinedByCurrentUser();
-  $scope.data = {discussion_description: ''}
+angular.module('app.controllers').controller('createPollDiscussionCtrl',function ($scope, $stateParams,questions, $controller, $http, serverConfig, $rootScope) {
+  $controller('abstractCreatePollCtrl', {$scope: $scope});
+  $scope.data.discussion_description = ''
 
-  if ($scope.groupID) 
-    $scope.data.group = groups.getGroup($scope.groupID)
-  else 
-    $scope.data.openChoices = true;
-
-  $scope.send = function(){
+  $scope.validate = function(){
     if($scope.data.discussion_description.length == 0){
       alert('Discussion topic cannot be blank.')
       return false
     }
+    return true
+  }
 
+  $scope.send = function(){
     var groupID = $scope.data.group.id
     var data = {subject: $scope.data.discussion_description,type: 'news'} 
     var payload = JSON.stringify(data)

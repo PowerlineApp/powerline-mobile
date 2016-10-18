@@ -1,22 +1,14 @@
-angular.module('app.controllers').controller('createPollFundraiserCtrl',function ($scope, $stateParams, $document, groups, profile, homeCtrlParams, $rootScope, $q, questions, $http, serverConfig, device) {
-  $scope.groupID = $stateParams.groupID;
-  $scope.groups = groups.groupsJoinedByCurrentUser();
+angular.module('app.controllers').controller('createPollFundraiserCtrl',function ($scope, $stateParams, $document, $controller, groups, profile, homeCtrlParams, $rootScope, $q, questions, $http, serverConfig, device) {
+  $controller('abstractCreatePollCtrl', {$scope: $scope});
 
   var tomorrow = new Date();
   tomorrow.setDate(tomorrow.getDate() + 1); 
-  $scope.data = {
-    title_text: '', 
-    description_text: '',
-    goal_amount: '',
-    end_of_event_date: tomorrow,
-    end_of_event_hour: '12:00',
-    custom_amount_amount_desc: ''
-  }
-
-  if ($scope.groupID) 
-    $scope.data.group = groups.getGroup($scope.groupID)
-  else 
-    $scope.data.openChoices = true;
+  $scope.data.title_text = ''
+  $scope.data.description_text = ''
+  $scope.data.goal_amount = ''
+  $scope.data.end_of_event_date = tomorrow
+  $scope.data.end_of_event_hour = '12:00'
+  $scope.data.custom_amount_amount_desc = ''
 
   $scope.hours = []
   for(i=0; i<24; i++){
@@ -90,7 +82,7 @@ angular.module('app.controllers').controller('createPollFundraiserCtrl',function
     return $http.post(serverConfig.url + '/api/v2/polls/'+pollID+'/options', payload, headers)
   }
 
-  $scope.send = function(){
+  $scope.validate = function(){
     var title = $scope.data.title_text
     var description = $scope.data.description_text
     var isCrowdfunding = $scope.data.is_crowdfunding
@@ -108,8 +100,8 @@ angular.module('app.controllers').controller('createPollFundraiserCtrl',function
       alert('Description cannot be blank')
       return false
     }
-    if(isCrowdfunding && isNaN(goalAmount)){
-      alert('Goal amount must be a number, e.g. 400 or 199.99')
+    if(isCrowdfunding && (isNaN(goalAmount) || goalAmount == 0)){
+      alert('Goal amount must be a positive number, e.g. 400 or 199.99')
       return false
     }
     if(isCrowdfunding &&  goalAmount < 0){
@@ -154,6 +146,19 @@ angular.module('app.controllers').controller('createPollFundraiserCtrl',function
       $scope.alert('Custom amount description cannot be blank.')
       return false     
     }
+
+    return true
+  }
+
+  $scope.send = function(){
+    var title = $scope.data.title_text
+    var description = $scope.data.description_text
+    var isCrowdfunding = $scope.data.is_crowdfunding
+    var goalAmount = Number($scope.data.goal_amount)
+    var endOfEventDate = $scope.data.end_of_event_date
+    var endOfEventTime = $scope.data.end_of_event_hour
+    var customAmountEnabled = $scope.data.custom_amount_enabled
+    var customAmountDesc = $scope.data.custom_amount_amount_desc
 
     $scope.showSpinner();
 
