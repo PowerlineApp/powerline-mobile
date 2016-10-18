@@ -1929,6 +1929,9 @@ ion-header-bar .button.back-button.header-item {
   background: url("../images/v2/cut/top-corner.png") 204px top no-repeat;
   background-size: 19px auto;
   box-shadow: -1px 5px 10px rgba(0, 0, 0, 0.2); }
+  .new-post-window .divide-leader-and-non-leader {
+    background-color: #e3e3e3;
+    height: 5px; }
   .new-post-window a {
     display: block;
     width: 100%;
