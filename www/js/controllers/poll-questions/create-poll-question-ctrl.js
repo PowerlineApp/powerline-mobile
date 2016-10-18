@@ -1,13 +1,6 @@
-angular.module('app.controllers').controller('createPollQuestionCtrl',function ($scope, $stateParams, $document, questions, groups, profile, homeCtrlParams, $rootScope, $q) {
-  $scope.groupID = $stateParams.groupID;
-  $scope.groups = groups.groupsJoinedByCurrentUser();
-  $scope.data = {question_text: ''}
-
-  if ($scope.groupID) 
-    $scope.data.group = groups.getGroup($scope.groupID)
-  else 
-    $scope.data.openChoices = true;
-
+angular.module('app.controllers').controller('createPollQuestionCtrl',function ($scope, $controller, questions, $rootScope, $q) {
+  $controller('abstractCreatePollCtrl', {$scope: $scope});
+  $scope.data.question_text = ''
   $scope.answers = [{answer_text: ''}, {answer_text: ''}]
 
   $scope.removeAnswer = function(index){
@@ -21,7 +14,7 @@ angular.module('app.controllers').controller('createPollQuestionCtrl',function (
     $scope.answers.push({answer_text: ''})
   }
 
-  $scope.send = function(){
+  $scope.validate = function(){
     if($scope.data.question_text.length == 0){
       $scope.alert('Question text cannot be blank.')
       return false
@@ -37,8 +30,12 @@ angular.module('app.controllers').controller('createPollQuestionCtrl',function (
       $scope.alert('Answer cannot be blank.')
       return false      
     }
-    $scope.showSpinner();
 
+    return true
+  }
+
+  $scope.send = function(){
+    $scope.showSpinner();
     var createRequest = questions.createPollQuestion($scope.data.group.id, $scope.data.question_text)
     createRequest.then(function(response){
       var pollID = response.data.id
