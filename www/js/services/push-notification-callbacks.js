@@ -19,6 +19,9 @@ function ($location, $timeout, follows, posts, userPetitions, petitions, groups,
 
   app = {
     view: function(data){
+      app.open(data)
+    },
+    open: function(data){
       var isPost = false
       var isUserPetition = false
       if(data.additionalData.entity && data.additionalData.entity.target){
@@ -26,39 +29,17 @@ function ($location, $timeout, follows, posts, userPetitions, petitions, groups,
         isPost = (targetType == 'post' || targetType == 'post-boosted')
         isUserPetition = (targetType == 'user-petition' || targetType == 'user-petition-boosted')
       }
-      var isPetition = data.additionalData.type == 'group_petition'
-      var isNews = data.additionalData.type == 'group_news'
-
-      if(isPost){
-        var eid = data.additionalData.entity.target.id
-        visitMainPageAndThen('/post/' + eid)
-      } else if(isUserPetition){
-        var eid = data.additionalData.entity.target.id
-        visitMainPageAndThen('/user-petition/' + eid)   
-      } else if(isPetition){
-        var petitionID = data.additionalData.entity.id
-        visitMainPageAndThen('/petition/' + petitionID)
-      } else if(isNews){
-        var newsID = data.additionalData.entity.id
-        visitMainPageAndThen('/question/news/' + newsID)
-      }
-
-      notifications.confirmNotificationIsProcessed(data)
-    },
-    open: function(data){
       var isPollNews = data.additionalData.type == 'group_news'
       var isGroup = data.additionalData.type == 'group-permissions-changed'
-      var isPost = data.additionalData.entity && data.additionalData.entity.target && data.additionalData.entity.target.type == 'post'
-      var isUserPetition = data.additionalData.entity && data.additionalData.entity.target && data.additionalData.entity.target.type == 'user-petition'
       var isCrowdfunding = data.additionalData.entity && data.additionalData.entity.target && data.additionalData.entity.target.type == 'group_payment_request_crowdfunding'
       var isPollNewsFromMention = data.additionalData.entity && data.additionalData.entity.target && data.additionalData.entity.target.type == 'group_news'
       var isPayment = data.additionalData.entity && data.additionalData.entity.target && data.additionalData.entity.target.type == 'group_payment_request'
       var isEvent = data.additionalData.entity && data.additionalData.entity.target && data.additionalData.entity.target.type == 'group_event'
-      var isPetition = data.additionalData.entity && data.additionalData.entity.target && data.additionalData.entity.target.type == 'group_petition'
-      var isQuestion = data.additionalData.entity && data.additionalData.entity.target && data.additionalData.entity.target.type == 'group_question'
+      var isPetition = data.additionalData.type == 'group_petition'
+      var isQuestion = data.additionalData.type == 'group_question' || (data.additionalData.entity && data.additionalData.entity.target && (data.additionalData.entity.target.type == 'group_question' || data.additionalData.entity.target.type == 'poll-published'))
 
       if(isPollNews){
-        var nID = data.additionalData.entity.id
+        var nID = data.additionalData.entity.target.id
         visitMainPageAndThen('/question/news/' + nID) 
       } else if(isPollNewsFromMention){
         var eid = data.additionalData.entity.target.id
@@ -93,7 +74,7 @@ function ($location, $timeout, follows, posts, userPetitions, petitions, groups,
     rsvp: function(data){
       var isPollEvent = data.additionalData.type == 'group_event'
       if(isPollEvent){
-        var pID = data.additionalData.entity.id
+        var pID = data.additionalData.entity.target.id
         visitMainPageAndThen('/leader-event/' + pID) 
       }
       notifications.confirmNotificationIsProcessed(data)
@@ -112,7 +93,8 @@ function ($location, $timeout, follows, posts, userPetitions, petitions, groups,
     donate: function(data){
       var isPollPayment = data.additionalData.type == 'group_payment_request'
       var isCrowdfundPayment = data.additionalData.type == 'group_payment_request_crowdfunding'
-      var pID = data.additionalData.entity.id
+      var pID = data.additionalData.entity.target.id
+      console.log(pID)
       if(isPollPayment)
         visitMainPageAndThen('/payment-polls/payment-request/' + pID) 
        else if (isCrowdfundPayment)
@@ -121,11 +103,7 @@ function ($location, $timeout, follows, posts, userPetitions, petitions, groups,
       notifications.confirmNotificationIsProcessed(data)
     },
     respond: function(data){
-      var t = data.additionalData.type
-      var eid = data.additionalData.entity.id
-      if(t == 'group_question')
-        visitMainPageAndThen('/questions/' + eid)     
-      notifications.confirmNotificationIsProcessed(data)   
+      app.open(data)
     },
     mute: function(data){
       if(data.additionalData.entity.target.type == 'post'){
@@ -174,7 +152,7 @@ function ($location, $timeout, follows, posts, userPetitions, petitions, groups,
           visitMainPageAndThen('/user-petition/' + userPetitionID);
         })
       } else if (isPetition){
-        var petitionID = data.additionalData.entity.id
+        var petitionID = data.additionalData.entity.target.id
         petitions.sign(petitionID).then(function(){
           visitMainPageAndThen('/petition/' + petitionID)
         })
@@ -183,7 +161,7 @@ function ($location, $timeout, follows, posts, userPetitions, petitions, groups,
     },
 
     reply: function(data){
-      app.view(data)
+      app.open(data)
     }
 
   }

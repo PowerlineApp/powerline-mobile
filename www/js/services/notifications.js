@@ -36,7 +36,7 @@ angular.module('app.services').factory('notifications', function ($window, devic
       "ios": {"alert": "true", "badge": "true", "sound": "true", "categories": {
         // https://github.com/PowerlineApp/powerline-mobile/issues/226 
         "comment-mentioned": {
-          "yes": {"callback": "app.view", "title": "Open", "foreground": true, "destructive": false},
+          "yes": {"callback": "app.open", "title": "Open", "foreground": true, "destructive": false},
           "no": {"callback": "app.ignore", "title": "Ignore", "foreground": false, "destructive": false}
         },
         "influence": { // user wants to follow you
@@ -64,7 +64,7 @@ angular.module('app.services').factory('notifications', function ($window, devic
           "no": {"callback": "app.downvote", "title": "Downvote", "foreground": true, "destructive": false}
         }, 
         "own-post-is-boosted": {
-          "yes": {"callback": "app.view", "title": "Open", "foreground": true, "destructive": false},
+          "yes": {"callback": "app.open", "title": "Open", "foreground": true, "destructive": false},
           "no": {"callback": "app.ignore", "title": "Ignore", "foreground": false, "destructive": false}
         },    
         "user-petition-is-boosted": {
@@ -72,7 +72,7 @@ angular.module('app.services').factory('notifications', function ($window, devic
           "no": {"callback": "app.ignore", "title": "Ignore", "foreground": false, "destructive": false}
         },
         "own-user-petition-is-boosted": {
-          "yes": {"callback": "app.view", "title": "Open", "foreground": true, "destructive": false},
+          "yes": {"callback": "app.open", "title": "Open", "foreground": true, "destructive": false},
           "no": {"callback": "app.ignore", "title": "Ignore", "foreground": false, "destructive": false}
         }, 
         "invite": { // you were been invited to group
@@ -84,24 +84,24 @@ angular.module('app.services').factory('notifications', function ($window, devic
           "no": {"callback": "app.ignore", "title": "Ignore", "foreground": true, "destructive": false}
         },
         "own-user-petition-commented": {
-          "yes": {"callback": "app.view", "title": "View", "foreground": true, "destructive": false},
+          "yes": {"callback": "app.open", "title": "View", "foreground": true, "destructive": false},
           "no": {"callback": "app.mute", "title": "Mute", "foreground": false, "destructive": false}
         },
         "own-post-commented": {
-          "yes": {"callback": "app.view", "title": "View", "foreground": true, "destructive": false},
+          "yes": {"callback": "app.open", "title": "View", "foreground": true, "destructive": false},
           "no": {"callback": "app.mute", "title": "Mute", "foreground": false, "destructive": false}
         },
         "follow-user-petition-commented": {
-          "yes": {"callback": "app.view", "title": "View", "foreground": true, "destructive": false},
+          "yes": {"callback": "app.open", "title": "View", "foreground": true, "destructive": false},
           "no": {"callback": "app.mute", "title": "Mute", "foreground": false, "destructive": false}
         },        
         "follow-post-commented": {
-          "yes": {"callback": "app.view", "title": "View", "foreground": true, "destructive": false},
+          "yes": {"callback": "app.open", "title": "View", "foreground": true, "destructive": false},
           "no": {"callback": "app.mute", "title": "Mute", "foreground": false, "destructive": false}
         },
         // is seems there is no own-user-petition-signed
         "own-post-voted": {
-          "yes": {"callback": "app.view", "title": "View", "foreground": true, "destructive": false},
+          "yes": {"callback": "app.open", "title": "View", "foreground": true, "destructive": false},
           "no": {"callback": "app.mute", "title": "Mute", "foreground": false, "destructive": false}
         },
         //// LEADER CONTENT ///////////////////////////////////////
@@ -110,12 +110,12 @@ angular.module('app.services').factory('notifications', function ($window, devic
           "no": {"callback": "app.ignore", "title": "Ignore", "foreground": false, "destructive": false}
         },
         "group_question": {
-          "yes": {"callback": "app.respond", "title": "Respond", "foreground": true, "destructive": false},
+          "yes": {"callback": "app.open", "title": "Respond", "foreground": true, "destructive": false},
           "no": {"callback": "app.ignore", "title": "Ignore", "foreground": false, "destructive": false}
         },
         "group_petition": {
           "yes": {"callback": "app.sign", "title": "Sign", "foreground": true, "destructive": false},
-          "no": {"callback": "app.view", "title": "View", "foreground": false, "destructive": false}
+          "no": {"callback": "app.open", "title": "View", "foreground": false, "destructive": false}
         },
         "group_news": {
           "yes": {"callback": "app.open", "title": "Open", "foreground": true, "destructive": false},
