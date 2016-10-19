@@ -30,8 +30,9 @@ angular.module('app.controllers')
     });
 
     $scope.select = function (option) {
+      console.log(option)
       $scope.data.option = option;
-      if (option.payment_amount || option.is_user_amount) {
+      if (option.payment_amount || (option.is_user_amount  && option.value != "I don't want to donate. Mark as read.")) {
         $scope.data.showCardsInfo = true;
       } else {
         $scope.data.showAnswerForm = true;
@@ -39,7 +40,7 @@ angular.module('app.controllers')
     };
 
     $scope.pay = function () {
-      if ($scope.data.option.is_user_amount && !$scope.data.payment_amount) {
+      if ($scope.data.option.is_user_amount && !$scope.data.payment_amount && $scope.data.option.value != "I don't want to donate. Mark as read.") {
         $scope.alert('Payment amount cannot be blank');
         return;
       }

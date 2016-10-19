@@ -91,7 +91,7 @@
                   <strong>Submit?</strong>
                   <span>{{ data.option.value }}{{ data.option.payment_amount ?  ' - for $' + data.option.payment_amount : '' }}</span>
               </p>
-              <div class="text-field-2" ng-if="data.option.is_user_amount">
+              <div class="text-field-2" ng-if="data.option.is_user_amount && data.option.value != 'I don\'t want to donate. Mark as read.'">
                   <input type="number" ng-model="data.payment_amount" required name="payment_amount" placeholder="Enter custom amount here (number only)" />
               </div>
               <div class="text-field-2">

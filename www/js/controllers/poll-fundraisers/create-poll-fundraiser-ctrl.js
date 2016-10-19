@@ -77,6 +77,10 @@ angular.module('app.controllers').controller('createPollFundraiserCtrl',function
     return $http.post(serverConfig.url + '/api/v2/polls/'+pollID+'/options', payload, headers)
   }
 
+  $scope.showCannotRemoveWarning = function(){
+    $scope.validationAlert('It is not possible to edit or remove this answer.')
+  }
+
   $scope.validate = function(){
     var title = $scope.data.title_text
     var description = $scope.data.description_text
@@ -170,15 +174,19 @@ angular.module('app.controllers').controller('createPollFundraiserCtrl',function
     createRequest.then(function(response){
       var pollID = response.data.id
       var requests = []
+      var r;
       $scope.answers.forEach(function(answer){
-        var r = addAmountToPayment(pollID, answer.amount, answer.amount_desc)
+        r = addAmountToPayment(pollID, answer.amount, answer.amount_desc)
         requests.push(r)
       })
 
       if(customAmountEnabled){
-        var r = addCustomAmountToPayment(pollID, customAmountDesc)
+        r = addCustomAmountToPayment(pollID, customAmountDesc)
         requests.push(r)
       }
+
+      r = addCustomAmountToPayment(pollID, "I don't want to donate. Mark as read.")
+      requests.push(r)
 
       $q.all(requests).then(function(){
         questions.publishPoll(pollID).then(function(){

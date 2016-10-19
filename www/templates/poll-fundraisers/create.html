@@ -102,7 +102,7 @@
           <ion-toggle-custom ng-model="data.custom_amount_enabled" 
           toggle-class="toggle-calm"><p style=" font-size: 17px;">Custom Amount Answer</p></ion-toggle-custom>  
         </div> 
-        <button style="float:right; position: relative; top: -5px; opacity: 0" 
+        <button ng-show="data.custom_amount_enabled" style="float:right; position: relative; top: -5px; opacity: 0" 
           class="button icon ion-close-circled button-clear">
         </button>          
         <div style="overflow: hidden;" ng-show="data.custom_amount_enabled">
@@ -117,6 +117,21 @@
           name="custom_amount_amount_desc" 
           maxlength="255" 
           required placeholder="Description" />
+        </div>
+        <button style="float:right; position: relative; top: -5px" 
+          ng-click="showCannotRemoveWarning()"
+          class="button icon ion-close-circled button-clear">
+        </button>    
+        <div style="overflow: hidden;">
+          <input class="title-field" 
+          disabled="true"
+          style="width: 30%" 
+          value="0 USD" />
+          <input class="title-field" 
+          disabled="true"
+          style="width: 69%; float; right" 
+          maxlength="255" 
+          required placeholder="I don't want to donate. Mark as read." />
         </div>
       </fieldset>
     </form>
