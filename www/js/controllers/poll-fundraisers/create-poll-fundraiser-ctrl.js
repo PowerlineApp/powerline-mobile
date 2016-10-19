@@ -1,16 +1,20 @@
 angular.module('app.controllers').controller('createPollFundraiserCtrl',function ($scope, $stateParams, $document, $controller, $rootScope, $q, questions, $http, serverConfig) {
   $controller('abstractCreatePollCtrl', {$scope: $scope});
 
-  var tomorrow = new Date();
-  tomorrow.setDate(tomorrow.getDate() + 1); 
-  tomorrow.setMinutes(0)
-  tomorrow.setMinutes(0)
-  tomorrow.setSeconds(0)
   $scope.data.title_text = ''
   $scope.data.description_text = ''
   $scope.data.goal_amount = ''
-  $scope.data.end_of_event_date = tomorrow
-  $scope.data.end_of_event_hour = '12:00'
+  $scope.data.end_of_event_date = null
+
+  var now = new Date()
+  var h = now.getHours()
+  h += 1
+  if(h == 24)
+    h = 0
+  var h2 = h+':00'
+  if(h2.length == 4)
+    h = '0'+h
+  $scope.data.end_of_event_hour = h2
   $scope.data.custom_amount_amount_desc = ''
 
   $scope.hours = []
@@ -81,14 +85,22 @@ angular.module('app.controllers').controller('createPollFundraiserCtrl',function
     $scope.validationAlert('It is not possible to edit or remove this answer.')
   }
 
+  $scope.prefillEndOfEventDate = function(){
+    if($scope.data.end_of_event_date == null){
+      var tomorrow = new Date();
+      tomorrow.setDate(tomorrow.getDate() + 1); 
+      tomorrow.setMinutes(0)
+      tomorrow.setMinutes(0)
+      tomorrow.setSeconds(0)
+      $scope.data.end_of_event_date = tomorrow
+    }
+  }
+
   $scope.validate = function(){
     var title = $scope.data.title_text
     var description = $scope.data.description_text
     var isCrowdfunding = $scope.data.is_crowdfunding
     var goalAmount = Number($scope.data.goal_amount)
-    var endOfEventDateTime = $scope.data.end_of_event_date
-    var endOfEventHour = Number($scope.data.end_of_event_hour.split(':')[0])
-    endOfEventDateTime.setHours(endOfEventHour)
     var customAmountEnabled = $scope.data.custom_amount_enabled
     var customAmountDesc = $scope.data.custom_amount_amount_desc
 
@@ -108,10 +120,21 @@ angular.module('app.controllers').controller('createPollFundraiserCtrl',function
       $scope.validationAlert('Goal amount must be greater than zero')
       return false
     }
-    var now = new Date()
-    if(isCrowdfunding && endOfEventDateTime < now){
-      $scope.validationAlert('End of Event must be in future')
-      return false
+    
+    if(isCrowdfunding){
+      var endOfEventDateTime = $scope.data.end_of_event_date
+      if(endOfEventDateTime == null){
+        $scope.validationAlert('End of event date cannot be blank')
+        return false
+      }
+      var endOfEventHour = Number($scope.data.end_of_event_hour.split(':')[0])
+      endOfEventDateTime.setHours(endOfEventHour)
+      var tomorrow = new Date();
+      tomorrow.setDate(tomorrow.getDate() + 1);
+      if(endOfEventDateTime < tomorrow){
+        $scope.validationAlert('End of event must be at least 24 hours from now.')
+        return false
+      }
     }
 
     var isThereNonEmptyAnswerDesc = false
@@ -155,9 +178,6 @@ angular.module('app.controllers').controller('createPollFundraiserCtrl',function
     var description = $scope.data.description_text
     var isCrowdfunding = $scope.data.is_crowdfunding
     var goalAmount = Number($scope.data.goal_amount)
-    var endOfEventDateTime = $scope.data.end_of_event_date
-    var endOfEventHour = Number($scope.data.end_of_event_hour.split(':')[0])
-    endOfEventDateTime.setHours(endOfEventHour)
     var customAmountEnabled = $scope.data.custom_amount_enabled
     var customAmountDesc = $scope.data.custom_amount_amount_desc
 
@@ -166,9 +186,12 @@ angular.module('app.controllers').controller('createPollFundraiserCtrl',function
     var groupID = $scope.data.group.id
 
     var createRequest = null
-    if(isCrowdfunding)
+    if(isCrowdfunding){
+      var endOfEventDateTime = $scope.data.end_of_event_date
+      var endOfEventHour = Number($scope.data.end_of_event_hour.split(':')[0])
+      endOfEventDateTime.setHours(endOfEventHour)
       createRequest = createPollCrowdfunding(title, description, groupID, endOfEventDateTime, goalAmount)
-    else 
+    } else 
       createRequest = createPollPayment(title, description, groupID)
 
     createRequest.then(function(response){
