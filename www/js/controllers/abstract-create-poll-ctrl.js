@@ -14,24 +14,29 @@ angular.module('app.controllers').controller('abstractCreatePollCtrl',function (
     // implement in inherited controller
   }
 
-  $scope.sendButtonClicked = function(){
+  $scope.sendButtonClicked = function(doNotShowMemberCountAlert){
     if($scope.validate()){
       $scope.showSpinner();
-      $scope.data.group.members().then(function(members){
-        $scope.hideSpinner();
-        var memberCount = members.length
-        var msg = 'You are about to send this to all '+memberCount+' group members. Are you sure?'
-        var confirmPopup = $ionicPopup.confirm({
-          title: 'Create new content',
-          cssClass: 'popup-by-ionic',
-          template: msg
-        });
+      if(doNotShowMemberCountAlert)
+        $scope.send()
+      else {
+        $scope.data.group.members().then(function(members){
+          $scope.hideSpinner();
+          var memberCount = members.length
+          var msg = 'You are about to send this to all '+memberCount+' group members. Are you sure?'
+          var confirmPopup = $ionicPopup.confirm({
+            title: 'Create new content',
+            cssClass: 'popup-by-ionic',
+            template: msg
+          });
 
-        confirmPopup.then(function(res) {
-          if(res) 
-            $scope.send()
-        });
-      })
+          confirmPopup.then(function(res) {
+            if(res) 
+              $scope.send()
+          });
+        })
+      }
+
     }
   }
 

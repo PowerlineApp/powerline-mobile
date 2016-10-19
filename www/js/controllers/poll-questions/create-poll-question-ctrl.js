@@ -16,7 +16,7 @@ angular.module('app.controllers').controller('createPollQuestionCtrl',function (
 
   $scope.validate = function(){
     if($scope.data.question_text.length == 0){
-      $scope.validationAlert('Question text cannot be blank.', null, 'ahoj')
+      $scope.validationAlert('Question text cannot be blank.')
       return false
     }
 

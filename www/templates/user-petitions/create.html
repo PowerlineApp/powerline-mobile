@@ -1,6 +1,6 @@
 <ion-view view-title="New User Petition">
   <ion-nav-buttons side="right">
-    <button class="button button-clear" onclick="angular.element('form[name=petitionForm] #submitter').trigger('click')">Send</button>
+    <button class="button button-clear" ng-click="sendButtonClicked(true)">Send</button>
   </ion-nav-buttons>
 
   <ion-content class="content has-footer" has-bouncing="false">

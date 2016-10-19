@@ -1,6 +1,6 @@
 <ion-view view-title="New Post">
   <ion-nav-buttons side="right">
-    <button class="button button-clear" onclick="angular.element('form[name=postForm] #submitter').trigger('click')">Send</button>
+    <button class="button button-clear" ng-click="sendButtonClicked(true)">Send</button>
   </ion-nav-buttons>
 
   <ion-content class="content has-footer" has-bouncing="false">
@@ -32,15 +32,11 @@
 
     <form name="postForm" novalidate ng-class="formClass" autocomplete="off">
       <fieldset class="add-post">
-          <textarea ng-model="data.petition_body" maxlength="300"
-                    name="petition_body" required placeholder="Type your message here"
+          <textarea ng-model="data.post_text" maxlength="300"
+                    name="post_text" required placeholder="Type your message here"
                     ng-init="data.chars_left = 300"
-                    ng-change="data.chars_left = 300 - data.petition_body.length"></textarea>
+                    ng-change="data.chars_left = 300 - data.post_text.length"></textarea>
       </fieldset>
-
-      <section class="ng-hide">
-        <input type="hidden" ng-model="data.group" name="group">
-      </section>
       <input type="button" ng-click="create(postForm)" id="submitter" class="ng-hide">
     </form>
 
