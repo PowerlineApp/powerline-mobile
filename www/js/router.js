@@ -239,6 +239,11 @@ angular.module('app')
       url: '/group/join/:id',
       templateUrl: 'templates/groups/join.html',
       controller: 'groups.join'
+    },{
+      name: 'manageGroup',
+      url: '/manage-group/:id',
+      templateUrl: 'templates/groups/manage-group.html',
+      controller: 'manageGroupCtrl'
     }, {
       name: 'services',
       url: '/other-services',
