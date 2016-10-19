@@ -14,7 +14,7 @@ angular.module('app.controllers').controller('createPollEventCtrl',function ($sc
   $scope.answers = [{desc: ''}, {desc: ''}]
   $scope.removeAnswer = function(index){
     if($scope.answers.length <= 2)
-      $scope.alert('You must provide at least two answers.')
+      $scope.validationAlert('You must provide at least two answers.')
     else
       $scope.answers.splice(index, 1);
   }
@@ -40,11 +40,11 @@ angular.module('app.controllers').controller('createPollEventCtrl',function ($sc
 
   $scope.validate = function(){
     if($scope.data.title.length == 0){
-      alert('Title cannot be blank.')
+      $scope.validationAlert('Title cannot be blank.')
       return false
     }
     if($scope.data.desc.length == 0){
-      alert('Description cannot be blank.')
+      $scope.validationAlert('Description cannot be blank.')
       return false
     }
 
@@ -57,12 +57,12 @@ angular.module('app.controllers').controller('createPollEventCtrl',function ($sc
     endTime.setHours(endHour)
 
     if(startTime < now){
-      alert('Event cannot start in the past.')
+      $scope.validationAlert('Event cannot start in the past.')
       return false
     }
     
     if(endTime < startTime){
-      alert('End date must be after start date.')
+      $scope.validationAlert('End date must be after start date.')
       return false
     }   
 
@@ -73,7 +73,7 @@ angular.module('app.controllers').controller('createPollEventCtrl',function ($sc
     })
 
     if(isThereNonEmptyAnswer){
-      $scope.alert('RSVP answer cannot be blank.')
+      $scope.validationAlert('RSVP answer cannot be blank.')
       return false      
     }
     return true
@@ -111,9 +111,9 @@ angular.module('app.controllers').controller('createPollEventCtrl',function ($sc
     }, function(error){
       $scope.hideSpinner();
       if(error.status == 403)
-        $scope.alert('You are not allowed to create Poll in this group')
+        $scope.createContentAlert('You are not allowed to create Poll in this group')
       else
-        $scope.alert('Error occured while creating Poll: '+JSON.stringify(error.data))
+        $scope.createContentAlert('Error occured while creating Poll: '+JSON.stringify(error.data))
     })
   }
 })

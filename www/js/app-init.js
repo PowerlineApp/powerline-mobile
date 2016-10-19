@@ -121,7 +121,7 @@ angular.module('app').run(function ($location, layout, spinnerIndicator, $rootSc
       $window.navigator.notification.alert.apply(null, arguments);
     } else {
       alert(arguments[0]);
-      if (arguments[1]) {
+      if (arguments[1] && typeof(arguments[1]) == "function") {
         arguments[1]();
       }
     }

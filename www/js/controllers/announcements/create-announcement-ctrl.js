@@ -4,7 +4,7 @@ angular.module('app.controllers').controller('createAnnouncementCtrl',function (
 
   $scope.validate = function(){
     if($scope.data.announcement_text.length == 0){
-      $scope.alert('Announcement message cannot be blank.')
+      $scope.validationAlert('Announcement message cannot be blank.')
       return false
     }
     return true
@@ -23,9 +23,9 @@ angular.module('app.controllers').controller('createAnnouncementCtrl',function (
     }, function(error){
       $scope.hideSpinner();
       if(error.status == 403)
-        $scope.alert('You are not allowed to create Announcement in this group')
+        $scope.createContentAlert('You are not allowed to create Announcement in this group')
       else
-        $scope.alert('Error occured while creating Announcement: '+JSON.stringify(error.data))
+        $scope.createContentAlert('Error occured while creating Announcement: '+JSON.stringify(error.data))
     })
   }
 

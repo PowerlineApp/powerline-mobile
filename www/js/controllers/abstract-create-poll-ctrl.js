@@ -1,4 +1,4 @@
-angular.module('app.controllers').controller('abstractCreatePollCtrl',function ($scope, $stateParams, groups) {
+angular.module('app.controllers').controller('abstractCreatePollCtrl',function ($scope, $stateParams, groups, $ionicPopup) {
   $scope.groupID = $stateParams.groupID;
   $scope.groups = groups.groupsJoinedByCurrentUser();
   $scope.data = {}
@@ -21,10 +21,33 @@ angular.module('app.controllers').controller('abstractCreatePollCtrl',function (
         $scope.hideSpinner();
         var memberCount = members.length
         var msg = 'You are about to send this to all '+memberCount+' group members. Are you sure?'
-        $scope.confirmAction(msg, 'Warning').then(function () {
-          $scope.send()
+        var confirmPopup = $ionicPopup.confirm({
+          title: 'Create new content',
+          cssClass: 'popup-by-ionic',
+          template: msg
+        });
+
+        confirmPopup.then(function(res) {
+          if(res) 
+            $scope.send()
         });
       })
     }
+  }
+
+  $scope.validationAlert = function(msg){
+   $ionicPopup.alert({
+     cssClass: 'popup-by-ionic',
+     title: 'Validation warning',
+     template: msg
+   });
+  }
+
+  $scope.createContentAlert = function(msg){
+   $ionicPopup.alert({
+     cssClass: 'popup-by-ionic',
+     title: 'Failed to create content',
+     template: msg
+   });
   }
 })

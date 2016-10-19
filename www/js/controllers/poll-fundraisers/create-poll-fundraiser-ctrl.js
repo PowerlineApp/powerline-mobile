@@ -25,7 +25,7 @@ angular.module('app.controllers').controller('createPollFundraiserCtrl',function
 
   $scope.removeAnswer = function(index){
     if($scope.answers.length <= 2)
-      $scope.alert('You must provide at least two answers.')
+      $scope.validationAlert('You must provide at least two answers.')
     else
       $scope.answers.splice(index, 1);
   }
@@ -89,24 +89,24 @@ angular.module('app.controllers').controller('createPollFundraiserCtrl',function
     var customAmountDesc = $scope.data.custom_amount_amount_desc
 
     if(title.length == 0){
-      alert('Title cannot be blank')
+      $scope.validationAlert('Title cannot be blank')
       return false
     }   
     if(description.length == 0){
-      alert('Description cannot be blank')
+      $scope.validationAlert('Description cannot be blank')
       return false
     }
     if(isCrowdfunding && (isNaN(goalAmount) || goalAmount == 0)){
-      alert('Goal amount must be a positive number, e.g. 400 or 199.99')
+      $scope.validationAlert('Goal amount must be a positive number, e.g. 400 or 199.99')
       return false
     }
     if(isCrowdfunding &&  goalAmount < 0){
-      alert('Goal amount must be greater than zero')
+      $scope.validationAlert('Goal amount must be greater than zero')
       return false
     }
     var now = new Date()
     if(isCrowdfunding && endOfEventDateTime < now){
-      alert('End of Event must be in future')
+      $scope.validationAlert('End of Event must be in future')
       return false
     }
 
@@ -124,22 +124,22 @@ angular.module('app.controllers').controller('createPollFundraiserCtrl',function
     })
 
     if(answerAmountNotNumber){
-      $scope.alert('Answer amount must be a number and cannot be blank.')
+      $scope.validationAlert('Answer amount must be a number and cannot be blank.')
       return false      
     }
 
     if(answerAmountIsSubzero){
-      $scope.alert('Answer amount must be greater than zero.')
+      $scope.validationAlert('Answer amount must be greater than zero.')
       return false       
     }
 
     if(isThereNonEmptyAnswerDesc){
-      $scope.alert('Answer description cannot be blank.')
+      $scope.validationAlert('Answer description cannot be blank.')
       return false      
     }
 
     if(customAmountEnabled && customAmountDesc.length == 0){
-      $scope.alert('Custom amount description cannot be blank.')
+      $scope.validationAlert('Custom amount description cannot be blank.')
       return false     
     }
 
@@ -189,13 +189,13 @@ angular.module('app.controllers').controller('createPollFundraiserCtrl',function
           $scope.hideSpinner();
           console.log('publish fundraising failed')
           console.log(error)
-          alert('Failed to publish fundraising: '+JSON.stringify(error))
+          $scope.createContentAlert('Failed to publish fundraising: '+JSON.stringify(error))
         })
       }, function(error){
         $scope.hideSpinner();
         console.log('add payment answer failed')
         console.log(error)
-        alert('Failed to add one of the payment options: '+JSON.stringify(error))
+        $scope.createContentAlert('Failed to add one of the payment options: '+JSON.stringify(error))
       })
 
     }, function(error){
@@ -203,13 +203,13 @@ angular.module('app.controllers').controller('createPollFundraiserCtrl',function
       console.log('Failed to create poll')
       console.log(error)
       if(error.status == 500)
-        alert('Your group must have a bank account verified before you can publish a fundraiser. Please visit Group Settings to setup and verify bank account information.')
+        $scope.createContentAlert('Your group must have a bank account verified before you can publish a fundraiser. Please visit Group Settings to setup and verify bank account information.')
       else if (error.data && error.data.length > 0){
         var msg = error.data[0].message
-        alert(msg)
+        $scope.createContentAlert(msg)
       }
       else
-      alert('Failed to create poll due to: '+JSON.stringify(error))
+      $scope.createContentAlert('Failed to create poll due to: '+JSON.stringify(error))
     })
   }
 

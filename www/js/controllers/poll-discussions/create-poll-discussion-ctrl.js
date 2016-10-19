@@ -4,7 +4,7 @@ angular.module('app.controllers').controller('createPollDiscussionCtrl',function
 
   $scope.validate = function(){
     if($scope.data.discussion_description.length == 0){
-      alert('Discussion topic cannot be blank.')
+      $scope.validationAlert('Discussion topic cannot be blank.')
       return false
     }
     return true
@@ -26,14 +26,14 @@ angular.module('app.controllers').controller('createPollDiscussionCtrl',function
       }, function(error){
         $scope.hideSpinner();
         console.log(error)
-        alert('Failed to publish discussion due to: '+JSON.stringify(error.data))
+        $scope.createContentAlert('Failed to publish discussion due to: '+JSON.stringify(error.data))
       })
     }, function(error){
       $scope.hideSpinner();
       if(error.status == 403)
-        $scope.alert('You are not allowed to create discussion in this group')
+        $scope.createContentAlert('You are not allowed to create discussion in this group')
       else
-        $scope.alert('Error occured while creating Poll: '+JSON.stringify(error.data))
+        $scope.createContentAlert('Error occured while creating Poll: '+JSON.stringify(error.data))
     })
   }
 })

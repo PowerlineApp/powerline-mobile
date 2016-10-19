@@ -5,7 +5,7 @@ angular.module('app.controllers').controller('createPollQuestionCtrl',function (
 
   $scope.removeAnswer = function(index){
     if($scope.answers.length <= 2)
-      $scope.alert('You must provide at least two answers.')
+      $scope.validationAlert('You must provide at least two answers.')
     else
       $scope.answers.splice(index, 1);
   }
@@ -16,7 +16,7 @@ angular.module('app.controllers').controller('createPollQuestionCtrl',function (
 
   $scope.validate = function(){
     if($scope.data.question_text.length == 0){
-      $scope.alert('Question text cannot be blank.')
+      $scope.validationAlert('Question text cannot be blank.', null, 'ahoj')
       return false
     }
 
@@ -27,7 +27,7 @@ angular.module('app.controllers').controller('createPollQuestionCtrl',function (
     })
 
     if(isThereNonEmptyAnswer){
-      $scope.alert('Answer cannot be blank.')
+      $scope.validationAlert('Answer cannot be blank.')
       return false      
     }
 
@@ -55,9 +55,9 @@ angular.module('app.controllers').controller('createPollQuestionCtrl',function (
     }, function(error){
       $scope.hideSpinner();
       if(error.status == 403)
-        $scope.alert('You are not allowed to create Poll in this group')
+        $scope.createContentAlert('You are not allowed to create Poll in this group')
       else
-        $scope.alert('Error occured while creating Poll: '+JSON.stringify(error.data))
+        $scope.createContentAlert('Error occured while creating Poll: '+JSON.stringify(error.data))
     })
   }
 
