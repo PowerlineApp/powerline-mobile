@@ -90,6 +90,13 @@ angular.module('app.services').factory('questions',function (QuestionResource,
       return d + ' ' + t
     },
 
+    fromBackendUTCtoLocalDateTime: function(backendUTCString){
+      var localDateTime = new Date()
+      if(backendUTCString)
+        localDateTime.setTime(Date.parse(backendUTCString) - (localDateTime.getTimezoneOffset() * 60000))
+      return localDateTime
+    },
+
     createPollEvent: function(groupID, title, desc, started_at, finished_at ){
       var data = {subject: desc,
         title: title,
@@ -132,15 +139,20 @@ angular.module('app.services').factory('questions',function (QuestionResource,
   }
 
   function format(question) {
-    question.published_at_date = new Date(question.published_at);
+    question.published_at_date = service.fromBackendUTCtoLocalDateTime(question.published_at);
+
     if (question.started_at) {
-      question.started_at_date = new Date()
-      question.started_at_date.setTime(Date.parse(question.started_at) - (question.started_at_date.getTimezoneOffset() * 60000))
-      question.finished_at_date = new Date()
-      question.finished_at_date.setTime(Date.parse(question.finished_at) - (question.finished_at_date.getTimezoneOffset() * 60000))
+      question.started_at_date = service.fromBackendUTCtoLocalDateTime(question.started_at)
+      question.finished_at_date = service.fromBackendUTCtoLocalDateTime(question.finished_at)
     }
 
-    question.expired_at = new Date(question.expire_at ? question.expire_at : question.published_at_date.getTime() + 86400000);
+    if(question.crowdfunding_deadline)
+       question.crowdfunding_deadline_date = service.fromBackendUTCtoLocalDateTime(question.crowdfunding_deadline)
+
+    if(question.expire_at)
+      question.expired_at = service.fromBackendUTCtoLocalDateTime(question.expire_at )
+    else 
+      question.expired_at = question.published_at_date.getTime() + 86400000
 
     /* 1 day */
     question.expired = new Date() > question.expired_at;

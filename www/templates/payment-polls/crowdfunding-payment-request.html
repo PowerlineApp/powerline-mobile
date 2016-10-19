@@ -36,7 +36,7 @@
       <p>
           <span>Goal amount: ${{ q.crowdfunding_goal_amount }}</span><br>
           <span>Total pledged: ${{ q.crowdfunding_pledged_amount || 0 }}</span><br>
-          <span>Deadline: {{ q.crowdfunding_deadline | date:'medium' }}</span><br><br>
+          <span>Deadline: {{ q.crowdfunding_deadline_date | date:'medium' }}</span><br><br>
           <span i-bind-taggable="q.subject" i-tags="q.cached_hash_tags"></span>
       </p>
 

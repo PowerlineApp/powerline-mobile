@@ -1,8 +1,11 @@
-angular.module('app.controllers').controller('createPollFundraiserCtrl',function ($scope, $stateParams, $document, $controller, groups, profile, homeCtrlParams, $rootScope, $q, questions, $http, serverConfig, device) {
+angular.module('app.controllers').controller('createPollFundraiserCtrl',function ($scope, $stateParams, $document, $controller, $rootScope, $q, questions, $http, serverConfig) {
   $controller('abstractCreatePollCtrl', {$scope: $scope});
 
   var tomorrow = new Date();
   tomorrow.setDate(tomorrow.getDate() + 1); 
+  tomorrow.setMinutes(0)
+  tomorrow.setMinutes(0)
+  tomorrow.setSeconds(0)
   $scope.data.title_text = ''
   $scope.data.description_text = ''
   $scope.data.goal_amount = ''
@@ -42,16 +45,8 @@ angular.module('app.controllers').controller('createPollFundraiserCtrl',function
     return $http.post(serverConfig.url + '/api/v2/groups/'+groupID+'/polls', payload, headers)
   }
 
-  var createPollCrowdfunding = function(title, description, groupID, endOfEventDate, endOfEventTime, goalAmount){
-    var year = endOfEventDate.getUTCFullYear()
-    var month = String(endOfEventDate.getMonth()+1)
-    if(month.length == 1)
-      month = '0'+mount
-    var day = String(endOfEventDate.getDate())
-    if(day.length == 1)
-      day = '0'+day
-
-    var crowdfunding_deadline = year+'/'+month+'/'+day+' '+endOfEventTime+':00' //"2016-09-30 09:52:33"
+  var createPollCrowdfunding = function(title, description, groupID, endOfEventDateTime, goalAmount){
+    var crowdfunding_deadline = questions.toBackendUTCDateTimeString(endOfEventDateTime)
     var data = {
       title: title,
       subject: description,
@@ -87,8 +82,9 @@ angular.module('app.controllers').controller('createPollFundraiserCtrl',function
     var description = $scope.data.description_text
     var isCrowdfunding = $scope.data.is_crowdfunding
     var goalAmount = Number($scope.data.goal_amount)
-    var endOfEventDate = $scope.data.end_of_event_date
-    var endOfEventTime = $scope.data.end_of_event_hour
+    var endOfEventDateTime = $scope.data.end_of_event_date
+    var endOfEventHour = Number($scope.data.end_of_event_hour.split(':')[0])
+    endOfEventDateTime.setHours(endOfEventHour)
     var customAmountEnabled = $scope.data.custom_amount_enabled
     var customAmountDesc = $scope.data.custom_amount_amount_desc
 
@@ -109,8 +105,8 @@ angular.module('app.controllers').controller('createPollFundraiserCtrl',function
       return false
     }
     var now = new Date()
-    if(isCrowdfunding && endOfEventDate < now){
-      alert('End of Event (day) must be in future')
+    if(isCrowdfunding && endOfEventDateTime < now){
+      alert('End of Event must be in future')
       return false
     }
 
@@ -155,8 +151,9 @@ angular.module('app.controllers').controller('createPollFundraiserCtrl',function
     var description = $scope.data.description_text
     var isCrowdfunding = $scope.data.is_crowdfunding
     var goalAmount = Number($scope.data.goal_amount)
-    var endOfEventDate = $scope.data.end_of_event_date
-    var endOfEventTime = $scope.data.end_of_event_hour
+    var endOfEventDateTime = $scope.data.end_of_event_date
+    var endOfEventHour = Number($scope.data.end_of_event_hour.split(':')[0])
+    endOfEventDateTime.setHours(endOfEventHour)
     var customAmountEnabled = $scope.data.custom_amount_enabled
     var customAmountDesc = $scope.data.custom_amount_amount_desc
 
@@ -166,7 +163,7 @@ angular.module('app.controllers').controller('createPollFundraiserCtrl',function
 
     var createRequest = null
     if(isCrowdfunding)
-      createRequest = createPollCrowdfunding(title, description, groupID, endOfEventDate, endOfEventTime, goalAmount)
+      createRequest = createPollCrowdfunding(title, description, groupID, endOfEventDateTime, goalAmount)
     else 
       createRequest = createPollPayment(title, description, groupID)
 
@@ -207,6 +204,10 @@ angular.module('app.controllers').controller('createPollFundraiserCtrl',function
       console.log(error)
       if(error.status == 500)
         alert('Your group must have a bank account verified before you can publish a fundraiser. Please visit Group Settings to setup and verify bank account information.')
+      else if (error.data && error.data.length > 0){
+        var msg = error.data[0].message
+        alert(msg)
+      }
       else
       alert('Failed to create poll due to: '+JSON.stringify(error))
     })
