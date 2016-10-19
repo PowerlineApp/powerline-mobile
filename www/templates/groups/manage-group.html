@@ -14,9 +14,19 @@
     </section>
 
     <section class="manage-group-sections">
-      <div class="manage-group-section">
-        <div>Membership Control</div>
-        <div>dropdown be here</div>
+      <div class="manage-group-section" ng-class="isExpanded('subscription-level') ? 'active' : ''">
+        <div class="expand-icon" ng-click="expand('subscription-level')"></div>
+        <div class="title" ng-click="expand('subscription-level')">Subscription Level</div>
+        <div class="content" ng-show="isExpanded('subscription-level')">
+          dropdown be here
+        </div>
+      </div>      
+      <div class="manage-group-section" ng-class="isExpanded('membership-control') ? 'active' : ''">
+        <div class="expand-icon" ng-click="expand('membership-control')"></div>
+        <div class="title" ng-click="expand('membership-control')">Membership Control</div>
+        <div class="content" ng-show="isExpanded('membership-control')">
+          dropdown be here
+        </div>
       </div>
     </section>
   </ion-content>

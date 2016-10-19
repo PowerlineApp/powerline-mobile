@@ -1046,3 +1046,40 @@ a.follow-action {
     vertical-align: middle
   }
 }
+
+.manage-group-sections .manage-group-section {
+  background-color: #f7f8fc;
+  margin-left: 8px;
+  margin-right: 8px;
+  padding: 12px;
+  border: 1px solid #d2d2d2;
+  border-bottom: 0;
+
+  .title {
+    font-size: 15px;
+    color: #778288;
+    font-weight: 600;    
+  }
+
+  .content {
+    border-top: 1px dotted #bdbdbd;
+    margin-top: 11px;
+    padding-top: 8px;
+  }
+
+  .expand-icon {
+    background-image: url(../images/v2/icons/down-passive.png);
+    float: right;
+    height: 16px;
+    width: 22px;
+    background-size: cover;
+  }
+
+  &:last-child {
+    border-bottom: 1px solid #d2d2d2;
+  }
+
+  &.active {
+    background-color: white;
+  }
+}
