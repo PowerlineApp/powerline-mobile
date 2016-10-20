@@ -1,6 +1,6 @@
 <ion-view view-title="Manage Group">
   <ion-nav-buttons side="right">
-    <button class="button button-clear" ng-click="save()">Save</button>
+    <button ng-show="dataIsAltered()" class="button button-clear" ng-click="save()">Save</button>
   </ion-nav-buttons>
 
   <ion-content class="content">
@@ -25,7 +25,19 @@
         <div class="expand-icon" ng-click="expand('membership-control')"></div>
         <div class="title" ng-click="expand('membership-control')">Membership Control</div>
         <div class="content" ng-show="isExpanded('membership-control')">
-          dropdown be here
+
+          <div>
+            <select 
+              ng-model="data.membership_control"
+              ng-options="item as item.name for item in membershipControlOptions">
+            </select>
+            <input 
+              ng-show="membershipControlSetToPasscode()"
+              ng-model="data.membership_control_passcode" 
+              maxlength="255" 
+              placeholder="Type passcode here" />
+          </div>
+
         </div>
       </div>
     </section>

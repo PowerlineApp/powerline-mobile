@@ -1065,6 +1065,21 @@ a.follow-action {
     border-top: 1px dotted #bdbdbd;
     margin-top: 11px;
     padding-top: 8px;
+
+    select, input {
+      width: 95%;
+      padding: 5px;
+      background-color: white;
+      border: 1px #bbbbbb dotted;
+      margin-bottom: 8px;
+    }
+
+    select {
+      background-image: url(../images/v2/icons/sort-down.png);
+      background-repeat: no-repeat;
+      background-position: right 7px center;
+      background-size: 10px;
+    }
   }
 
   .expand-icon {
