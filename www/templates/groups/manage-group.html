@@ -18,7 +18,44 @@
         <div class="expand-icon" ng-click="expand('subscription-level')"></div>
         <div class="title" ng-click="expand('subscription-level')">Subscription Level</div>
         <div class="content" ng-show="isExpanded('subscription-level')">
-          dropdown be here
+          <div class="current-subscription-level-info">
+            <div class="name">Current Account: Gold</div>
+            <div class="expire-at">Expire at: Thu 4 2016</div>
+            <div class="cancel">Cancel subscription</div>
+          </div>
+          <br/>
+
+          <div class="subscription-levels">
+            <div class="subscription-level">
+              <div class="desc">
+                <div class="subscription-title">
+                  Get Started
+                </div>
+                <div  class="audience-and-size">
+                  Audience: Unlimited<br/>
+                  Size: Unlimited
+                </div>                
+              </div>
+              <div class="price">
+                <div class="inner" style="padding-left: 24px">Free/<br />month</div>
+              </div>
+            </div>
+
+            <div class="subscription-level">
+              <div class="desc">
+                <div class="subscription-title">
+                  For Controls
+                </div>
+                <div  class="audience-and-size">
+                  Audience: Not Business<br/>
+                  Size: Under 1k users
+                </div>                
+              </div>
+              <div class="price">
+                <div class="inner">Silver<br />$19/month</div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>      
       <div class="manage-group-section" ng-class="isExpanded('membership-control') ? 'active' : ''">

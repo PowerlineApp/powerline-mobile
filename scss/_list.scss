@@ -1097,4 +1097,76 @@ a.follow-action {
   &.active {
     background-color: white;
   }
+
+  .current-subscription-level-info{
+    text-align: center;
+
+    .name{
+      color: #6e8082;
+      font-weight: 900;
+      font-family: "Lato Bold";
+      font-size: 14px;
+    }
+
+    .expire-at{
+      margin-top: 4px;
+      color: #758181;
+      font-weight: 900;
+      font-size: 12px;
+    }
+
+    .cancel {
+      color: #b40b2c;
+      font-family: "Lato Bold";
+      margin-top: 7px;
+    }
+  }
+
+  .subscription-levels .subscription-level {
+    display: flex;
+    position: relative;
+    margin-bottom: 3px;
+
+   .price {
+    display: flex;
+    justify-content: flex-start;
+    background-color: #090856;
+    width: 96px;
+    height: 96px;
+    border-radius: 60px;
+    color: #fffeff;
+    border: 6px solid #ebf0f3;
+    font-weight: 600;
+    z-index: 2;
+    text-align: center;
+    
+      .inner {
+        align-self: center;
+        padding-left: 9px;
+      }
+    }
+
+    .desc {
+    position: absolute;
+    left: 66px;
+    margin-top: 16px;
+    background-color: #f2f9ff;
+    padding: 10px 11px 10px 40px;
+    z-index: 1;
+    width: 180px;
+
+      .subscription-title{
+        color: #03016c;
+        font-weight: 900;
+        font-family: "Lato Bold";
+      }
+
+      .audience-and-size {
+        color: #788389;
+        font-size: 5px;
+        margin-top: 4px;
+        font-weight: 700;
+      }
+    }
+  }
 }

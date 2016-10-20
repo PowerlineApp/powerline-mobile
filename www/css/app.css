@@ -3135,6 +3135,58 @@ a.follow-action {
     border-bottom: 1px solid #d2d2d2; }
   .manage-group-sections .manage-group-section.active {
     background-color: white; }
+  .manage-group-sections .manage-group-section .current-subscription-level-info {
+    text-align: center; }
+    .manage-group-sections .manage-group-section .current-subscription-level-info .name {
+      color: #6e8082;
+      font-weight: 900;
+      font-family: "Lato Bold";
+      font-size: 14px; }
+    .manage-group-sections .manage-group-section .current-subscription-level-info .expire-at {
+      margin-top: 4px;
+      color: #758181;
+      font-weight: 900;
+      font-size: 12px; }
+    .manage-group-sections .manage-group-section .current-subscription-level-info .cancel {
+      color: #b40b2c;
+      font-family: "Lato Bold";
+      margin-top: 7px; }
+  .manage-group-sections .manage-group-section .subscription-levels .subscription-level {
+    display: flex;
+    position: relative;
+    margin-bottom: 3px; }
+    .manage-group-sections .manage-group-section .subscription-levels .subscription-level .price {
+      display: flex;
+      justify-content: flex-start;
+      background-color: #090856;
+      width: 96px;
+      height: 96px;
+      border-radius: 60px;
+      color: #fffeff;
+      border: 6px solid #ebf0f3;
+      font-weight: 600;
+      z-index: 2;
+      text-align: center; }
+      .manage-group-sections .manage-group-section .subscription-levels .subscription-level .price .inner {
+        align-self: center;
+        padding-left: 9px; }
+    .manage-group-sections .manage-group-section .subscription-levels .subscription-level .desc {
+      position: absolute;
+      left: 66px;
+      margin-top: 16px;
+      background-color: #f2f9ff;
+      padding: 10px 11px 10px 40px;
+      z-index: 1;
+      width: 180px; }
+      .manage-group-sections .manage-group-section .subscription-levels .subscription-level .desc .subscription-title {
+        color: #03016c;
+        font-weight: 900;
+        font-family: "Lato Bold"; }
+      .manage-group-sections .manage-group-section .subscription-levels .subscription-level .desc .audience-and-size {
+        color: #788389;
+        font-size: 5px;
+        margin-top: 4px;
+        font-weight: 700; }
 
 .group {
   margin-bottom: 12px; }
