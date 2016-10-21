@@ -1122,51 +1122,71 @@ a.follow-action {
     }
   }
 
-  .subscription-levels .subscription-level {
-    display: flex;
-    justify-content: center;
-    position: relative;
-    margin-bottom: 3px;
-
-   .price {
-    display: flex;
-    justify-content: center;
-    background-color: #090856;
-    width: 96px;
-    height: 96px;
-    border-radius: 60px;
-    color: #fffeff;
-    border: 6px solid #ebf0f3;
-    font-weight: 600;
-    z-index: 2;
-    text-align: center;
-    
-      .inner {
-        align-self: center;
-      }
+  .subscription-levels {
+    .select-button {
+      position: relative;
+      left: 52%;
+      top: -26px;
+      z-index: 3;
+      background: #54c5ff;
+      width: 76px;
+      height: 23px;
+      text-align: center;
+      vertical-align: middle;
+      line-height: 22px;
+      color: #fff;
+      font-family: "Lato Bold";
+      border-radius: 2px;
+      margin-bottom: -21px;
     }
 
-    .desc {
-    margin-top: 16px;
-    margin-bottom: 16px;
-    margin-left: -27px;
-    background-color: #f2f9ff;
-    padding: 10px 11px 10px 40px;
-    z-index: 1;
-    width: 180px;
-    border: 1px solid #eef3f6;
+    .subscription-level{
+      display: flex;
+      justify-content: center;
+      position: relative;
+      margin-bottom: 3px;
 
-      .subscription-title{
-        color: #03016c;
-        font-weight: 900;
-        font-family: "Lato Bold";
+    .price {
+      display: flex;
+      justify-content: center;
+      background: linear-gradient(#3b3a88, #02014f);
+      width: 96px;
+      height: 96px;
+      border-radius: 60px;
+      color: #fffeff;
+      border: 6px solid #ebf0f3;
+      font-weight: 600;
+      z-index: 2;
+      text-align: center;
+      
+        .inner {
+          align-self: center;
+        }
       }
 
-      .audience-and-size {
-        color: #788389;
-        font-size: 5px;
-        margin-top: 4px;
-        font-weight: 700;
+      .desc {
+      margin-top: 16px;
+      margin-bottom: 16px;
+      margin-left: -27px;
+      background-color: #f2f9ff;
+      padding: 10px 11px 10px 40px;
+      z-index: 1;
+      width: 180px;
+      border: 1px solid #eef3f6;
+      text-align: center;
+
+        .subscription-title{
+          color: #03016c;
+          font-weight: 900;
+          font-family: "Lato Bold";
+        }
+
+        .audience-and-size {
+          color: #788389;
+          font-size: 5px;
+          margin-top: 4px;
+          font-weight: 700;
+        }
       }
     }
   }

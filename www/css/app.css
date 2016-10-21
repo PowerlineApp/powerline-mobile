@@ -3151,6 +3151,21 @@ a.follow-action {
       color: #b40b2c;
       font-family: "Lato Bold";
       margin-top: 7px; }
+  .manage-group-sections .manage-group-section .subscription-levels .select-button {
+    position: relative;
+    left: 52%;
+    top: -26px;
+    z-index: 3;
+    background: #54c5ff;
+    width: 76px;
+    height: 23px;
+    text-align: center;
+    vertical-align: middle;
+    line-height: 22px;
+    color: #fff;
+    font-family: "Lato Bold";
+    border-radius: 2px;
+    margin-bottom: -21px; }
   .manage-group-sections .manage-group-section .subscription-levels .subscription-level {
     display: flex;
     justify-content: center;
@@ -3159,7 +3174,7 @@ a.follow-action {
     .manage-group-sections .manage-group-section .subscription-levels .subscription-level .price {
       display: flex;
       justify-content: center;
-      background-color: #090856;
+      background: linear-gradient(#3b3a88, #02014f);
       width: 96px;
       height: 96px;
       border-radius: 60px;
@@ -3178,7 +3193,8 @@ a.follow-action {
       padding: 10px 11px 10px 40px;
       z-index: 1;
       width: 180px;
-      border: 1px solid #eef3f6; }
+      border: 1px solid #eef3f6;
+      text-align: center; }
       .manage-group-sections .manage-group-section .subscription-levels .subscription-level .desc .subscription-title {
         color: #03016c;
         font-weight: 900;

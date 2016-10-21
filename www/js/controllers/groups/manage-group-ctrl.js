@@ -29,6 +29,7 @@ angular.module('app.controllers').controller('manageGroupCtrl',function ($scope,
     return mcChanged
   }
 
+
   $scope.membershipControlSetToPasscode = function(){
     return $scope.data.membership_control.value == 'passcode'
   }
