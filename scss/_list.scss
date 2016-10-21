@@ -1190,4 +1190,19 @@ a.follow-action {
       }
     }
   }
+
+  ion-list .item.item-checkbox {
+    font-size: 14px;
+    border-width: 0;
+  }
+
+  .save-button-holder{
+    text-align: center;
+    button {
+      min-height: 20px;
+      height: 33px;
+      line-height: 0;
+      width: 200px;
+    }
+  }
 }

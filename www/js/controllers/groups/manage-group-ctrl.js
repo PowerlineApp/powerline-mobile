@@ -1,5 +1,6 @@
 angular.module('app.controllers').controller('manageGroupCtrl',function ($scope, groups, $stateParams, $ionicPopup) {
   var groupID = parseInt($stateParams.id)
+  $scope.data = {}
   groups.loadAllDetails(groupID).then(function(){
     $scope.group = groups.get(groupID);
     console.log($scope.group)
@@ -10,6 +11,13 @@ angular.module('app.controllers').controller('manageGroupCtrl',function ($scope,
       $scope.data.membership_control = $scope.membershipControlOptions[1]
     else if($scope.group.membership_control == 'passcode')
       $scope.data.membership_control = $scope.membershipControlOptions[2]
+
+    groups.loadPermissions(groupID).then(function (permissionModel) {
+      permissionModel.get('required_permissions').forEach(function(permissionID){
+        $scope.data.selectedPermissions[permissionID] = true
+      })
+      
+    })
   })  
 
   var expandedSection = null
@@ -30,6 +38,9 @@ angular.module('app.controllers').controller('manageGroupCtrl',function ($scope,
   }
 
   //////////// MEMBERSHIP CONTROL SETTINGS //////////////////////////////
+
+  $scope.data.membership_control = {}
+  $scope.data.membership_control_passcode = ''
 
   $scope.membershipControlSettingsAltered = function(){
     if(!$scope.group)
@@ -58,12 +69,21 @@ angular.module('app.controllers').controller('manageGroupCtrl',function ($scope,
     return $scope.data.membership_control.value == 'passcode'
   }
 
-  $scope.data = {membership_control: {}, membership_control_passcode: ''}
-
   $scope.membershipControlOptions = [
     {name: 'Public (Open to all)', value: 'public'},
     {name: 'Approval (User is approved by group leader)', value: 'approval'},
     {name: 'Passcode (User must provide correct passcode to enter)', value: 'passcode'}]
 
+  //////// GROUP PERMISSIONS /////////////////////////////////////////////
 
+  $scope.allGroupPermissions = groups.permissionsLabels
+  $scope.data.selectedPermissions = {}
+
+  $scope.groupPermissionsAltered = function(){
+    return true
+  }
+
+  $scope.saveGroupPermissions = function(){
+    console.log($scope.data.selectedPermissions)
+  }
 })

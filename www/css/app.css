@@ -3204,6 +3204,16 @@ a.follow-action {
         font-size: 5px;
         margin-top: 4px;
         font-weight: 700; }
+  .manage-group-sections .manage-group-section ion-list .item.item-checkbox {
+    font-size: 14px;
+    border-width: 0; }
+  .manage-group-sections .manage-group-section .save-button-holder {
+    text-align: center; }
+    .manage-group-sections .manage-group-section .save-button-holder button {
+      min-height: 20px;
+      height: 33px;
+      line-height: 0;
+      width: 200px; }
 
 .group {
   margin-bottom: 12px; }
