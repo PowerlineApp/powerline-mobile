@@ -37,6 +37,14 @@ angular.module('app.controllers').controller('manageGroupCtrl',function ($scope,
    });
   }
 
+  $scope.saveError = function(msg){
+   $ionicPopup.alert({
+     cssClass: 'popup-by-ionic',
+     title: 'Server error',
+     template: msg
+   });
+  }
+
   //////////// MEMBERSHIP CONTROL SETTINGS //////////////////////////////
 
   $scope.data.membership_control = {}
@@ -101,6 +109,8 @@ angular.module('app.controllers').controller('manageGroupCtrl',function ($scope,
     $scope.group.changeGroupPermissions(activePermissionsIDs).then(function(){
       $scope.showToast('Group permissions altered successfully.')
       $scope.group.currentPermissions = activePermissionsIDs
+    }, function(error){
+      $scope.saveError(JSON.stringify(error))
     })
   }
 })
