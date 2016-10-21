@@ -1,7 +1,4 @@
 <ion-view view-title="Manage Group">
-  <ion-nav-buttons side="right">
-    <button ng-show="dataIsAltered()" class="button button-clear" ng-click="save()">Save</button>
-  </ion-nav-buttons>
 
   <ion-content class="content">
 
@@ -78,6 +75,12 @@
               maxlength="255" 
               placeholder="Type passcode here" />
           </div>
+
+          <button ng-show="membershipControlSettingsAltered()" 
+            ng-click="saveMembershipControlSettings()"
+            class="button btn-primary">
+            Save
+          </button>
 
         </div>
       </div>

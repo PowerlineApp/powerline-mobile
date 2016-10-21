@@ -85,9 +85,11 @@ angular.module('app.services').factory('GroupModel', function(groupsInvites, $ht
         })
     },
 
-    this.setMembeshipControlToPasscode = function(passcode){
-        var data = {membership_control: 'passcode', 
-            membership_passcode: passcode}
+    this.changeMembershipControl = function(membershipType, passcode){
+        var data = { membership_control: membershipType}
+       if(membershipType == 'passcode')
+         data.membership_passcode = passcode
+       
         var payload = JSON.stringify(data)
         var headers = {headers: {'Content-Type': 'application/json'}}
         return $http.put(serverConfig.url + '/api/v2/groups/'+this.id+'/membership', payload, headers).then(function(response){
