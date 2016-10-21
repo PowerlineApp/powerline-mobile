@@ -1129,7 +1129,7 @@ a.follow-action {
 
    .price {
     display: flex;
-    justify-content: flex-start;
+    justify-content: center;
     background-color: #090856;
     width: 96px;
     height: 96px;
@@ -1142,7 +1142,6 @@ a.follow-action {
     
       .inner {
         align-self: center;
-        padding-left: 9px;
       }
     }
 
