@@ -3153,6 +3153,7 @@ a.follow-action {
       margin-top: 7px; }
   .manage-group-sections .manage-group-section .subscription-levels .subscription-level {
     display: flex;
+    justify-content: center;
     position: relative;
     margin-bottom: 3px; }
     .manage-group-sections .manage-group-section .subscription-levels .subscription-level .price {
@@ -3170,13 +3171,14 @@ a.follow-action {
       .manage-group-sections .manage-group-section .subscription-levels .subscription-level .price .inner {
         align-self: center; }
     .manage-group-sections .manage-group-section .subscription-levels .subscription-level .desc {
-      position: absolute;
-      left: 66px;
       margin-top: 16px;
+      margin-bottom: 16px;
+      margin-left: -27px;
       background-color: #f2f9ff;
       padding: 10px 11px 10px 40px;
       z-index: 1;
-      width: 180px; }
+      width: 180px;
+      border: 1px solid #eef3f6; }
       .manage-group-sections .manage-group-section .subscription-levels .subscription-level .desc .subscription-title {
         color: #03016c;
         font-weight: 900;

@@ -21,12 +21,12 @@
               ng-bind="data.joined ? 'Unjoin' : 'Join'"
               ng-class="{'btn-primary': !data.joined, 'btn-red1': data.joined}"
               style="text-transform: capitalize;"></button>
+
     </section>
 
     <section class="margin-10" ng-show="data.official_description">
       <p class="gray-content" ng-bind="data.official_description"></p>
     </section>
-
     <section>
       <ul class="info-list">
         <li ng-show="data.acronym">
@@ -54,6 +54,12 @@
         <li ng-show="permissionsForHumans && permissionsForHumans.length > 0">
           <p><span>Permissions</span></p>
           <p ng-bind="permissionsForHumans.join(', ')"></p>
+        </li>
+        <li ng-show="isGroupManager()">
+          <button class="btn-large btn-primary"
+              style="text-transform: capitalize;" 
+              ng-click="goToGroupManagement()"
+              >Manage</button>
         </li>
       </ul>
     </section>

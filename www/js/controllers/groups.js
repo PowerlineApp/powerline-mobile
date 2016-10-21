@@ -1,4 +1,4 @@
-angular.module('app.controllers').controller('groups',function ($scope, groups, $state, $rootScope, $http, serverConfig) {
+angular.module('app.controllers').controller('groups',function ($scope, groups, $state, $rootScope, $http, serverConfig, $location) {
   
   $scope.groupsGrupedByFirstLetter = [];
 
@@ -85,7 +85,7 @@ angular.module('app.controllers').controller('groups',function ($scope, groups, 
   $scope.$watch(groups.getNewGroups, function (newValue) {
     $scope.newItems = newValue;
   });
-}).controller('groups.profile',function ($scope, topBar, groups, $stateParams, $state, activity, favorite, follows, homeCtrlParams, $rootScope, $location) {
+}).controller('groups.profile',function ($scope, topBar, groups, $stateParams, $state, activity, favorite, follows, homeCtrlParams, $rootScope, $location, profile) {
   
   follows.load();
   $scope.favoriteService = favorite
@@ -99,6 +99,14 @@ angular.module('app.controllers').controller('groups',function ($scope, groups, 
 
   $scope.goToMembers = function(){
     $scope.navigateTo('group-members', $scope.data)
+  }
+
+  $scope.goToGroupManagement = function(){
+    $location.path('/manage-group/'+id);
+  }
+
+  $scope.isGroupManager = function(){
+    return profile.isCurrentUserLeader()
   }
 
   $scope.invite = function () {

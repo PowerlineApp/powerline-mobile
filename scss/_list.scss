@@ -1124,6 +1124,7 @@ a.follow-action {
 
   .subscription-levels .subscription-level {
     display: flex;
+    justify-content: center;
     position: relative;
     margin-bottom: 3px;
 
@@ -1146,13 +1147,14 @@ a.follow-action {
     }
 
     .desc {
-    position: absolute;
-    left: 66px;
     margin-top: 16px;
+    margin-bottom: 16px;
+    margin-left: -27px;
     background-color: #f2f9ff;
     padding: 10px 11px 10px 40px;
     z-index: 1;
     width: 180px;
+    border: 1px solid #eef3f6;
 
       .subscription-title{
         color: #03016c;
