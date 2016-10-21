@@ -165,17 +165,15 @@ angular.module('app.services').factory('groups',function ($resource, serverConfi
       });
     },
 
-    permissionsLabels: {
-      permissions_name: 'Name',
-      permissions_contacts: 'Contact information',
-      permissions_responses: 'Responses',
-      permissions_address: 'Street Address',
-      permissions_city: 'City',
-      permissions_state: 'State',
-      permissions_country: 'Country',
-      permissions_zip_code: 'Zip Code',
-      permissions_email: 'Email',
-      permissions_phone: 'Phone Number'
+    permissionsLabels: {"permissions_name":"Name",
+      "permissions_address":"Street Address",
+      "permissions_city":"City",
+      "permissions_state":"State",
+      "permissions_country":"Country",
+      "permissions_zip_code":"Zip Code",
+      "permissions_email":"Email",
+      "permissions_phone":"Phone Number",
+      "permissions_responses":"Responses"
     },
 
     loadPermissions: function (id) {

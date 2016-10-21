@@ -13,10 +13,10 @@ angular.module('app.controllers').controller('manageGroupCtrl',function ($scope,
       $scope.data.membership_control = $scope.membershipControlOptions[2]
 
     groups.loadPermissions(groupID).then(function (permissionModel) {
-      permissionModel.get('required_permissions').forEach(function(permissionID){
+      $scope.group.currentPermissions = permissionModel.get('required_permissions')
+      $scope.group.currentPermissions.forEach(function(permissionID){
         $scope.data.selectedPermissions[permissionID] = true
       })
-      
     })
   })  
 
@@ -79,11 +79,28 @@ angular.module('app.controllers').controller('manageGroupCtrl',function ($scope,
   $scope.allGroupPermissions = groups.permissionsLabels
   $scope.data.selectedPermissions = {}
 
+  var activePermissions = function(){
+    var activePermissionsIDs = []
+    Object.keys($scope.data.selectedPermissions).forEach(function(k){
+      if($scope.data.selectedPermissions[k])
+        activePermissionsIDs.push(k)
+    })
+    return activePermissionsIDs
+  }
+
   $scope.groupPermissionsAltered = function(){
-    return true
+    if($scope.group == null)
+      return false
+
+    var originalPermission = $scope.group.currentPermissions
+    return JSON.stringify(originalPermission)!=JSON.stringify(activePermissions());
   }
 
   $scope.saveGroupPermissions = function(){
-    console.log($scope.data.selectedPermissions)
+    var activePermissionsIDs = activePermissions()
+    $scope.group.changeGroupPermissions(activePermissionsIDs).then(function(){
+      $scope.showToast('Group permissions altered successfully.')
+      $scope.group.currentPermissions = activePermissionsIDs
+    })
   }
 })
