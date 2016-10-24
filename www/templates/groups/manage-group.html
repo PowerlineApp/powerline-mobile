@@ -126,6 +126,33 @@
 
         </div>
       </div>
+
+
+      <div class="manage-group-section" id="group-invites" ng-class="isExpanded('group-invites') ? 'active' : ''">
+        <div class="expand-icon" ng-click="expand('group-invites')"></div>
+        <div class="title" ng-click="expand('group-invites')">Invites</div>
+        <div class="content" ng-show="isExpanded('group-invites')">
+
+          <div>
+            <input 
+              ng-model="data.invites_emails" 
+              maxlength="1000" 
+              placeholder="Enter email addresses" />
+              <div>
+              Use comma to separate addressess, e.g. kate@email.com, john@doe.com 
+              </div>
+          </div>
+
+          <div style="padding-top: 10px;" class="save-button-holder">
+            <button 
+              ng-click="sendGroupInvites()"
+              class="button btn-primary">
+              Send
+            </button>
+          </div>
+
+        </div>
+      </div>
     </section>
   </ion-content>
 </ion-view>

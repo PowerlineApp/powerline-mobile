@@ -18,6 +18,8 @@ angular.module('app.controllers').controller('manageGroupCtrl',function ($scope,
         $scope.data.selectedPermissions[permissionID] = true
       })
     })
+
+    $scope.data.invites_emails = ''
   })  
 
   var expandedSection = null
@@ -113,4 +115,13 @@ angular.module('app.controllers').controller('manageGroupCtrl',function ($scope,
       $scope.saveError(JSON.stringify(error))
     })
   }
+
+  ////// SEND INVITATIONS //////////////////////////////////////
+
+  $scope.sendGroupInvites = function(){
+    if($scope.data.invites_emails == null)
+      return
+    
+  }
+
 })
