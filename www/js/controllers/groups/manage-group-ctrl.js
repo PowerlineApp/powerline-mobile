@@ -61,7 +61,27 @@ angular.module('app.controllers').controller('manageGroupCtrl',function ($scope,
   }
 
   $scope.cancelSubscriptionLevel = function(){
-    // TODO
+    var currentPlanNameHuman = $scope.group.subscriptionLevel
+
+    var msg = 'You subscription level will change to Free when you click OK.'
+    var confirmPopup = $ionicPopup.confirm({
+      title: 'Stop <span class="capitalize">'+currentPlanNameHuman+'</span> subscription level',
+      template: msg,
+      cssClass: 'popup-by-ionic',
+    });
+
+    confirmPopup.then(function(res) {
+      if(res) {
+        $scope.showSpinner()
+        $scope.group.changeSubscriptionLevel(groups.subscriptionLevels.FREE).then(function(){
+          $scope.hideSpinner()
+          $scope.showToast('Subscription level successfully changed to Free.')
+        }, function(error){
+          $scope.hideSpinner()
+          $scope.showSaveAlert(JSON.stringify(error))
+        })
+      }
+    });
   }
 
   $scope.changeSubscriptionLevel = function(planName){
