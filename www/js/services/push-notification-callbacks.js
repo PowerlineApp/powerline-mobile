@@ -1,5 +1,5 @@
 angular.module('app.services').factory('pushNotificationCallbacks', 
-function ($location, $timeout, follows, posts, userPetitions, petitions, groups, $rootScope, notifications) {
+function ($location, $timeout, follows, posts, userPetitions, petitions, groups, $rootScope, notifications, announcements) {
   // we must use global app.* variable to store callbacks
   // becuase push notification plugin is from phonegap, which uses 'app'
 
@@ -80,6 +80,7 @@ function ($location, $timeout, follows, posts, userPetitions, petitions, groups,
       notifications.confirmNotificationIsProcessed(data)
     },
     share: function(data){
+      announcements.load()
       visitMainPageAndThen('/messages')
       notifications.confirmNotificationIsProcessed(data)
     },
