@@ -65,7 +65,7 @@ angular.module('app.controllers').controller('manageGroupCtrl',function ($scope,
 
     var msg = 'You subscription level will change to Free when you click OK.'
     var confirmPopup = $ionicPopup.confirm({
-      title: 'Stop <span class="capitalize">'+currentPlanNameHuman+'</span> subscription level',
+      title: 'Revoke <span class="capitalize">'+currentPlanNameHuman+'</span> subscription level',
       template: msg,
       cssClass: 'popup-by-ionic',
     });
