@@ -85,6 +85,26 @@ angular.module('app.services').factory('GroupModel', function(groupsInvites, $ht
         })
     },
 
+    this.loadSubscriptionLevelInfo = function(){
+      var group = this
+      return $http.get(serverConfig.url + '/api/v2/groups/'+this.id+'/subscription').then(function(response){
+        group.subscriptionLevel =  response.data.package_type
+        group.subscriptionLevelExpireAt = response.data.expired_at
+      })
+    },
+
+    this.changeSubscriptionLevel = function(levelName){
+      var that = this
+      var data = {package_type: levelName}
+      var payload = JSON.stringify(data)
+      var headers = {headers: {'Content-Type': 'application/json'}}
+      return $http.put(serverConfig.url + '/api/v2/groups/'+this.id+'/subscription', payload, headers).then(function(response){
+        that.subscriptionLevel = levelName
+        //that.group.subscriptionLevelExpireAt = TODO
+        return(response)
+      })
+    }
+
     this.changeMembershipControl = function(membershipType, passcode){
         var data = { membership_control: membershipType}
        if(membershipType == 'passcode')

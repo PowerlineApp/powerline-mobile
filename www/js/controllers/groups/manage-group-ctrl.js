@@ -1,9 +1,12 @@
 angular.module('app.controllers').controller('manageGroupCtrl',function ($scope, groups, $stateParams, $ionicPopup) {
   var groupID = parseInt($stateParams.id)
   $scope.data = {}
+  $scope.group = {} 
+  $scope.groups = groups
   groups.loadAllDetails(groupID).then(function(){
     $scope.group = groups.get(groupID);
     console.log($scope.group)
+    $scope.group.loadSubscriptionLevelInfo()
 
     if($scope.group.membership_control == 'public')
      $scope.data.membership_control = $scope.membershipControlOptions[0]
@@ -39,12 +42,54 @@ angular.module('app.controllers').controller('manageGroupCtrl',function ($scope,
    });
   }
 
-  $scope.saveError = function(msg){
+  $scope.showSaveAlert = function(msg){
    $ionicPopup.alert({
      cssClass: 'popup-by-ionic',
      title: 'Server error',
      template: msg
    });
+  }
+
+  //////////// SUBSCRIPTION LEVEL ///////////////////////////////////////
+
+  $scope.isActiveSubscriptionLevel = function(levelName){
+    return $scope.group.subscriptionLevel == levelName
+  }
+
+  $scope.isSubscriptionLevelCancellable = function(){
+    return $scope.group.subscriptionLevel != groups.subscriptionLevels.FREE
+  }
+
+  $scope.cancelSubscriptionLevel = function(){
+    // TODO
+  }
+
+  $scope.changeSubscriptionLevel = function(planName){
+    if($scope.isActiveSubscriptionLevel(planName))
+      return false
+
+    var currentPlanNameHuman = $scope.group.subscriptionLevel
+    var newPlanNameHuman = planName
+
+    var msg = 'Do you want to change subscription level from <span class="capitalize">'+currentPlanNameHuman+'</span> to <span class="capitalize">'+newPlanNameHuman+'</span> ?'
+    var confirmPopup = $ionicPopup.confirm({
+      title: 'Change subscription level',
+      template: msg,
+      cssClass: 'popup-by-ionic',
+    });
+
+    confirmPopup.then(function(res) {
+      if(res) {
+        $scope.showSpinner()
+        $scope.group.changeSubscriptionLevel(planName).then(function(){
+          $scope.hideSpinner()
+          $scope.showToast('Subscription level successfully changed to <span class="capitalize">'+newPlanNameHuman+'</span>.')
+        }, function(error){
+          $scope.hideSpinner()
+          $scope.showSaveAlert(JSON.stringify(error))
+        })
+      }
+    });
   }
 
   //////////// MEMBERSHIP CONTROL SETTINGS //////////////////////////////
@@ -112,7 +157,7 @@ angular.module('app.controllers').controller('manageGroupCtrl',function ($scope,
       $scope.showToast('Group permissions altered successfully.')
       $scope.group.currentPermissions = activePermissionsIDs
     }, function(error){
-      $scope.saveError(JSON.stringify(error))
+      $scope.showSaveAlert(JSON.stringify(error))
     })
   }
 

@@ -193,7 +193,9 @@ angular.module('app.services').factory('groups',function ($resource, serverConfi
         }
       });
       return deferred.promise
-    }
+    },
+
+    subscriptionLevels: {FREE: 'free', SILVER: 'silver', GOLD: 'gold'}
   }
 
   function parseInfo(data) {
