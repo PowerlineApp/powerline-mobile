@@ -3127,6 +3127,16 @@ a.follow-action {
       background-repeat: no-repeat;
       background-position: right 7px center;
       background-size: 10px; }
+    .manage-group-sections .manage-group-section .content table {
+      width: 100%; }
+      .manage-group-sections .manage-group-section .content table tr th {
+        font-family: "Lato Bold"; }
+      .manage-group-sections .manage-group-section .content table tr td, .manage-group-sections .manage-group-section .content table tr th {
+        padding: 5px; }
+      .manage-group-sections .manage-group-section .content table tr:nth-child(even) {
+        background: #ebebeb; }
+      .manage-group-sections .manage-group-section .content table tr td.delete-user {
+        text-align: right; }
   .manage-group-sections .manage-group-section .expand-icon {
     background-image: url(../images/v2/icons/down-passive.png);
     float: right;

@@ -1084,6 +1084,25 @@ a.follow-action {
       background-position: right 7px center;
       background-size: 10px;
     }
+
+    table {
+      width: 100%;
+      tr th {
+        font-family: "Lato Bold";
+      }
+
+      tr td, tr th {
+        padding: 5px;
+      }
+
+      tr:nth-child(even) {
+        background: #ebebeb;
+      }
+
+      tr td.delete-user {
+        text-align: right;
+      }
+    }
   }
 
   .expand-icon {

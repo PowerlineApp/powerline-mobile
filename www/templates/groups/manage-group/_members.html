@@ -1,0 +1,27 @@
+<div class="manage-group-section" ng-class="isExpanded('members') ? 'active' : ''">
+  <div class="expand-icon" ng-click="expand('members')"></div>
+  <div class="title" ng-click="expand('members')">Manage Group Members</div>
+  <div class="content" ng-show="isExpanded('members')">
+
+    <table>
+      <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Email</th>
+        <th></th>
+        <th></th>
+      </tr>
+      <tr ng-repeat="member in group.members | orderBy:'username'">
+        <td>{{member.username}}</td>
+        <td>{{member.first_name}} {{member.last_name}}</td>
+        <td>N/A</td>
+        <td></td>
+        <td class="delete-user">
+          <button class="button-clear button-small icon ion-trash-b"
+            ng-click="removeFromGroup(member)">
+          </button>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>

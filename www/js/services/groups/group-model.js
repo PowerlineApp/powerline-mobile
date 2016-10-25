@@ -149,6 +149,10 @@ angular.module('app.services').factory('GroupModel', function(groupsInvites, $ht
       var headers = {headers: {'Content-Type': 'application/json'}}
       return $http.put(serverConfig.url + '/api/v2/groups/'+this.id, payload, headers)
     }
+
+    this.removeMember = function(userID){
+      // TODO
+    }
   }
 
   return model

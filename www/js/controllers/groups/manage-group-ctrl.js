@@ -1,7 +1,7 @@
 angular.module('app.controllers').controller('manageGroupCtrl',function ($scope, groups, $stateParams, $ionicPopup, $ionicScrollDelegate) {
   var groupID = parseInt($stateParams.id)
   $scope.data = {}
-  $scope.group = {} 
+  $scope.group = {members: []} 
   $scope.groups = groups
   $scope.data.basic_settings = {}
 
@@ -29,6 +29,10 @@ angular.module('app.controllers').controller('manageGroupCtrl',function ($scope,
       $scope.group.currentPermissions.forEach(function(permissionID){
         $scope.data.selectedPermissions[permissionID] = true
       })
+    })
+
+    $scope.group.members().then(function(members){
+      $scope.group.members = members
     })
 
     $scope.data.invites_emails = ''
@@ -227,13 +231,43 @@ angular.module('app.controllers').controller('manageGroupCtrl',function ($scope,
   }
 
   $scope.saveGroupPermissions = function(){
+    $scope.showSpinner()
     var activePermissionsIDs = activePermissions()
     $scope.group.changeGroupPermissions(activePermissionsIDs).then(function(){
+      $scope.hideSpinner()
       $scope.showToast('Group permissions altered successfully.')
       $scope.group.currentPermissions = activePermissionsIDs
     }, function(error){
+      $scope.hideSpinner()
       $scope.showSaveAlert(JSON.stringify(error))
     })
+  }
+
+
+  ////// GROUP MEMBERS ////////////////////////////////////////
+
+  $scope.removeFromGroup = function(member){
+    var confirmPopup = $ionicPopup.confirm({
+      title: 'Remove user',
+      template: 'Do you want to remove user '+member.username+' from group?',
+      cssClass: 'popup-by-ionic',
+    });
+
+    confirmPopup.then(function(res) {
+      if(res) {
+        $scope.showSpinner()
+        $scope.group.removeMember(member.id).then(function(){
+          $scope.hideSpinner()
+          $scope.showToast('User '+member.username+' removed successfully from group')
+          $scope.group.members().then(function(members){
+            $scope.group.members = members
+          })
+        }, function(error){
+          $scope.hideSpinner()
+          $scope.showSaveAlert(JSON.stringify(error))
+        })
+      }
+    });
   }
 
   ////// SEND INVITATIONS //////////////////////////////////////
