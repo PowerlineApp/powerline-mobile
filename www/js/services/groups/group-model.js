@@ -143,6 +143,12 @@ angular.module('app.services').factory('GroupModel', function(groupsInvites, $ht
       var headers = {headers: {'Content-Type': 'application/json'}}
       return $http.put(serverConfig.url + '/api/v2/groups/'+this.id+'/users', payload, headers)
     }
+
+    this.updateBasicSettings = function(data){
+      var payload = JSON.stringify(data)
+      var headers = {headers: {'Content-Type': 'application/json'}}
+      return $http.put(serverConfig.url + '/api/v2/groups/'+this.id, payload, headers)
+    }
   }
 
   return model

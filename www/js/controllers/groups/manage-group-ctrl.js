@@ -3,10 +3,19 @@ angular.module('app.controllers').controller('manageGroupCtrl',function ($scope,
   $scope.data = {}
   $scope.group = {} 
   $scope.groups = groups
+  $scope.data.basic_settings = {}
+
   groups.loadAllDetails(groupID).then(function(){
     $scope.group = groups.get(groupID);
     console.log($scope.group)
-    $scope.group.loadSubscriptionLevelInfo()
+   
+
+    $scope.data.basic_settings.official_title = $scope.group.official_title
+    $scope.data.basic_settings.official_description = $scope.group.official_description
+    $scope.data.basic_settings.acronym = $scope.group.acronym
+    $scope.data.basic_settings.group_type = $scope.groupTypeOptions[$scope.group.group_type] 
+
+     $scope.group.loadSubscriptionLevelInfo()
 
     if($scope.group.membership_control == 'public')
      $scope.data.membership_control = $scope.membershipControlOptions[0]
@@ -51,6 +60,32 @@ angular.module('app.controllers').controller('manageGroupCtrl',function ($scope,
      title: 'Save was not successful',
      template: msg
    });
+  }
+
+  //////////// BASIC SETTINGS ///////////////////////////////////////////
+
+  // $scope.groupTypeOptions = [
+  //   {name: 'Educational', value: 0},
+  //   {name: 'Non-Profit (Not Campaign)', value: 1},
+  //   {name: 'Non-Profit (Campaign)', value: 2},
+  //   {name: 'Business', value: 3},
+  //   {name: 'Cooperative/Union', value: 4},
+  //   {name: 'Other', value: 5},    
+  //   ]
+  
+    $scope.groupTypeOptions = ['Educational', 'Non-Profit (Not Campaign)', 
+    'Non-Profit (Campaign)',  'Business', 'Cooperative/Union','Other'
+    ]
+
+  $scope.saveBasicSettings = function(){
+    $scope.showSpinner()
+    $scope.group.updateBasicSettings($scope.data.basic_settings).then(function(){
+      $scope.hideSpinner()
+      $scope.showToas('Group profile settings updated successfully.')
+    }, function(error){
+      $scope.hideSpinner()
+      $scope.showSaveAlert(JSON.stringify(error.data))
+    })
   }
 
   //////////// SUBSCRIPTION LEVEL ///////////////////////////////////////

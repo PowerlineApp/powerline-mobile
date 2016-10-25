@@ -1,0 +1,49 @@
+<div class="manage-group-section" id="group-invites" ng-class="isExpanded('basic-settings') ? 'active' : ''">
+  <div class="expand-icon" ng-click="expand('basic-settings')"></div>
+  <div class="title" ng-click="expand('basic-settings')">Profile Setup</div>
+  <div class="content" ng-show="isExpanded('basic-settings')">
+
+    <div>
+      <div class="label">
+        Group Name
+      </div>
+      <input 
+        ng-model="data.basic_settings.official_title" 
+        maxlength="255" 
+        placeholder="Group Name" />
+
+      <div class="label">
+        Group Description (optional)
+      </div>
+      <input 
+        ng-model="data.basic_settings.official_description" 
+        maxlength="255" 
+        placeholder="Group Description (optional)" />
+
+      <div class="label">
+        Group Acronym (optional)
+      </div>
+      <input 
+        ng-model="data.basic_settings.acronym" 
+        maxlength="255" 
+        placeholder="Group Acronym (optional)" />
+
+      <div class="label">
+        Group Type
+      </div>
+      <select 
+        ng-model="data.basic_settings.group_type"
+        ng-options="item as item for item in groupTypeOptions">
+      </select>
+    </div>
+
+    <div style="padding-top: 10px;" class="save-button-holder">
+      <button 
+        ng-click="saveBasicSettings()"
+        class="button btn-primary">
+        Save
+      </button>
+    </div>
+
+  </div>
+</div>

@@ -3120,6 +3120,8 @@ a.follow-action {
       background-color: white;
       border: 1px #bbbbbb dotted;
       margin-bottom: 8px; }
+    .manage-group-sections .manage-group-section .content .label {
+      font-size: 12px; }
     .manage-group-sections .manage-group-section .content select {
       background-image: url(../images/v2/icons/sort-down.png);
       background-repeat: no-repeat;
