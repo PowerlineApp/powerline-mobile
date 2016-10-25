@@ -45,7 +45,7 @@ angular.module('app.controllers').controller('manageGroupCtrl',function ($scope,
   $scope.showSaveAlert = function(msg){
    $ionicPopup.alert({
      cssClass: 'popup-by-ionic',
-     title: 'Server error',
+     title: 'Save was not successful',
      template: msg
    });
   }
@@ -122,7 +122,7 @@ angular.module('app.controllers').controller('manageGroupCtrl',function ($scope,
       return false
 
     var ch1 = $scope.group.membership_control != $scope.data.membership_control.value
-    var ch2 = $scope.data.membership_control_passcode
+    // var ch2 = $scope.data.membership_control_passcode
     return ch1
   }
 
@@ -130,13 +130,19 @@ angular.module('app.controllers').controller('manageGroupCtrl',function ($scope,
     var mtype = $scope.data.membership_control.value
     var passcode =  $scope.data.membership_control_passcode
 
-    if(mtype = 'passcode' && passcode.length == 0){
+    if(mtype == 'passcode' && passcode.length == 0){
        $scope.validationAlert('Passcode cannot be blank.')
       return
     } 
     $scope.group.changeMembershipControl(mtype, passcode).then(function(){
       $scope.showToast('Group membership control altered successfully.')
-      // todo refresh membershipControlSettingsAltered
+      $scope.group.membership_control = mtype
+    }, function(error){
+      console.log(error)
+      if(error.status == 400 && error.data && error.data.message)
+        $scope.showSaveAlert(error.data.message)
+      else
+        $scope.showSaveAlert(JSON.stringify(error))
     })
   }
 
