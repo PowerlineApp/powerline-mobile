@@ -1,0 +1,26 @@
+<div class="manage-group-section" ng-class="isExpanded('membership-control') ? 'active' : ''">
+  <div class="expand-icon" ng-click="expand('membership-control')"></div>
+  <div class="title" ng-click="expand('membership-control')">Membership Control</div>
+  <div class="content" ng-show="isExpanded('membership-control')">
+
+    <div>
+      <select 
+        ng-model="data.membership_control"
+        ng-options="item as item.name for item in membershipControlOptions">
+      </select>
+      <input 
+        ng-show="membershipControlSetToPasscode()"
+        ng-model="data.membership_control_passcode" 
+        maxlength="255" 
+        placeholder="Type passcode here" />
+    </div>
+
+    <div class="save-button-holder">
+      <button ng-show="membershipControlSettingsAltered()" 
+        ng-click="saveMembershipControlSettings()"
+        class="button btn-primary">
+        Save
+      </button>
+    </div>
+  </div>
+</div>

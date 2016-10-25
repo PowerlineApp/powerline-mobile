@@ -1,0 +1,96 @@
+<div class="manage-group-section" ng-class="isExpanded('subscription-level') ? 'active' : ''">
+  <div class="expand-icon" ng-click="expand('subscription-level')"></div>
+  <div class="title" ng-click="expand('subscription-level')">Subscription Level</div>
+  <div class="content" ng-show="isExpanded('subscription-level')">
+    <div class="current-subscription-level-info">
+      <div class="name">Current Account: 
+        <span class="capitalize">{{group.subscriptionLevel}}</span>
+      </div>
+      <div class="expire-at" 
+        ng-show="group.subscriptionLevelExpireAt">
+        Expire at: {{group.subscriptionLevelExpireAt}}
+      </div>
+      <div class="cancel" 
+        ng-show="isSubscriptionLevelCancellable()"
+        ng-click="cancelSubscriptionLevel()">
+        Revoke subscription
+      </div>
+    </div>
+    <br/>
+
+    <div class="subscription-levels">
+      <div class="subscription-level" ng-click="changeSubscriptionLevel(groups.subscriptionLevels.FREE)">
+        <div class="price">
+          <div class="inner">Free/<br />month</div>
+        </div>
+        <div class="desc">
+          <div class="subscription-title">
+            Get Started
+          </div>
+          <div  class="audience-and-size">
+            Audience: Unlimited<br/>
+            Size: Unlimited
+          </div>              
+        </div>
+      </div>
+      <div class="select-button" 
+      ng-hide="isActiveSubscriptionLevel(groups.subscriptionLevels.FREE)"
+      ng-click="changeSubscriptionLevel(groups.subscriptionLevels.FREE)">Select</div>  
+
+      <div class="subscription-level" ng-click="changeSubscriptionLevel(groups.subscriptionLevels.SILVER)">
+        <div class="price">
+          <div class="inner">Silver<br />$19/month</div>
+        </div>
+        <div class="desc">
+          <div class="subscription-title">
+            For Controls
+          </div>
+          <div  class="audience-and-size">
+            Audience: Not Business<br/>
+            Size: Under 1k users
+          </div>      
+        </div>
+      </div>
+      <div class="select-button" 
+      ng-hide="isActiveSubscriptionLevel(groups.subscriptionLevels.SILVER)"
+      ng-click="changeSubscriptionLevel(groups.subscriptionLevels.SILVER)">Select</div>  
+
+      <div class="subscription-level" ng-click="changeSubscriptionLevel(groups.subscriptionLevels.GOLD)">
+        <div class="price">
+          <div class="inner">Gold<br />$39/month</div>
+        </div>
+        <div class="desc">
+          <div class="subscription-title">
+            Get Growth
+          </div>
+          <div  class="audience-and-size">
+            Audience: Unlimited<br/>
+            Size: Under 5k users
+          </div>      
+        </div>
+      </div>
+      <div class="select-button" 
+      ng-hide="isActiveSubscriptionLevel(groups.subscriptionLevels.GOLD)"
+      ng-click="changeSubscriptionLevel(groups.subscriptionLevels.GOLD)">Select</div>  
+
+      <div class="subscription-level" ng-click="changeSubscriptionLevel(groups.subscriptionLevels.PLATINUM)">
+        <div class="price">
+          <div class="inner">Platinum<br />$125/month</div>
+        </div>
+        <div class="desc">
+          <div class="subscription-title">
+            For Insights
+          </div>
+          <div  class="audience-and-size">
+            Audience: Not Business<br/>
+            Size: Unlimited
+          </div>      
+        </div>
+      </div>
+      <div class="select-button" 
+      ng-hide="isActiveSubscriptionLevel(groups.subscriptionLevels.PLATINUM)"
+      ng-click="changeSubscriptionLevel(groups.subscriptionLevels.PLATINUM)">Select</div> 
+
+    </div>
+  </div>
+</div>  

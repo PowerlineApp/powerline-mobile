@@ -3131,7 +3131,7 @@ a.follow-action {
     height: 16px;
     width: 22px;
     background-size: cover; }
-  .manage-group-sections .manage-group-section:last-child {
+  .manage-group-sections .manage-group-section.last {
     border-bottom: 1px solid #d2d2d2; }
   .manage-group-sections .manage-group-section.active {
     background-color: white; }

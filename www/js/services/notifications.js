@@ -17,7 +17,8 @@ angular.module('app.services').factory('notifications', function ($window, devic
             if (response.data) {
               console.error(angular.toJson(response.data));
             }
-            alert('failed to registed device '+token+' to push notifications: '+JSON.stringify(response))
+            console.log(response)
+            alert('Failed to registed your device to push notifications. This may happen when you login on another device under your account. Please logout and login on this device.')
           });
         } else {
           console.log('my token was already registered')
