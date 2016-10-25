@@ -131,6 +131,14 @@ angular.module('app.services').factory('GroupModel', function(groupsInvites, $ht
         return(response.data)
       })        
     }
+
+    this.addPaymentCard = function(cardData){
+        console.log(cardData)
+        var data = cardData
+        var payload = JSON.stringify(data)
+        var headers = {headers: {'Content-Type': 'application/json'}}
+        return $http.post(serverConfig.url + '/api/v2/groups/'+this.id+'/bank-accounts', payload, headers)
+    }
   }
 
   return model

@@ -38,7 +38,37 @@ angular.module('app.services')
       },
       remove: function (card) {
         return $http['delete'](serverConfig.url + '/api/cards/' + card.get('id'));
-      }
+      },
+
+      createGroupCard: function (data, group) {
+        var deferred = $q.defer();
+
+        stripe().card.createToken({
+          name: data.name,
+          number: data.number,
+          cvc: data.cvc,
+          exp_month: data.expired_month,
+          exp_year: data.expired_year
+        }, function(status, response) {
+          if (response.error) {
+            deferred.reject(response.error.message);
+          } else {
+            group.addPaymentCard(data)
+              .then(function (response) {
+                deferred.resolve(new JsModel(response.data));
+              })
+              .catch(function (error) {
+                console.log('error while adding credit card:')
+                console.log(error)
+                deferred.reject('Server error while adding a card: '+JSON.stringify(error));
+              })
+            ;
+          }
+        });
+
+        return deferred.promise;
+      },
+
     };
   })
   .factory('stripe', function($window, serverConfig) {

@@ -1,4 +1,4 @@
-angular.module('app.controllers').controller('manageGroupCtrl',function ($scope, groups, $stateParams, $ionicPopup) {
+angular.module('app.controllers').controller('manageGroupCtrl',function ($scope, groups, $stateParams, $ionicPopup, $ionicScrollDelegate) {
   var groupID = parseInt($stateParams.id)
   $scope.data = {}
   $scope.group = {} 
@@ -121,8 +121,11 @@ angular.module('app.controllers').controller('manageGroupCtrl',function ($scope,
     return $scope.data.paymentCards && $scope.data.paymentCards.length == 0
   }
 
-  $scope.addPaymentCard = function(){}
-
+  $scope.showAddPaymentCardPopup = false;
+  $scope.addPaymentCard = function(){
+    $scope.showAddPaymentCardPopup = true;
+    $ionicScrollDelegate.scrollTo(0, 80, true);
+  };
   //////////// MEMBERSHIP CONTROL SETTINGS //////////////////////////////
 
   $scope.data.membership_control = {}

@@ -1,20 +1,25 @@
-  <div class="manage-group-section" ng-class="isExpanded('payment-setup') ? 'active' : ''">
-    <div class="expand-icon" ng-click="expand('payment-setup')"></div>
-    <div class="title" ng-click="expand('payment-setup')">Payment Setup</div>
-    <div class="content" ng-show="isExpanded('payment-setup')">
+<div class="manage-group-section" ng-class="isExpanded('payment-setup') ? 'active' : ''">
+  <div class="expand-icon" ng-click="expand('payment-setup')"></div>
+  <div class="title" ng-click="expand('payment-setup')">Payment Setup</div>
+  <div class="content" ng-show="isExpanded('payment-setup')">
 
-      <div>
-        <div ng-show="hasNoPaymentCards()">
-          This group has no associated payment methods.
-        </div>
-      </div>
-
-      <div class="save-button-holder" style="margin-top: 11px;">
-        <button 
-          ng-click="addPaymentCard()"
-          class="button btn-primary">
-          Add Payment Card
-        </button>
+    <div>
+      <div ng-show="hasNoPaymentCards()">
+        This group has no associated payment methods.
       </div>
     </div>
+
+    <div class="save-button-holder" style="margin-top: 11px;">
+      <button 
+        ng-click="addPaymentCard()"
+        class="button btn-primary">
+        Add Payment Card
+      </button>
+    </div>
   </div>
+</div>
+
+<group-card-form ng-show="showAddPaymentCardPopup"
+  cancel="showAddPaymentCardPopup=false"
+  completed="showAddPaymentCardPopup=false;"
+  group="group"></group-card-form>

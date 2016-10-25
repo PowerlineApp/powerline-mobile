@@ -94,5 +94,54 @@ angular.module('app.directives')
         };
       }
     };
+  }).directive('groupCardForm', function () {
+    return {
+      restrict: 'E',
+      scope: {
+        cancel: '&',
+        completed: '&',
+        group: '='
+      },
+      templateUrl: 'templates/profile/cards.html',
+      controller: function ($scope, $rootScope, cards) {
+        $scope.group = $scope.group || {}
+        var prefillForm = function(){
+          $scope.data = {
+            name: '',
+            number: '',
+            cvc: '',
+            expired_month: '',
+            expired_year: '',
+            address: {
+              country_code: 'US',
+              city: $scope.group.official_city,
+              line1: $scope.group.official_address,
+              line2: '',
+              state: $scope.group.official_state,
+              postal_code: ''
+            }
+          };
+        }
+        $scope.$watch('group', function(newValue, oldValue) {
+          prefillForm()
+        }, true);
+
+        $scope.submit = function () {
+          console.log('submit')
+          $rootScope.showSpinner();
+          cards.createGroupCard($scope.data, $scope.group)
+            .then(function (card) {
+              $scope.completed(card);
+            })
+            .catch(function (error) {
+              $rootScope.alert(error);
+            })
+            .finally(function () {
+              $rootScope.hideSpinner();
+            })
+          ;
+        };
+      }
+    };
   })
 ;

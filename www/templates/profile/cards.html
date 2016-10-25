@@ -2,9 +2,9 @@
   <div class="popup padding-10" style="min-height: 200px;">
     <p class="btn-close" ng-click="cancel()"></p>
 
-    <form name="cardForm" ng-submit="submit()" ng-show="!loading">
+    <form name="cardForm" ng-show="!loading">
       <fieldset class="margin-v-20">
-        <h3 style="color: gray;font-size: 12px;">Please enter your credit card information</h3><br>
+        <h3 style="color: gray;font-size: 12px;">Please enter credit card information</h3><br>
 
         <div class="item-floating-label text-field-1">
           <span class="input-label">Name<asterisk>*</asterisk></span>
@@ -31,7 +31,7 @@
       </fieldset>
 
       <fieldset class="margin-v-20">
-        <h3 style="color: gray;font-size: 12px;">Please enter your billing address</h3><br>
+        <h3 style="color: gray;font-size: 12px;">Please enter billing address</h3><br>
 
         <div class="item-floating-label text-field-1">
           <span class="input-label">Street Address<asterisk>*</asterisk></span>
@@ -56,7 +56,7 @@
       </fieldset>
 
       <div class="margin-v-10">
-        <button class="btn-large btn-primary">Save & Submit</button>
+        <button class="btn-large btn-primary"  ng-click="submit()">Save & Submit</button>
       </div>
     </form>
 
