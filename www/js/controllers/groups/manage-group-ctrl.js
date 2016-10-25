@@ -23,6 +23,9 @@ angular.module('app.controllers').controller('manageGroupCtrl',function ($scope,
     })
 
     $scope.data.invites_emails = ''
+    $scope.group.getPaymentCards().then(function(paymentCards){
+      $scope.data.paymentCards = paymentCards
+    })
   })  
 
   var expandedSection = null
@@ -111,6 +114,14 @@ angular.module('app.controllers').controller('manageGroupCtrl',function ($scope,
       }
     });
   }
+
+  //////////// PAYMENT CARDS ////////////////////////////////////////////
+
+  $scope.hasNoPaymentCards = function(){
+    return $scope.data.paymentCards && $scope.data.paymentCards.length == 0
+  }
+
+  $scope.addPaymentCard = function(){}
 
   //////////// MEMBERSHIP CONTROL SETTINGS //////////////////////////////
 

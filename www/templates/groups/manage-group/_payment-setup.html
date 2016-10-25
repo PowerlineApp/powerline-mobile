@@ -1,25 +1,19 @@
-  <div class="manage-group-section" ng-class="isExpanded('membership-control') ? 'active' : ''">
-    <div class="expand-icon" ng-click="expand('membership-control')"></div>
-    <div class="title" ng-click="expand('membership-control')">Membership Control</div>
-    <div class="content" ng-show="isExpanded('membership-control')">
+  <div class="manage-group-section" ng-class="isExpanded('payment-setup') ? 'active' : ''">
+    <div class="expand-icon" ng-click="expand('payment-setup')"></div>
+    <div class="title" ng-click="expand('payment-setup')">Payment Setup</div>
+    <div class="content" ng-show="isExpanded('payment-setup')">
 
       <div>
-        <select 
-          ng-model="data.membership_control"
-          ng-options="item as item.name for item in membershipControlOptions">
-        </select>
-        <input 
-          ng-show="membershipControlSetToPasscode()"
-          ng-model="data.membership_control_passcode" 
-          maxlength="255" 
-          placeholder="Type passcode here" />
+        <div ng-show="hasNoPaymentCards()">
+          This group has no associated payment methods.
+        </div>
       </div>
 
-      <div class="save-button-holder">
-        <button ng-show="membershipControlSettingsAltered()" 
-          ng-click="saveMembershipControlSettings()"
+      <div class="save-button-holder" style="margin-top: 11px;">
+        <button 
+          ng-click="addPaymentCard()"
           class="button btn-primary">
-          Save
+          Add Payment Card
         </button>
       </div>
     </div>
