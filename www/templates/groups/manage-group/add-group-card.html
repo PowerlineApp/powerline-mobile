@@ -1,0 +1,81 @@
+<div class="popup-overflow">
+  <div class="popup padding-10" style="min-height: 200px;">
+    <p class="btn-close" ng-click="cancel()"></p>
+
+    <form name="cardForm" ng-show="!loading">
+      <fieldset class="margin-v-20">
+        <h3 style="color: gray;font-size: 12px;">Please enter credit card information</h3><br>
+
+        <div class="item-floating-label text-field-1">
+          <span class="input-label">Name<asterisk>*</asterisk></span>
+          <input type="text" name="name" ng-model="data.card.name" required/>
+        </div>
+        <div class="item-floating-label text-field-1">
+          <span class="input-label">Number</span>
+          <input type="number" name="number" ng-model="data.card.number" required/>
+        </div>
+        <div class="item-floating-label text-field-1">
+          <span class="input-label">CVC</span>
+          <input type="number" name="cvc" ng-model="data.card.cvc" required/>
+        </div>
+        <div class="item-floating-label text-field-1">
+          <span class="input-label">Expiration Month (MM)</span>
+          <input type="number" name="expired_month"
+                 max="12" ng-model="data.card.expired_month" required/>
+        </div>
+        <div class="item-floating-label text-field-1">
+          <span class="input-label">Expiration Year (YYYY)</span>
+          <input type="number" name="expired_year"
+                 max="9999" ng-model="data.card.expired_year" required/>
+        </div>
+      </fieldset>
+
+      <fieldset class="margin-v-20">
+        <h3 style="color: gray;font-size: 12px;">Please enter billing address</h3><br>
+
+        <div class="item-floating-label text-field-1">
+          <span class="input-label">First Name</span>
+          <input type="text" name="first_name" ng-model="data.first_name" required/>
+        </div>
+        <div class="item-floating-label text-field-1">
+          <span class="input-label">Last Name</span>
+          <input type="text" name="last_name" ng-model="data.last_name" required/>
+        </div>
+        <div class="item-floating-label text-field-1">
+          <span class="input-label">Last Four Digits of Social Security Number</span>
+          <input type="text" name="ssn_last_4" ng-model="data.ssn_last_4" required/>
+        </div>
+        <div class="item-floating-label text-field-1">
+          <span class="input-label">Business Name</span>
+          <input type="text" name="business_name" ng-model="data.business_name" required/>
+        </div>
+        <div class="item-floating-label text-field-1">
+          <span class="input-label">Address Line 1</span>
+          <input type="text" name="address_line1" ng-model="data.address_line1" required/>
+        </div>
+        <div class="item-floating-label text-field-1">
+          <span class="input-label">Address Line 2</span>
+          <input type="text" name="address_line2" ng-model="data.address_line2" required/>
+        </div>
+        <div class="item-floating-label text-field-1">
+          <span class="input-label">City</span>
+          <input type="text" name="city" ng-model="data.city" required/>
+        </div>
+        <div class="item-floating-label text-field-1">
+          <span class="input-label">State</span>
+          <input type="text" name="state" ng-model="data.state" required/>
+        </div>
+        <div class="item-floating-label text-field-1">
+          <span class="input-label">Postal Code</span>
+          <input type="text" name="postal_code" ng-model="data.postal_code" required/>
+        </div>
+      </fieldset>
+
+      <div class="margin-v-10">
+        <button class="btn-large btn-primary"  ng-click="submit()">Save & Submit</button>
+      </div>
+    </form>
+
+  </div>
+
+</div>

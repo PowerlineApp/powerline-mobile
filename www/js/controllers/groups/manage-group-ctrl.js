@@ -204,9 +204,20 @@ angular.module('app.controllers').controller('manageGroupCtrl',function ($scope,
   ////// SEND INVITATIONS //////////////////////////////////////
 
   $scope.sendGroupInvites = function(){
-    if($scope.data.invites_emails == null)
+    if($scope.data.invites_emails == null || $scope.data.invites_emails.length == 0)
       return
     
+    var emailsAsArray = $scope.data.invites_emails.split(',')
+    $scope.showSpinner()
+    $scope.group.inviteUsers(emailsAsArray).then(function(){
+      $scope.hideSpinner()
+      var userCount = emailsAsArray.length
+      $scope.showToast('Invitations send successfully to '+userCount+' user(s).')
+      $scope.data.invites_emails = ''
+    }, function(error){
+      $scope.hideSpinner()
+      $scope.showSaveAlert(JSON.stringify(error))
+    })
   }
 
 })

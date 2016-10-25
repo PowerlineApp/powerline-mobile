@@ -137,6 +137,12 @@ angular.module('app.services').factory('GroupModel', function(groupsInvites, $ht
       var headers = {headers: {'Content-Type': 'application/json'}}
       return $http.post(serverConfig.url + '/api/v2/groups/'+this.id+'/bank-accounts', payload, headers)
     }
+
+    this.inviteUsers = function(emailsArray){
+      var payload = JSON.stringify({users: emailsArray})
+      var headers = {headers: {'Content-Type': 'application/json'}}
+      return $http.put(serverConfig.url + '/api/v2/groups/'+this.id+'/users', payload, headers)
+    }
   }
 
   return model
