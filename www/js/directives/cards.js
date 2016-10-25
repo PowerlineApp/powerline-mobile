@@ -102,23 +102,30 @@ angular.module('app.directives')
         completed: '&',
         group: '='
       },
-      templateUrl: 'templates/profile/cards.html',
+      templateUrl: 'templates/groups/manage-group/add-group-card.html',
       controller: function ($scope, $rootScope, cards) {
         $scope.group = $scope.group || {}
         var prefillForm = function(){
           $scope.data = {
-            name: '',
-            number: '',
-            cvc: '',
-            expired_month: '',
-            expired_year: '',
-            address: {
-              country_code: 'US',
-              city: $scope.group.official_city,
-              line1: $scope.group.official_address,
-              line2: '',
-              state: $scope.group.official_state,
-              postal_code: ''
+            currency: 'usd',
+            type: 'company',
+            first_name: '1',
+            last_name: '1',
+            ssn_last_4: 1235,
+            business_name: '1',
+            address_line1: '1',
+            address_line2: '1',
+            city: '1',
+            state: '1',
+            postal_code: '1',
+            country: 'US',
+            card: {
+              currency: 'usd',
+              name: '1', 
+              number: 5105105105105100,
+              cvc: 123,
+              expired_month: 12,
+              expired_year: 2018
             }
           };
         }
