@@ -19,8 +19,11 @@ angular.module('app.controllers').controller('home', function ($scope, $timeout,
 
   }
 
-  $scope.isLeader = function(){
-    return profile.isCurrentUserLeader()
+  $scope.canCreateLeaderContent = function(){
+    var selectedGroupID = null
+    if($scope.filter.selectedGroup)
+      selectedGroupID = $scope.filter.selectedGroup.id
+    return groups.canCreateLeaderContent(selectedGroupID)
   }
 
   function refreshListOfActivities() {

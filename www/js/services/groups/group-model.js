@@ -153,6 +153,14 @@ angular.module('app.services').factory('GroupModel', function(groupsInvites, $ht
     this.removeMember = function(userID){
       // TODO
     }
+
+    this.currentUserIsManager = function(){
+      return this.user_role == 'manager'
+    }
+
+    this.currentUserIsOwner = function(){
+      return this.user_role == 'owner'
+    }      
   }
 
   return model

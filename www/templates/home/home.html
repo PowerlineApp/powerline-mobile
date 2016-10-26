@@ -10,15 +10,15 @@
   <section ng-show="showPostWindow" class="new-post-window" ng-click="$event.stopPropagation()">
     <a ng-click="createNewContent('post')"><i class="post"></i>New Post</a>
     <a ng-click="createNewContent('user-petition')"><i class="user-petition"></i>New Petition</a>
-    <div ng-show="isLeader()" class="divide-leader-and-non-leader">
+    <div ng-show="canCreateLeaderContent()">
+      <div class="divide-leader-and-non-leader"></div>
+      <a ng-click="createNewContent('poll-question')"><i class="poll-question"></i>New Group Poll</a>
+      <a ng-click="createNewContent('poll-discussion')"><i class="poll-discussion"></i>New Group Discussion</a>
+      <a ng-click="createNewContent('petition')"><i class="user-petition"></i>New Group Petition</a>
+      <a ng-click="createNewContent('poll-event')"><i class="poll-event"></i>New Group Event</a>
+      <a ng-click="createNewContent('poll-fundraiser')"><i class="poll-fundraiser"></i>New Group Fundraiser</a>
+      <a ng-click="createNewContent('announcement')"><i class="announcement"></i>New Group Announcement</a>
     </div>
-    <a ng-show="isLeader()" ng-click="createNewContent('poll-question')"><i class="poll-question"></i>New Group Poll</a>
-    <a ng-show="isLeader()" ng-click="createNewContent('poll-discussion')"><i class="poll-discussion"></i>New Group Discussion</a>
-    <a ng-show="isLeader()" ng-click="createNewContent('petition')"><i class="user-petition"></i>New Group Petition</a>
-    <a ng-show="isLeader()" ng-click="createNewContent('poll-event')"><i class="poll-event"></i>New Group Event</a>
-    <a ng-show="isLeader()" ng-click="createNewContent('poll-fundraiser')"><i class="poll-fundraiser"></i>New Group Fundraiser</a>
-    <a ng-show="isLeader()" ng-click="createNewContent('announcement')"><i class="announcement"></i>New Group Announcement</a>
-
 
   </section>
   <section ng-include="'templates/notifications.html'"></section>

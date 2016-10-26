@@ -106,6 +106,20 @@ angular.module('app.services').factory('groups',function ($resource, serverConfi
       });
     },
 
+    canCreateLeaderContent: function(groupID){
+      if(groupID){
+        var group = this.get(groupID)
+        return group.currentUserIsManager() || group.currentUserIsOwner()
+      } else { // there must be at least one group where is leader or owner
+        var groups = this.groupsJoinedByCurrentUser()
+        var manageableGroups = groups.filter(function(group){
+          return group.currentUserIsManager() || group.currentUserIsOwner()
+        })
+
+        return manageableGroups.length > 0
+      }
+    },
+
     inviteAllFollowers: function (groupID) {
       var usernamesOfMyFollowers = follows.getUsersFollowingCurrentUser().map(function(follower){
         return follower.username

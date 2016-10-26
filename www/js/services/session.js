@@ -144,9 +144,6 @@ angular.module('app.services').factory('session', function (notifications, serve
   var profile;
 
   var service = {
-    isCurrentUserLeader: function(){
-      return profile && (profile.first_name == 'Peter10' || profile.username == 'jtest1')
-    },
     get: function () {
       return profile;
     },

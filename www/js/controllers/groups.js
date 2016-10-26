@@ -106,7 +106,8 @@ angular.module('app.controllers').controller('groups',function ($scope, groups, 
   }
 
   $scope.isGroupManager = function(){
-    return profile.isCurrentUserLeader()
+    var group = $scope.data
+    return group.currentUserIsManager() || group.currentUserIsOwner()
   }
 
   $scope.invite = function () {
