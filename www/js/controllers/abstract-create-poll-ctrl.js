@@ -1,11 +1,14 @@
 angular.module('app.controllers').controller('abstractCreatePollCtrl',function ($scope, $stateParams, groups, $ionicPopup) {
-  $scope.groupID = $stateParams.groupID;
-  $scope.groups = groups.groupsJoinedByCurrentUser();
   $scope.data = {}
-  if ($scope.groupID) 
-    $scope.data.group = groups.getGroup($scope.groupID)
-  else 
-    $scope.data.openChoices = true;
+
+  $scope.prepareGroupPicker = function(isLeaderContent){
+    $scope.groupID = $stateParams.groupID;
+    $scope.groups = groups.groupsWhereUserCanCreateContent(isLeaderContent);
+    if ($scope.groupID) 
+      $scope.data.group = groups.getGroup($scope.groupID)
+    else 
+      $scope.data.openChoices = true;
+  }
 
   $scope.validate = function(){
     // implement in inherited controller

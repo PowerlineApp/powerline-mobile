@@ -96,6 +96,16 @@ angular.module('app.services').factory('groups',function ($resource, serverConfi
       return newGroups;
     },
 
+    groupsWhereUserCanCreateContent: function(isLeaderContent){
+      var gs = this.groupsJoinedByCurrentUser()
+      if(!isLeaderContent)
+        return gs
+      else
+        return gs.filter(function(g){
+          return g.currentUserIsManager() || g.currentUserIsOwner()
+        })
+    },
+
     groupsJoinedByCurrentUser: function () {
       var result = service.getAllUserGroups().filter(function(g){
         return g.joinedByCurrentUser()

@@ -1,5 +1,6 @@
 angular.module('app.controllers').controller('createUserPetitionCtrl',function ($scope, $stateParams, $document, userPetitions, groups, profile, $rootScope, $controller) {
   $controller('abstractCreatePollCtrl', {$scope: $scope});
+  $scope.prepareGroupPicker(false)
   
   $scope.profile = profile.get();
   $scope.data.title = ''

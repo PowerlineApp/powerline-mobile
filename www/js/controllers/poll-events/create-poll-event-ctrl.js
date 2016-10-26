@@ -1,5 +1,6 @@
 angular.module('app.controllers').controller('createPollEventCtrl',function ($scope, $stateParams,questions, $http, serverConfig, $rootScope, $controller, $q) {
   $controller('abstractCreatePollCtrl', {$scope: $scope});
+  $scope.prepareGroupPicker(true)
 
   var tomorrow = new Date();
   tomorrow.setMinutes(0)

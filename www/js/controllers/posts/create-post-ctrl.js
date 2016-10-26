@@ -1,5 +1,6 @@
 angular.module('app.controllers').controller('createPostCtrl',function ($scope, $stateParams, $document, posts, groups, profile, $rootScope, $controller) {
   $controller('abstractCreatePollCtrl', {$scope: $scope});
+  $scope.prepareGroupPicker(false)
   
   $scope.profile = profile.get();
   $scope.data.post_text = ''

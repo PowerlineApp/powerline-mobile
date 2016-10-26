@@ -1,5 +1,6 @@
 angular.module('app.controllers').controller('createPollFundraiserCtrl',function ($scope, $stateParams, $document, $controller, $rootScope, $q, questions, $http, serverConfig) {
   $controller('abstractCreatePollCtrl', {$scope: $scope});
+  $scope.prepareGroupPicker(true)
 
   $scope.data.title_text = ''
   $scope.data.description_text = ''

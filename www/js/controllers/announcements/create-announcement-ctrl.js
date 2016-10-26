@@ -1,5 +1,6 @@
 angular.module('app.controllers').controller('createAnnouncementCtrl',function ($scope, $controller, $rootScope, $q, serverConfig, $http) {
   $controller('abstractCreatePollCtrl', {$scope: $scope});
+  $scope.prepareGroupPicker(true)
   $scope.data.announcement_text = ''
 
   $scope.validate = function(){

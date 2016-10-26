@@ -1,5 +1,7 @@
 angular.module('app.controllers').controller('createPollQuestionCtrl',function ($scope, $controller, questions, $rootScope, $q) {
   $controller('abstractCreatePollCtrl', {$scope: $scope});
+  $scope.prepareGroupPicker(true)
+  
   $scope.data.question_text = ''
   $scope.answers = [{answer_text: ''}, {answer_text: ''}]
 

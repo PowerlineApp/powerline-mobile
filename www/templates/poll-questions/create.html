@@ -4,31 +4,7 @@
   </ion-nav-buttons>
 
   <ion-content class="content has-footer" has-bouncing="false">
-    <section class="dropdown-1">
-      <div class="title" ng-click="data.openChoices = !data.openChoices">
-        <fieldset class="profile-avatar">
-          <avatar-img img="profile.avatar_file_name" text="profile.first_name"></avatar-img>
-        </fieldset>
-        <span>
-          <fieldset class="avatar" ng-show="data.group">
-            <img ng-src="{{ data.group.getIconWhite()}}" />
-          </fieldset>
-          {{ data.group ? data.group.official_title : 'Select a community' }}
-        </span>
-        <i class="icon-post"></i>
-      </div>
-      <ul class="choices" ng-show="data.openChoices">
-        <li ng-repeat="item in groups" ng-click="data.group = item;
-                data.openChoices = false;">
-          <span>
-            <fieldset class="avatar">
-              <avatar-img img="item.getIconWhite()" text="item.official_title"></avatar-img>
-            </fieldset>
-            {{ item.official_title}}
-          </span>
-        </li>
-      </ul>
-    </section>
+    <ng-include src="'templates/shared/_create-content-group-picker.html'"></ng-include>
 
     <form name="pollQuestionForm" novalidate ng-class="formClass" autocomplete="off">
       <fieldset class="add-post">

@@ -1,5 +1,7 @@
 angular.module('app.controllers').controller('createPetitionCtrl',function ($scope, $stateParams,petitions, groups, $http, serverConfig, $rootScope, $controller) {
   $controller('abstractCreatePollCtrl', {$scope: $scope});
+  $scope.prepareGroupPicker(true)
+  
   $scope.data.title = ''
   $scope.data.petition_body = ''
 

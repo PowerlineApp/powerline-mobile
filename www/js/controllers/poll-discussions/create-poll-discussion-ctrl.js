@@ -1,5 +1,7 @@
 angular.module('app.controllers').controller('createPollDiscussionCtrl',function ($scope, $stateParams,questions, $controller, $http, serverConfig, $rootScope) {
   $controller('abstractCreatePollCtrl', {$scope: $scope});
+  $scope.prepareGroupPicker(true)
+  
   $scope.data.discussion_description = ''
 
   $scope.validate = function(){
