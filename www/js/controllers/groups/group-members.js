@@ -70,7 +70,7 @@ angular.module('app.controllers').controller('group.members',function ($scope, g
   $scope.pendingApproval = function(groupMember){
     var notMe = groupMember.id != session.user_id
     var memberAsFollowable = follows.getOrCreateUser(groupMember.id)
-    return notMe && memberAsFollowable.isFollowedByCurrentUser() && !memberAsFollowable.isApproved()
+    return notMe && memberAsFollowable.isFollowedByCurrentUser() && !memberAsFollowable.hasApprovedCurrentUser()
   }
 
   

@@ -5,16 +5,16 @@
         <avatar-img img="item.avatar_file_name" text="item.first_name"></avatar-img>
       </figure>
       <p ng-click="navigateTo('path', 'influence/profile', item.user_id)">{{ item.username}}</p>
-      <p ng-if="item.isApproved()"><span>{{ item.first_name}} {{ item.last_name}}</span></p>
-      <a ng-show="item.isApproved()" class="follow-action" ng-click="unfollow(item)">
+      <p ng-if="item.hasApprovedCurrentUser()"><span>{{ item.first_name}} {{ item.last_name}}</span></p>
+      <a ng-show="item.hasApprovedCurrentUser()" class="follow-action" ng-click="unfollow(item)">
         <i class="icon ion-person calm"></i>
         <i class="icon ion-minus-circled" style="color: #adb7c6"></i> 
       </a>
-      <a ng-show="!item.isApproved()" class="follow-action">
+      <a ng-show="!item.hasApprovedCurrentUser()" class="follow-action">
         <i class="icon ion-person" style="color: #adb7c6"></i>
         <i class="icon ion-android-time calm"></i> 
       </a>
-      <p ng-if="!item.isApproved()" class="pending-message">pending approval</p>
+      <p ng-if="!item.hasApprovedCurrentUser()" class="pending-message">pending approval</p>
     </li>
   </ul>
 

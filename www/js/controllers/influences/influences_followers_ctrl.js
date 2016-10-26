@@ -9,9 +9,20 @@ angular.module('app.controllers').controller('influences.followers',function ($s
   });
 
   $scope.remove = function (userFollowingCurrentUser) {
-    $scope.confirmAction('Are you sure?').then(function () {
-      userFollowingCurrentUser.unApprove()
-      $scope.data = follows.getUsersFollowingCurrentUser();
+    $scope.confirmAction('Do you want to stop '+userFollowingCurrentUser.username+' from following you?').then(function () {
+      userFollowingCurrentUser.unApprove().then(function(){
+        follows.load();
+      })
+      
+    });
+  };
+
+  $scope.approve = function (userFollowingCurrentUser) {
+    $scope.confirmAction('Do you want to approve '+userFollowingCurrentUser.username+'?').then(function () {
+      userFollowingCurrentUser.approve().then(function(){
+        follows.load();
+      })
+      
     });
   };
 

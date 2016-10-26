@@ -32,7 +32,7 @@
               Follow
         </button>
         <button class="btn-text-bordered"
-                ng-if="!item.ignored() && !item.isApproved()"
+                ng-if="!item.ignored() && !item.isApprovedByCurrentUser()"
                 ng-click="item.ignore();send()">
                 Ignore
         </button>

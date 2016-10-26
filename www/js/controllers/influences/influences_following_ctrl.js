@@ -9,7 +9,7 @@ angular.module('app.controllers').controller('influences.following',function ($s
   });
 
   $scope.unfollow = function (userFollowedByCurrentUser) {
-    $scope.confirmAction('Are you sure?').then(function () {
+    $scope.confirmAction('Do you want to stop following '+userFollowedByCurrentUser.username+'?').then(function () {
       userFollowedByCurrentUser.unFollowByCurrentUser()
       $scope.data = follows.getUsersFollowedByCurrentUser();
     });

@@ -37,7 +37,7 @@ angular.module('app.services').factory('ActivityModel',
       isFollowing: function () {
         var owner = this.get('owner');
         return owner.type === 'user' && follows.some(function (following) {
-          return following.get('user').id === owner.id && following.isApproved();
+          return following.get('user').id === owner.id && following.isApprovedByCurrentUser();
         });
       },
 
