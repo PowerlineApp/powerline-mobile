@@ -17,9 +17,7 @@ angular.module('app.controllers').controller('manageGroupCtrl',function ($scope,
 
     $scope.group.loadSubscriptionLevelInfo()
 
-    $scope.group.getBankAccounts().then(function(bankAccounts){
-      $scope.group.bankAccounts = bankAccounts
-    })
+    $scope.group.loadBankAccount()
 
     if($scope.group.membership_control == 'public')
      $scope.data.membership_control = $scope.membershipControlOptions[0]
@@ -158,17 +156,19 @@ angular.module('app.controllers').controller('manageGroupCtrl',function ($scope,
     });
   }
 
-  //////////// PAYMENT CARDS ////////////////////////////////////////////
-
-  $scope.hasNoBankAccount = function(){
-    return $scope.group.bankAccounts == null || $scope.group.bankAccounts.length == 0
-  }
+  //////////// PAYMENT METHODS ////////////////////////////////////////////
 
   $scope.showAddBankAccountPopup = false;
   $scope.addBankAccount = function(){
     $scope.showAddBankAccountPopup = true;
     $ionicScrollDelegate.scrollTo(0, 80, true);
-  };
+  }
+
+  $scope.bankAccountAdded = function(){
+    $scope.group.loadBankAccount()
+    $scope.showToast('Bank account successfully added.')
+  }
+
   //////////// MEMBERSHIP CONTROL SETTINGS //////////////////////////////
 
   $scope.data.membership_control = {}

@@ -6,11 +6,59 @@
       <fieldset class="margin-v-20">
         <h3 style="color: gray;font-size: 12px;">Please enter bank account details</h3><br>
 
-        <div class="item-floating-label text-field-1">
-          <span class="input-label">Business Name<asterisk>*</asterisk></span>
-          <input type="text" name="name" ng-model="data.business_name" required/>
+        <div style="padding: 5px">
+          Account type: Business
+        </div >
+        <div style="padding: 5px">
+          Currency: USD
         </div>
-       
+        <div class="item-floating-label text-field-1">
+          <span class="input-label">Business Name</span>
+          <input type="text" name="account_holder_name" ng-model="data.stripe.account_holder_name">
+        </div>
+        <div class="item-floating-label text-field-1">
+          <span class="input-label">First Name</span>
+          <input type="text" name="first_name" ng-model="data.powerline.first_name">
+        </div>     
+        <div class="item-floating-label text-field-1">
+          <span class="input-label">Last Name</span>
+          <input type="text" name="last_name" ng-model="data.powerline.last_name">
+        </div> 
+        <div class="item-floating-label text-field-1">
+          <span class="input-label">Address Line 1</span>
+          <input type="text" name="address_line1" ng-model="data.powerline.address_line1">
+        </div> 
+        <div class="item-floating-label text-field-1">
+          <span class="input-label">Address Line 2</span>
+          <input type="text" name="address_line2" ng-model="data.powerline.address_line2">
+        </div> 
+        <div class="item-floating-label text-field-1">
+          <span class="input-label">City</span>
+          <input type="text" name="city" ng-model="data.powerline.city">
+        </div>
+        <div class="item-floating-label text-field-1">
+          <span class="input-label">State</span>
+          <input type="text" name="state" ng-model="data.powerline.state">
+        </div>
+        <div class="item-floating-label text-field-1">
+          <span class="input-label">Postal Code</span>
+          <input type="text" name="postal_code" ng-model="data.powerline.postal_code">
+        </div>
+        <div style="padding: 5px">
+          Country: US
+        </div>
+        <div class="item-floating-label text-field-1">
+          <span class="input-label">Last Four Digits of Social Security Number</span>
+          <input type="text" name="ssn_last_4" ng-model="data.powerline.ssn_last_4">
+        </div>
+        <div class="item-floating-label text-field-1">
+          <span class="input-label">Routing Number</span>
+          <input type="text" name="routing_number" ng-model="data.stripe.routing_number">
+        </div>
+        <div class="item-floating-label text-field-1">
+          <span class="input-label">Account Number</span>
+          <input type="text" name="account_number" ng-model="data.stripe.account_number">
+        </div>
       </fieldset>
 
       <div class="margin-v-10">

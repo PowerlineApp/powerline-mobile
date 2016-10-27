@@ -156,56 +156,46 @@ angular.module('app.services').factory('GroupModel', function(groupsInvites, $ht
       return this.user_role == 'owner'
     }  
 
-    this.getBankAccounts = function(){
+    this.loadBankAccount = function(){
+      var that = this
       return $http.get(serverConfig.url + '/api/v2/groups/'+this.id+'/bank-accounts').then(function(response){
-        return response.data
+        that.bankAccount = response.data[0]
+        return that.bankAccount
       })
     }
 
-    this.addBankAccount = function(){
+    this.addBankAccount = function(payload){
       var that = this
-      var payload = {
-        account_number: '000123456789',
-        routing_number: '110000000',
-        country: 'US',
-        currency: 'USD',
-        account_holder_name: 'John Doe Company',
-        account_holder_type: 'company',
-      }
+      var deferred = $q.defer();
 
-     stripe().bankAccount.createToken(payload, function(status, response){
+      stripe().bankAccount.createToken(payload.stripe, function(status, response){
        if(status == 200){
-         console.log(response)
          var stripeToken = response.id
-         that._registerStripeBankAccountTokenToPowerline(stripeToken, payload)
-       } else {
-         console.log('failed to add bank account')
-         console.log(response)
-       }
-     })
+          var powerlinePayload = payload.powerline
+          powerlinePayload.currency = payload.stripe.currency
+          powerlinePayload.type = payload.stripe.type
+          powerlinePayload.business_name = payload.stripe.account_holder_name
+          powerlinePayload.type = payload.stripe.account_holder_type
+          powerlinePayload.source = stripeToken
+
+          var json_payload = JSON.stringify(powerlinePayload)
+          var headers = {headers: {'Content-Type': 'application/json'}}
+          $http.post(serverConfig.url + '/api/v2/groups/'+that.id+'/bank-accounts', json_payload, headers).then(function(response){
+            deferred.resolve(response)
+          }, function(error){
+            console.log('failed to add bank account to powerline')
+            console.log(error)
+            deferred.reject(error)
+          })
+        } else {
+          console.log('failed to add bank account to stripe. status code: '+status)
+          console.log(response)
+          deferred.reject(response)
+        }
+      })
+
+     return deferred.promise
     } 
-
-    this._registerStripeBankAccountTokenToPowerline = function(bankAccountStripToken, data){
-      var payload = {
-        source: bankAccountStripToken,
-        currency: data.currency,
-        type: data.account_holder_type,
-        first_name: 'John',
-        last_name: 'Doe',
-        ssn_last_4: '1234',
-        business_name: data.account_holder_name,
-        address_line1: 'Street 1',
-        address_line2: '',
-        city: 'San Diego',
-        state: 'CA',
-        postal_code: '12345',
-        country: 'US'
-      }
-
-      var json_payload = JSON.stringify(payload)
-      var headers = {headers: {'Content-Type': 'application/json'}}
-      return $http.post(serverConfig.url + '/api/v2/groups/'+this.id+'/bank-accounts', json_payload, headers)
-    }   
   }
 
   return model

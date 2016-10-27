@@ -4,14 +4,16 @@
   <div class="content" ng-show="isExpanded('payment-setup')">
 
     <div>
-      Bank accounts:
-
-      <div ng-show="hasNoBankAccount()">
-        This group has no associated bank accounts.
-      </div>
       
-      <div ng-repeat="account in group.bankAccounts">
-          {{account.bank_name}}
+
+      <div ng-hide="group.bankAccount">
+        This group has no associated bank account.
+      </div>
+
+      <div ng-show="group.bankAccount">
+        This group has following bank account:<br/>
+        Bank name: {{group.bankAccount.bank_name || 'Unknown bank name'}}<br />
+        Account number ends with: {{group.bankAccount.last4}}
       </div>
     </div>
 
@@ -19,7 +21,7 @@
       <button 
         ng-click="addBankAccount()"
         class="button btn-primary">
-        Add Bank Account
+        {{group.bankAccount ? 'Change' : 'Add'}} Bank Account
       </button>
     </div>
   </div>
@@ -27,5 +29,5 @@
 
 <group-bank-account-form ng-show="showAddBankAccountPopup"
   cancel="showAddBankAccountPopup=false"
-  completed="showAddBankAccountPopup=false;"
+  completed="showAddBankAccountPopup=false;bankAccountAdded()"
   group="group"></group-card-form>
