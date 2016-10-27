@@ -12,23 +12,23 @@ angular.module('app.directives').directive('groupBankAccountForm', function () {
         $scope.data = {stripe: {}, powerline: {}}
 
         $scope.data.stripe = {
-          account_number: '000123456789',
-          routing_number: '110000000',
+          account_number: '',
+          routing_number: '',
           country: 'US',
           currency: 'USD',
-          account_holder_name: 'John Doe Company',
+          account_holder_name: '',
           account_holder_type: 'company',
         }
 
         $scope.data.powerline = {
-          first_name: 'John',
-          last_name: 'Doe',
-          ssn_last_4: '1234',
-          address_line1: 'Street 1',
+          first_name: '',
+          last_name: '',
+          ssn_last_4: '',
+          address_line1: '',
           address_line2: '',
-          city: 'San Diego',
-          state: 'CA',
-          postal_code: '12345',
+          city: '',
+          state: '',
+          postal_code: '',
           country: 'US'
         }
 
