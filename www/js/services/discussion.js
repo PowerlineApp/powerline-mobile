@@ -81,7 +81,6 @@ angular.module('app.services').factory('discussion',function (serverConfig, Comm
       else if(entity == 'user-petitions')
         return userPetitions.addComment(id, data.parent_comment, data.comment_body)
       else{
-        delete data['privacy'];
         return $http.post(getUrl(entity, id), data, headers).then(function (response) {
           return response.data;
         });
