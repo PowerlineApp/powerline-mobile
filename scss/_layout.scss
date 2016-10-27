@@ -112,6 +112,8 @@ hr {
   }
 }
 
-.popup-by-ionic h3.popup-title {
-  color: black
+.popup-by-ionic {
+  h3.popup-title, h5 {
+    color: black
+  }
 }

@@ -1,7 +1,7 @@
 angular.module('app.controllers').controller('manageGroupCtrl',function ($scope, groups, $stateParams, $ionicPopup, $ionicScrollDelegate, session) {
   var groupID = parseInt($stateParams.id)
   $scope.data = {}
-  $scope.group = {members: []} 
+  $scope.group = {members: [], fieldsToFillOnJoin: []} 
   $scope.groups = groups
   $scope.data.basic_settings = {}
 
@@ -25,6 +25,9 @@ angular.module('app.controllers').controller('manageGroupCtrl',function ($scope,
       $scope.data.membership_control = $scope.membershipControlOptions[1]
     else if($scope.group.membership_control == 'passcode')
       $scope.data.membership_control = $scope.membershipControlOptions[2]
+
+
+    $scope.group.loadFieldsToFillOnJoin()
 
     groups.loadPermissions(groupID).then(function (permissionModel) {
       $scope.group.currentPermissions = permissionModel.get('required_permissions')
@@ -213,6 +216,66 @@ angular.module('app.controllers').controller('manageGroupCtrl',function ($scope,
     {name: 'Approval (User is approved by group leader)', value: 'approval'},
     {name: 'Passcode (User must provide correct passcode to enter)', value: 'passcode'}]
 
+  $scope.addFieldRequiredToFillOnJoin = function(){
+    var addPopup = $ionicPopup.show({
+      template: '<input type="questionText" ng-model="data.questionText" style="padding:5px;">',
+      title: 'Add Field',
+      cssClass: 'popup-by-ionic',
+      subTitle: 'Please Enter Field Text (Question)',
+      scope: $scope,
+      buttons: [
+        { text: 'Cancel' },
+        {
+          text: '<b>Save</b>',
+          type: 'button-positive',
+          onTap: function(e) {
+            if (!$scope.data.questionText) 
+              e.preventDefault();
+            return(true)
+          }
+        }
+      ]
+    });
+
+    addPopup.then(function(res) {
+      if(!res)
+        return
+
+      $scope.showSpinner()
+      $scope.group.addFieldRequiredOnJoin($scope.data.questionText).then(function(response){
+        $scope.group.loadFieldsToFillOnJoin()
+        $scope.hideSpinner()
+        $scope.showToast('Question successfully added.')
+        $scope.data.questionText = ''
+      }, function(error){
+        $scope.hideSpinner()
+        $scope.showSaveAlert(JSON.stringify(error))
+      })
+    });
+  }
+
+  $scope.removeRequiredField = function(field){
+    var confirmPopup = $ionicPopup.confirm({
+      title: 'Remove question',
+      template: 'Remove question "'+field.field_name+'"?',
+      cssClass: 'popup-by-ionic',
+    });
+
+    confirmPopup.then(function(res) {
+      if(res) {
+        $scope.showSpinner()
+        $scope.group.removeFieldRequiredOnJoin(field.id).then(function(){
+          $scope.group.loadFieldsToFillOnJoin()
+          $scope.hideSpinner()
+          $scope.showToast('Question removed successfully.')
+        }, function(error){
+          $scope.hideSpinner()
+          $scope.showSaveAlert(JSON.stringify(error))
+        })
+      }
+    });
+  }
+
   //////// GROUP PERMISSIONS /////////////////////////////////////////////
 
   $scope.allGroupPermissions = groups.permissionsLabels
@@ -282,7 +345,6 @@ angular.module('app.controllers').controller('manageGroupCtrl',function ($scope,
     });
 
     confirmPopup.then(function(res) {
-      console.log(member)
       if(res) {
         $scope.showSpinner()
         $scope.group.removeMember(member.id).then(function(){

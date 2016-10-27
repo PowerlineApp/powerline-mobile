@@ -385,7 +385,7 @@ hr {
     .autocomplete-popup li strong {
       font-family: "Lato Bolder"; }
 
-.popup-by-ionic h3.popup-title {
+.popup-by-ionic h3.popup-title, .popup-by-ionic h5 {
   color: black; }
 
 .margin-h-8 {

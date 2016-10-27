@@ -17,19 +17,30 @@ angular.module('app.services').factory('GroupModel', function(groupsInvites, $ht
       return $http.delete(serverConfig.url + '/api/v2/groups/'+this.id+'/users/'+userID)
     }
 
-    this.fieldsToFillOnJoin = function(){
+    this.loadFieldsToFillOnJoin = function(){
       var deferred = $q.defer();
       var that = this
-      if(that._fieldsToFillOnJoin)
+      $http.get(serverConfig.url + '/api/v2/groups/'+this.id+'/fields').then(function(response){
+        that.fieldsToFillOnJoin = response.data || []
         deferred.resolve(that._fieldsToFillOnJoin);
-      else {
-        $http.get(serverConfig.url + '/api/v2/groups/'+this.id+'/fields').then(function(response){
-          that._fieldsToFillOnJoin = response.data || []
-          deferred.resolve(that._fieldsToFillOnJoin);
-        })  
-      }
+      })  
+      
       return deferred.promise;   
     }
+
+
+    this.addFieldRequiredOnJoin = function(questionText){
+        var data = {field_name: questionText}
+        var payload = JSON.stringify(data)
+        var headers = {headers: {'Content-Type': 'application/json'}}
+        return $http.post(serverConfig.url + '/api/v2/groups/'+this.id+'/fields', payload, headers).then(function(response){
+          return(response)
+        })
+    },
+    
+    this.removeFieldRequiredOnJoin = function(fieldID){
+        return $http.delete(serverConfig.url + '/api/v2/group-fields/'+fieldID)
+    },
 
     this.userHasInvitation = function(){
       return groupsInvites.hasInvite(this.id)
@@ -81,15 +92,6 @@ angular.module('app.services').factory('GroupModel', function(groupsInvites, $ht
     this.followAllMembers = function(){
       return $http.put(serverConfig.url + '/api/v2/user/group-followers/' + this.id)    
     }
-
-    this.addQuestionRequiredOnJoin = function(questionText){
-        var data = {field_name: questionText}
-        var payload = JSON.stringify(data)
-        var headers = {headers: {'Content-Type': 'application/json'}}
-        return $http.post(serverConfig.url + '/api/v2/groups/'+this.id+'/fields', payload, headers).then(function(response){
-          return(response)
-        })
-    },
 
     this.loadSubscriptionLevelInfo = function(){
       var group = this
@@ -161,7 +163,7 @@ angular.module('app.services').factory('GroupModel', function(groupsInvites, $ht
     this.makeManager = function(userID){
       // TODO
     }
-    
+
     this.loadBankAccount = function(){
       var that = this
       return $http.get(serverConfig.url + '/api/v2/groups/'+this.id+'/bank-accounts').then(function(response){

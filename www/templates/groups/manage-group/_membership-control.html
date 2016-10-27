@@ -22,5 +22,43 @@
         Save
       </button>
     </div>
+
+    <div style="margin-bottom: 7px; margin-top: 7px;">
+      <div ng-show="group.fieldsToFillOnJoin.length > 0"> 
+        Users are required to answer following questions when joining this group:
+      </div>
+
+      <div ng-show="group.fieldsToFillOnJoin.length == 0"> 
+        There are currently no fields users are required to fill in when joining this group.
+      </div>
+
+      <table>
+      <tr>
+        <th></th>
+        <th></th>
+      </tr>
+        <tr ng-repeat="field in group.fieldsToFillOnJoin">
+          <td style="vertical-align: middle">
+            {{field.field_name}}
+          </td>
+          
+          <td class="actions">
+            <button class="button-small icon ion-trash-b"
+              style="background-color: #ff9a9a"
+              ng-click="removeRequiredField(field)">
+              Remove
+            </button>
+          </td>
+        </tr>
+      </table>
+    </div>
+
+    <div class="save-button-holder">
+      <button
+        ng-click="addFieldRequiredToFillOnJoin()"
+        class="button btn-primary">
+        Add Question
+      </button>
+    </div>
   </div>
 </div>
