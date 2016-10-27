@@ -3136,6 +3136,7 @@ a.follow-action {
       .manage-group-sections .manage-group-section .content table tr:nth-child(even) {
         background: #ebebeb; }
       .manage-group-sections .manage-group-section .content table tr td.actions {
+        vertical-align: middle;
         text-align: right; }
         .manage-group-sections .manage-group-section .content table tr td.actions button {
           margin-bottom: 5px; }
