@@ -3135,8 +3135,12 @@ a.follow-action {
         padding: 5px; }
       .manage-group-sections .manage-group-section .content table tr:nth-child(even) {
         background: #ebebeb; }
-      .manage-group-sections .manage-group-section .content table tr td.delete-user {
+      .manage-group-sections .manage-group-section .content table tr td.actions {
         text-align: right; }
+        .manage-group-sections .manage-group-section .content table tr td.actions button {
+          margin-bottom: 5px; }
+      .manage-group-sections .manage-group-section .content table tr td span.member-label {
+        font-weight: 900; }
   .manage-group-sections .manage-group-section .expand-icon {
     background-image: url(../images/v2/icons/down-passive.png);
     float: right;

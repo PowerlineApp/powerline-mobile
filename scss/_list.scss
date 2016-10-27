@@ -1099,8 +1099,16 @@ a.follow-action {
         background: #ebebeb;
       }
 
-      tr td.delete-user {
+      tr td.actions {
         text-align: right;
+
+        button {
+          margin-bottom: 5px;
+        }
+      }
+
+      tr td span.member-label {
+        font-weight: 900;
       }
     }
   }

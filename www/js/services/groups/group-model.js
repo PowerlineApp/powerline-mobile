@@ -158,6 +158,10 @@ angular.module('app.services').factory('GroupModel', function(groupsInvites, $ht
       return this.user_role == 'owner'
     }  
 
+    this.makeManager = function(userID){
+      // TODO
+    }
+    
     this.loadBankAccount = function(){
       var that = this
       return $http.get(serverConfig.url + '/api/v2/groups/'+this.id+'/bank-accounts').then(function(response){

@@ -5,20 +5,35 @@
 
     <table>
       <tr>
-        <th>ID</th>
-        <th>Name</th>
-        <th>Email</th>
         <th></th>
         <th></th>
       </tr>
       <tr ng-repeat="member in group.groupMembers | orderBy:'username'">
-        <td>{{member.username}}</td>
-        <td>{{member.first_name}} {{member.last_name}}</td>
-        <td>N/A</td>
-        <td></td>
-        <td class="delete-user">
-          <button class="button-clear button-small icon ion-trash-b"
+        <td>
+          <span class="member-label">Username:</span> {{member.username}}<br />
+          <span class="member-label">Name:</span> {{member.first_name}} {{member.last_name}}<br />
+          <span class="member-label">Email:</span> {{member.email}}<br/>
+          <span class="member-label">Role:</span> {{member.user_role}}
+        </td>
+        
+        <td class="actions">
+          <button 
+            ng-show="canBecameManager(member)"
+            style="background-color: #84c0ff"
+            class="button-small icon ion-arrow-up-a"
+            ng-click="makeManager(member)">
+            Set as Manager
+          </button>
+          <button 
+            ng-show="isManager(member)"
+            class="button-small icon ion-arrow-up-a"
+            ng-click="makeManager(member)">
+            Set as Normal Member
+          </button>
+          <button class="button-small icon ion-trash-b"
+            style="background-color: #ff9a9a"
             ng-click="removeFromGroup(member)">
+            Remove from Group
           </button>
         </td>
       </tr>

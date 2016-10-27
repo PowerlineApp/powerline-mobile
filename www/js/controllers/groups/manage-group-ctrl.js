@@ -251,6 +251,25 @@ angular.module('app.controllers').controller('manageGroupCtrl',function ($scope,
 
   ////// GROUP MEMBERS ////////////////////////////////////////
 
+  $scope.isManager = function(member){
+    return member.user_role == 'manager'
+  }
+  $scope.canBecameManager = function(member){
+    return member.user_role == 'member'
+  }
+
+  $scope.makeManager = function(member){
+    $scope.showSpinner()
+    $scope.group.makeManager(member.id).then(function(){
+      $scope.hideSpinner()
+      $scope.showToast('User '+member.username+' is now manager.')
+      $scope.group.loadGroupMembers()
+    }, function(error){
+      $scope.hideSpinner()
+      $scope.showSaveAlert(JSON.stringify(error))
+    })    
+  }
+
   $scope.removeFromGroup = function(member){
     var msg = 'Do you want to remove user '+member.username+' from group?'
     if(session.user_id == member.id)
