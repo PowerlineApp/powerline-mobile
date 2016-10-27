@@ -5,8 +5,7 @@ angular.module('app.controllers').controller('group.members',function ($scope, g
 
   groups.loadAllDetails(groupID).then(function(){
     $scope.group = groups.get(groupID);
-    $scope.group.members().then(function(members){
-      $scope.groupMembers = members
+    $scope.group.loadGroupMembers().then(function(members){
       follows.load().then(function(){
 
         var alreadyFollowingIDs = follows.getUsersFollowedByCurrentUser().map(function(f){

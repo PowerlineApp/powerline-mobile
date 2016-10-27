@@ -5,10 +5,16 @@ angular.module('app.services').factory('GroupModel', function(groupsInvites, $ht
       this.upper_title = this.official_title.toUpperCase();
     },
 
-    this.members = function(){
+    this.loadGroupMembers = function(){
+      var that = this
       return $http.get(serverConfig.url + '/api/v2/groups/'+this.id+'/users').then(function(response){
+        that.groupMembers = response.data.payload
         return(response.data.payload)
       })  
+    }
+
+    this.removeMember = function(userID){
+      return $http.delete(serverConfig.url + '/api/v2/groups/'+this.id+'/users/'+userID)
     }
 
     this.fieldsToFillOnJoin = function(){
@@ -142,10 +148,6 @@ angular.module('app.services').factory('GroupModel', function(groupsInvites, $ht
       var payload = JSON.stringify(data)
       var headers = {headers: {'Content-Type': 'application/json'}}
       return $http.put(serverConfig.url + '/api/v2/groups/'+this.id, payload, headers)
-    }
-
-    this.removeMember = function(userID){
-      // TODO
     }
 
     this.currentUserIsManager = function(){

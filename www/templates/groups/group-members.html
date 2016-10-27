@@ -24,7 +24,7 @@
 
   <section class="margin-8">
     <ul class="profiles-list-two">
-      <li ng-repeat="member in groupMembers">
+      <li ng-repeat="member in group.groupMembers">
         <figure ng-click="navigateTo('path', 'influence/profile', member.id)">
           <avatar-img img="member.avatar_file_name" text="member.first_name"></avatar-img>
         </figure>

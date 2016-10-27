@@ -1,4 +1,4 @@
-angular.module('app.controllers').controller('manageGroupCtrl',function ($scope, groups, $stateParams, $ionicPopup, $ionicScrollDelegate) {
+angular.module('app.controllers').controller('manageGroupCtrl',function ($scope, groups, $stateParams, $ionicPopup, $ionicScrollDelegate, session) {
   var groupID = parseInt($stateParams.id)
   $scope.data = {}
   $scope.group = {members: []} 
@@ -33,9 +33,7 @@ angular.module('app.controllers').controller('manageGroupCtrl',function ($scope,
       })
     })
 
-    $scope.group.members().then(function(members){
-      $scope.group.members = members
-    })
+    $scope.group.loadGroupMembers()
 
     $scope.data.invites_emails = ''
     $scope.group.getPaymentCards().then(function(paymentCards){
@@ -254,21 +252,24 @@ angular.module('app.controllers').controller('manageGroupCtrl',function ($scope,
   ////// GROUP MEMBERS ////////////////////////////////////////
 
   $scope.removeFromGroup = function(member){
+    var msg = 'Do you want to remove user '+member.username+' from group?'
+    if(session.user_id == member.id)
+      msg = 'Do you want to leave this group?'
+    
     var confirmPopup = $ionicPopup.confirm({
       title: 'Remove user',
-      template: 'Do you want to remove user '+member.username+' from group?',
+      template: msg,
       cssClass: 'popup-by-ionic',
     });
 
     confirmPopup.then(function(res) {
+      console.log(member)
       if(res) {
         $scope.showSpinner()
         $scope.group.removeMember(member.id).then(function(){
           $scope.hideSpinner()
           $scope.showToast('User '+member.username+' removed successfully from group')
-          $scope.group.members().then(function(members){
-            $scope.group.members = members
-          })
+          $scope.group.loadGroupMembers()
         }, function(error){
           $scope.hideSpinner()
           $scope.showSaveAlert(JSON.stringify(error))

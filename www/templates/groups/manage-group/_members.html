@@ -11,7 +11,7 @@
         <th></th>
         <th></th>
       </tr>
-      <tr ng-repeat="member in group.members | orderBy:'username'">
+      <tr ng-repeat="member in group.groupMembers | orderBy:'username'">
         <td>{{member.username}}</td>
         <td>{{member.first_name}} {{member.last_name}}</td>
         <td>N/A</td>
