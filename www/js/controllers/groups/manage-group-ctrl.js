@@ -15,7 +15,11 @@ angular.module('app.controllers').controller('manageGroupCtrl',function ($scope,
     $scope.data.basic_settings.acronym = $scope.group.acronym
     $scope.data.basic_settings.group_type = $scope.groupTypeOptions[$scope.group.group_type] 
 
-     $scope.group.loadSubscriptionLevelInfo()
+    $scope.group.loadSubscriptionLevelInfo()
+
+    $scope.group.getBankAccounts().then(function(bankAccounts){
+      $scope.group.bankAccounts = bankAccounts
+    })
 
     if($scope.group.membership_control == 'public')
      $scope.data.membership_control = $scope.membershipControlOptions[0]
@@ -156,13 +160,13 @@ angular.module('app.controllers').controller('manageGroupCtrl',function ($scope,
 
   //////////// PAYMENT CARDS ////////////////////////////////////////////
 
-  $scope.hasNoPaymentCards = function(){
-    return $scope.data.paymentCards && $scope.data.paymentCards.length == 0
+  $scope.hasNoBankAccount = function(){
+    return $scope.group.bankAccounts == null || $scope.group.bankAccounts.length == 0
   }
 
-  $scope.showAddPaymentCardPopup = false;
-  $scope.addPaymentCard = function(){
-    $scope.showAddPaymentCardPopup = true;
+  $scope.showAddBankAccountPopup = false;
+  $scope.addBankAccount = function(){
+    $scope.showAddBankAccountPopup = true;
     $ionicScrollDelegate.scrollTo(0, 80, true);
   };
   //////////// MEMBERSHIP CONTROL SETTINGS //////////////////////////////

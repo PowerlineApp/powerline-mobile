@@ -1,0 +1,23 @@
+<div class="popup-overflow">
+  <div class="popup padding-10" style="min-height: 200px;">
+    <p class="btn-close" ng-click="cancel()"></p>
+
+    <form name="cardForm" ng-show="!loading">
+      <fieldset class="margin-v-20">
+        <h3 style="color: gray;font-size: 12px;">Please enter bank account details</h3><br>
+
+        <div class="item-floating-label text-field-1">
+          <span class="input-label">Business Name<asterisk>*</asterisk></span>
+          <input type="text" name="name" ng-model="data.business_name" required/>
+        </div>
+       
+      </fieldset>
+
+      <div class="margin-v-10">
+        <button class="btn-large btn-primary"  ng-click="submit()">Save & Submit</button>
+      </div>
+    </form>
+
+  </div>
+
+</div>

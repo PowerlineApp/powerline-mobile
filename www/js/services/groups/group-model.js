@@ -1,4 +1,4 @@
-angular.module('app.services').factory('GroupModel', function(groupsInvites, $http, $q, serverConfig) {
+angular.module('app.services').factory('GroupModel', function(groupsInvites, $http, $q, serverConfig, stripe) {
   var model = function(){
     this.fillWith = function(data){
       $.extend(this, data)
@@ -132,12 +132,6 @@ angular.module('app.services').factory('GroupModel', function(groupsInvites, $ht
       })        
     }
 
-    this.addPaymentCard = function(data){
-      var payload = JSON.stringify(data)
-      var headers = {headers: {'Content-Type': 'application/json'}}
-      return $http.post(serverConfig.url + '/api/v2/groups/'+this.id+'/bank-accounts', payload, headers)
-    }
-
     this.inviteUsers = function(emailsArray){
       var payload = JSON.stringify({users: emailsArray})
       var headers = {headers: {'Content-Type': 'application/json'}}
@@ -160,7 +154,58 @@ angular.module('app.services').factory('GroupModel', function(groupsInvites, $ht
 
     this.currentUserIsOwner = function(){
       return this.user_role == 'owner'
-    }      
+    }  
+
+    this.getBankAccounts = function(){
+      return $http.get(serverConfig.url + '/api/v2/groups/'+this.id+'/bank-accounts').then(function(response){
+        return response.data
+      })
+    }
+
+    this.addBankAccount = function(){
+      var that = this
+      var payload = {
+        account_number: '000123456789',
+        routing_number: '110000000',
+        country: 'US',
+        currency: 'USD',
+        account_holder_name: 'John Doe Company',
+        account_holder_type: 'company',
+      }
+
+     stripe().bankAccount.createToken(payload, function(status, response){
+       if(status == 200){
+         console.log(response)
+         var stripeToken = response.id
+         that._registerStripeBankAccountTokenToPowerline(stripeToken, payload)
+       } else {
+         console.log('failed to add bank account')
+         console.log(response)
+       }
+     })
+    } 
+
+    this._registerStripeBankAccountTokenToPowerline = function(bankAccountStripToken, data){
+      var payload = {
+        source: bankAccountStripToken,
+        currency: data.currency,
+        type: data.account_holder_type,
+        first_name: 'John',
+        last_name: 'Doe',
+        ssn_last_4: '1234',
+        business_name: data.account_holder_name,
+        address_line1: 'Street 1',
+        address_line2: '',
+        city: 'San Diego',
+        state: 'CA',
+        postal_code: '12345',
+        country: 'US'
+      }
+
+      var json_payload = JSON.stringify(payload)
+      var headers = {headers: {'Content-Type': 'application/json'}}
+      return $http.post(serverConfig.url + '/api/v2/groups/'+this.id+'/bank-accounts', json_payload, headers)
+    }   
   }
 
   return model

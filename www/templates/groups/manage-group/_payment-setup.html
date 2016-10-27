@@ -4,22 +4,28 @@
   <div class="content" ng-show="isExpanded('payment-setup')">
 
     <div>
-      <div ng-show="hasNoPaymentCards()">
-        This group has no associated payment methods.
+      Bank accounts:
+
+      <div ng-show="hasNoBankAccount()">
+        This group has no associated bank accounts.
+      </div>
+      
+      <div ng-repeat="account in group.bankAccounts">
+          {{account.bank_name}}
       </div>
     </div>
 
     <div class="save-button-holder" style="margin-top: 11px;">
       <button 
-        ng-click="addPaymentCard()"
+        ng-click="addBankAccount()"
         class="button btn-primary">
-        Add Payment Card
+        Add Bank Account
       </button>
     </div>
   </div>
 </div>
 
-<group-card-form ng-show="showAddPaymentCardPopup"
-  cancel="showAddPaymentCardPopup=false"
-  completed="showAddPaymentCardPopup=false;"
+<group-bank-account-form ng-show="showAddBankAccountPopup"
+  cancel="showAddBankAccountPopup=false"
+  completed="showAddBankAccountPopup=false;"
   group="group"></group-card-form>
