@@ -1,6 +1,6 @@
 <div class="manage-group-section" ng-class="isExpanded('members') ? 'active' : ''">
-  <div class="expand-icon" ng-click="expand('members')"></div>
-  <div class="title" ng-click="expand('members')">Manage Group Members</div>
+  <div class="expand-icon" ng-click="toggleVisibility('members')"></div>
+  <div class="title" ng-click="toggleVisibility('members')">Manage Group Members</div>
   <div class="content" ng-show="isExpanded('members')">
 
     <table>

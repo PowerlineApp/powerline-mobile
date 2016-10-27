@@ -44,7 +44,10 @@ angular.module('app.controllers').controller('manageGroupCtrl',function ($scope,
   })  
 
   var expandedSection = null
-  $scope.expand = function(sectionName){
+  $scope.toggleVisibility = function(sectionName){
+    if(expandedSection == sectionName)
+      expandedSection = null
+    else
     expandedSection = sectionName
   }
 

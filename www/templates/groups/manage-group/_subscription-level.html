@@ -1,6 +1,6 @@
 <div class="manage-group-section" ng-class="isExpanded('subscription-level') ? 'active' : ''">
-  <div class="expand-icon" ng-click="expand('subscription-level')"></div>
-  <div class="title" ng-click="expand('subscription-level')">Subscription Level</div>
+  <div class="expand-icon" ng-click="toggleVisibility('subscription-level')"></div>
+  <div class="title" ng-click="toggleVisibility('subscription-level')">Subscription Level</div>
   <div class="content" ng-show="isExpanded('subscription-level')">
     <div class="current-subscription-level-info">
       <div class="name">Current Account: 
