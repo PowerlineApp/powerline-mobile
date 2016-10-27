@@ -16,11 +16,11 @@
       <div class="item" ng-repeat="comment in comment.children| limitTo:commentsLimit track by $index" bindonce>
         <div class="wrap">
           <figure ng-click="navigateTo('influence-profile', comment.user.id)">
-            <img bo-src="comment.author_picture| imgix:{w:35}" width="35">
+            <img ng-src="{{comment.author_picture}}" width="35">
           </figure>
           <div class="header">
             <strong
-              bo-bind="comment.user.full_name"
+              ng-bind="comment.user.full_name"
               ng-click="navigateTo('owner-profile', comment.user)"></strong>
             <br>
             <time ng-bind="(comment.created_at | elapsed)"></time>
@@ -67,7 +67,7 @@
           <p ng-click="view.commentToShare = view.commentToShare.id === comment.id ? null : comment">
             <i class="icon-share"></i>
           </p>
-          <p bo-show="comment.link" i-open-system="comment.link" ng-click>
+          <p ng-show="comment.link" i-open-system="comment.link" ng-click>
             <i class="icon-link"></i>
           </p>
 
