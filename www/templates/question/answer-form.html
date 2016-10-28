@@ -10,9 +10,9 @@
         </div>
 
         <div class="margin-10">
-            <div class="checkbox-privacy" ng-class="{checked: data.privacy}" guide="privacy-option" ng-click="data.privacy = data.privacy ? 0 : 1">
+            <div class="checkbox-privacy" ng-class="{checked: data.privacy == 'private'}" guide="privacy-option" ng-click="data.privacy = data.privacy == 'private' ? 'public' : 'private'">
                 <i></i>
-                {{ data.privacy ? 'Username hidden' : 'Username visible'  }}
+                {{ data.privacy == 'private' ? 'Username hidden' : 'Username visible'  }}
             </div>
         </div>
         <div class="section-footer">

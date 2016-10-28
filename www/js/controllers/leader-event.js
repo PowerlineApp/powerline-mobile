@@ -4,7 +4,7 @@ angular.module('app.controllers')
     
     $scope.data = {
       comment: '',
-      privacy: 0
+      privacy: 'public'
     };
 
     $scope.showSpinner();

@@ -73,9 +73,9 @@
             <textarea ng-model="data.comment" placeholder="(Optional) You can add your comment here" maxlength="500"></textarea>
           </div>
           <div class="margin-10">
-            <div class="checkbox-privacy" ng-class="{checked: data.privacy}" ng-click="data.privacy = data.privacy ? 0 : 1" guide="privacy-option">
+            <div class="checkbox-privacy" ng-class="{checked: data.privacy == 'private'}" ng-click="data.privacy = data.privacy == 'private' ? 'public' : 'private'" guide="privacy-option">
               <i></i>
-              {{ data.privacy ? 'Username hidden' : 'Username visible'  }}
+              {{ data.privacy == 'private' ? 'Username hidden' : 'Username visible'  }}
             </div>
           </div>
           <div class="section-footer">

@@ -174,10 +174,11 @@ angular.module('app.services').factory('posts',function ($q, session, serverConf
       })
     },
 
-    addComment: function(postID, parentCommentID, commentText){
+    addComment: function(postID, parentCommentID, commentText, privacy){
       var payload = JSON.stringify({
         comment_body:commentText,
-        parent_comment: parentCommentID
+        parent_comment: parentCommentID,
+        privacy: privacy
       })
       var headers = {headers: {'Content-Type': 'application/json'}}
       return $http.post(serverConfig.url + '/api/v2/posts/'+postID+'/comments', payload, headers)

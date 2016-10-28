@@ -35,7 +35,7 @@ angular.module('app.controllers').controller('question',function ($scope, $locat
 
   $scope.data = {
     comment: '',
-    privacy: 0
+    privacy: 'public'
   };
 
   $scope.selectOption = function (option) {
@@ -103,7 +103,7 @@ angular.module('app.controllers').controller('question',function ($scope, $locat
                                                     serverConfig, homeCtrlParams, activity, layout) {
   
   $scope.data = {
-    privacy: 0,
+    privacy: 'public',
     comment: ''
   };
   activity.setEntityRead({id: Number($stateParams.id), type: 'petition'});

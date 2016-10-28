@@ -141,7 +141,7 @@ angular.module('app.controllers').controller('discussion',function ($scope, topB
 
   $scope.data = {
     comment: '',
-    privacy: 0
+    privacy: 'public'
   };
   $scope.reply = function () {
     if (!$scope.data.comment) {

@@ -77,9 +77,9 @@ angular.module('app.services').factory('discussion',function (serverConfig, Comm
       
       var headers = {headers: {'Content-Type': 'application/json'}}
       if(entity == 'posts')
-        return posts.addComment(id, data.parent_comment, data.comment_body)
+        return posts.addComment(id, data.parent_comment, data.comment_body, data.privacy)
       else if(entity == 'user-petitions')
-        return userPetitions.addComment(id, data.parent_comment, data.comment_body)
+        return userPetitions.addComment(id, data.parent_comment, data.comment_body, data.privacy)
       else{
         return $http.post(getUrl(entity, id), data, headers).then(function (response) {
           return response.data;
@@ -129,7 +129,7 @@ angular.module('app.services').factory('discussion',function (serverConfig, Comm
   var Comment = function (data) {
     _.extend(this, data);
 
-    if (this.privacy === 1) {
+    if (this.privacy === 'private') {
       this.user = {
         username: 'Someone',
         full_name: 'Someone'

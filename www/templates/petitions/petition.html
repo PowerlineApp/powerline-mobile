@@ -49,9 +49,9 @@
 
       <section class="margin-h-10" ng-show="petition.canBeSigned() || petition.canBeUnsigned()">
           <div  style="float: left;width: 50%;padding-top: 12px;" class="margin-v-20">
-              <div class="checkbox-privacy" ng-class="{checked: data.privacy}" ng-click="data.privacy = data.privacy ? 0 : 1" guide="privacy-option">
+              <div class="checkbox-privacy" ng-class="{checked: data.privacy == 'private'}" ng-click="data.privacy = data.privacy == 'private' ? 'public' : 'private'" guide="privacy-option">
                   <i></i>
-                  {{ data.privacy ? 'Username hidden' : 'Username visible'  }}
+                  {{ data.privacy == 'private' ? 'Username hidden' : 'Username visible'  }}
               </div>
           </div>
           <div style="float: left;width: 50%;" class="margin-v-20">

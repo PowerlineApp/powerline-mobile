@@ -106,7 +106,7 @@ angular.module('app.services').factory('petitions',function ($q, session, server
       // see https://github.com/PowerlineApp/powerline-mobile/issues/195#issuecomment-243477778
       // for details why we make two http request in sign/unsign
       this.get(petitionID).then(function(petition){
-        var privacy = 0
+        var privacy = 'public'
         petition.sign(privacy).then(function(){
           d.resolve()
         })

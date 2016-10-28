@@ -99,9 +99,9 @@
               </div>
               <p class="margin-10" ng-show="data.option.payment_amount">You will only be charged if this campaign reaches its goal.</p>
               <div class="margin-10">
-                  <div class="checkbox-privacy" ng-class="{checked: data.privacy}" ng-click="data.privacy = data.privacy ? 0 : 1" guide="privacy-option">
+                  <div class="checkbox-privacy" ng-class="{checked: data.privacy == 'private'}" ng-click="data.privacy = data.privacy == 'private' ? 'public' : 'private'" guide="privacy-option">
                       <i></i>
-                      {{ data.privacy ? 'Username hidden' : 'Username visible'  }}
+                      {{ data.privacy == 'private' ? 'Username hidden' : 'Username visible'  }}
                   </div>
               </div>
               <div class="section-footer">

@@ -5,7 +5,7 @@ angular.module('app.controllers').controller('getPetitionCtrl',function ($scope,
     $scope.showSpinner();
   }
 
-  $scope.data = {privacy: 0}
+  $scope.data = {privacy: 'public'}
 
   $scope.sign = function(){
     $scope.petition.sign($scope.data.privacy)
