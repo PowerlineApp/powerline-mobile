@@ -27,7 +27,7 @@ angular.module('app.services').factory('SocialActivityModel', function (iStorage
           avatarTitle = this.get('following').full_name;
         } else if (this.get('group')) {
           avatar = this.get('group').avatar_file_path;
-          avatarTitle = this.get('group').official_title;
+          avatarTitle = this.get('group').official_name;
         }
         this.set('avatar', avatar);
         this.set('avatar_title', avatarTitle);

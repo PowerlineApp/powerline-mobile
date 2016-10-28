@@ -40,7 +40,7 @@
         <span ng-bind="group.getTitle()"></span>
       </div>
       <div ng-click="filter.filter_full_view = !filter.filter_full_view" class="more"
-           ng-class="{selected: filter.selectedGroup.group_type === 0, open: filter.filter_full_view}">
+           ng-class="{selected: filter.selectedGroup.groupTypeIsCommon(), open: filter.filter_full_view}">
         <figure>
           <img src="images/v2/icons/more.png" ng-show="filter.selectedGroup == null" />
             <avatar-img 

@@ -106,13 +106,14 @@ angular.module('app.services').factory('groups',function ($resource, serverConfi
         })
     },
 
+
     groupsJoinedByCurrentUser: function () {
       var result = service.getAllUserGroups().filter(function(g){
         return g.joinedByCurrentUser()
       })
 
-      return _(result).sortBy(function (item) {
-        return -item.group_type;
+      return _(result).sortBy(function (group) {
+        return -group.groupTypeAsInteger();
       });
     },
 
@@ -230,7 +231,7 @@ angular.module('app.services').factory('groups',function ($resource, serverConfi
     groupsById = []
     rawGroupsData.forEach(function (rawGroupData) {
         var group = new GroupModel()
-        if(rawGroupData.official_title){
+        if(rawGroupData.official_name){
           group.fillWith(rawGroupData)
           groupsById[group.id] = group;
         } else {

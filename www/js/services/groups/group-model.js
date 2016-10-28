@@ -2,7 +2,7 @@ angular.module('app.services').factory('GroupModel', function(groupsInvites, $ht
   var model = function(){
     this.fillWith = function(data){
       $.extend(this, data)
-      this.upper_title = this.official_title.toUpperCase();
+      this.upper_title = this.official_name.toUpperCase();
     },
 
     this.loadGroupMembers = function(){
@@ -46,8 +46,24 @@ angular.module('app.services').factory('GroupModel', function(groupsInvites, $ht
       return groupsInvites.hasInvite(this.id)
     }
 
+    var GROUP_TYPE_LABEL_TO_INT = {
+      'common': 0,
+      'state' :1,
+      'country': 2,
+      'local': 3,
+      'special': 4
+    }
+
+    this.groupTypeAsInteger = function(){
+      return GROUP_TYPE_LABEL_TO_INT[this.group_type_label]
+    },
+
     this.groupTypeIsCommon = function(){
-      return this.group_type == 0
+      return this.group_type_label == 'common'
+    },
+
+    this.groupTypeIsState = function(){
+      return this.group_type_label == 'state'
     },
 
     this.groupMembershipIsPublic = function(){
@@ -67,7 +83,7 @@ angular.module('app.services').factory('GroupModel', function(groupsInvites, $ht
     },
 
     this.getTitle = function () {
-      return this.acronym || this.official_title;
+      return this.acronym || this.official_name;
     },
 
     this.getIconWhite = function () {

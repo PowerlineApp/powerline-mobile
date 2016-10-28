@@ -87,7 +87,7 @@ function PostMixin(posts, groups){
   this.groupName = function(){
     var userGroup = groups.get(this.get('entity').group_id);
     if(userGroup)
-      return userGroup.official_title
+      return userGroup.official_name
   }
 
   this.getCreator = function(){

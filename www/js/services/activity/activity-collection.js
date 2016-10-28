@@ -47,32 +47,25 @@ angular.module('app.services').factory('ActivityCollection',
       return this;
     };
 
-    aCollection.getFilteredModels = function (filter) {
-      if (!filter) {
+    aCollection.getFilteredModels = function (group) {
+      if (!group) {
         return this.models;
       }
       var representativeIds = [];
 
+      if (group.groupTypeIsCommon()) 
+        return this.filter(hasGroup);
+
       function hasGroup(activity) {
-        return activity.get('entity').group_id === filter.id ||
-          (activity.get('owner').type === 'group' && activity.get('owner').id === filter.id);
+        return activity.get('entity').group_id === group.id ||
+          (activity.get('owner').type === 'group' && activity.get('owner').id === group.id);
       }
 
       function hasRepresentative(activity) {
         return activity.get('owner').type === 'representative' && _.contains(representativeIds, activity.get('owner').id);
       }
 
-      if (0 === filter.group_type) {
-        return this.filter(hasGroup);
-      }
-
-      var repMethod = {
-        1: 'US',
-        2: 'STATE',
-        3: 'LOCAL'
-      };
-
-      _(representatives.getRepresentativesByGroupType(repMethod[filter.group_type])).each(function (representative) {
+      _(representatives.getRepresentativesByGroupType(group.groupTypeAsInteger())).each(function (representative) {
         if (representative) {
           representativeIds.push(representative.storage_id);
         }
@@ -80,7 +73,7 @@ angular.module('app.services').factory('ActivityCollection',
 
       return this.filter(function (activity) {
         return hasGroup(activity) || hasRepresentative(activity) ||
-          (1 === filter.group_type && 'admin' === activity.get('owner').type);
+          (group.groupTypeIsState() && 'admin' === activity.get('owner').type);
       });
 
     };

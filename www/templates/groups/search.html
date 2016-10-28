@@ -20,9 +20,9 @@
         <li class="title">Popular Groups</li>
         <li ng-repeat="item in popularItems | limitTo:5">
           <figure ng-click="navigateTo('group-profile', item)">
-            <avatar-img img="item.avatar_file_path" text="item.official_title"></avatar-img>
+            <avatar-img img="item.avatar_file_path" text="item.official_name"></avatar-img>
           </figure>
-          <p ng-click="navigateTo('group-profile', item)">{{ item.official_title}}</p>
+          <p ng-click="navigateTo('group-profile', item)">{{ item.official_name}}</p>
           <p class="btn-add" ng-click="navigateTo('group-join', item)"></p>
         </li>
       </ul>
@@ -31,9 +31,9 @@
         <li class="title">New Groups</li>
         <li ng-repeat="item in newItems | limitTo:5">
           <figure ng-click="navigateTo('group-profile', item)">
-            <avatar-img img="item.avatar_file_path" text="item.official_title"></avatar-img>
+            <avatar-img img="item.avatar_file_path" text="item.official_name"></avatar-img>
           </figure>
-          <p ng-click="navigateTo('group-profile', item)">{{ item.official_title}}</p>
+          <p ng-click="navigateTo('group-profile', item)">{{ item.official_name}}</p>
           <p class="btn-add" ng-click="navigateTo('group-join', item)"></p>
         </li>
       </ul>
@@ -43,9 +43,9 @@
       <li class="title">Results</li>
       <li ng-repeat="item in searchItems">
         <figure ng-click="navigateTo('group-profile', item)">
-          <avatar-img img="item.avatar_file_path" text="item.official_title"></avatar-img>
+          <avatar-img img="item.avatar_file_path" text="item.official_name"></avatar-img>
         </figure>
-        <p ng-click="navigateTo('group-profile', item)">{{ item.official_title}}</p>
+        <p ng-click="navigateTo('group-profile', item)">{{ item.official_name}}</p>
         <p ng-if="item.joined === 0" class="btn-add" ng-click="navigateTo('group-join', item)"></p>
         <p ng-if="item.status === 1" class="btn-remove" ng-click="unjoin(item)"></p>
         <p ng-if="item.status === 0" class="pending-message">pending approval</p>

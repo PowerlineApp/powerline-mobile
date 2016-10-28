@@ -10,7 +10,7 @@ angular.module('app.controllers').controller('manageGroupCtrl',function ($scope,
     console.log($scope.group)
    
 
-    $scope.data.basic_settings.official_title = $scope.group.official_title
+    $scope.data.basic_settings.official_name = $scope.group.official_name
     $scope.data.basic_settings.official_description = $scope.group.official_description
     $scope.data.basic_settings.acronym = $scope.group.acronym
     $scope.data.basic_settings.group_type = $scope.groupTypeOptions[$scope.group.group_type] 

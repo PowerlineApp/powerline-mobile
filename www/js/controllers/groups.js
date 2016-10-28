@@ -94,7 +94,7 @@ angular.module('app.controllers').controller('groups',function ($scope, groups, 
 
   $scope.data = groups.get(id);
   $scope.isChangeAvailable = function () {
-    return $scope.data && $scope.data.group_type === 0;
+    return $scope.data && $scope.data.groupTypeIsCommon()
   };
 
   $scope.goToMembers = function(){
@@ -132,7 +132,7 @@ angular.module('app.controllers').controller('groups',function ($scope, groups, 
       groups.unjoin($scope.data.id).then(function () {
         $rootScope.$broadcast('groups-updated');
         $scope.hideSpinner();
-         $scope.showToast('Successfully left group ' + $scope.data.official_title);
+         $scope.showToast('Successfully left group ' + $scope.data.official_name);
         $location.path('/groups');
       }, function () {
         $scope.hideSpinner();
@@ -281,7 +281,7 @@ angular.module('app.controllers').controller('groups',function ($scope, groups, 
     $rootScope.$broadcast('groups-updated');
     $scope.hideSpinner();
     if (!$scope.showApproveMessage) {
-      $scope.showToast('Successfully joined group ' + $scope.group.official_title);
+      $scope.showToast('Successfully joined group ' + $scope.group.official_name);
       $scope.path('/groups');
     }
   }

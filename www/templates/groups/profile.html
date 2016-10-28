@@ -1,6 +1,6 @@
 <ion-view view-title="Group Profile">
   <ion-nav-buttons side="right">
-    <button class="button button-clear" ng-click="togglePostWindow()" ng-show="data.group_type === 0 && data.joined">Invite</button>
+    <button class="button button-clear" ng-click="togglePostWindow()" ng-show="data.groupTypeIsCommon() && data.joined">Invite</button>
   </ion-nav-buttons>
   
   <section ng-show="showPostWindow" class="new-post-window" ng-click="$event.stopPropagation()">
@@ -10,10 +10,10 @@
 
     <section class="p-header">
       <div class="avatar">
-        <avatar-img img="data.avatar_file_path" text="data.official_title"></avatar-img>
+        <avatar-img img="data.avatar_file_path" text="data.official_name"></avatar-img>
       </div>
 
-      <h3 ng-bind="data.official_title"></h3>
+      <h3 ng-bind="data.official_name"></h3>
       <br><br>
       <button class="btn-large"
               ng-show="isChangeAvailable()"

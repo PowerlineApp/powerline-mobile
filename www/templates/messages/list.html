@@ -31,7 +31,7 @@
           <avatar-img img="item.get('inviter').avatar_file_name" text="item.get('inviter').first_name"></avatar-img>
         </figure>
         <p><span>{{ item.get('inviter').first_name}} {{ item.get('inviter').last_name}}</span> invite you to join</p>
-        <p><span>{{ item.get('group').official_title}}</span> group</p>
+        <p><span>{{ item.get('group').official_name}}</span> group</p>
         <div class="controls">
           <button class="btn-medium btn-dark-simple" ng-click="ignoreInvite(item)">Ignore</button>
           <button class="btn-medium btn-red" ng-click="navigateTo('group-join', item.get('group'))">Join</button>

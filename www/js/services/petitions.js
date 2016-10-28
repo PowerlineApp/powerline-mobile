@@ -8,7 +8,7 @@ angular.module('app.services').factory('petitions',function ($q, session, server
         id: data.group.id,
         avatar: data.group.avatar_file_path,
         type: 'group',
-        name: data.group.official_title
+        name: data.group.official_name
       }
 
       this.votingOptions = data.options
