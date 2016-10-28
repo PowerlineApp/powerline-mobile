@@ -112,9 +112,11 @@ angular.module('app.services').factory('groups',function ($resource, serverConfi
         return g.joinedByCurrentUser()
       })
 
-      return _(result).sortBy(function (group) {
+      var sorted =  _(result).sortBy(function (group) {
         return -group.groupTypeAsInteger();
       });
+
+      return sorted
     },
 
     canCreateLeaderContent: function(groupID){

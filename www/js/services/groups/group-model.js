@@ -48,8 +48,8 @@ angular.module('app.services').factory('GroupModel', function(groupsInvites, $ht
 
     var GROUP_TYPE_LABEL_TO_INT = {
       'common': 0,
-      'state' :1,
-      'country': 2,
+      'country' :1,
+      'state': 2,
       'local': 3,
       'special': 4
     }
