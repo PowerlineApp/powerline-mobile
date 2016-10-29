@@ -6,19 +6,15 @@
     <section class="margin-h-10 padding-v-10">
       <form name="createGroupForm" novalidate ng-class="formClass" class="margin-v-10" autocomplete="off">
         <fieldset class="margin-v-10">
-          <div class="item-floating-label text-field-1" ng-class="{invalid: createGroupForm.username.$invalid && createGroupForm.$filled}">
-            <span class="input-label">Group Username<asterisk>*</asterisk></span>
-            <input type="text" ng-model="data.username" required name="username" autocapitalize="off" autocorrect="off" ng-pattern="/^[A-Za-z0-9-_]+$/" />
+          <div class="item-floating-label text-field-1" ng-class="{invalid: createGroupForm.official_name.$invalid && createGroupForm.$filled}">
+            <span class="input-label">Group Name<asterisk>*</asterisk></span>
+            <input type="text" ng-model="data.official_name" required name="official_name" />
           </div>
           <div class="item-floating-label text-field-1" ng-class="{invalid: createGroupForm.official_type.$invalid && createGroupForm.$filled}">
             <span class="input-label">Group Type<asterisk>*</asterisk></span>
             <select ng-model="data.official_type" name="official_type" required ng-options="type for type in types" i-placeholder>
               <option value=""></option>
             </select>
-          </div>
-          <div class="item-floating-label text-field-1" ng-class="{invalid: createGroupForm.official_name.$invalid && createGroupForm.$filled}">
-            <span class="input-label">Group Name<asterisk>*</asterisk></span>
-            <input type="text" ng-model="data.official_name" required name="official_name" />
           </div>
           <div class="item-floating-label text-field-1" ng-class="{invalid: createGroupForm.official_description.$invalid && createGroupForm.$filled}">
             <span class="input-label">Group Description<asterisk>*</asterisk></span>
