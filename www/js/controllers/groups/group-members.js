@@ -1,4 +1,4 @@
-angular.module('app.controllers').controller('group.members',function ($scope, groups, $stateParams, follows, session) {
+angular.module('app.controllers').controller('group.members',function ($scope, groups, $stateParams, follows, session, $ionicPopup) {
   var groupID = parseInt($stateParams.id)
   $scope.groupMembers = []
   $scope.followingAll = true
@@ -24,14 +24,24 @@ angular.module('app.controllers').controller('group.members',function ($scope, g
   })
 
   $scope.followAll = function(){
-    $scope.group.followAllMembers().then(function(){
-      $scope.showToast('Follow all request sent!');
-      $scope.followingAll = true
-      follows.load()
-      $scope.groupMembers.forEach(function(m){
-        m.isFollowed = true
-      })
-    })
+    var confirmPopup = $ionicPopup.confirm({
+      title: 'Follow All',
+      cssClass: 'popup-by-ionic',
+      template: 'Do you want to want to follow all users in this group?'
+    });
+
+    confirmPopup.then(function(res) {
+      if(res) {
+        $scope.group.followAllMembers().then(function(){
+          $scope.showToast('Follow all request sent!');
+          $scope.followingAll = true
+          follows.load()
+          $scope.groupMembers.forEach(function(m){
+            m.isFollowed = true
+          })
+        })
+      }
+    });
   }
 
   $scope.isFollowable = function(member){
@@ -49,21 +59,43 @@ angular.module('app.controllers').controller('group.members',function ($scope, g
   }
 
   $scope.follow = function(groupMember) {
-    var memberAsFollowable = follows.getOrCreateUser(groupMember.id);
-    memberAsFollowable.followByCurrentUser().then(function () {
-      follows.load()
-      $scope.showToast('Follow request sent!');
-      groupMember.isFollowed = true
-    }); 
+    var confirmPopup = $ionicPopup.confirm({
+      title: 'Follow All',
+      cssClass: 'popup-by-ionic',
+      template: 'Do you want to follow '+groupMember.username+' ?'
+    });
+
+    confirmPopup.then(function(res) {
+      if(res) {
+        var memberAsFollowable = follows.getOrCreateUser(groupMember.id);
+        memberAsFollowable.followByCurrentUser().then(function () {
+          follows.load()
+          $scope.showToast('Follow request sent!');
+          groupMember.isFollowed = true
+        }); 
+      }
+    });
+
+
   };
 
   $scope.unfollow = function(groupMember) {
-    var memberAsFollowable = follows.getOrCreateUser(groupMember.id);
-    memberAsFollowable.unFollowByCurrentUser().then(function () {
-      follows.load()
-      $scope.showToast('Successfully unfollowed user.');
-      groupMember.isFollowed = false
-    }); 
+    var confirmPopup = $ionicPopup.confirm({
+      title: 'Follow All',
+      cssClass: 'popup-by-ionic',
+      template: 'Do you want to stop following '+groupMember.username+' ?'
+    });
+
+    confirmPopup.then(function(res) {
+      if(res) {
+        var memberAsFollowable = follows.getOrCreateUser(groupMember.id);
+        memberAsFollowable.unFollowByCurrentUser().then(function () {
+          follows.load()
+          $scope.showToast('Successfully unfollowed user.');
+          groupMember.isFollowed = false
+        }); 
+      }
+    });
   };
   
   $scope.pendingApproval = function(groupMember){
