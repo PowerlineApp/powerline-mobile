@@ -288,15 +288,15 @@ angular.module('app.controllers').controller('groups',function ($scope, groups, 
 
 }).controller('groups.create',function ($scope, groups, profile, $location) {
 
-  var user = profile.get();
-  $scope.data = {
-    manager_first_name: user.first_name,
-    manager_last_name: user.last_name,
-    manager_email: user.email,
-    manager_phone: user.phone
-  };
-
-  
+  $scope.data = {}
+  profile.load().then(function(user){
+    $scope.data = {
+      manager_first_name: user.first_name,
+      manager_last_name: user.last_name,
+      manager_email: user.email,
+      manager_phone: user.phone
+    };
+  })
 
   $scope.types = [
     'Educational',
@@ -327,21 +327,20 @@ angular.module('app.controllers').controller('groups',function ($scope, groups, 
         });
       }, function (response) {
         $scope.hideSpinner();
-        if (response.data && response.data.errors) {
-          _(response.data.errors).each(function (error) {
-            if (createGroupForm[error.property]) {
-              createGroupForm[error.property].$setValidity('required', false);
-            }
-          });
-          if (response.data.errors.length) {
-            $scope.alert(response.data.errors[0].message, null, 'Error', 'OK');
-          }
-          $scope.formClass = 'error';
-        } else if (response.data && response.data.error) {
-          $scope.alert(response.data.error, null, 'Error', 'OK');
-        } else {
-          $scope.alert('Error occurred', null, 'Error', 'OK');
+        console.log(response)
+
+        var errorMsg = 'Failed to create new group. '
+        if(response.data && response.data  && response.data.message)
+          errorMsg += response.data.message + '. '
+
+        if(response.data && response.data.errors && response.data.errors.children){
+          _.each(response.data.errors.children, function(fieldErrors,fieldName){
+            if(fieldErrors.errors)
+              errorMsg += fieldName + ': ' + fieldErrors.errors.join(', ') + '. '
+          })
         }
+
+        $scope.alert(errorMsg, null, 'Error', 'OK');
       });
     }
   }
