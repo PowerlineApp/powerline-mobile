@@ -12,7 +12,7 @@ angular.module('app.controllers').controller('group.members',function ($scope, g
           return f.user_id
         })
 
-        $scope.groupMembers.forEach(function(m){
+        members.forEach(function(m){
           var isFollowed = (0 <= alreadyFollowingIDs.indexOf(m.id))
           if(isFollowed)
             m.isFollowed = true
