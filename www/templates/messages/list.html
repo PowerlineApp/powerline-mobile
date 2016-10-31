@@ -44,11 +44,11 @@
     <ul class="activities-list">
       <li ng-repeat="announcement in announcements" class="item read">
         <figure ng-click="navigateTo('owner-profile', announcement.user)">
-          <avatar-img img="announcement.user.avatar_file_path" text="announcement.user.type === 'group' ? announcement.user.official_title : announcement.user.first_name"></avatar-img>
+          <avatar-img img="announcement.group.avatar_file_path" text="announcement.user.type === 'group' ? announcement.group.official_name : announcement.user.first_name"></avatar-img>
         </figure>
         <div class="item-title">
           <strong
-            ng-bind="announcement.user.type === 'group' ? announcement.user.official_title : announcement.user.first_name + ' ' + announcement.user.last_name"
+            ng-bind="announcement.user.type === 'group' ? announcement.user.official_name : announcement.user.first_name + ' ' + announcement.user.last_name"
             ng-click="navigateTo('owner-profile', announcement.user)"></strong>
           <i class="time"><time ng-bind="(announcement.published_at | elapsed) + ' ago'"></time></i>
         </div>
