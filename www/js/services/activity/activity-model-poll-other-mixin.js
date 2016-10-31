@@ -39,7 +39,7 @@ function PollOtherMixin(serverConfig, $http){
   }
 
   this.groupName = function(){
-    return this.get('owner').official_title
+    return this.get('owner').official_name
   }
 
   this.getCreator = function(){
