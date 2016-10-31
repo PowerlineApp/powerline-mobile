@@ -23,7 +23,7 @@ angular.module('app.controllers').controller('abstractCreatePollCtrl',function (
       if(doNotShowMemberCountAlert)
         $scope.send()
       else {
-        $scope.data.group.members().then(function(members){
+        $scope.data.group.loadGroupMembers().then(function(members){
           $scope.hideSpinner();
           var memberCount = members.length
           var msg = 'You are about to send this to all '+memberCount+' group members. Are you sure?'
