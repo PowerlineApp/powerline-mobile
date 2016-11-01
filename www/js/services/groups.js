@@ -222,7 +222,7 @@ angular.module('app.services').factory('groups',function ($resource, serverConfi
       return deferred.promise
     },
 
-    subscriptionLevels: {FREE: 'free', SILVER: 'silver', GOLD: 'gold'}
+    subscriptionLevels: {FREE: 'free', SILVER: 'silver', GOLD: 'gold', PLATINUM: 'platinum'}
   }
 
   function parseInfo(data) {
