@@ -3231,6 +3231,9 @@ a.follow-action {
       height: 33px;
       line-height: 0;
       width: 200px; }
+  .manage-group-sections .manage-group-section button.delete-action {
+    background-color: #ff4444;
+    color: white; }
 
 .group {
   margin-bottom: 12px; }
