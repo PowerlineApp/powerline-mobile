@@ -16,8 +16,8 @@ angular.module('app.controllers').controller('manageGroupCtrl',function ($scope,
     $scope.data.basic_settings.group_type = $scope.groupTypeOptions[$scope.group.group_type] 
 
     $scope.group.loadSubscriptionLevelInfo()
-
     $scope.group.loadBankAccount()
+    $scope.group.loadPaymentCard()
 
     if($scope.group.membership_control == 'public')
      $scope.data.membership_control = $scope.membershipControlOptions[0]
@@ -25,7 +25,6 @@ angular.module('app.controllers').controller('manageGroupCtrl',function ($scope,
       $scope.data.membership_control = $scope.membershipControlOptions[1]
     else if($scope.group.membership_control == 'passcode')
       $scope.data.membership_control = $scope.membershipControlOptions[2]
-
 
     $scope.group.loadFieldsToFillOnJoin()
 
@@ -171,6 +170,17 @@ angular.module('app.controllers').controller('manageGroupCtrl',function ($scope,
   $scope.bankAccountAdded = function(){
     $scope.group.loadBankAccount()
     $scope.showToast('Bank account successfully added.')
+  }
+
+  $scope.showAddPaymentCardPopup = false;
+  $scope.addPaymentCard = function(){
+    $scope.showAddPaymentCardPopup = true;
+    $ionicScrollDelegate.scrollTo(0, 80, true);
+  }
+
+  $scope.paymentCardAdded = function(){
+    $scope.group.loadPaymentCard()
+    $scope.showToast('Payment card successfully added.')
   }
 
   //////////// MEMBERSHIP CONTROL SETTINGS //////////////////////////////

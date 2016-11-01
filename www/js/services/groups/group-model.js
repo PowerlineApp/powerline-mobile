@@ -220,6 +220,46 @@ angular.module('app.services').factory('GroupModel', function(groupsInvites, $ht
 
      return deferred.promise
     } 
+
+    this.loadPaymentCard = function(){
+      var that = this
+      return $http.get(serverConfig.url + '/api/v2/groups/'+this.id+'/cards').then(function(response){
+        that.paymentCard = response.data[0]
+        return that.paymentCard
+      })
+    }
+
+    this.addPaymentCard = function(data){
+      var deferred = $q.defer();
+      var that = this
+      
+      stripe().card.createToken({
+        name: data.name,
+        number: data.number,
+        cvc: data.cvc,
+        exp_month: data.expired_month,
+        exp_year: data.expired_year
+      }, function(status, response) {
+        if (response.error) {
+          deferred.reject(response.error.message);
+        } else {
+          var payload = JSON.stringify({source: response.id})
+          var headers = {headers: {'Content-Type': 'application/json'}}
+          $http.post(serverConfig.url + '/api/v2/groups/'+that.id+'/cards', payload, headers)
+            .then(function (response) {
+              deferred.resolve();
+            })
+            .catch(function (error) {
+              console.log('error while adding credit card:')
+              console.log(error)
+              deferred.reject('Server error while adding a card: '+JSON.stringify(error));
+            })
+          ;
+        }
+        });
+
+      return deferred.promise;
+    }
   }
 
   return model

@@ -4,8 +4,6 @@
   <div class="content" ng-show="isExpanded('payment-setup')">
 
     <div>
-      
-
       <div ng-hide="group.bankAccount">
         This group has no associated bank account.
       </div>
@@ -24,10 +22,35 @@
         {{group.bankAccount ? 'Change' : 'Add'}} Bank Account
       </button>
     </div>
+
+    <div style="padding-top: 10px;">
+      <div ng-hide="group.paymentCard">
+        This group has no associated payment card.
+      </div>
+
+      <div ng-show="group.paymentCard">
+        This group has following payment card:<br/>
+        Card issued by: {{group.paymentCard.brand}}<br />
+        Card number ends with: {{group.paymentCard.last4}}
+      </div>
+    </div>
+
+    <div class="save-button-holder" style="margin-top: 11px;">
+      <button 
+        ng-click="addPaymentCard()"
+        class="button btn-primary">
+        {{group.paymentCard ? 'Change' : 'Add'}}  Payment Card
+      </button>
+    </div>
   </div>
 </div>
 
 <group-bank-account-form ng-show="showAddBankAccountPopup"
   cancel="showAddBankAccountPopup=false"
   completed="showAddBankAccountPopup=false;bankAccountAdded()"
-  group="group"></group-card-form>
+  group="group"></group-bank-account-form>
+
+<group-payment-card-form ng-show="showAddPaymentCardPopup"
+  cancel="showAddPaymentCardPopup=false"
+  completed="showAddPaymentCardPopup=false;paymentCardAdded()"
+  group="group"></group-payment-card-form>
