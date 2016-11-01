@@ -183,6 +183,26 @@ angular.module('app.controllers').controller('manageGroupCtrl',function ($scope,
     $scope.showToast('Payment card successfully added.')
   }
 
+  $scope.deletePaymentCard = function(){
+    var card = $scope.group.paymentCard
+    var confirmPopup = $ionicPopup.confirm({
+      title: 'Remove Payment Card',
+      template: 'Do you want to remove '+card.brand+' card?',
+      cssClass: 'popup-by-ionic',
+    });
+
+    confirmPopup.then(function(res) {
+      if(res) {
+        $scope.showSpinner()
+        $scope.group.removePaymentCard().then(function(){
+          $scope.group.loadPaymentCard()
+          $scope.hideSpinner()
+          $scope.showToast('Card successfully removed.')
+        })
+      }
+    })
+  }
+
   //////////// MEMBERSHIP CONTROL SETTINGS //////////////////////////////
 
   $scope.data.membership_control = {}

@@ -260,6 +260,10 @@ angular.module('app.services').factory('GroupModel', function(groupsInvites, $ht
 
       return deferred.promise;
     }
+
+    this.removePaymentCard = function(){
+      return $http.delete(serverConfig.url + '/api/v2/groups/'+this.id+'/cards/'+this.paymentCard.id)
+    }
   }
 
   return model

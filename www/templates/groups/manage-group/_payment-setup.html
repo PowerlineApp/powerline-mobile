@@ -41,6 +41,13 @@
         class="button btn-primary">
         {{group.paymentCard ? 'Change' : 'Add'}}  Payment Card
       </button>
+      <button 
+      ng-show="group.paymentCard"
+        ng-click="deletePaymentCard()"
+        class="button btn-primary"
+        style="background-color: #ff9a9a">
+        Remove Card
+      </button>
     </div>
   </div>
 </div>
