@@ -66,7 +66,7 @@ angular.module('app.controllers').controller('manageGroupCtrl',function ($scope,
   $scope.showSaveAlert = function(msg){
    $ionicPopup.alert({
      cssClass: 'popup-by-ionic',
-     title: 'Save was not successful',
+     title: 'Action failed',
      template: msg
    });
   }
