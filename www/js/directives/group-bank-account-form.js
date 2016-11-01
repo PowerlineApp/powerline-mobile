@@ -24,10 +24,10 @@ angular.module('app.directives').directive('groupBankAccountForm', function () {
           first_name: '',
           last_name: '',
           ssn_last_4: '',
-          address_line1: '',
+          address_line1: $scope.group.official_address,
           address_line2: '',
-          city: '',
-          state: '',
+          city: $scope.group.official_city,
+          state: $scope.group.official_state,
           postal_code: '',
           country: 'US'
         }
