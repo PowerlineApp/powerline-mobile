@@ -201,7 +201,6 @@ angular.module('app.controllers').controller('groups',function ($scope, groups, 
     
     $scope.showSpinner();
     group.loadFieldsToFillOnJoin().then(function (fields) {
-
       if(fields && fields.length > 0){
         $scope.hideSpinner();
         $scope.data.fields = [];

@@ -52,8 +52,8 @@ angular.module('app.services').factory('groups',function ($resource, serverConfi
         payload['passcode'] = passcode
 
       if(answeredFields){
-        payload['fields'] = answeredFields.map(function(f){
-          return {'field': {'id': f.field.id}, 'field_value': f.field_value}
+        payload['answeredFields'] = answeredFields.map(function(f){
+          return {'id': f.field.id, 'value': f.field_value}
         })
       }
       

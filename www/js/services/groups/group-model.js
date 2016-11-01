@@ -22,7 +22,7 @@ angular.module('app.services').factory('GroupModel', function(groupsInvites, $ht
       var that = this
       $http.get(serverConfig.url + '/api/v2/groups/'+this.id+'/fields').then(function(response){
         that.fieldsToFillOnJoin = response.data || []
-        deferred.resolve(that._fieldsToFillOnJoin);
+        deferred.resolve(that.fieldsToFillOnJoin);
       })  
       
       return deferred.promise;   
