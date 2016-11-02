@@ -258,19 +258,14 @@ angular.module('app.controllers').controller('groups',function ($scope, groups, 
       $scope.showApproveMessage = !status;
       success();
     }, function (response) {
+      var jsonError = JSON.stringify(response.data)
       $scope.formClass = 'error';
       $scope.hideSpinner();
-      if (403 === response.status) {
-        /*if (response.data && response.data.error) {
-          $scope.alert(response.data.error);
-        } else {*/
+      if (jsonError.indexOf('Incorrect passcode') >= 0) {
           joinForm.passcode.$setValidity('required', false);
           $scope.alert('Incorrect passcode');
-        //}
-      } else if (400 === response.status) {
-        $scope.alert('Invalid data');
-      } else {
-        $scope.alert('Error occurred');
+      } else  {
+        $scope.alert('Error occured: '+jsonError);
       }
     });
   }

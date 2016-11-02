@@ -13,7 +13,7 @@ angular.module('app.controllers').controller('manageGroupCtrl',function ($scope,
     $scope.data.basic_settings.official_name = $scope.group.official_name
     $scope.data.basic_settings.official_description = $scope.group.official_description
     $scope.data.basic_settings.acronym = $scope.group.acronym
-    $scope.data.basic_settings.group_type = $scope.groupTypeOptions[$scope.group.group_type] 
+    $scope.data.basic_settings.official_type = $scope.group.official_type
 
     $scope.group.loadSubscriptionLevelInfo()
     $scope.group.loadBankAccount()
@@ -72,17 +72,8 @@ angular.module('app.controllers').controller('manageGroupCtrl',function ($scope,
   }
 
   //////////// BASIC SETTINGS ///////////////////////////////////////////
-
-  // $scope.groupTypeOptions = [
-  //   {name: 'Educational', value: 0},
-  //   {name: 'Non-Profit (Not Campaign)', value: 1},
-  //   {name: 'Non-Profit (Campaign)', value: 2},
-  //   {name: 'Business', value: 3},
-  //   {name: 'Cooperative/Union', value: 4},
-  //   {name: 'Other', value: 5},    
-  //   ]
   
-    $scope.groupTypeOptions = ['Educational', 'Non-Profit (Not Campaign)', 
+    $scope.officialTypeOptions = ['Educational', 'Non-Profit (Not Campaign)', 
     'Non-Profit (Campaign)',  'Business', 'Cooperative/Union','Other'
     ]
 
@@ -90,7 +81,7 @@ angular.module('app.controllers').controller('manageGroupCtrl',function ($scope,
     $scope.showSpinner()
     $scope.group.updateBasicSettings($scope.data.basic_settings).then(function(){
       $scope.hideSpinner()
-      $scope.showToas('Group profile settings updated successfully.')
+      $scope.showToast('Group profile settings updated successfully.')
     }, function(error){
       $scope.hideSpinner()
       $scope.showSaveAlert(JSON.stringify(error.data))
@@ -236,8 +227,9 @@ angular.module('app.controllers').controller('manageGroupCtrl',function ($scope,
       return false
 
     var ch1 = $scope.group.membership_control != $scope.data.membership_control.value
-    // var ch2 = $scope.data.membership_control_passcode
-    return ch1
+    var passcode = $scope.data.membership_control_passcode
+    var ch2 = passcode && passcode.length > 0
+    return ch1 || ch2
   }
 
   $scope.saveMembershipControlSettings = function(){
