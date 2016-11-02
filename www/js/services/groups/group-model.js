@@ -194,6 +194,10 @@ angular.module('app.services').factory('GroupModel', function(groupsInvites, $ht
       return $http.put(serverConfig.url + '/api/v2/groups/'+this.id+'/managers/'+userID)
     }
 
+    this.approveMembership = function(userID){
+      return $http.patch(serverConfig.url + '/api/v2/groups/'+this.id+'/invites/'+userID)
+    }
+
     this.loadBankAccount = function(){
       var that = this
       return $http.get(serverConfig.url + '/api/v2/groups/'+this.id+'/bank-accounts').then(function(response){

@@ -18,6 +18,13 @@
         
         <td class="actions">
           <button 
+            ng-show="membershipIsPending(member)"
+            style="background-color: #84c0ff"
+            class="button-small icon ion-ios-checkmark"
+            ng-click="approveMembership(member)">
+            Approve Membership
+          </button>
+          <button 
             ng-show="canBecameManager(member)"
             style="background-color: #84c0ff"
             class="button-small icon ion-arrow-up-a"

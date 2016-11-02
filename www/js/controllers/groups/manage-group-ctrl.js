@@ -369,7 +369,23 @@ angular.module('app.controllers').controller('manageGroupCtrl',function ($scope,
     return member.user_role == 'manager'
   }
   $scope.canBecameManager = function(member){
-    return member.user_role == 'member'
+    return !$scope.membershipIsPending(member) && member.user_role == 'member'
+  }
+
+  $scope.membershipIsPending = function(member){
+    return member.join_status == 'pending'
+  }
+
+  $scope.approveMembership = function(member){
+    $scope.showSpinner()
+    $scope.group.approveMembership(member.id).then(function(){
+      $scope.hideSpinner()
+      $scope.showToast('User '+member.username+' membership approved.')
+      $scope.group.loadGroupMembers()
+    }, function(error){
+      $scope.hideSpinner()
+      $scope.showSaveAlert(JSON.stringify(error))
+    })      
   }
 
   $scope.makeManager = function(member){
