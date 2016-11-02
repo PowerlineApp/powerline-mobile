@@ -147,7 +147,10 @@ angular.module('app.controllers').controller('manageGroupCtrl',function ($scope,
           $scope.showToast('Subscription level successfully changed to <span class="capitalize">'+newPlanNameHuman+'</span>.')
         }, function(error){
           $scope.hideSpinner()
-          $scope.showSaveAlert(JSON.stringify(error))
+          if(error.data.message && error.data.message == "User doesn't have an account in stripe")
+            $scope.showSaveAlert('In order to upgrade subscription plan you must first add a payment card in Payment Setup section.')
+          else
+            $scope.showSaveAlert(JSON.stringify(error))
         })
       }
     });
