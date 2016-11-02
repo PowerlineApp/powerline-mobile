@@ -112,8 +112,14 @@ angular.module('app.services').factory('GroupModel', function(groupsInvites, $ht
     this.loadSubscriptionLevelInfo = function(){
       var group = this
       return $http.get(serverConfig.url + '/api/v2/groups/'+this.id+'/subscription').then(function(response){
-        group.subscriptionLevel = response.data.package_type
-        group.subscriptionLevelExpireAt = response.data.expired_at
+        var isEnabled = response.data.enabled
+        if(isEnabled){
+          group.subscriptionLevel = response.data.package_type
+          group.subscriptionLevelExpireAt = response.data.expired_at
+        } else {
+          group.subscriptionLevel = 'free'
+          group.subscriptionLevelExpireAt = null         
+        }
       })
     },
 
