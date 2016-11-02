@@ -21,6 +21,12 @@
         class="button btn-primary">
         {{group.bankAccount ? 'Change' : 'Add'}} Bank Account
       </button>
+      <button 
+      ng-show="group.bankAccount"
+        ng-click="deleteBankAccount()"
+        class="button btn-primary delete-action">
+        Remove Account
+      </button>
     </div>
 
     <div style="padding-top: 10px;">

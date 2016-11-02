@@ -172,6 +172,29 @@ angular.module('app.controllers').controller('manageGroupCtrl',function ($scope,
     $scope.showToast('Bank account successfully added.')
   }
 
+  $scope.deleteBankAccount = function(){
+    var account = $scope.group.bankAccount
+    var confirmPopup = $ionicPopup.confirm({
+      title: 'Remove Bank Account',
+      template: 'Do you want to remove bank account?',
+      cssClass: 'popup-by-ionic',
+    });
+
+    confirmPopup.then(function(res) {
+      if(res) {
+        $scope.showSpinner()
+        $scope.group.removeBankAccount().then(function(){
+          $scope.group.removeBankAccount()
+          $scope.hideSpinner()
+          $scope.showToast('Bank account successfully removed.')
+        }, function(error){
+          $scope.hideSpinner()
+          $scope.showSaveAlert(JSON.stringify(error))
+        })
+      }
+    })
+  }  
+
   $scope.showAddPaymentCardPopup = false;
   $scope.addPaymentCard = function(){
     $scope.showAddPaymentCardPopup = true;

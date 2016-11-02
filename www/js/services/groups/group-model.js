@@ -229,6 +229,10 @@ angular.module('app.services').factory('GroupModel', function(groupsInvites, $ht
      return deferred.promise
     } 
 
+    this.removeBankAccount = function(){
+      return $http.delete(serverConfig.url + '/api/v2/groups/'+this.id+'/bank-accounts/'+this.bankAccount.id)
+    }
+
     this.loadPaymentCard = function(){
       var that = this
       return $http.get(serverConfig.url + '/api/v2/groups/'+this.id+'/cards').then(function(response){
