@@ -381,6 +381,11 @@ angular.module('app.controllers').controller('manageGroupCtrl',function ($scope,
     })    
   }
 
+
+  $scope.makeNormalMember = function(userID){
+    alert('todo')
+  }
+
   $scope.removeFromGroup = function(member){
     var msg = 'Do you want to remove user '+member.username+' from group?'
     if(session.user_id == member.id)

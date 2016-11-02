@@ -22,13 +22,13 @@
             style="background-color: #84c0ff"
             class="button-small icon ion-arrow-up-a"
             ng-click="makeManager(member)">
-            Set as Manager
+            Make Manager
           </button>
           <button 
             ng-show="isManager(member)"
-            class="button-small icon ion-arrow-up-a"
-            ng-click="makeManager(member)">
-            Set as Normal Member
+            class="button-small icon ion-arrow-down-a"
+            ng-click="makeNormalMember(member)">
+            Make Normal Member
           </button>
           <button class="button-small icon ion-trash-b delete-action"
             ng-click="removeFromGroup(member)">

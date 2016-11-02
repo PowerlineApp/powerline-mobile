@@ -191,7 +191,7 @@ angular.module('app.services').factory('GroupModel', function(groupsInvites, $ht
     }  
 
     this.makeManager = function(userID){
-      // TODO
+      return $http.put(serverConfig.url + '/api/v2/groups/'+this.id+'/managers/'+userID)
     }
 
     this.loadBankAccount = function(){
