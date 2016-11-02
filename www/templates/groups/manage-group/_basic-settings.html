@@ -35,6 +35,30 @@
         ng-model="data.basic_settings.official_type"
         ng-options="item as item for item in officialTypeOptions">
       </select>
+
+      <div class="label">
+        Group Address (optional)
+      </div>
+      <input 
+        ng-model="data.basic_settings.official_address" 
+        maxlength="255" 
+        placeholder="Address (optional)" />
+
+      <div class="label">
+        City (optional)
+      </div>
+      <input 
+        ng-model="data.basic_settings.official_city" 
+        maxlength="255" 
+        placeholder="City (optional)" />
+
+      <div class="label">
+        State (optional)
+      </div>
+      <input 
+        ng-model="data.basic_settings.official_state" 
+        maxlength="255" 
+        placeholder="State (optional)" />
     </div>
 
     <div style="padding-top: 10px;" class="save-button-holder">

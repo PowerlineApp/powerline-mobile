@@ -14,6 +14,9 @@ angular.module('app.controllers').controller('manageGroupCtrl',function ($scope,
     $scope.data.basic_settings.official_description = $scope.group.official_description
     $scope.data.basic_settings.acronym = $scope.group.acronym
     $scope.data.basic_settings.official_type = $scope.group.official_type
+    $scope.data.basic_settings.official_address = $scope.group.official_address
+    $scope.data.basic_settings.official_city = $scope.group.official_city
+    $scope.data.basic_settings.official_state = $scope.group.official_state
 
     $scope.group.loadSubscriptionLevelInfo()
     $scope.group.loadBankAccount()
