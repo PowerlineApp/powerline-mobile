@@ -52,7 +52,7 @@ angular.module('app.services').factory('groups',function ($resource, serverConfi
         payload['passcode'] = passcode
 
       if(answeredFields){
-        payload['answeredFields'] = answeredFields.map(function(f){
+        payload['answered_fields'] = answeredFields.map(function(f){
           return {'id': f.field.id, 'value': f.field_value}
         })
       }
