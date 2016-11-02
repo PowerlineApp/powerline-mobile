@@ -1,7 +1,7 @@
 <ion-view view-title="Join Group">
   <ion-content class="content page-join-group">
     <section ng-show="!loading" class="padding-10">
-      <form name="joinForm" novalidate ng-class="formClass" autocomplete="off" ng-show="!showApproveMessage">
+      <form name="joinForm" novalidate ng-class="formClass" autocomplete="off">
         <fieldset class="margin-v-10" ng-show="group.isPasscodeRequiredOnJoin()">
           <div class="text-field text-field-label" ng-class="invalidClass(joinForm.passcode.$invalid)">
             <label for="group_passcode">Passcode</label>
@@ -20,10 +20,6 @@
         <button class="btn-large btn-primary margin-v-10" ng-click="join(joinForm)">Continue</button>
       </form>
     </section>
-
-    <div ng-show="showApproveMessage" class="info-message" style="margin-top: 70px;">
-      <p>Awaiting Approval <br> from Group Administrator</p>
-    </div>
     <br>
   </ion-content>
 </ion-view>

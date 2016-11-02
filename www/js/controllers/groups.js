@@ -212,7 +212,7 @@ angular.module('app.controllers').controller('groups',function ($scope, groups, 
             }
           );
         });
-      } else if(group.groupMembershipIsPublic() || group.userHasInvitation())
+      } else if(group.groupMembershipIsPublic() || group.userHasInvitation() || group.groupMembershipIsApproval())
         $scope.join();
 
     }, function () {
@@ -255,7 +255,6 @@ angular.module('app.controllers').controller('groups',function ($scope, groups, 
     passcode = $scope.data.passcode
     answeredFields = $scope.data.fields
     groups.join(id, passcode, answeredFields).then(function (status) {
-      $scope.showApproveMessage = !status;
       success();
     }, function (response) {
       var jsonError = JSON.stringify(response.data)
@@ -274,10 +273,12 @@ angular.module('app.controllers').controller('groups',function ($scope, groups, 
     homeCtrlParams.loaded = false;
     $rootScope.$broadcast('groups-updated');
     $scope.hideSpinner();
-    if (!$scope.showApproveMessage) {
-      $scope.showToast('Successfully joined group ' + $scope.group.official_name);
-      $scope.path('/groups');
-    }
+    var group = groups.get(id);
+    var msg = 'Successfully joined group ' + $scope.group.official_name
+    if (group.groupMembershipIsApproval())
+      msg = 'You request to join group '+$scope.group.official_name+' was received. Awaiting approval from group administrator.'
+    $scope.showToast(msg);
+    $scope.path('/groups');
   }
 
 }).controller('groups.create',function ($scope, groups, profile, $location) {
