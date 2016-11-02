@@ -119,14 +119,22 @@ angular.module('app.services').factory('GroupModel', function(groupsInvites, $ht
 
     this.changeSubscriptionLevel = function(levelName){
       var that = this
-      var data = {package_type: levelName}
-      var payload = JSON.stringify(data)
-      var headers = {headers: {'Content-Type': 'application/json'}}
-      return $http.put(serverConfig.url + '/api/v2/groups/'+this.id+'/subscription', payload, headers).then(function(response){
-        that.subscriptionLevel = levelName
-        //that.group.subscriptionLevelExpireAt = TODO
-        return(response)
-      })
+      if(levelName == 'free'){
+        return $http.delete(serverConfig.url + '/api/v2/groups/'+this.id+'/subscription').then(function(response){
+          that.subscriptionLevel = 'free'
+          that.subscriptionLevelExpireAt = null
+          return(response)
+        })        
+      } else {
+        var data = {package_type: levelName}
+        var payload = JSON.stringify(data)
+        var headers = {headers: {'Content-Type': 'application/json'}}
+        return $http.put(serverConfig.url + '/api/v2/groups/'+this.id+'/subscription', payload, headers).then(function(response){
+          that.subscriptionLevel = response.data.package_type
+          that.subscriptionLevelExpireAt = response.data.expired_at
+          return(response)
+        })
+      }
     }
 
     this.changeMembershipControl = function(membershipType, passcode){
