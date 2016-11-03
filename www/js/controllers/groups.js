@@ -187,10 +187,7 @@ angular.module('app.controllers').controller('groups',function ($scope, groups, 
   var id = Number($stateParams.id);
 
   groups.loadAllDetails(id).then(function (group) {
-    $scope.hideSpinner();
     $scope.group = group
-    
-    $scope.showSpinner();
     group.loadFieldsToFillOnJoin().then(function (fields) {
       if(fields && fields.length > 0){
         $scope.hideSpinner();

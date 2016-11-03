@@ -366,7 +366,8 @@ angular.module('app.controllers').controller('manageGroupCtrl',function ($scope,
   $scope.canBeDowngradedToNormalMember = function(member){
     var isManager = member.user_role == 'manager'
     var currentUserIsOwner = $scope.group.currentUserIsOwner()
-    return isManager && currentUserIsOwner
+    var membershipIsNotPending = !$scope.membershipIsPending(member)
+    return isManager && currentUserIsOwner && membershipIsNotPending
   }
   $scope.canBecameManager = function(member){
     var isNormalMember = member.user_role == 'member'
