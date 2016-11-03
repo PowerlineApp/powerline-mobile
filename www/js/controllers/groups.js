@@ -91,10 +91,21 @@ angular.module('app.controllers').controller('groups',function ($scope, groups, 
   $scope.favoriteService = favorite
 
   var id = parseInt($stateParams.id, 10);
+  $scope.$on('$ionicView.enter', function(){
+    $scope.loaded = false
+    $scope.data = null
+    $scope.showSpinner();
+    groups.loadAllDetails(id).then(function(){
+      $scope.data = groups.get(id);
+      $scope.loaded = true
+      $scope.activities = activity.getActivities().getFilteredModels($scope.data);
+      $scope.hideSpinner();
+      checkPermissions();
+    })
+  });
 
-  $scope.data = groups.get(id);
   $scope.isChangeAvailable = function () {
-    return $scope.data && $scope.data.groupTypeIsCommon()
+    return $scope.loaded && $scope.data.groupTypeIsCommon()
   };
 
   $scope.goToMembers = function(){
@@ -107,7 +118,7 @@ angular.module('app.controllers').controller('groups',function ($scope, groups, 
 
   $scope.isGroupManager = function(){
     var group = $scope.data
-    return group.currentUserIsManager() || group.currentUserIsOwner()
+    return $scope.loaded &&(group.currentUserIsManager() || group.currentUserIsOwner())
   }
 
   $scope.invite = function () {
@@ -146,11 +157,6 @@ angular.module('app.controllers').controller('groups',function ($scope, groups, 
       doUnjoin()
     });
   };
-
-  function loaded() {
-    $scope.hideSpinner();
-    return checkPermissions();
-  }
   
   $scope.togglePostWindow = function(){
     $scope.showPostWindow = !$scope.showPostWindow;
@@ -174,21 +180,6 @@ angular.module('app.controllers').controller('groups',function ($scope, groups, 
       }
     });
   }
-
-  $scope.showSpinner();
-  groups.loadAllDetails(id).then(loaded, loaded);
-
-  $scope.$watch('data', function () {
-    if ($scope.data) {
-      $scope.activities = activity.getActivities().getFilteredModels($scope.data);
-    }
-  });
-
-  $scope.$watch(function () {
-    return groups.get(id);
-  }, function (newValue) {
-    $scope.data = newValue;
-  });
 }).controller('groups.join', function ($scope, $stateParams, groups, homeCtrlParams, $rootScope) {
 
   $scope.showSpinner();
