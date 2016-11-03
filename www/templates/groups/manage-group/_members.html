@@ -32,12 +32,14 @@
             Make Manager
           </button>
           <button 
-            ng-show="isManager(member)"
+            ng-show="canBeDowngradedToNormalMember(member)"
             class="button-small icon ion-arrow-down-a"
             ng-click="makeNormalMember(member)">
             Make Normal Member
           </button>
-          <button class="button-small icon ion-trash-b delete-action"
+          <button 
+            ng-show="canRemoveUser(member)"
+            class="button-small icon ion-trash-b delete-action"
             ng-click="removeFromGroup(member)">
             Remove from Group
           </button>

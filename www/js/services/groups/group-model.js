@@ -164,12 +164,6 @@ angular.module('app.services').factory('GroupModel', function(groupsInvites, $ht
         })     
     }
 
-    this.getPaymentCards = function(){
-      return $http.get(serverConfig.url + '/api/v2/groups/'+this.id+'/bank-accounts').then(function(response){
-        return(response.data)
-      })        
-    }
-
     this.inviteUsers = function(emailsArray){
       var payload = JSON.stringify({users: emailsArray})
       var headers = {headers: {'Content-Type': 'application/json'}}

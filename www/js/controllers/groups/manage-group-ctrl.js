@@ -7,8 +7,6 @@ angular.module('app.controllers').controller('manageGroupCtrl',function ($scope,
 
   groups.loadAllDetails(groupID).then(function(){
     $scope.group = groups.get(groupID);
-    console.log($scope.group)
-   
 
     $scope.data.basic_settings.official_name = $scope.group.official_name
     $scope.data.basic_settings.official_description = $scope.group.official_description
@@ -18,9 +16,11 @@ angular.module('app.controllers').controller('manageGroupCtrl',function ($scope,
     $scope.data.basic_settings.official_city = $scope.group.official_city
     $scope.data.basic_settings.official_state = $scope.group.official_state
 
-    $scope.group.loadSubscriptionLevelInfo()
-    $scope.group.loadBankAccount()
-    $scope.group.loadPaymentCard()
+    if($scope.group.currentUserIsOwner()){
+      $scope.group.loadSubscriptionLevelInfo()
+      $scope.group.loadBankAccount()
+      $scope.group.loadPaymentCard()
+    }
 
     if($scope.group.membership_control == 'public')
      $scope.data.membership_control = $scope.membershipControlOptions[0]
@@ -41,9 +41,6 @@ angular.module('app.controllers').controller('manageGroupCtrl',function ($scope,
     $scope.group.loadGroupMembers()
 
     $scope.data.invites_emails = ''
-    $scope.group.getPaymentCards().then(function(paymentCards){
-      $scope.data.paymentCards = paymentCards
-    })
   })  
 
   var expandedSection = null
@@ -365,11 +362,26 @@ angular.module('app.controllers').controller('manageGroupCtrl',function ($scope,
 
   ////// GROUP MEMBERS ////////////////////////////////////////
 
-  $scope.isManager = function(member){
-    return member.user_role == 'manager'
+  $scope.canBeDowngradedToNormalMember = function(member){
+    var isManager = member.user_role == 'manager'
+    var currentUserIsOwner = $scope.group.currentUserIsOwner()
+    return isManager && currentUserIsOwner
   }
   $scope.canBecameManager = function(member){
-    return !$scope.membershipIsPending(member) && member.user_role == 'member'
+    var isNormalMember = member.user_role == 'member'
+    var membershipIsNotPending = !$scope.membershipIsPending(member)
+    var currentUserIsOwner = $scope.group.currentUserIsOwner()
+    return isNormalMember && membershipIsNotPending && currentUserIsOwner
+  }
+
+  $scope.canRemoveUser = function(member){
+    var isOwner = member.user_role == 'owner'
+    var currentUserIsOwner = $scope.group.currentUserIsOwner()
+    return (isOwner && currentUserIsOwner) || (!isOwner)
+  }
+
+  $scope.currentUserIsOwner = function(){
+    return $scope.group.currentUserIsOwner && $scope.group.currentUserIsOwner()
   }
 
   $scope.membershipIsPending = function(member){
