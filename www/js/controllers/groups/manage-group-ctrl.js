@@ -96,7 +96,7 @@ angular.module('app.controllers').controller('manageGroupCtrl',function ($scope,
   }
 
   $scope.isSubscriptionLevelCancellable = function(){
-    return $scope.group.subscriptionLevel != groups.subscriptionLevels.FREE
+    return $scope.group.subscriptionLevelIsFree && !$scope.group.subscriptionLevelIsFree()
   }
 
   $scope.cancelSubscriptionLevel = function(){
@@ -145,7 +145,7 @@ angular.module('app.controllers').controller('manageGroupCtrl',function ($scope,
           $scope.showToast('Subscription level successfully changed to <span class="capitalize">'+newPlanNameHuman+'</span>.')
         }, function(error){
           $scope.hideSpinner()
-          if(error.data.message && error.data.message == "User doesn't have an account in stripe")
+          if(error.data.message && (error.data.message == "User doesn't have an account in stripe" || error.data.message == 'This customer has no attached payment source'))
             $scope.showSaveAlert('In order to upgrade subscription plan you must first add a payment card in Payment Setup section.')
           else
             $scope.showSaveAlert(JSON.stringify(error))
@@ -203,9 +203,14 @@ angular.module('app.controllers').controller('manageGroupCtrl',function ($scope,
 
   $scope.deletePaymentCard = function(){
     var card = $scope.group.paymentCard
+
+    var msg = 'Do you want to remove '+card.brand+' card?'
+    if(!$scope.group.subscriptionLevelIsFree())
+      msg += ' Group subscription plan will change to Free plan.'
+    
     var confirmPopup = $ionicPopup.confirm({
       title: 'Remove Payment Card',
-      template: 'Do you want to remove '+card.brand+' card?',
+      template: msg,
       cssClass: 'popup-by-ionic',
     });
 
@@ -214,8 +219,10 @@ angular.module('app.controllers').controller('manageGroupCtrl',function ($scope,
         $scope.showSpinner()
         $scope.group.removePaymentCard().then(function(){
           $scope.group.loadPaymentCard()
-          $scope.hideSpinner()
-          $scope.showToast('Card successfully removed.')
+          $scope.group.changeSubscriptionLevel(groups.subscriptionLevels.FREE).then(function(){
+            $scope.hideSpinner()
+            $scope.showToast('Card successfully removed.')
+          })
         })
       }
     })

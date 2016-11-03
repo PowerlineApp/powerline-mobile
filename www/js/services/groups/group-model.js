@@ -143,6 +143,10 @@ angular.module('app.services').factory('GroupModel', function(groupsInvites, $ht
       }
     }
 
+    this.subscriptionLevelIsFree = function(){
+      return this.subscriptionLevel == 'free'
+    }
+
     this.changeMembershipControl = function(membershipType, passcode){
         var data = { membership_control: membershipType}
        if(membershipType == 'passcode')
