@@ -7,6 +7,7 @@ angular.module('app.controllers').controller('manageGroupCtrl',function ($scope,
 
   groups.loadAllDetails(groupID).then(function(){
     $scope.group = groups.get(groupID);
+    console.log($scope.group)
 
     $scope.data.basic_settings.official_name = $scope.group.official_name
     $scope.data.basic_settings.official_description = $scope.group.official_description
@@ -413,8 +414,16 @@ angular.module('app.controllers').controller('manageGroupCtrl',function ($scope,
   }
 
 
-  $scope.makeNormalMember = function(userID){
-    alert('todo')
+  $scope.makeNormalMember = function(member){
+    $scope.showSpinner()
+    $scope.group.makeNormalMember(member.id).then(function(){
+      $scope.hideSpinner()
+      $scope.showToast('User '+member.username+' is now regular member.')
+      $scope.group.loadGroupMembers()
+    }, function(error){
+      $scope.hideSpinner()
+      $scope.showSaveAlert(JSON.stringify(error))
+    })  
   }
 
   $scope.removeFromGroup = function(member){
