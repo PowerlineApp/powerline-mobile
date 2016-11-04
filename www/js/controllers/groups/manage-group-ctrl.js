@@ -1,4 +1,4 @@
-angular.module('app.controllers').controller('manageGroupCtrl',function ($scope, groups, $stateParams, $ionicPopup, $ionicScrollDelegate, session) {
+angular.module('app.controllers').controller('manageGroupCtrl',function ($scope, groups, $stateParams, $ionicPopup, $ionicScrollDelegate, session, $location) {
   var groupID = parseInt($stateParams.id)
   $scope.data = {}
   $scope.group = {members: [], fieldsToFillOnJoin: []} 
@@ -7,41 +7,43 @@ angular.module('app.controllers').controller('manageGroupCtrl',function ($scope,
 
   groups.loadAllDetails(groupID).then(function(){
     $scope.group = groups.get(groupID);
-    console.log($scope.group)
+    if($scope.group.currentUserIsManager() || $scope.group.currentUserIsOwner())
+      $location.path('/group/'+$scope.group.id);
+    else {
+      $scope.data.basic_settings.official_name = $scope.group.official_name
+      $scope.data.basic_settings.official_description = $scope.group.official_description
+      $scope.data.basic_settings.acronym = $scope.group.acronym
+      $scope.data.basic_settings.official_type = $scope.group.official_type
+      $scope.data.basic_settings.official_address = $scope.group.official_address
+      $scope.data.basic_settings.official_city = $scope.group.official_city
+      $scope.data.basic_settings.official_state = $scope.group.official_state
 
-    $scope.data.basic_settings.official_name = $scope.group.official_name
-    $scope.data.basic_settings.official_description = $scope.group.official_description
-    $scope.data.basic_settings.acronym = $scope.group.acronym
-    $scope.data.basic_settings.official_type = $scope.group.official_type
-    $scope.data.basic_settings.official_address = $scope.group.official_address
-    $scope.data.basic_settings.official_city = $scope.group.official_city
-    $scope.data.basic_settings.official_state = $scope.group.official_state
+      if($scope.group.currentUserIsOwner()){
+        $scope.group.loadSubscriptionLevelInfo()
+        $scope.group.loadBankAccount()
+        $scope.group.loadPaymentCard()
+      }
 
-    if($scope.group.currentUserIsOwner()){
-      $scope.group.loadSubscriptionLevelInfo()
-      $scope.group.loadBankAccount()
-      $scope.group.loadPaymentCard()
-    }
+      if($scope.group.membership_control == 'public')
+      $scope.data.membership_control = $scope.membershipControlOptions[0]
+      else if($scope.group.membership_control == 'approval')
+        $scope.data.membership_control = $scope.membershipControlOptions[1]
+      else if($scope.group.membership_control == 'passcode')
+        $scope.data.membership_control = $scope.membershipControlOptions[2]
 
-    if($scope.group.membership_control == 'public')
-     $scope.data.membership_control = $scope.membershipControlOptions[0]
-    else if($scope.group.membership_control == 'approval')
-      $scope.data.membership_control = $scope.membershipControlOptions[1]
-    else if($scope.group.membership_control == 'passcode')
-      $scope.data.membership_control = $scope.membershipControlOptions[2]
+      $scope.group.loadFieldsToFillOnJoin()
 
-    $scope.group.loadFieldsToFillOnJoin()
-
-    groups.loadPermissions(groupID).then(function (permissionModel) {
-      $scope.group.currentPermissions = permissionModel.get('required_permissions')
-      $scope.group.currentPermissions.forEach(function(permissionID){
-        $scope.data.selectedPermissions[permissionID] = true
+      groups.loadPermissions(groupID).then(function (permissionModel) {
+        $scope.group.currentPermissions = permissionModel.get('required_permissions')
+        $scope.group.currentPermissions.forEach(function(permissionID){
+          $scope.data.selectedPermissions[permissionID] = true
+        })
       })
-    })
 
-    $scope.group.loadGroupMembers()
+      $scope.group.loadGroupMembers()
 
-    $scope.data.invites_emails = ''
+      $scope.data.invites_emails = ''
+    }
   })  
 
   var expandedSection = null
@@ -444,7 +446,8 @@ angular.module('app.controllers').controller('manageGroupCtrl',function ($scope,
 
   $scope.removeFromGroup = function(member){
     var msg = 'Do you want to remove user '+member.username+' from group?'
-    if(session.user_id == member.id)
+    var aboutToRemoveMyself = session.user_id == member.id
+    if(aboutToRemoveMyself)
       msg = 'Do you want to leave this group?'
     
     var confirmPopup = $ionicPopup.confirm({
@@ -458,8 +461,9 @@ angular.module('app.controllers').controller('manageGroupCtrl',function ($scope,
         $scope.showSpinner()
         $scope.group.removeMember(member.id).then(function(){
           $scope.hideSpinner()
+          if(aboutToRemoveMyself)
+            $location.path('/group/'+$scope.group.id);
           $scope.showToast('User '+member.username+' removed successfully from group')
-          $scope.group.loadGroupMembers()
         }, function(error){
           $scope.hideSpinner()
           $scope.showSaveAlert(JSON.stringify(error))

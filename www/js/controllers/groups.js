@@ -116,9 +116,9 @@ angular.module('app.controllers').controller('groups',function ($scope, groups, 
     $location.path('/manage-group/'+id);
   }
 
-  $scope.isGroupManager = function(){
+  $scope.canViewGroupManagement = function(){
     var group = $scope.data
-    return $scope.loaded &&(group.currentUserIsManager() || group.currentUserIsOwner())
+    return $scope.loaded && group.joined && (group.currentUserIsManager() || group.currentUserIsOwner())
   }
 
   $scope.invite = function () {
