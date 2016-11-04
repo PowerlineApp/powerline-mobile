@@ -384,9 +384,17 @@ angular.module('app.controllers').controller('manageGroupCtrl',function ($scope,
   }
 
   $scope.canRemoveUser = function(member){
-    var isOwner = member.user_role == 'owner'
     var currentUserIsOwner = $scope.group.currentUserIsOwner()
-    return (isOwner && currentUserIsOwner) || (!isOwner)
+    var isMember = member.user_role == 'member'
+    var currentUserIsManager = $scope.group.currentUserIsManager()
+    var isMe = member.id == session.user_id
+
+    if(currentUserIsOwner) // owner can remove anyone
+      return true
+    else if ((currentUserIsManager && isMember) || (currentUserIsManager && isMe)) // manager can remove only regular member and himself
+      return true
+    else
+      return false
   }
 
   $scope.currentUserIsOwner = function(){
