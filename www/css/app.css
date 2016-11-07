@@ -3164,10 +3164,11 @@ a.follow-action {
       color: #758181;
       font-weight: 900;
       font-size: 12px; }
-    .manage-group-sections .manage-group-section .current-subscription-level-info .cancel {
+    .manage-group-sections .manage-group-section .current-subscription-level-info a.cancel {
       color: #b40b2c;
       font-family: "Lato Bold";
-      margin-top: 7px; }
+      margin-top: 7px;
+      display: block; }
   .manage-group-sections .manage-group-section .subscription-levels .select-button {
     position: relative;
     left: 52%;
@@ -3182,7 +3183,8 @@ a.follow-action {
     color: #fff;
     font-family: "Lato Bold";
     border-radius: 2px;
-    margin-bottom: -21px; }
+    margin-bottom: -21px;
+    cursor: pointer; }
   .manage-group-sections .manage-group-section .subscription-levels .subscription-level {
     display: flex;
     justify-content: center;

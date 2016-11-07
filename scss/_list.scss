@@ -1147,10 +1147,11 @@ a.follow-action {
       font-size: 12px;
     }
 
-    .cancel {
+    a.cancel {
       color: #b40b2c;
       font-family: "Lato Bold";
       margin-top: 7px;
+      display: block;
     }
   }
 
@@ -1170,6 +1171,7 @@ a.follow-action {
       font-family: "Lato Bold";
       border-radius: 2px;
       margin-bottom: -21px;
+      cursor: pointer;
     }
 
     .subscription-level{

@@ -8,17 +8,17 @@
       </div>
       <div class="expire-at" 
         ng-show="group.subscriptionLevelExpireAt">
-        Expire at: {{group.subscriptionLevelExpireAt | date:'M.d.yyyy'}}
+        Subscription plan will expire at: {{group.subscriptionLevelExpireAt | date:'M.d.yyyy'}}
       </div>
       <div class="expire-at" 
         ng-show="group.nextPaymentAt">
-        Next payment at: {{group.nextPaymentAt | date:'M.d.yyyy'}}
+        The next charge for your group will be on {{group.nextPaymentAt | date:'M.d.yyyy'}} using card ending in {{group.paymentCard.last4}}.
       </div>
-      <div class="cancel" 
+      <a class="cancel" 
         ng-show="isSubscriptionLevelCancellable()"
         ng-click="cancelSubscriptionLevel()">
         Cancel subscription
-      </div>
+      </a>
     </div>
     <br/>
 
