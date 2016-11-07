@@ -55,7 +55,7 @@
           <p><span>Permissions</span></p>
           <p ng-bind="permissionsForHumans.join(', ')"></p>
         </li>
-        <li>
+        <li ng-show="canViewGroupManagement()">
           <button class="btn-large btn-primary"
               style="text-transform: capitalize;" 
               ng-click="goToGroupManagement()"
