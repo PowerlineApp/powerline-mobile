@@ -44,8 +44,12 @@
           <span class="input-label">Postal Code</span>
           <input type="text" name="postal_code" ng-model="data.powerline.postal_code">
         </div>
-        <div style="padding: 5px">
-          Country: US
+        <div class="item-floating-label text-field-1">
+          <span class="input-label">Country</span>
+          <select 
+            ng-model="data.stripe.country"
+            ng-options="item as item.name for item in countries">
+          </select>
         </div>
         <div class="item-floating-label text-field-1">
           <span class="input-label">Last Four Digits of Social Security Number</span>

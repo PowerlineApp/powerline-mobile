@@ -212,10 +212,12 @@ angular.module('app.services').factory('GroupModel', function(groupsInvites, $ht
       })
     }
 
-    this.addBankAccount = function(payload){
+    this.addBankAccount = function(formPayload){
       var that = this
       var deferred = $q.defer();
-
+      var payload = {} 
+      angular.copy(formPayload, payload)
+      payload.stripe.country = payload.stripe.country.value
       stripe().bankAccount.createToken(payload.stripe, function(status, response){
        if(status == 200){
          var stripeToken = response.id
@@ -225,6 +227,7 @@ angular.module('app.services').factory('GroupModel', function(groupsInvites, $ht
           powerlinePayload.business_name = payload.stripe.account_holder_name
           powerlinePayload.type = payload.stripe.account_holder_type
           powerlinePayload.source = stripeToken
+          powerlinePayload.country = payload.stripe.country
 
           var json_payload = JSON.stringify(powerlinePayload)
           var headers = {headers: {'Content-Type': 'application/json'}}

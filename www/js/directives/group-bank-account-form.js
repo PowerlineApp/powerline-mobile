@@ -10,10 +10,34 @@ angular.module('app.directives').directive('groupBankAccountForm', function () {
       controller: function ($scope, $rootScope, cards) {
         $scope.data = {stripe: {}, powerline: {}}
 
+        $scope.countries = [
+          {name: 'Austria', value: 'AT'},
+          {name: 'Australia', value: 'AU'},
+          {name: 'Belgium', value: 'BE'},
+          {name: 'Canada', value: 'CA'},
+          {name: 'Germany', value: 'DE'},
+          {name: 'Denmark', value: 'DK'},
+          {name: 'Spain', value: 'ES'},
+          {name: 'Finland', value: 'FI'},
+          {name: 'France', value: 'FR'},
+          {name: 'United', value: 'Kingdom'},
+          {name: 'Hong', value: 'Kong'},
+          {name: 'Ireland', value: 'IE'},
+          {name: 'Italy', value: 'IT'},
+          {name: 'Japan', value: 'JP'},
+          {name: 'Luxembourg', value: 'LU'},
+          {name: 'Netherlands', value: 'NL'},
+          {name: 'Norway', value: 'NO'},
+          {name: 'Portugal', value: 'PT'},
+          {name: 'Sweden', value: 'SE'},
+          {name: 'Singapore', value: 'SG'},
+          {name: 'United States', value: 'US'}
+        ]
+
         $scope.data.stripe = {
           account_number: '',
           routing_number: '',
-          country: 'US',
+          country: $scope.countries[$scope.countries.length - 1],
           currency: 'USD',
           account_holder_name: '',
           account_holder_type: 'company',
@@ -28,8 +52,7 @@ angular.module('app.directives').directive('groupBankAccountForm', function () {
             address_line2: '',
             city: $scope.group.official_city,
             state: $scope.group.official_state,
-            postal_code: '',
-            country: 'US'
+            postal_code: ''
           }
         }
 
