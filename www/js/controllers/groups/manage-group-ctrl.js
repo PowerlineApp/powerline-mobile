@@ -108,7 +108,7 @@ angular.module('app.controllers').controller('manageGroupCtrl',function ($scope,
 
     var msg = 'You subscription level will change to Free when you click OK.'
     var confirmPopup = $ionicPopup.confirm({
-      title: 'Revoke <span class="capitalize">'+currentPlanNameHuman+'</span> subscription level',
+      title: 'Cancel <span class="capitalize">'+currentPlanNameHuman+'</span> subscription level',
       template: msg,
       cssClass: 'popup-by-ionic',
     });
@@ -149,7 +149,7 @@ angular.module('app.controllers').controller('manageGroupCtrl',function ($scope,
           $scope.showToast('Subscription level successfully changed to <span class="capitalize">'+newPlanNameHuman+'</span>.')
         }, function(error){
           $scope.hideSpinner()
-          if(error.data.message && (error.data.message == "User doesn't have an account in stripe" || error.data.message == 'This customer has no attached payment source'))
+          if(error.data && error.data.message && (error.data.message == "User doesn't have an account in stripe" || error.data.message == 'This customer has no attached payment source'))
             $scope.showSaveAlert('In order to upgrade subscription plan you must first add a payment card in Payment Setup section.')
           else
             $scope.showSaveAlert(JSON.stringify(error))

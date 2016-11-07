@@ -10,10 +10,14 @@
         ng-show="group.subscriptionLevelExpireAt">
         Expire at: {{group.subscriptionLevelExpireAt | date:'M.d.yyyy'}}
       </div>
+      <div class="expire-at" 
+        ng-show="group.nextPaymentAt">
+        Next payment at: {{group.nextPaymentAt | date:'M.d.yyyy'}}
+      </div>
       <div class="cancel" 
         ng-show="isSubscriptionLevelCancellable()"
         ng-click="cancelSubscriptionLevel()">
-        Revoke subscription
+        Cancel subscription
       </div>
     </div>
     <br/>

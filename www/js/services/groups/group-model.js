@@ -116,9 +116,11 @@ angular.module('app.services').factory('GroupModel', function(groupsInvites, $ht
         if(isEnabled){
           group.subscriptionLevel = response.data.package_type
           group.subscriptionLevelExpireAt = response.data.expired_at
+          group.nextPaymentAt = response.data.next_payment_at
         } else {
           group.subscriptionLevel = 'free'
-          group.subscriptionLevelExpireAt = null         
+          group.subscriptionLevelExpireAt = null      
+          group.nextPaymentAt = null  
         }
       })
     },
@@ -129,6 +131,7 @@ angular.module('app.services').factory('GroupModel', function(groupsInvites, $ht
         return $http.delete(serverConfig.url + '/api/v2/groups/'+this.id+'/subscription').then(function(response){
           that.subscriptionLevel = 'free'
           that.subscriptionLevelExpireAt = null
+          that.nextPaymentAt = null  
           return(response)
         })        
       } else {
@@ -138,6 +141,7 @@ angular.module('app.services').factory('GroupModel', function(groupsInvites, $ht
         return $http.put(serverConfig.url + '/api/v2/groups/'+this.id+'/subscription', payload, headers).then(function(response){
           that.subscriptionLevel = response.data.package_type
           that.subscriptionLevelExpireAt = response.data.expired_at
+          that.nextPaymentAt = response.data.next_payment_at
           return(response)
         })
       }
