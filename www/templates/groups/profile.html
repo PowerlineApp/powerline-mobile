@@ -29,6 +29,12 @@
     </section>
     <section>
       <ul class="info-list">
+        <li ng-show="canViewGroupManagement()">
+          <button class="btn-large btn-primary"
+              style="text-transform: capitalize;" 
+              ng-click="goToGroupManagement()"
+              >Manage</button>
+        </li>
         <li ng-show="data.acronym">
           <p><span>Acronym</span></p>
           <p ng-bind="data.acronym"></p>
@@ -54,12 +60,6 @@
         <li ng-show="permissionsForHumans && permissionsForHumans.length > 0">
           <p><span>Permissions</span></p>
           <p ng-bind="permissionsForHumans.join(', ')"></p>
-        </li>
-        <li ng-show="canViewGroupManagement()">
-          <button class="btn-large btn-primary"
-              style="text-transform: capitalize;" 
-              ng-click="goToGroupManagement()"
-              >Manage</button>
         </li>
       </ul>
     </section>

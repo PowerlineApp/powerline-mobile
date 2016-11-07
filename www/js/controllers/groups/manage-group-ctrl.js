@@ -7,7 +7,9 @@ angular.module('app.controllers').controller('manageGroupCtrl',function ($scope,
 
   groups.loadAllDetails(groupID).then(function(){
     $scope.group = groups.get(groupID);
-    if($scope.group.currentUserIsManager() || $scope.group.currentUserIsOwner())
+
+    var canManageGroup = $scope.group.currentUserIsManager() || $scope.group.currentUserIsOwner()
+    if(!canManageGroup)
       $location.path('/group/'+$scope.group.id);
     else {
       $scope.data.basic_settings.official_name = $scope.group.official_name
