@@ -18,10 +18,10 @@ angular.module('app.controllers').controller('createPostCtrl',function ($scope, 
     $scope.showSpinner();
 
 
-    posts.create($scope.data.group.id, $scope.data.post_text).then(function(){
+    posts.create($scope.data.group.id, $scope.data.post_text).then(function(response){
       $scope.hideSpinner();
       $rootScope.showToast('Post successfully created!');
-      $rootScope.back();
+      $rootScope.path('/post/'+response.data.id);
     }).catch(function(response){
       $scope.hideSpinner();
       if (response.data && response.data.errors && response.data.errors.errors) {

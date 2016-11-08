@@ -25,10 +25,10 @@ angular.module('app.controllers').controller('createUserPetitionCtrl',function (
     var title = $scope.data.title 
     var body = $scope.data.petition_body
 
-    userPetitions.create($scope.data.group.id, title, body).then(function(){
+    userPetitions.create($scope.data.group.id, title, body).then(function(response){
       $scope.hideSpinner();
       $rootScope.showToast('User petition successfully created!');
-      $rootScope.back();
+      $rootScope.path('/user-petition/'+response.data.id);
     }).catch(function(response){
       $scope.hideSpinner();
       if (response.data && response.data.errors && response.data.errors.errors) {

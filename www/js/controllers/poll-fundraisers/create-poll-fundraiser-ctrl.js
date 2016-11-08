@@ -215,10 +215,13 @@ angular.module('app.controllers').controller('createPollFundraiserCtrl',function
       })
 
       sqAjax.whenDone().then(function(){
-        questions.publishPoll(pollID).then(function(){
+        questions.publishPoll(pollID).then(function(response){
           $scope.hideSpinner();
           $rootScope.showToast('Fundraiser successfully created!');
-          $rootScope.back();
+          if(isCrowdfunding)
+            $rootScope.path('/payment-polls/crowdfunding-payment-request/'+response.data.id);
+          else
+            $rootScope.path('/payment-polls/payment-request/'+response.data.id);
         }, function(error){
           $scope.hideSpinner();
           console.log('publish fundraising failed')

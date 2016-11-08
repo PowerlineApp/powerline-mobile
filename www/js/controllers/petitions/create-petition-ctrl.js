@@ -20,10 +20,10 @@ angular.module('app.controllers').controller('createPetitionCtrl',function ($sco
   $scope.send = function(){
     var groupID = $scope.data.group.id
     $scope.showSpinner();
-    petitions.create($scope.data.title,$scope.data.petition_body,groupID).then(function(response){
+    petitions.create($scope.data.title,$scope.data.petition_body,groupID).then(function(petitionID){
         $scope.hideSpinner();
         $rootScope.showToast('Petition successfully created!');
-        $rootScope.back();
+        $rootScope.path('/petition/'+petitionID);
     }, function(error){
       $scope.hideSpinner();
       if(error.status == 403)

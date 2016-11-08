@@ -48,10 +48,10 @@ angular.module('app.controllers').controller('createPollQuestionCtrl',function (
         })
       })
       sqAjax.whenDone().then(function(){
-        questions.publishPoll(pollID).then(function(){
+        questions.publishPoll(pollID).then(function(response){
           $scope.hideSpinner();
           $rootScope.showToast('Poll successfully created!');
-          $rootScope.back();
+          $rootScope.path('/questions/'+response.data.id);
         })
       })
       

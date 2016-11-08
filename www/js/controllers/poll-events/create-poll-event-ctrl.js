@@ -103,10 +103,10 @@ angular.module('app.controllers').controller('createPollEventCtrl',function ($sc
         })
       })
       sqAjax.whenDone().then(function(){
-        questions.publishPoll(pollID).then(function(){
+        questions.publishPoll(pollID).then(function(response){
           $scope.hideSpinner();
-          $rootScope.showToast('Poll successfully created!');
-          $rootScope.back();
+          $rootScope.showToast('Event successfully created!');
+          $rootScope.path('/leader-event/'+response.data.id);
         })
       })
       
