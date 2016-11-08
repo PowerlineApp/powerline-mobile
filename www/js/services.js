@@ -140,4 +140,30 @@ angular.module('app.services', [
     groups: [],
     selectedGroup: null
   }
-});
+}).factory('SequentialAjax', function ($q) {
+  return function() {
+    this.callables = []
+    this.add = function(callable){
+      this.callables.push(callable)
+    }
+
+    this.whenDone = function(){
+      var deferred = $q.defer();
+      this._callCallable(deferred, 0)
+      return deferred.promise;
+    }
+
+    this._callCallable = function(deferred, counter){
+      var that = this
+      var callable = that.callables[counter]
+      if(callable == undefined)
+        deferred.resolve()
+      else {
+        callable.call().then(function(){
+          that._callCallable(deferred, counter+1)
+        })
+      }
+    }
+  }
+
+})

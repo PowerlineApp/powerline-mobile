@@ -1,4 +1,4 @@
-angular.module('app.controllers').controller('createPollFundraiserCtrl',function ($scope, $stateParams, $document, $controller, $rootScope, $q, questions, $http, serverConfig) {
+angular.module('app.controllers').controller('createPollFundraiserCtrl',function ($scope, $stateParams, $document, $controller, $rootScope, $q, questions, $http, serverConfig, SequentialAjax) {
   $controller('abstractCreatePollCtrl', {$scope: $scope});
   $scope.prepareGroupPicker(true)
 
@@ -197,22 +197,24 @@ angular.module('app.controllers').controller('createPollFundraiserCtrl',function
 
     createRequest.then(function(response){
       var pollID = response.data.id
-      var requests = []
-      var r;
+      var sqAjax = new SequentialAjax()
       $scope.answers.forEach(function(answer){
-        r = addAmountToPayment(pollID, answer.amount, answer.amount_desc)
-        requests.push(r)
+        sqAjax.add(function(){
+          return addAmountToPayment(pollID, answer.amount, answer.amount_desc)
+        })
       })
 
       if(customAmountEnabled){
-        r = addCustomAmountToPayment(pollID, customAmountDesc)
-        requests.push(r)
+        sqAjax.add(function(){
+          return addCustomAmountToPayment(pollID, customAmountDesc)
+        })
       }
 
-      r = addCustomAmountToPayment(pollID, "I don't want to donate. Mark as read.")
-      requests.push(r)
+      sqAjax.add(function(){
+        return addCustomAmountToPayment(pollID, "I don't want to donate. Mark as read.")
+      })
 
-      $q.all(requests).then(function(){
+      sqAjax.whenDone().then(function(){
         questions.publishPoll(pollID).then(function(){
           $scope.hideSpinner();
           $rootScope.showToast('Fundraiser successfully created!');

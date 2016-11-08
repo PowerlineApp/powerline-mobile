@@ -1,4 +1,4 @@
-angular.module('app.controllers').controller('createPollEventCtrl',function ($scope, $stateParams,questions, $http, serverConfig, $rootScope, $controller, $q) {
+angular.module('app.controllers').controller('createPollEventCtrl',function ($scope, $stateParams,questions, $http, serverConfig, $rootScope, $controller, $q, SequentialAjax) {
   $controller('abstractCreatePollCtrl', {$scope: $scope});
   $scope.prepareGroupPicker(true)
 
@@ -96,12 +96,13 @@ angular.module('app.controllers').controller('createPollEventCtrl',function ($sc
     var createRequest = questions.createPollEvent(groupID, title, desc, startTime, endTime)
     createRequest.then(function(response){
       var pollID = response.data.id
-      var addAnswerRequests = []
+      var sqAjax = new SequentialAjax()
       $scope.answers.forEach(function(answer){
-        var r = questions.addOptionToPoll(pollID, answer.desc)
-        addAnswerRequests.push(r)
+        sqAjax.add(function(){
+          return questions.addOptionToPoll(pollID, answer.desc)
+        })
       })
-      $q.all(addAnswerRequests).then(function(){
+      sqAjax.whenDone().then(function(){
         questions.publishPoll(pollID).then(function(){
           $scope.hideSpinner();
           $rootScope.showToast('Poll successfully created!');
