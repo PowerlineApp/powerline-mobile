@@ -9,9 +9,6 @@
         <div style="padding: 5px">
           Account type: Business
         </div >
-        <div style="padding: 5px">
-          Currency: USD
-        </div>
         <div class="item-floating-label text-field-1">
           <span class="input-label">Business Name</span>
           <input type="text" name="account_holder_name" ng-model="data.stripe.account_holder_name">
@@ -48,9 +45,17 @@
           <span class="input-label">Country</span>
           <select 
             ng-model="data.stripe.country"
-            ng-options="item as item.name for item in countries">
+            ng-options="item as item.name for item in countries"
+            ng-change="onCountryChange()">
           </select>
         </div>
+        <div class="item-floating-label text-field-1">
+          <span class="input-label">Currency</span>
+          <select 
+            ng-model="data.stripe.currency"
+            ng-options="item as item for item in data.stripe.country.currencies">
+          </select>
+        </div>        
         <div class="item-floating-label text-field-1">
           <span class="input-label">Last Four Digits of Social Security Number</span>
           <input type="text" name="ssn_last_4" ng-model="data.powerline.ssn_last_4">

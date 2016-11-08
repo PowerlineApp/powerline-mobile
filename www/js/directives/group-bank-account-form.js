@@ -11,36 +11,41 @@ angular.module('app.directives').directive('groupBankAccountForm', function () {
         $scope.data = {stripe: {}, powerline: {}}
 
         $scope.countries = [
-          {name: 'Austria', value: 'AT'},
-          {name: 'Australia', value: 'AU'},
-          {name: 'Belgium', value: 'BE'},
-          {name: 'Canada', value: 'CA'},
-          {name: 'Germany', value: 'DE'},
-          {name: 'Denmark', value: 'DK'},
-          {name: 'Spain', value: 'ES'},
-          {name: 'Finland', value: 'FI'},
-          {name: 'France', value: 'FR'},
-          {name: 'United', value: 'Kingdom'},
-          {name: 'Hong', value: 'Kong'},
-          {name: 'Ireland', value: 'IE'},
-          {name: 'Italy', value: 'IT'},
-          {name: 'Japan', value: 'JP'},
-          {name: 'Luxembourg', value: 'LU'},
-          {name: 'Netherlands', value: 'NL'},
-          {name: 'Norway', value: 'NO'},
-          {name: 'Portugal', value: 'PT'},
-          {name: 'Sweden', value: 'SE'},
-          {name: 'Singapore', value: 'SG'},
-          {name: 'United States', value: 'US'}
+          {name: 'Austria', value: 'AT', currencies: ['EUR', 'GBP', 'USD', 'DKK', 'NOK', 'SEK']},
+          {name: 'Australia', value: 'AU', currencies: ['AUD']},
+          {name: 'Belgium', value: 'BE', currencies: ['EUR', 'GBP', 'USD', 'DKK', 'NOK', 'SEK']}, 
+          {name: 'Canada', value: 'CA', currencies: ['CAD', 'USD']},
+          {name: 'Germany', value: 'DE', currencies: ['EUR', 'GBP', 'USD', 'DKK', 'NOK', 'SEK']},
+          {name: 'Denmark', value: 'DK', currencies: ['EUR', 'GBP', 'USD', 'DKK', 'NOK', 'SEK']},
+          {name: 'Spain', value: 'ES', currencies: ['EUR', 'GBP', 'USD', 'DKK', 'NOK', 'SEK']},
+          {name: 'Finland', value: 'FI', currencies: ['EUR', 'GBP', 'USD', 'DKK', 'NOK', 'SEK']}, 
+          {name: 'France', value: 'FR', currencies: ['EUR', 'GBP', 'USD', 'DKK', 'NOK', 'SEK']},
+          {name: 'United Kingdom', value: 'UK', currencies: ['EUR', 'GBP', 'USD', 'DKK', 'NOK', 'SEK']},
+          {name: 'Hong Kong', value: 'HK', currencies: ['HKD']},
+          {name: 'Ireland', value: 'IE', currencies: ['EUR', 'GBP', 'USD', 'DKK', 'NOK', 'SEK']},
+          {name: 'Italy', value: 'IT', currencies: ['EUR', 'GBP', 'USD', 'DKK', 'NOK', 'SEK']},
+          {name: 'Japan', value: 'JP', currencies: ['JPY']},
+          {name: 'Luxembourg', value: 'LU', currencies: ['EUR', 'GBP', 'USD', 'DKK', 'NOK', 'SEK']},
+          {name: 'Netherlands', value: 'NL', currencies: ['EUR', 'GBP', 'USD', 'DKK', 'NOK', 'SEK']},
+          {name: 'Norway', value: 'NO', currencies: ['EUR', 'GBP', 'USD', 'DKK', 'NOK', 'SEK']},
+          {name: 'Portugal', value: 'PT', currencies: ['EUR', 'GBP', 'USD', 'DKK', 'NOK', 'SEK']},
+          {name: 'Sweden', value: 'SE', currencies: ['EUR', 'GBP', 'USD', 'DKK', 'NOK', 'SEK']},
+          {name: 'Singapore', value: 'SG', currencies: ['SGD']},
+          {name: 'United States', value: 'US', currencies: ['USD']}
         ]
 
+        var presetCountry = $scope.countries[$scope.countries.length - 1]
         $scope.data.stripe = {
           account_number: '',
           routing_number: '',
-          country: $scope.countries[$scope.countries.length - 1],
-          currency: 'USD',
+          country: presetCountry,
+          currency: presetCountry.currencies[0],
           account_holder_name: '',
           account_holder_type: 'company',
+        }
+
+        $scope.onCountryChange = function(){
+          $scope.data.stripe.currency = $scope.data.stripe.country.currencies[0]
         }
 
         var prefillForm = function(){
