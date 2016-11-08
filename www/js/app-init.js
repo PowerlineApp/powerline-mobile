@@ -168,4 +168,8 @@ angular.module('app').run(function ($location, layout, spinnerIndicator, $rootSc
     return isDefault
 };
 
+$rootScope.goToHomeScreen = function(){
+  $rootScope.path('/main')
+}
+
 });

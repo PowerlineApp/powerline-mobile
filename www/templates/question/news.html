@@ -1,4 +1,9 @@
-<ion-view view-title="NEWS">
+<ion-view view-title="NEWS" hide-back-button="true">
+  <ion-nav-buttons side="left">
+    <button class="button back-button buttons button-clear header-item" ng-click="goToHomeScreen()">
+      <i class="icon ion-ios-arrow-back"></i> 
+    </button>
+  </ion-nav-buttons>
   <ion-content class="content">
     <ion-refresher
       pulling-text="Pull to refresh..."
