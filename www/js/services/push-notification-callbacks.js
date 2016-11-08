@@ -3,20 +3,6 @@ function ($location, $timeout, follows, posts, userPetitions, petitions, groups,
   // we must use global app.* variable to store callbacks
   // becuase push notification plugin is from phonegap, which uses 'app'
 
-  var visitAandThenB = function(urlA, urlB){
-    $rootScope.showSpinner()
-    $location.path(urlA) // tweak to have back button in detail
-    $timeout(function(){
-      $rootScope.hideSpinner()
-      $location.path(urlB);
-    }, 2000);    
-  }
-
-  var visitMainPageAndThen = function(url){   
-    visitAandThenB('/main', url)
-  }
-
-
   app = {
     view: function(data){
       app.open(data)
@@ -40,34 +26,34 @@ function ($location, $timeout, follows, posts, userPetitions, petitions, groups,
 
       if(isPollNews){
         var nID = data.additionalData.entity.target.id
-        visitMainPageAndThen('/question/news/' + nID) 
+        $location.path('/question/news/' + nID) 
       } else if(isPollNewsFromMention){
         var eid = data.additionalData.entity.target.id
-        visitMainPageAndThen('/question/news/' + eid) 
+        $location.path('/question/news/' + eid) 
       } else if(isGroup){
         var gID = data.additionalData.entity.target.id
-        visitMainPageAndThen('/group/' + gID) 
+        $location.path('/group/' + gID) 
       } else if(isPost){
         var eid = data.additionalData.entity.target.id
-        visitMainPageAndThen('/post/' + eid)
+        $location.path('/post/' + eid)
       } else if(isUserPetition){
         var eid = data.additionalData.entity.target.id
-        visitMainPageAndThen('/user-petition/' + eid)
+        $location.path('/user-petition/' + eid)
       }  else if(isCrowdfunding){
         var eid = data.additionalData.entity.target.id
-        visitMainPageAndThen('/payment-polls/crowdfunding-payment-request/' + eid)
+        $location.path('/payment-polls/crowdfunding-payment-request/' + eid)
       }  else if(isPayment){
         var eid = data.additionalData.entity.target.id
-        visitMainPageAndThen('/payment-polls/payment-request/' + eid)
+        $location.path('/payment-polls/payment-request/' + eid)
       }  else if(isEvent){
         var eid = data.additionalData.entity.target.id
-        visitMainPageAndThen('/leader-event/' + eid)
+        $location.path('/leader-event/' + eid)
       } else if(isPetition){
         var eid = data.additionalData.entity.target.id
-        visitMainPageAndThen('/petition/' + eid)
+        $location.path('/petition/' + eid)
       } else if(isQuestion){
         var eid = data.additionalData.entity.target.id
-        visitMainPageAndThen('/questions/' + eid)
+        $location.path('/questions/' + eid)
       }
       notifications.confirmNotificationIsProcessed(data)
     },
@@ -75,19 +61,19 @@ function ($location, $timeout, follows, posts, userPetitions, petitions, groups,
       var isPollEvent = data.additionalData.type == 'group_event'
       if(isPollEvent){
         var pID = data.additionalData.entity.target.id
-        visitMainPageAndThen('/leader-event/' + pID) 
+        $location.path('/leader-event/' + pID) 
       }
       notifications.confirmNotificationIsProcessed(data)
     },
     share: function(data){
       announcements.load()
-      visitMainPageAndThen('/messages')
+      $location.path('/messages')
       notifications.confirmNotificationIsProcessed(data)
     },
     join: function(data){
       var groupID = data.additionalData.entity.id
       groups.join(groupID).finally(function(){
-        visitMainPageAndThen('/group/' + groupID)
+        $location.path('/group/' + groupID)
       })
       notifications.confirmNotificationIsProcessed(data)
     },
@@ -97,9 +83,9 @@ function ($location, $timeout, follows, posts, userPetitions, petitions, groups,
       var pID = data.additionalData.entity.target.id
       console.log(pID)
       if(isPollPayment)
-        visitMainPageAndThen('/payment-polls/payment-request/' + pID) 
+        $location.path('/payment-polls/payment-request/' + pID) 
        else if (isCrowdfundPayment)
-        visitMainPageAndThen('/payment-polls/crowdfunding-payment-request/' + pID) 
+        $location.path('/payment-polls/crowdfunding-payment-request/' + pID) 
       
       notifications.confirmNotificationIsProcessed(data)
     },
@@ -117,7 +103,7 @@ function ($location, $timeout, follows, posts, userPetitions, petitions, groups,
     approve: function(data){
       var userID = data.additionalData.entity.target.id
       follows.getOrCreateUser(userID).approve()
-      visitMainPageAndThen('/influences');
+      $location.path('/influences');
       notifications.confirmNotificationIsProcessed(data)
     },
 
@@ -129,7 +115,7 @@ function ($location, $timeout, follows, posts, userPetitions, petitions, groups,
     upvote: function(data){
       var postID = data.additionalData.entity.target.id
       posts.upvote(postID).then(function(){
-        visitMainPageAndThen('/post/' + postID);
+        $location.path('/post/' + postID);
         $rootScope.showToast('Your vote was recorded.')
       })
       notifications.confirmNotificationIsProcessed(data)
@@ -138,7 +124,7 @@ function ($location, $timeout, follows, posts, userPetitions, petitions, groups,
     downvote: function(data){
       var postID = data.additionalData.entity.target.id
       posts.downvote(postID).then(function(){
-        visitMainPageAndThen('/post/' + postID);
+        $location.path('/post/' + postID);
         $rootScope.showToast('Your vote was recorded.')
       })
       notifications.confirmNotificationIsProcessed(data)
@@ -150,12 +136,12 @@ function ($location, $timeout, follows, posts, userPetitions, petitions, groups,
       if(isUserPetition){
         var userPetitionID = data.additionalData.entity.target.id
         userPetitions.sign(userPetitionID).then(function(){
-          visitMainPageAndThen('/user-petition/' + userPetitionID);
+          $location.path('/user-petition/' + userPetitionID);
         })
       } else if (isPetition){
         var petitionID = data.additionalData.entity.target.id
         petitions.sign(petitionID).then(function(){
-          visitMainPageAndThen('/petition/' + petitionID)
+          $location.path('/petition/' + petitionID)
         })
       }
       notifications.confirmNotificationIsProcessed(data)
