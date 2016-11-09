@@ -56,6 +56,9 @@ angular.module('app.services').factory('notifications', function ($window, devic
           "yes": {"callback": "app.upvote", "title": "Upvote", "foreground": true, "destructive": false},
           "no": {"callback": "app.downvote", "title": "Downvote", "foreground": true, "destructive": false}
         },
+        "post-mentioned": { 
+          "yes": {"callback": "app.open", "title": "Open", "foreground": true, "destructive": false},
+        },
         "user_petition": {
           "yes": {"callback": "app.sign", "title": "Sign", "foreground": true, "destructive": false},
           "no": {"callback": "app.ignore", "title": "Ignore", "foreground": false, "destructive": false}
