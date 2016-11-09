@@ -1,0 +1,44 @@
+<div class="manage-group-section" ng-class="isExpanded('group-sections') ? 'active' : ''">
+  <div class="expand-icon" ng-click="toggleVisibility('group-sections')"></div>
+  <div class="title" ng-click="toggleVisibility('group-sections')">Group Sections/Sub-Groups</div>
+  <div class="content" ng-show="isExpanded('group-sections')">
+
+    <div style="padding-top: 10px;" class="save-button-holder">
+      <button 
+        ng-click="addGroupSection()"
+        class="button btn-primary">
+        Add New Section
+      </button>
+    </div>
+
+    <div ng-repeat="section in group.sections">
+      <table>
+        <tr>
+          <th>
+            Section name: {{section.title}}
+          </th>
+          <th class="actions">
+            <button 
+              class="button-small icon ion-trash-b delete-action"
+              ng-click="deleteGroupSection(section)">
+              Delete Section
+            </button>
+          </th>
+        </tr>
+        <tr ng-repeat="member in section.members | orderBy:'username'">
+          <td>
+            <span class="member-label">Username:</span> {{member.username}}<br />
+            <span class="member-label">Name:</span> {{member.first_name}} {{member.last_name}}<br />
+            <span class="member-label">Email:</span> {{member.email}}<br/>
+            <span class="member-label">Role:</span> {{member.user_role}}
+          </td>
+          
+          <td class="actions">
+          </td>
+        </tr>
+      </table>
+
+      <div ng-show="section.members.length == 0">There are no members in this section yet</div>
+    </div>
+  </div>
+</div>

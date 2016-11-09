@@ -295,6 +295,23 @@ angular.module('app.services').factory('GroupModel', function(groupsInvites, $ht
     this.removePaymentCard = function(){
       return $http.delete(serverConfig.url + '/api/v2/groups/'+this.id+'/cards/'+this.paymentCard.id)
     }
+
+    this.loadSections = function(){
+      var that = this
+      return $http.get(serverConfig.url + '/api/v2/groups/'+this.id+'/sections').then(function(response){
+        that.sections = response.data.payload
+        that.sections[0].members = []
+      })
+    }
+
+    this.addSection = function(title){
+      var that = this
+      var payload = JSON.stringify({title: title})
+      var headers = {headers: {'Content-Type': 'application/json'}}
+      return $http.post(serverConfig.url + '/api/v2/groups/'+this.id+'/sections', payload, headers).then(function(){
+        that.loadSections()
+      })
+    }
   }
 
   return model

@@ -1,7 +1,7 @@
 angular.module('app.controllers').controller('manageGroupCtrl',function ($scope, groups, $stateParams, $ionicPopup, $ionicScrollDelegate, session, $location) {
   var groupID = parseInt($stateParams.id)
   $scope.data = {}
-  $scope.group = {members: [], fieldsToFillOnJoin: []} 
+  $scope.group = {members: [], fieldsToFillOnJoin: [], sections: []} 
   $scope.groups = groups
   $scope.data.basic_settings = {}
 
@@ -45,6 +45,8 @@ angular.module('app.controllers').controller('manageGroupCtrl',function ($scope,
       $scope.group.loadGroupMembers()
 
       $scope.data.invites_emails = ''
+
+      $scope.group.loadSections()
     }
   })  
 
@@ -471,6 +473,40 @@ angular.module('app.controllers').controller('manageGroupCtrl',function ($scope,
           $scope.showSaveAlert(JSON.stringify(error))
         })
       }
+    });
+  }
+
+  ////// GROUP SECTIONS /////////////////////////////////////////
+
+  $scope.addGroupSection = function(){
+    $scope.data.newSectionName = ''
+    var addSectionPopup = $ionicPopup.show({
+      template: '<input type="text" ng-model="data.newSectionName">',
+      title: 'Add Group Section',
+      subTitle: 'Please enter section name',
+      cssClass: 'popup-by-ionic',
+      scope: $scope,
+      buttons: [
+        { text: 'Cancel' },
+        {
+          text: '<b>Save</b>',
+          type: 'button-positive',
+          onTap: function(e) {
+            if (!$scope.data.newSectionName) 
+              e.preventDefault();
+            return(true)
+          }
+        }
+      ]
+    });
+
+    addSectionPopup.then(function(res) {
+      var s = $scope.data.newSectionName
+      $scope.showSpinner()
+      $scope.group.addSection(s).then(function(){
+        $scope.hideSpinner()
+        $scope.showToast("Group section '"+s+"' added successfully.")
+      })
     });
   }
 
