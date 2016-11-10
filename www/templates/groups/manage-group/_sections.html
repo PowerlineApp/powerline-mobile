@@ -3,7 +3,7 @@
   <div class="title" ng-click="toggleVisibility('group-sections')">Group Sections/Sub-Groups</div>
   <div class="content" ng-show="isExpanded('group-sections')">
 
-    <div style="padding-top: 10px;" class="save-button-holder">
+    <div style="padding-top: 10px; padding-bottom: 10px;" class="save-button-holder">
       <button 
         ng-click="addGroupSection()"
         class="button btn-primary">
@@ -13,32 +13,62 @@
 
     <div ng-repeat="section in group.sections">
       <table>
-        <tr>
+        <tr class="header">
           <th>
             Section name: {{section.title}}
           </th>
           <th class="actions">
             <button 
+              class="button-small btn-primary icon ion-person-add"
+              ng-click="editSectionMembers(section)"
+              ng-show="!section.inEditMode">
+              Edit Members
+            </button>
+            <button 
+              class="button-small btn-primary"
+              ng-click="saveSectionMembers(section)"
+              ng-show="section.inEditMode">
+              Save Changes
+            </button>
+            <button 
+              class="button-small"
+              ng-click="cancelEditSectionMembers(section)"
+              ng-show="section.inEditMode">
+              Cancel Changes
+            </button>
+            <button 
+              ng-show="!section.inEditMode"
               class="button-small icon ion-trash-b delete-action"
               ng-click="deleteGroupSection(section)">
               Delete Section
             </button>
           </th>
         </tr>
-        <tr ng-repeat="member in section.members | orderBy:'username'">
+        <tr ng-show="!section.inEditMode" ng-repeat="member in section.members | orderBy:'username'">
+          <td colspan="2">
+            <span class="member-label">Username:</span> {{member.username}}<br />
+            <span class="member-label">Name:</span> {{member.first_name}} {{member.last_name}}<br />
+            <span class="member-label">Email:</span> {{member.email}}<br/>
+            <span class="member-label">Role:</span> {{member.user_role}}
+          </td>
+        </tr>
+
+        <tr ng-show="section.inEditMode" ng-repeat="member in group.groupMembers | orderBy:'username'">
+          <td class="checkbox-holder">
+            <ion-checkbox ng-model="section.editMembersHash[member.id]">is member</ion-checkbox>
+          </td>
           <td>
             <span class="member-label">Username:</span> {{member.username}}<br />
             <span class="member-label">Name:</span> {{member.first_name}} {{member.last_name}}<br />
             <span class="member-label">Email:</span> {{member.email}}<br/>
             <span class="member-label">Role:</span> {{member.user_role}}
           </td>
-          
-          <td class="actions">
-          </td>
+        
         </tr>
+
       </table>
 
-      <div ng-show="section.members.length == 0">There are no members in this section yet</div>
+      <div ng-show="section.members.length == 0 && !section.inEditMode">There are no members in this section yet</div>
     </div>
   </div>
 </div>

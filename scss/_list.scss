@@ -1087,8 +1087,12 @@ a.follow-action {
 
     table {
       width: 100%;
+      tr.header {
+        background-color: #b9b9cc;
+      }
       tr th {
         font-family: "Lato Bold";
+        vertical-align: middle;
       }
 
       tr td, tr th {
@@ -1098,8 +1102,13 @@ a.follow-action {
       tr:nth-child(even) {
         background: #ebebeb;
       }
+      
+      td.checkbox-holder{
+        vertical-align: middle;
+        width: 5%;
+      }
 
-      tr td.actions {
+      tr td.actions, tr th.actions {
         vertical-align: middle;
         text-align: right;
 

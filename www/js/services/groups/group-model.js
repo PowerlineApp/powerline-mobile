@@ -300,7 +300,11 @@ angular.module('app.services').factory('GroupModel', function(groupsInvites, $ht
       var that = this
       return $http.get(serverConfig.url + '/api/v2/groups/'+this.id+'/sections').then(function(response){
         that.sections = response.data.payload
-        that.sections[0].members = []
+        that.sections.forEach(function(section){
+          that.loadSectionMembers(section.id).then(function(response){
+            section.members = response.data.payload
+          })
+        })
       })
     }
 
@@ -309,6 +313,34 @@ angular.module('app.services').factory('GroupModel', function(groupsInvites, $ht
       var payload = JSON.stringify({title: title})
       var headers = {headers: {'Content-Type': 'application/json'}}
       return $http.post(serverConfig.url + '/api/v2/groups/'+this.id+'/sections', payload, headers).then(function(){
+        that.loadSections()
+      })
+    }
+
+    this.deleteSection = function(sectionID){
+      var that = this
+      return $http.delete(serverConfig.url + '/api/v2/group-sections/'+sectionID).then(function(){
+        that.loadSections()
+      })      
+    }
+
+    this.loadSectionMembers = function(sectionID){
+      return $http.get(serverConfig.url + '/api/v2/group-sections/'+sectionID+'/users')         
+    }
+
+    this.changeSectionMembers = function(sectionID, userIDsToAdd, userIDsToRemove){
+      var requests = []
+      userIDsToAdd.forEach(function(userID){
+        var r = $http.put(serverConfig.url + '/api/v2/group-sections/'+sectionID+'/users/'+userID) 
+        requests.push(r)
+      })
+      userIDsToRemove.forEach(function(userID){
+        var r = $http.delete(serverConfig.url + '/api/v2/group-sections/'+sectionID+'/users/'+userID) 
+        requests.push(r)
+      })      
+
+      var that = this
+      return $q.all(requests).then(function(){
         that.loadSections()
       })
     }

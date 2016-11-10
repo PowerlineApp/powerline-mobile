@@ -3129,16 +3129,22 @@ a.follow-action {
       background-size: 10px; }
     .manage-group-sections .manage-group-section .content table {
       width: 100%; }
+      .manage-group-sections .manage-group-section .content table tr.header {
+        background-color: #b9b9cc; }
       .manage-group-sections .manage-group-section .content table tr th {
-        font-family: "Lato Bold"; }
+        font-family: "Lato Bold";
+        vertical-align: middle; }
       .manage-group-sections .manage-group-section .content table tr td, .manage-group-sections .manage-group-section .content table tr th {
         padding: 5px; }
       .manage-group-sections .manage-group-section .content table tr:nth-child(even) {
         background: #ebebeb; }
-      .manage-group-sections .manage-group-section .content table tr td.actions {
+      .manage-group-sections .manage-group-section .content table td.checkbox-holder {
+        vertical-align: middle;
+        width: 5%; }
+      .manage-group-sections .manage-group-section .content table tr td.actions, .manage-group-sections .manage-group-section .content table tr th.actions {
         vertical-align: middle;
         text-align: right; }
-        .manage-group-sections .manage-group-section .content table tr td.actions button {
+        .manage-group-sections .manage-group-section .content table tr td.actions button, .manage-group-sections .manage-group-section .content table tr th.actions button {
           margin-bottom: 5px; }
       .manage-group-sections .manage-group-section .content table tr td span.member-label {
         font-weight: 900; }

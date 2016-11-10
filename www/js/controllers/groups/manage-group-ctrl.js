@@ -510,6 +510,99 @@ angular.module('app.controllers').controller('manageGroupCtrl',function ($scope,
     });
   }
 
+  $scope.deleteGroupSection = function(section){
+    $scope.data.newSectionName = ''
+    var deleteSectionPopup = $ionicPopup.show({
+      title: 'Delete Group Section',
+      subTitle: "Do you want to remove section '"+section.title+"'?",
+      cssClass: 'popup-by-ionic',
+      scope: $scope,
+      buttons: [
+        { text: 'Cancel' },
+        {
+          text: '<b>Delete</b>',
+          type: 'button-assertive',
+          onTap: function(e) {
+            return(true)
+          }
+        }
+      ]
+    });
+
+    deleteSectionPopup.then(function(res) {
+      if(res){
+        $scope.showSpinner()
+        $scope.group.deleteSection(section.id).then(function(){
+          $scope.hideSpinner()
+          $scope.showToast("Group section '"+section.title+"' removed successfully.")
+        })
+      }
+    });
+  }
+
+  $scope.editSectionMembers = function(section){
+    section.inEditMode = true
+    section.editMembersHash = {}
+    section.wasMemberBeforeChangesWereMade = {}
+    section.members.forEach(function(m){
+      section.editMembersHash[m.id] = true
+      section.wasMemberBeforeChangesWereMade[m.id] = true
+    })
+  }
+
+  $scope.saveSectionMembers = function(section){
+    var userIDsToAdd = []
+    var userIDsToRemove = []
+    _.each(section.editMembersHash, function(addThisUser, userID){
+      var removeThisUser = !addThisUser
+      var wasMember = section.wasMemberBeforeChangesWereMade[userID] == true
+      if(addThisUser && !wasMember)
+        userIDsToAdd.push(userID)
+      else if(removeThisUser && wasMember)
+        userIDsToRemove.push(userID)
+    })
+
+    if(userIDsToAdd.length == 0 && userIDsToRemove == 0){
+      $ionicPopup.alert({
+        cssClass: 'popup-by-ionic',
+        title: 'Edit Section Members',
+        template: 'Nothing to save, no changes were made.'
+      });
+
+      return false
+    }
+
+    msg = ''
+    if(userIDsToAdd.length > 0)
+      msg += 'Add '+userIDsToAdd.length+' member(s) to this section? '
+    if(userIDsToRemove.length > 0)
+      msg += 'Remove '+userIDsToRemove.length+' member(s) from this section?'     
+
+    var confirmPopup = $ionicPopup.confirm({
+      title: 'Edit Section Members',
+      template: msg,
+      cssClass: 'popup-by-ionic',
+    });
+
+    confirmPopup.then(function(res) {
+      if(res) {
+        section.inEditMode = false
+        $scope.showSpinner()
+        $scope.group.changeSectionMembers(section.id,userIDsToAdd, userIDsToRemove).then(function(){
+          $scope.hideSpinner()
+          $scope.showToast("Members of section '"+section.title+"' updated successfully.")
+        }, function(error){
+          $scope.hideSpinner()
+          $scope.showSaveAlert(JSON.stringify(error))
+        })
+      }
+    });    
+  }
+
+  $scope.cancelEditSectionMembers = function(section){
+    section.inEditMode = false
+  }
+
   ////// SEND INVITATIONS //////////////////////////////////////
 
   $scope.sendGroupInvites = function(){
