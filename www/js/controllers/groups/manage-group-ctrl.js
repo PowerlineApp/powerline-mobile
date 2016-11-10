@@ -494,19 +494,21 @@ angular.module('app.controllers').controller('manageGroupCtrl',function ($scope,
           onTap: function(e) {
             if (!$scope.data.newSectionName) 
               e.preventDefault();
-            return(true)
           }
         }
       ]
     });
 
     addSectionPopup.then(function(res) {
-      var s = $scope.data.newSectionName
-      $scope.showSpinner()
-      $scope.group.addSection(s).then(function(){
-        $scope.hideSpinner()
-        $scope.showToast("Group section '"+s+"' added successfully.")
-      })
+      if($scope.data.newSectionName){
+        var s = $scope.data.newSectionName
+        $scope.showSpinner()
+        $scope.group.addSection(s).then(function(){
+          $scope.hideSpinner()
+          $scope.showToast("Group section '"+s+"' added successfully.")
+        })
+      }
+
     });
   }
 
