@@ -3242,6 +3242,9 @@ a.follow-action {
   .manage-group-sections .manage-group-section button.delete-action {
     background-color: #ff4444;
     color: white; }
+  .manage-group-sections .manage-group-section button.cancel-action {
+    background-color: #505050;
+    color: white; }
 
 .group {
   margin-bottom: 12px; }

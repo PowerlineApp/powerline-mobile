@@ -3,7 +3,7 @@
   <div class="title" ng-click="toggleVisibility('group-sections')">Group Sections/Sub-Groups</div>
   <div class="content" ng-show="isExpanded('group-sections')">
 
-    <div style="padding-top: 10px; padding-bottom: 10px;" class="save-button-holder">
+    <div style="padding-top: 10px;" class="save-button-holder">
       <button 
         ng-click="addGroupSection()"
         class="button btn-primary">
@@ -12,7 +12,7 @@
     </div>
 
     <div ng-repeat="section in group.sections">
-      <table>
+      <table style="margin-top: 15px">
         <tr class="header">
           <th>
             Section name: {{section.title}}
@@ -31,7 +31,7 @@
               Save Changes
             </button>
             <button 
-              class="button-small"
+              class="button-small cancel-action"
               ng-click="cancelEditSectionMembers(section)"
               ng-show="section.inEditMode">
               Cancel Changes
@@ -68,7 +68,10 @@
 
       </table>
 
-      <div ng-show="section.members.length == 0 && !section.inEditMode">There are no members in this section yet</div>
+      <div ng-show="section.members.length == 0 && !section.inEditMode"
+      style="margin-top:5px;">
+        There are no members in this section yet
+        </div>
     </div>
   </div>
 </div>
