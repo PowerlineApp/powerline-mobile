@@ -3138,9 +3138,9 @@ a.follow-action {
         padding: 5px; }
       .manage-group-sections .manage-group-section .content table tr:nth-child(even) {
         background: #ebebeb; }
-      .manage-group-sections .manage-group-section .content table td.checkbox-holder {
+      .manage-group-sections .manage-group-section .content table td.actions-first {
         vertical-align: middle;
-        width: 5%; }
+        text-align: center; }
       .manage-group-sections .manage-group-section .content table tr td.actions, .manage-group-sections .manage-group-section .content table tr th.actions {
         vertical-align: middle;
         text-align: right; }

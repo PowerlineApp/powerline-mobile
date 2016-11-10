@@ -54,16 +54,28 @@
         </tr>
 
         <tr ng-show="section.inEditMode" ng-repeat="member in group.groupMembers | orderBy:'username'">
-          <td class="checkbox-holder">
-            <ion-checkbox ng-model="section.editMembersHash[member.id]">is member</ion-checkbox>
-          </td>
           <td>
             <span class="member-label">Username:</span> {{member.username}}<br />
             <span class="member-label">Name:</span> {{member.first_name}} {{member.last_name}}<br />
             <span class="member-label">Email:</span> {{member.email}}<br/>
             <span class="member-label">Role:</span> {{member.user_role}}
           </td>
-        
+          <td class="actions">
+            <button 
+              class="button-small delete-action"
+              ng-click="removeUserFromSection(section, member)"
+              ng-show="section.editMembersHash[member.id]" 
+              style="width: 92px">
+              Remove
+            </button>
+            <button 
+              class="button-small btn-primary"
+              ng-click="addUserToSection(section, member)"
+              ng-show="!section.editMembersHash[member.id]" 
+              style="width: 92px">
+              Add
+            </button>
+          </td>        
         </tr>
 
       </table>

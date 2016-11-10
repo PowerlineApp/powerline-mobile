@@ -550,6 +550,14 @@ angular.module('app.controllers').controller('manageGroupCtrl',function ($scope,
     })
   }
 
+  $scope.addUserToSection = function(section, user){
+    section.editMembersHash[user.id] = true
+  }
+
+  $scope.removeUserFromSection = function(section, user){
+    section.editMembersHash[user.id] = false
+  }
+
   $scope.saveSectionMembers = function(section){
     var userIDsToAdd = []
     var userIDsToRemove = []
