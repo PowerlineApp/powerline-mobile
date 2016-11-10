@@ -61,20 +61,12 @@
             <span class="member-label">Role:</span> {{member.user_role}}
           </td>
           <td class="actions">
-            <button 
-              class="button-small delete-action"
-              ng-click="removeUserFromSection(section, member)"
-              ng-show="section.editMembersHash[member.id]" 
-              style="width: 92px">
-              Remove
-            </button>
-            <button 
-              class="button-small btn-primary"
-              ng-click="addUserToSection(section, member)"
-              ng-show="!section.editMembersHash[member.id]" 
-              style="width: 92px">
-              Add
-            </button>
+          <label class="toggle">
+            <input type="checkbox" ng-model="section.editMembersHash[member.id]">
+            <div class="track">
+              <div class="handle"></div>
+            </div>
+          </label>
           </td>        
         </tr>
 
