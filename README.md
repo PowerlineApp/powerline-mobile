@@ -33,6 +33,12 @@ Our branching strategy is straightforward and well documented . For a detailed l
 **Work in progress. Please help us build our documentation!**
 Check out all of our documentation for more details include our API [PowerlineApp Documentation](http://powerlineapp.github.io/).
 
+## Installation
+
+* somehow install node.js, e.g. on macos `brew install node`
+* `sudo npm install -g cordova`
+* `sudo npm install -g ionic`
+* `ionic serve` -- powerline mobile app should launch in web browser
  
 ## Pull Request & Claiming your Bounty
 When your code is ready and on GitHub, create a pull request via the GitHub UI. Once your pull request is created, it is best practice to go to the bounty on Assembly and submit your work with a link to the pull request. If the feature you created does not have a bounty created yet, simply create one explaining what you've done and why. The core team will award the bounty after confirming and merging the contribution. We recommend you include the appropriate unit tests to make things easier for everyone. 
