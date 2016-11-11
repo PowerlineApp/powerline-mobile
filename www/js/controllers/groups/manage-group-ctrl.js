@@ -184,8 +184,7 @@ angular.module('app.controllers').controller('manageGroupCtrl',function ($scope,
     confirmPopup.then(function(res) {
       if(res) {
         $scope.showSpinner()
-        $scope.group.removeBankAccount().then(function(){
-          $scope.group.removeBankAccount()
+        $scope.group.removeStripeAccount().then(function(){
           $scope.hideSpinner()
           $scope.showToast('Bank account successfully removed.')
         }, function(error){
