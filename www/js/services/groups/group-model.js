@@ -303,15 +303,22 @@ angular.module('app.services').factory('GroupModel', function(groupsInvites, $ht
     }
 
     this.loadSections = function(){
+      var deferred = $q.defer();
       var that = this
-      return $http.get(serverConfig.url + '/api/v2/groups/'+this.id+'/sections').then(function(response){
+      $http.get(serverConfig.url + '/api/v2/groups/'+this.id+'/sections').then(function(response){
         that.sections = response.data.payload
+        var sectionMemberRequests = []
         that.sections.forEach(function(section){
-          that.loadSectionMembers(section.id).then(function(response){
-            section.members = response.data.payload
-          })
+          var r = that.loadSectionMembers(section)
+          sectionMemberRequests.push(r)
+        })
+
+        $q.all(sectionMemberRequests).then(function(){
+          deferred.resolve()
         })
       })
+
+      return deferred.promise;
     }
 
     this.addSection = function(title){
@@ -330,8 +337,13 @@ angular.module('app.services').factory('GroupModel', function(groupsInvites, $ht
       })      
     }
 
-    this.loadSectionMembers = function(sectionID){
-      return $http.get(serverConfig.url + '/api/v2/group-sections/'+sectionID+'/users')         
+    this.loadSectionMembers = function(section){
+      var deferred = $q.defer();
+      $http.get(serverConfig.url + '/api/v2/group-sections/'+section.id+'/users').then(function(response){
+        section.members = response.data.payload
+        deferred.resolve()
+      })       
+      return deferred.promise;
     }
 
     this.changeSectionMembers = function(sectionID, userIDsToAdd, userIDsToRemove){

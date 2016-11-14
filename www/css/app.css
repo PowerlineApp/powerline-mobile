@@ -3246,6 +3246,12 @@ a.follow-action {
     background-color: #505050;
     color: white; }
 
+.publish-content p {
+  padding-bottom: 8px; }
+
+.publish-content label.group-section-picker .item-content {
+  font-size: 12px; }
+
 .group {
   margin-bottom: 12px; }
   .group h3 {
