@@ -35,9 +35,10 @@ Check out all of our documentation for more details include our API [PowerlineAp
 
 ## Installation
 
-* somehow install node.js, e.g. on macos `brew install node`
+* install node.js, e.g. on macos `brew install node`
 * `sudo npm install -g cordova`
 * `sudo npm install -g ionic`
+* copy powerline config file, e.g. when you want to connect to development backend, run `cp www/config/dev.js www/js/config.js`
 * `ionic serve` -- powerline mobile app should launch in web browser
  
 ## Pull Request & Claiming your Bounty
