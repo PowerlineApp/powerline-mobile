@@ -56,7 +56,7 @@
             ng-options="item as item for item in data.stripe.country.currencies">
           </select>
         </div>        
-        <div class="item-floating-label text-field-1">
+        <div class="item-floating-label text-field-1" ng-show="requireSSN()">
           <span class="input-label">Last Four Digits of Social Security Number</span>
           <input type="text" name="ssn_last_4" ng-model="data.powerline.ssn_last_4">
         </div>

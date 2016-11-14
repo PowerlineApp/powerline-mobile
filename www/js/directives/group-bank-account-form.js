@@ -44,6 +44,10 @@ angular.module('app.directives').directive('groupBankAccountForm', function () {
           account_holder_type: 'company',
         }
 
+        $scope.requireSSN = function(){
+          return $scope.data.stripe.country.value == 'US'
+        }
+
         $scope.onCountryChange = function(){
           $scope.data.stripe.currency = $scope.data.stripe.country.currencies[0]
         }

@@ -221,15 +221,18 @@ angular.module('app.services').factory('GroupModel', function(groupsInvites, $ht
       stripe().bankAccount.createToken(payload.stripe, function(status, response){
        if(status == 200){
          var stripeToken = response.id
-          var powerlinePayload = payload.powerline
-          powerlinePayload.currency = payload.stripe.currency
-          powerlinePayload.type = payload.stripe.type
-          powerlinePayload.business_name = payload.stripe.account_holder_name
-          powerlinePayload.type = payload.stripe.account_holder_type
-          powerlinePayload.source = stripeToken
-          powerlinePayload.country = payload.stripe.country
+          var powerlinePayloadToSubmit = {}
+          angular.copy(payload.powerline, powerlinePayloadToSubmit)
+          powerlinePayloadToSubmit.currency = payload.stripe.currency
+          powerlinePayloadToSubmit.type = payload.stripe.type
+          powerlinePayloadToSubmit.business_name = payload.stripe.account_holder_name
+          powerlinePayloadToSubmit.type = payload.stripe.account_holder_type
+          powerlinePayloadToSubmit.source = stripeToken
+          powerlinePayloadToSubmit.country = payload.stripe.country
+          if(powerlinePayloadToSubmit.country == 'US')
+            powerlinePayloadToSubmit.ssn_last_4
 
-          var json_payload = JSON.stringify(powerlinePayload)
+          var json_payload = JSON.stringify(powerlinePayloadToSubmit)
           var headers = {headers: {'Content-Type': 'application/json'}}
           $http.post(serverConfig.url + '/api/v2/groups/'+that.id+'/bank-accounts', json_payload, headers).then(function(response){
             deferred.resolve(response)
@@ -248,12 +251,11 @@ angular.module('app.services').factory('GroupModel', function(groupsInvites, $ht
      return deferred.promise
     } 
 
-    this.removeBankAccount = function(){
-      return $http.delete(serverConfig.url + '/api/v2/groups/'+this.id+'/bank-accounts/'+this.bankAccount.id)
-    }
-
     this.removeStripeAccount = function(){
-      return $http.delete(serverConfig.url + '/api/v2/groups/'+this.id+'/stripe-account')
+      var that = this
+      return $http.delete(serverConfig.url + '/api/v2/groups/'+this.id+'/stripe-account').then(function(){
+        that.loadBankAccount()
+      })
     }
 
     this.loadPaymentCard = function(){
