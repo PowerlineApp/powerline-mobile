@@ -73,9 +73,11 @@ angular.module('app.services').factory('questions',function (QuestionResource,
       return educational_context || educational_context.length > 0
     },
 
-    createPollQuestion: function(groupID, questionText){
+    createPollQuestion: function(groupID, questionText, sectionsToPublishIn){
       var data = {subject: questionText,
         type: 'group'} 
+      if(sectionsToPublishIn)
+        data.group_sections = sectionsToPublishIn
         
       var payload = JSON.stringify(data)
       var headers = {headers: {'Content-Type': 'application/json'}}
@@ -97,13 +99,16 @@ angular.module('app.services').factory('questions',function (QuestionResource,
       return localDateTime
     },
 
-    createPollEvent: function(groupID, title, desc, started_at, finished_at ){
+    createPollEvent: function(groupID, title, desc, started_at, finished_at ,sectionsToPublishIn){
       var data = {subject: desc,
         title: title,
         started_at: service.toBackendUTCDateTimeString(started_at),  // "2016-09-20 09:52:33"
         finished_at: service.toBackendUTCDateTimeString(finished_at),
         type: 'event'} 
         
+      if(sectionsToPublishIn)
+        data.group_sections = sectionsToPublishIn
+
       var payload = JSON.stringify(data)
       var headers = {headers: {'Content-Type': 'application/json'}}
 

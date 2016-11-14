@@ -131,11 +131,15 @@ angular.module('app.services').factory('petitions',function ($q, session, server
       return $http.delete(serverConfig.url + '/api/v2/user/polls/'+petitionID)      
     },
 
-    create: function(title, description, groupID){
+    create: function(title, description, groupID, sectionsToPublishIn){
       var data = {petition_title: title, 
         petition_body: description, 
         subject: '.', // not sure what is this, but backend will fail to create petition wihtout it
         type: 'petition'} 
+
+      if(sectionsToPublishIn)
+        data.group_sections = sectionsToPublishIn
+        
       var payload = JSON.stringify(data)
       var headers = {headers: {'Content-Type': 'application/json'}}
       var createPetitionRequest = $http.post(serverConfig.url + '/api/v2/groups/'+groupID+'/polls', payload, headers)

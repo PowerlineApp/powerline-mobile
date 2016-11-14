@@ -38,7 +38,7 @@ angular.module('app.controllers').controller('createPollQuestionCtrl',function (
 
   $scope.send = function(){
     $scope.showSpinner();
-    var createRequest = questions.createPollQuestion($scope.data.group.id, $scope.data.question_text)
+    var createRequest = questions.createPollQuestion($scope.data.group.id, $scope.data.question_text,  $scope.sectionsToPublishIn())
     createRequest.then(function(response){
       var pollID = response.data.id
       var sqAjax = new SequentialAjax()

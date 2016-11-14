@@ -32,7 +32,7 @@ angular.module('app.controllers').controller('abstractCreatePollCtrl',function (
           var msg = 'You are about to send this to all '+allMemberCount+' group members. Are you sure?'
           
           if(g.sections.length > 0){
-            msg = '<p>Send to all group members or a group section(s)?</p>'
+            msg = '<p>Send to all group members or send to section(s) of a group?</p>'
             msg += `<ion-checkbox class="group-section-picker" ng-model="data.selectedSections.all" ng-change="sectionSelectionChanged('all')">
                       All (`+allMemberCount+` members)
                     </ion-checkbox>`
@@ -54,7 +54,6 @@ angular.module('app.controllers').controller('abstractCreatePollCtrl',function (
           });
 
           confirmPopup.then(function(res) {
-            console.log($scope.data.selectedSections)
             if(res) 
               $scope.send()
           });
@@ -81,6 +80,19 @@ angular.module('app.controllers').controller('abstractCreatePollCtrl',function (
     // if all options are deselected, select All
     if (!(_.values($scope.data.selectedSections).includes(true)))
       $scope.data.selectedSections.all = true
+  }
+
+  $scope.sectionsToPublishIn = function(){
+    var sections = []
+    _.each($scope.data.selectedSections, function(v, k){
+      if(k != 'all' && v)
+        sections.push(k)
+    })   
+
+    if(sections.length == 0)
+      return null
+    else 
+      return sections
   }
 
   $scope.validationAlert = function(msg){

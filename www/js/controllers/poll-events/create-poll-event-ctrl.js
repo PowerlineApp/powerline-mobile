@@ -93,7 +93,7 @@ angular.module('app.controllers').controller('createPollEventCtrl',function ($sc
     var desc = $scope.data.desc
 
     $scope.showSpinner(); 
-    var createRequest = questions.createPollEvent(groupID, title, desc, startTime, endTime)
+    var createRequest = questions.createPollEvent(groupID, title, desc, startTime, endTime, $scope.sectionsToPublishIn())
     createRequest.then(function(response){
       var pollID = response.data.id
       var sqAjax = new SequentialAjax()

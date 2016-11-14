@@ -44,6 +44,9 @@ angular.module('app.controllers').controller('createPollFundraiserCtrl',function
       title: title,
       subject: description,
       type: 'payment_request'} 
+
+    if($scope.sectionsToPublishIn())
+      data.group_sections = $scope.sectionsToPublishIn()
       
     var payload = JSON.stringify(data)
     var headers = {headers: {'Content-Type': 'application/json'}}
@@ -60,6 +63,9 @@ angular.module('app.controllers').controller('createPollFundraiserCtrl',function
       crowdfunding_deadline: crowdfunding_deadline,
       type: 'payment_request'} 
       
+    if($scope.sectionsToPublishIn())
+      data.group_sections = $scope.sectionsToPublishIn()
+
     var payload = JSON.stringify(data)
     var headers = {headers: {'Content-Type': 'application/json'}}
     return $http.post(serverConfig.url + '/api/v2/groups/'+groupID+'/polls', payload, headers)    

@@ -32,6 +32,9 @@ angular.module('app.controllers').controller('createAnnouncementCtrl',function (
 
   var createAnnouncement = function(message, groupID){
     var data = {content: message} 
+    if($scope.sectionsToPublishIn())
+      data.group_sections = $scope.sectionsToPublishIn()
+      
     var payload = JSON.stringify(data)
     var headers = {headers: {'Content-Type': 'application/json'}}
     return $http.post(serverConfig.url + '/api/v2/groups/'+groupID+'/announcements', payload, headers)

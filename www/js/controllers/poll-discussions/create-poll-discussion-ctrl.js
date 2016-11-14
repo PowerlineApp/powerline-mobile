@@ -15,6 +15,8 @@ angular.module('app.controllers').controller('createPollDiscussionCtrl',function
   $scope.send = function(){
     var groupID = $scope.data.group.id
     var data = {subject: $scope.data.discussion_description,type: 'news'} 
+    if($scope.sectionsToPublishIn())
+      data.group_sections = $scope.sectionsToPublishIn()
     var payload = JSON.stringify(data)
     var headers = {headers: {'Content-Type': 'application/json'}}
     $scope.showSpinner();
