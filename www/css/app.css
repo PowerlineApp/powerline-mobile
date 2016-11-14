@@ -1065,6 +1065,7 @@ select.choice-filter {
     background: rgba(67, 73, 76, 0.8);
     display: block;
     width: 100%;
+    height: 100vh;
     position: absolute;
     top: 35px;
     left: 0;
@@ -1853,6 +1854,9 @@ ion-header-bar .button.back-button.header-item {
     color: #030366;
     opacity: 1; }
 
+.deleteConfirmTitle .popup-title {
+  color: black; }
+
 .nav {
   background: #0c0c54; }
   .nav .bar-header, .nav ion-content {
@@ -1941,7 +1945,7 @@ ion-header-bar .button.back-button.header-item {
     height: 50px;
     line-height: 50px;
     color: #030366;
-    font-size: 12px;
+    font-size: 16px;
     border-top: solid 1px #f7f7f7;
     border-bottom: solid 1px #ddd;
     background: #fff; }
@@ -3240,8 +3244,10 @@ a.follow-action {
       line-height: 0;
       width: 200px; }
   .manage-group-sections .manage-group-section button.delete-action {
-    background-color: #ff4444;
-    color: white; }
+    border-color: transparent;
+    background: 0 0;
+    box-shadow: none;
+    color: #fd0517; }
   .manage-group-sections .manage-group-section button.cancel-action {
     background-color: #505050;
     color: white; }

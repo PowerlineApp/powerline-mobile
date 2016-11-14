@@ -1,7 +1,13 @@
-<ion-view view-title="New Group">
+<ion-view view-title="New Group" hide-back-button="fromMenu">
+  <ion-nav-buttons side="left">
+    <button menu-toggle="left" class="button button-icon icon ion-navicon" ng-show="fromMenu"></button>
+  </ion-nav-buttons>
+
   <ion-nav-buttons side="right">
     <button class="button button-clear" ng-click="send()">Send</button>
   </ion-nav-buttons>
+  
+
   <ion-content class="content">
     <section class="margin-h-10 padding-v-10">
       <form name="createGroupForm" novalidate ng-class="formClass" class="margin-v-10" autocomplete="off">

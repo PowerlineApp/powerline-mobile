@@ -59,7 +59,6 @@ angular.module('app.controllers').controller('abstractCreatePollCtrl',function (
           });
         })
       }
-
     }
   }
 
@@ -110,4 +109,12 @@ angular.module('app.controllers').controller('abstractCreatePollCtrl',function (
      template: msg
    });
   }
-})
+
+  $scope.createIsCrowdfunderAlert = function(msg){
+   $ionicPopup.alert({
+     cssClass: 'popup-by-ionic',
+     title: 'Make this a crowdfunder?',
+     template: msg
+   });
+  }
+});

@@ -9,10 +9,10 @@
     <form name="petitionForm" novalidate ng-class="formClass" autocomplete="off">
       <fieldset class="add-post">
         <div class="title-field" ng-class="invalidClass(petitionForm.title.$invalid)">
-            <input ng-model="data.title" name="title" maxlength="255" required placeholder="Type title here" />
+            <input ng-model="data.title" name="title" maxlength="255" focus-me="!data.openChoices" required placeholder="Type title here" />
         </div>
         <textarea ng-model="data.petition_body" maxlength="2500" name="petition_body"
-                  required placeholder="Type your message here"
+                  required placeholder="Start by telling a story. Then, close with a call for action or change."
                   ng-init="data.chars_left = 2500"
                   ng-change="data.chars_left = 2500 - data.petition_body.length"></textarea>
     </fieldset>

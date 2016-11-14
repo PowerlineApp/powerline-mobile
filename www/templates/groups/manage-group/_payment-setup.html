@@ -1,11 +1,11 @@
 <div class="manage-group-section" ng-class="isExpanded('payment-setup') ? 'active' : ''">
   <div class="expand-icon" ng-click="toggleVisibility('payment-setup')"></div>
-  <div class="title" ng-click="toggleVisibility('payment-setup')">Payment Setup</div>
+  <div class="title" ng-click="toggleVisibility('payment-setup')">Fundraiser Setup</div>
   <div class="content" ng-show="isExpanded('payment-setup')">
 
     <div>
       <div ng-hide="group.bankAccount">
-        This group has no associated bank account.
+        In order to send fundraisers to your group, you must provide a bank account first.
       </div>
 
       <div ng-show="group.bankAccount">

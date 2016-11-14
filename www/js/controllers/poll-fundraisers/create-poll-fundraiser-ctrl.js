@@ -103,6 +103,13 @@ angular.module('app.controllers').controller('createPollFundraiserCtrl',function
     }
   }
 
+  $scope.showCrowdfunderAlert = function(){
+    if ($scope.data.is_crowdfunding)
+    {
+      $scope.createIsCrowdfunderAlert('If you reach or exceed your goal amount by the deadline, all of your supporters will be charged. If you do not reach that goal by the deadline, your supporters will not be charged.');
+    }
+  }
+
   $scope.validate = function(){
     var title = $scope.data.title_text
     var description = $scope.data.description_text

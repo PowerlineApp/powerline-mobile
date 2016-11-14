@@ -30,6 +30,7 @@ angular.module('app.controllers').controller('getUserPetitionCtrl',function ($sc
   $scope.deleteClicked = false;
   $scope.showDeleteConfirm = function() {
     var confirmPopup = $ionicPopup.confirm({
+      cssClass: 'deleteConfirmTitle',
       title: 'Delete User Petition',
       template: 'Are you sure you want to delete this user petition?'
     });

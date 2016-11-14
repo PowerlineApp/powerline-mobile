@@ -25,7 +25,7 @@
 
     <div style="margin-bottom: 7px; margin-top: 7px;">
       <div ng-show="group.fieldsToFillOnJoin.length > 0"> 
-        Users are required to answer following questions when joining this group:
+        Users are required to answer these questions in order to join the group:
       </div>
 
       <div ng-show="group.fieldsToFillOnJoin.length == 0"> 
@@ -41,11 +41,12 @@
           <td style="vertical-align: middle">
             {{field.field_name}}
           </td>
-          
-          <td class="actions">
-            <button class="button-small icon ion-trash-b delete-action"
+          <!-- <button class="button-small icon ion-close-circled button-clear btn-red"
               ng-click="removeRequiredField(field)">
-              Remove
+            </button> -->
+          <td class="actions">
+            <button class="button-small icon ion-close-circled button-clear delete-action"
+              ng-click="removeRequiredField(field)">
             </button>
           </td>
         </tr>

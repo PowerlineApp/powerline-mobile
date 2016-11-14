@@ -69,7 +69,28 @@ angular.module('app.directives').directive('groupBankAccountForm', function () {
             prefillForm()
         });
 
+        $scope.errorRNumber = false;
+        $scope.errorANumber = false;
+
+        var isInvalidFormData = function(){
+          if ($scope.data.stripe.routing_number != $scope.data.stripe.routing_number1)
+            $scope.errorRNumber = true;
+          else
+            $scope.errorRNumber = false;
+
+          if ($scope.data.stripe.account_number != $scope.data.stripe.account_number1)
+            $scope.errorANumber = true;
+          else
+            $scope.errorANumber = false;
+
+          if ($scope.errorRNumber || $scope.errorANumber)
+            return true;
+          else
+            return false;
+        }
+
         $scope.submit = function () {
+          if (isInvalidFormData()) return;
           $rootScope.showSpinner();
           $scope.group.addBankAccount($scope.data)
             .then(function (response) {

@@ -15,6 +15,7 @@ angular.module('app.controllers').controller('getPostCtrl',function ($scope, top
 
   $scope.showDeleteConfirm = function() {
     var confirmPopup = $ionicPopup.confirm({
+      cssClass: 'deleteConfirmTitle',
       title: 'Delete Post',
       template: 'Are you sure you want to delete this post?'
     });
