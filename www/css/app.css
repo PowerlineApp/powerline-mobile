@@ -1884,6 +1884,11 @@ ion-header-bar .button.back-button.header-item {
     background-position-y: 11px; }
   .nav li.groups-item i {
     background-position-y: -47px; }
+  .nav li.groups-create-item i {
+    background-image: url(../images/v2/icons/create-new-group.png);
+    background-size: contain;
+    background-position-y: 0;
+    background-position-x: 40px; }
   .nav li.influences-item i {
     background-position-y: -102px; }
   .nav li.representatives-item i {
