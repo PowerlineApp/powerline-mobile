@@ -131,6 +131,10 @@
       padding-left: 3px;
     }
   }
+
+  i.action-icon {
+    font-size: 22px; float: right; padding: 3px 10px 3px 10px;
+  }
   
   @include iphone6AndLower{
     p, .title{

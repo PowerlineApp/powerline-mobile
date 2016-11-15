@@ -1,5 +1,5 @@
 angular.module('app.controllers').controller('getPostCtrl',function ($scope, topBar, $stateParams, loaded, $cacheFactory, $state,
-                                   homeCtrlParams, activity, layout, $ionicPopup, $rootScope, posts) {
+                                   homeCtrlParams, activity, layout, $ionicPopup, $rootScope, posts, groups) {
 
   $scope.showSpinner();
   $scope.inEditMode = false;
@@ -16,7 +16,8 @@ angular.module('app.controllers').controller('getPostCtrl',function ($scope, top
   $scope.showDeleteConfirm = function() {
     var confirmPopup = $ionicPopup.confirm({
       title: 'Delete Post',
-      template: 'Are you sure you want to delete this post?'
+      template: 'Are you sure you want to delete this post?',
+      cssClass: 'popup-by-ionic'
     });
 
     confirmPopup.then(function(res) {
@@ -34,6 +35,7 @@ angular.module('app.controllers').controller('getPostCtrl',function ($scope, top
     posts.get($stateParams.id).then(function (post) {
       $scope.hideSpinner();
       $scope.post = post;
+      $scope.group = groups.get(post.groupID)
       $scope.activeAnswerType = post.getMyAnswerType()
     }, function(){
       $scope.hideSpinner();
@@ -82,4 +84,30 @@ angular.module('app.controllers').controller('getPostCtrl',function ($scope, top
     }
   }
 
+  $scope.isBoostable = function(){
+    var notBoostedYet = $scope.post && !$scope.post.isBoosted()
+    var currentUserCanBoost = $scope.group && ($scope.group.currentUserIsManager() || $scope.group.currentUserIsOwner())
+    return notBoostedYet && currentUserCanBoost
+  }
+
+  $scope.onBoostButtonClicked = function(){
+    var confirmPopup = $ionicPopup.confirm({
+      title: 'Boost Post',
+      template: 'Manually boost this item? All group members will be notified immediately. Consider adding a comment to help guide the conversation.',
+      cssClass: 'popup-by-ionic',
+    });
+
+    confirmPopup.then(function(res) {
+      if(res) {
+        $scope.showSpinner()
+        $scope.post.boost().then(function(){
+          $scope.hideSpinner()
+          $scope.showToast('Post boosted successfully.')
+        }, function(error){
+          $scope.hideSpinner()
+          $scope.showSaveAlert(JSON.stringify(error))
+        })
+      }
+    })
+  }
 })
