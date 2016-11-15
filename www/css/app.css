@@ -1854,6 +1854,9 @@ ion-header-bar .button.back-button.header-item {
     color: #030366;
     opacity: 1; }
 
+.deleteConfirmTitle .popup-title {
+  color: black; }
+
 .nav {
   background: #0c0c54; }
   .nav .bar-header, .nav ion-content {

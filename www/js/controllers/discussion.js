@@ -117,6 +117,7 @@ angular.module('app.controllers').controller('discussion',function ($scope, topB
 
   $scope.showConfirm = function(comment, $index) {
     var confirmPopup = $ionicPopup.confirm({
+      cssClass: 'deleteConfirmTitle',
       title: 'Delete Comment',
       template: 'Are you sure you want to Delete?'
     });
