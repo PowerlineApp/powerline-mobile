@@ -12,37 +12,37 @@
         <fieldset>
           <div class="item-floating-label text-field-1" ng-class="{invalid: registrationForm.address1.$invalid && registrationForm.$filled}">
             <span class="input-label">Street Address<asterisk>*</asterisk></span>
-            <input type="text" ng-model="data.address1" i-address="geocode" placeholder="" required name="address1"/>
+            <input type="text" ng-model="data.address1" i-address="geocode" placeholder="" required name="address1" tabindex="1" />
           </div>
           <div class="item-floating-label text-field-1" ng-class="{invalid: registrationForm.address2.$invalid && registrationForm.$filled}">
             <span class="input-label">Apt/Suite #</span>
-            <input type="text" ng-model="data.address2" name="address2"/>
+            <input type="text" ng-model="data.address2" name="address2" tabindex="2" />
           </div>
           <div class="item-floating-label text-field-1" ng-class="{invalid: registrationForm.zip.$invalid && registrationForm.$filled}">
             <span class="input-label">Zipcode<asterisk>*</asterisk></span>
-            <input type="text" ng-model="data.zip" required name="zip"/>
+            <input type="text" ng-model="data.zip" required name="zip" tabindex="3" />
           </div>
           <div class="item-floating-label text-field-1" ng-class="{invalid: registrationForm.city.$invalid && registrationForm.$filled}">
             <span class="input-label">City<asterisk>*</asterisk></span>
-            <input type="text"  ng-model="data.city" i-address="(cities)" placeholder="" required name="city"/>
+            <input type="text"  ng-model="data.city" i-address="(cities)" placeholder="" required name="city" tabindex="4" />
           </div>
           <div class="item-floating-label text-field-1" ng-class="{invalid: registrationForm.state.$invalid && registrationForm.$filled}">
             <span class="input-label">State<asterisk>*</asterisk></span>
-            <input type="text" ng-model="data.state" name="state" required i-address="(regions)" placeholder="">
+            <input type="text" ng-model="data.state" name="state" required i-address="(regions)" placeholder="" tabindex="5" />
           </div>
           <div class="item-floating-label text-field-1" ng-class="{invalid: registrationForm.country.$invalid && registrationForm.$filled}">
             <span class="input-label">Country<asterisk>*</asterisk></span>
-            <input type="text" ng-model="data.country" name="country" required>
+            <input type="text" ng-model="data.country" name="country" required tabindex="6" />
           </div>
           <div class="item-floating-label text-field-1" ng-class="{invalid: registrationForm.email.$invalid && registrationForm.$filled}">
             <span class="input-label">Email<asterisk>*</asterisk></span>
             <i class="icon-field icon-email"></i>
-            <input type="email" ng-model="data.email" name="email" required i-repeat="email_confirm"/>
+            <input type="email" ng-model="data.email" name="email" required i-repeat="email_confirm" tabindex="7" />
           </div>
           <div class="item-floating-label text-field-1" ng-class="{invalid: registrationForm.email_confirm.$invalid && registrationForm.$filled}">
             <span class="input-label">Confirm Email<asterisk>*</asterisk></span>
             <i class="icon-field icon-email"></i>
-            <input type="email" ng-model="data.email_confirm" name="email_confirm" required i-repeat="email"/>
+            <input type="email" ng-model="data.email_confirm" name="email_confirm" required i-repeat="email" tabindex="8" ng-enter="next(registrationForm)" />
           </div>
            <ion-toggle-custom ng-model="age.iAmAdult" toggle-class="toggle-calm"><p>I am 13 or older</p></ion-toggle-custom>
         </fieldset>
