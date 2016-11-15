@@ -1,9 +1,26 @@
 angular.module('app.controllers').controller('createPostCtrl',function ($scope, $stateParams, $document, posts, groups, profile, $rootScope, $controller) {
   $controller('abstractCreatePollCtrl', {$scope: $scope});
   $scope.prepareGroupPicker(false)
+
+  $scope.placeholders = ['Words can move the masses. And yours can, too - if you get enough people to support your post. Be nice!',
+                          'Write what you mean and mean what you write! But don\'t be mean!'];
+  $scope.placeholder = '';
   
   $scope.profile = profile.get();
-  $scope.data.post_text = ''
+
+  $scope.data.post_text = '';
+
+  $scope.$on('$ionicView.beforeEnter', function(){
+    var indexPlaceholder = JSON.parse( window.localStorage.getItem('indexPlaceholder'));
+    if (typeof indexPlaceholder === "undefined" || indexPlaceholder == null){
+      indexPlaceholder = 0;
+    }else{
+      indexPlaceholder = parseInt(indexPlaceholder);
+    }
+    $scope.placeholder = $scope.placeholders[indexPlaceholder%2];
+    indexPlaceholder++;
+    window.localStorage.setItem( 'indexPlaceholder', JSON.stringify(indexPlaceholder));
+  })
 
   $scope.validate = function(){
     if($scope.data.post_text.length == 0){
