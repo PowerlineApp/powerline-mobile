@@ -70,7 +70,7 @@ angular.module('app.controllers').controller('home', function ($scope, $timeout,
       } else {
         $scope.isLoadMore = true;
       }
-      prepare();
+      //prepare();
       
       $scope.$emit('home.activities-reloaded');
       $scope.$broadcast('scroll.refreshComplete');
