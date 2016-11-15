@@ -221,7 +221,7 @@ angular.module('app')
       controller: 'groups.search'
     }, {
       name: 'groupsCreate',
-      url: '/groups/create',
+      url: '/groups/create/:fromWhere',
       templateUrl: 'templates/groups/create.html',
       controller: 'groups.create'
     }, {
