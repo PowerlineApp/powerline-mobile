@@ -8,7 +8,7 @@
 
     <form name="postForm" novalidate ng-class="formClass" autocomplete="off">
       <fieldset class="add-post">
-          <textarea ng-model="data.post_text" maxlength="300"
+          <textarea ng-model="data.post_text" maxlength="300" focus-me="!data.openChoices"
                     name="post_text" required placeholder="Type your message here"
                     ng-init="data.chars_left = 300"
                     ng-change="data.chars_left = 300 - data.post_text.length"></textarea>
