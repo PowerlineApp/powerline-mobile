@@ -42,7 +42,7 @@ var createNotificationJSON = function (e) {
             break;
     }
 
-    result.additionalData = { coldstart: false };         // this gets called only when the app is running
+    result.additionalData = {};
     result.additionalData.pushNotificationReceivedEventArgs = e;
     return result;
 }
@@ -64,15 +64,6 @@ module.exports = {
                     channel.addEventListener("pushnotificationreceived", onNotificationReceived);
                     myApp.notificationEvent = onNotificationReceived;
                     onSuccess(result, { keepCallback: true });
-
-                    var context = cordova.require('cordova/platform').activationContext;
-                    var launchArgs = context ? context.args : null;
-                    if (launchArgs) {         //If present, app launched through push notification
-                        var result = { message: '' };       //Added to identify callback as notification type in the API
-                        result.launchArgs = launchArgs;
-                        result.additionalData = { coldstart: true };
-                        onSuccess(result, { keepCallback: true });
-                    }
                 }, function (error) {
                     onFail(error);
                 });
@@ -91,3 +82,5 @@ module.exports = {
     }
 };
 require("cordova/exec/proxy").add("PushNotification", module.exports);
+
+
