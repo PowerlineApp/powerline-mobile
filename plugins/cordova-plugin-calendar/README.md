@@ -1,4 +1,4 @@
-# PhoneGap Calendar plugin 
+# PhoneGap Calendar plugin
 
 for iOS and Android, by [Eddy Verbruggen](http://www.x-services.nl)
 
@@ -20,8 +20,9 @@ Of course I'm happy to receive any amount but I'm just as happy if you simply 's
 	2. [Manually](https://github.com/EddyVerbruggen/Calendar-PhoneGap-Plugin#manually)
 	2. [PhoneGap Build](https://github.com/EddyVerbruggen/Calendar-PhoneGap-Plugin#phonegap-build)
 3. [Usage](https://github.com/EddyVerbruggen/Calendar-PhoneGap-Plugin#3-usage)
-4. [Credits](https://github.com/EddyVerbruggen/Calendar-PhoneGap-Plugin#4-credits)
-5. [License](https://github.com/EddyVerbruggen/Calendar-PhoneGap-Plugin#5-license)
+4. [Promises](https://github.com/EddyVerbruggen/Calendar-PhoneGap-Plugin#4-promises)
+5. [Credits](https://github.com/EddyVerbruggen/Calendar-PhoneGap-Plugin#5-credits)
+6. [License](https://github.com/EddyVerbruggen/Calendar-PhoneGap-Plugin#6-license)
 
 ## 1. Description
 
@@ -36,7 +37,11 @@ This plugin allows you to add events to the Calendar of the mobile device.
 * Supported methods: `find`, `create`, `modify`, `delete`, ..
 * All methods work without showing the native calendar. Your app never loses control.
 * Tested on iOS 6+.
-* On iOS 10+ you need to provide a reason to the user for Calendar access. This plugin adds an empty `NSCalendarsUsageDescription` key to the /platforms/ios/*-Info.plist file which you can override with your custom string [per Apple's guideline](https://developer.apple.com/library/prerelease/content/documentation/General/Reference/InfoPlistKeyReference/Articles/CocoaKeys.html#//apple_ref/doc/uid/TP40009251-SW15).
+* On iOS 10+ you need to provide a reason to the user for Calendar access. This plugin adds an empty `NSCalendarsUsageDescription` key to the /platforms/ios/*-Info.plist file which you can override with your custom string. To do so, pass the following variable when installing the plugin:
+
+```
+cordova plugin add cordova-plugin-calendar --variable CALENDAR_USAGE_DESCRIPTION="This app uses your calendar"
+```
 
 ### Android specifics
 * Supported methods on Android 4: `find`, `create` (silent and interactive), `delete`, ..
@@ -126,8 +131,8 @@ The table gives an overview of basic operation compatibility:
 
 Operation                           | Comment     | iOS | Android
 ----------------------------------- | ----------- | --- | -------
-createCalendar                      |             | yes | 
-deleteCalendar                      |             | yes | 
+createCalendar                      |             | yes | yes
+deleteCalendar                      |             | yes | yes
 createEvent                         | silent      | yes | yes (on Android < 4 dialog is shown)
 createEventWithOptions              | silent      | yes | yes (on Android < 4 dialog is shown)
 createEventInteractively            | interactive | yes | yes
@@ -136,11 +141,11 @@ findEvent                           |             | yes | yes
 findEventWithOptions                |             | yes | yes
 listEventsInRange                   |             |     | yes
 listCalendars                       |             | yes | yes
-findAllEventsInNamedCalendars       |             | yes | 
-modifyEvent                         |             | yes | 
-modifyEventWithOptions              |             | yes | 
+findAllEventsInNamedCalendars       |             | yes |
+modifyEvent                         |             | yes |
+modifyEventWithOptions              |             | yes |
 deleteEvent                         |             | yes | yes
-deleteEventFromNamedCalendar        |             | yes | 
+deleteEventFromNamedCalendar        |             | yes |
 openCalendar                        |             | yes | yes
 
 Basic operations, you'll want to copy-paste this for testing purposes:
@@ -162,12 +167,12 @@ Basic operations, you'll want to copy-paste this for testing purposes:
   createCalOptions.calendarColor = "#FF0000"; // an optional hex color (with the # char), default is null, so the OS picks a color
   window.plugins.calendar.createCalendar(createCalOptions,success,error);
 
-  // delete a calendar (iOS only for now)
+  // delete a calendar
   window.plugins.calendar.deleteCalendar(calendarName,success,error);
 
   // create an event silently (on Android < 4 an interactive dialog is shown)
   window.plugins.calendar.createEvent(title,eventLocation,notes,startDate,endDate,success,error);
-  
+
   // create an event silently (on Android < 4 an interactive dialog is shown which doesn't use this options) with options:
   var calOptions = window.plugins.calendar.getCalendarOptions(); // grab the defaults
   calOptions.firstReminderMinutes = 120; // default is 60, pass in null for no reminder (alarm)
@@ -203,7 +208,7 @@ Basic operations, you'll want to copy-paste this for testing purposes:
   // if you need to find events in a specific calendar, use this one. All options are currently ignored when finding events, except for the calendarName.
   var calOptions = window.plugins.calendar.getCalendarOptions();
   calOptions.calendarName = "MyCreatedCalendar"; // iOS only
-  calOptions.id = "D9B1D85E-1182-458D-B110-4425F17819F1"; // iOS only, get it from createEventWithOptions (if not found, we try matching against title, etc)
+  calOptions.id = "D9B1D85E-1182-458D-B110-4425F17819F1"; // if not found, we try matching against title, etc
   window.plugins.calendar.findEventWithOptions(title,eventLocation,notes,startDate,endDate,calOptions,success,error);
 
   // list all events in a date range (only supported on Android for now)
@@ -337,7 +342,13 @@ Note that backward compatibility was added by checking for read or write permiss
 If permission is needed the plugin will now show the permission request popup.
 The user will then need to allow access and invoke the same method again after doing so.
 
-## 4. CREDITS ##
+## 4. Promises
+If you like to use promises instead of callbacks, or struggle to create a lot of
+events asynchronously with this plugin then I encourage you to take a look at
+[this awesome wrapper](https://github.com/poetic-labs/native-calender-api) for
+this plugin. Kudos to [John Rodney](https://github.com/JohnRodney) for this piece of art!
+
+## 5. Credits
 
 This plugin was enhanced for Plugman / PhoneGap Build by [Eddy Verbruggen](http://www.x-services.nl). I fixed some issues in the native code (mainly for iOS) and changed the JS-Native functions a little in order to make a universal JS API for both platforms.
 * Inspired by [this nice blog of Devgirl](http://devgirl.org/2013/07/17/tutorial-how-to-write-a-phonegap-plugin-for-android/).
@@ -345,7 +356,7 @@ This plugin was enhanced for Plugman / PhoneGap Build by [Eddy Verbruggen](http:
 * Credits for the original Android code go to [Ten Forward Consulting](https://github.com/tenforwardconsulting/Phonegap-Calendar-Plugin-android) and [twistandshout](https://github.com/twistandshout/phonegap-calendar-plugin).
 * Special thanks to [four32c.com](http://four32c.com) for sponsoring part of the implementation, while keeping the plugin opensource.
 
-## 5. License
+## 6. License
 
 [The MIT License (MIT)](http://www.opensource.org/licenses/mit-license.html)
 

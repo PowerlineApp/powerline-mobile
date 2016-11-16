@@ -1,41 +1,10 @@
-/**
- * Copyright (c) 2012, Twist and Shout, Inc. http://www.twist.com/
- * All rights reserved.
- *
- * Redistribution and use in source and binary forms, with or without
- * modification, are permitted provided that the following conditions are
- * met:
- *
- * 1. Redistributions of source code must retain the above copyright notice,
- *    this list of conditions and the following disclaimer.
- * 2. Redistributions in binary form must reproduce the above copyright
- *    notice, this list of conditions and the following disclaimer in the
- *    documentation and/or other materials provided with the distribution.
- *
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS
- * IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO,
- * THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
- * PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR
- * CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
- * EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
- * PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
- * PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
- * LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
- * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
- * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- */
-
-
-/**
- * @author yvonne@twist.com (Yvonne Yip)
- */
-
 package nl.xservices.plugins.accessor;
 
 import android.content.ContentResolver;
 import android.content.ContentUris;
 import android.content.ContentValues;
 import android.database.Cursor;
+import android.graphics.Color;
 import android.net.Uri;
 import android.provider.CalendarContract;
 import android.text.TextUtils;
@@ -82,7 +51,7 @@ public abstract class AbstractCalendarAccessor {
     public JSONObject toJSONObject() {
       JSONObject obj = new JSONObject();
       try {
-        obj.put("id", this.id);
+        obj.put("id", this.eventId);
         obj.putOpt("message", this.message);
         obj.putOpt("location", this.location);
         obj.putOpt("title", this.title);
@@ -181,7 +150,7 @@ public abstract class AbstractCalendarAccessor {
                                                 String[] projection, String selection, String[] selectionArgs,
                                                 String sortOrder);
 
-  private Event[] fetchEventInstances(String title, String location, long startFrom, long startTo) {
+  private Event[] fetchEventInstances(String eventId, String title, String location, String notes, long startFrom, long startTo) {
     String[] projection = {
         this.getKey(KeyIndex.INSTANCES_ID),
         this.getKey(KeyIndex.INSTANCES_EVENT_ID),
@@ -196,21 +165,36 @@ public abstract class AbstractCalendarAccessor {
     String selection = "";
     List<String> selectionList = new ArrayList<String>();
 
-    if (title != null) {
-      //selection += Events.TITLE + "=?";
-      selection += Events.TITLE + " LIKE ?";
-      selectionList.add("%" + title + "%");
-    }
-    if (location != null && !location.equals("")) {
-      if (!"".equals(selection)) {
-        selection += " AND ";
+    if (eventId != null) {
+      selection += CalendarContract.Instances.EVENT_ID + " = ?";
+      selectionList.add(eventId);
+    } else {
+      if (title != null) {
+        //selection += Events.TITLE + "=?";
+        selection += Events.TITLE + " LIKE ?";
+        selectionList.add("%" + title + "%");
       }
-      selection += Events.EVENT_LOCATION + " LIKE ?";
-      selectionList.add("%" + location + "%");
+      if (location != null && !location.equals("")) {
+        if (!"".equals(selection)) {
+          selection += " AND ";
+        }
+        selection += Events.EVENT_LOCATION + " LIKE ?";
+        selectionList.add("%" + location + "%");
+      }
+      if (notes != null && !notes.equals("")) {
+        if (!"".equals(selection)) {
+          selection += " AND ";
+        }
+        selection += Events.DESCRIPTION + " LIKE ?";
+        selectionList.add("%" + notes + "%");
+      }
     }
 
     String[] selectionArgs = new String[selectionList.size()];
     Cursor cursor = queryEventInstances(startFrom, startTo, projection, selection, selectionList.toArray(selectionArgs), sortOrder);
+    if (cursor == null) {
+      return null;
+    }
     Event[] instances = null;
     if (cursor.moveToFirst()) {
       int idCol = cursor.getColumnIndex(this.getKey(KeyIndex.INSTANCES_ID));
@@ -232,7 +216,13 @@ public abstract class AbstractCalendarAccessor {
         i += 1;
       } while (cursor.moveToNext());
     }
-    return instances;
+
+    // if we don't find the event by id, try again by title etc - inline with iOS logic
+    if ((instances == null || instances.length == 0) && eventId != null) {
+      return fetchEventInstances(null, title, location, notes, startFrom, startTo);
+    } else {
+      return instances;
+    }
   }
 
   private String[] getActiveCalendarIds() {
@@ -386,10 +376,10 @@ public abstract class AbstractCalendarAccessor {
     return attendeeMap;
   }
 
-  public JSONArray findEvents(String title, String location, long startFrom, long startTo) {
+  public JSONArray findEvents(String eventId, String title, String location, String notes, long startFrom, long startTo) {
     JSONArray result = new JSONArray();
     // Fetch events from the instance table.
-    Event[] instances = fetchEventInstances(title, location, startFrom, startTo);
+    Event[] instances = fetchEventInstances(eventId, title, location, notes, startFrom, startTo);
     if (instances == null) {
       return result;
     }
@@ -419,7 +409,7 @@ public abstract class AbstractCalendarAccessor {
 
   public boolean deleteEvent(Uri eventsUri, long startFrom, long startTo, String title, String location) {
     ContentResolver resolver = this.cordova.getActivity().getApplicationContext().getContentResolver();
-    Event[] events = fetchEventInstances(title, location,startFrom, startTo);
+    Event[] events = fetchEventInstances(null, title, location, "", startFrom, startTo);
     int nrDeletedRecords = 0;
     if (events != null) {
       for (Event event : events) {
@@ -470,12 +460,12 @@ public abstract class AbstractCalendarAccessor {
       }
     }
 
-    // runtime exceptions are dealt with by the caller
-    Uri uri = cr.insert(eventsUri, values);
-    String createdEventID = uri.getLastPathSegment();
-    Log.d(LOG_TAG, "Created event with ID " + createdEventID);
-
+    String createdEventID = null;
     try {
+      Uri uri = cr.insert(eventsUri, values);
+      createdEventID = uri.getLastPathSegment();
+      Log.d(LOG_TAG, "Created event with ID " + createdEventID);
+
       if (firstReminderMinutes > -1) {
         ContentValues reminderValues = new ContentValues();
         reminderValues.put("event_id", Long.parseLong(uri.getLastPathSegment()));
@@ -497,27 +487,108 @@ public abstract class AbstractCalendarAccessor {
     return createdEventID;
   }
 
-  public void createCalendar(String calendarName) {
-    Uri calUri = CalendarContract.Calendars.CONTENT_URI;
-    ContentValues cv = new ContentValues();
-//    cv.put(CalendarContract.Calendars.ACCOUNT_NAME, yourAccountName);
-//    cv.put(CalendarContract.Calendars.ACCOUNT_TYPE, CalendarContract.ACCOUNT_TYPE_LOCAL);
-//    cv.put(CalendarContract.Calendars.NAME, "myname");
-    cv.put(CalendarContract.Calendars.CALENDAR_DISPLAY_NAME, calendarName);
-//    cv.put(CalendarContract.Calendars.CALENDAR_COLOR, yourColor);
-//    cv.put(CalendarContract.Calendars.CALENDAR_ACCESS_LEVEL, CalendarContract.Calendars.CAL_ACCESS_OWNER);
-//    cv.put(CalendarContract.Calendars.OWNER_ACCOUNT, true);
-    cv.put(CalendarContract.Calendars.VISIBLE, 1);
-    cv.put(CalendarContract.Calendars.SYNC_EVENTS, 0);
+  @SuppressWarnings("MissingPermission") // already requested in calling method
+  public String createCalendar(String calendarName, String calendarColor) {
+    try {
+      // don't create if it already exists
+      Uri evuri = CalendarContract.Calendars.CONTENT_URI;
+      final ContentResolver contentResolver = cordova.getActivity().getContentResolver();
+      Cursor result = contentResolver.query(evuri, new String[] {CalendarContract.Calendars._ID, CalendarContract.Calendars.NAME, CalendarContract.Calendars.CALENDAR_DISPLAY_NAME}, null, null, null);
+      if (result != null) {
+        while (result.moveToNext()) {
+          if (result.getString(1).equals(calendarName) || result.getString(2).equals(calendarName)) {
+            result.close();
+            return null;
+          }
+        }
+        result.close();
+      }
 
-    calUri = calUri.buildUpon()
-//        .appendQueryParameter(CalendarContract.CALLER_IS_SYNCADAPTER, "false")
-//        .appendQueryParameter(CalendarContract.Calendars.ACCOUNT_NAME, ACCOUNT_NAME)
-//        .appendQueryParameter(CalendarContract.Calendars.ACCOUNT_TYPE, CalendarContract.ACCOUNT_TYPE_LOCAL)
+      // doesn't exist yet, so create
+      Uri calUri = CalendarContract.Calendars.CONTENT_URI;
+      ContentValues cv = new ContentValues();
+      cv.put(CalendarContract.Calendars.ACCOUNT_NAME, "AccountName");
+      cv.put(CalendarContract.Calendars.ACCOUNT_TYPE, CalendarContract.ACCOUNT_TYPE_LOCAL);
+      cv.put(CalendarContract.Calendars.NAME, calendarName);
+      cv.put(CalendarContract.Calendars.CALENDAR_DISPLAY_NAME, calendarName);
+      if (calendarColor != null) {
+        cv.put(CalendarContract.Calendars.CALENDAR_COLOR, Color.parseColor(calendarColor));
+      }
+      cv.put(CalendarContract.Calendars.VISIBLE, 1);
+      cv.put(CalendarContract.Calendars.SYNC_EVENTS, 0);
+
+      calUri = calUri.buildUpon()
+          .appendQueryParameter(CalendarContract.CALLER_IS_SYNCADAPTER, "true")
+          .appendQueryParameter(CalendarContract.Calendars.ACCOUNT_NAME, "AccountName")
+          .appendQueryParameter(CalendarContract.Calendars.ACCOUNT_TYPE, CalendarContract.ACCOUNT_TYPE_LOCAL)
+          .build();
+
+      Uri created = contentResolver.insert(calUri, cv);
+      if (created != null) {
+        return created.getLastPathSegment();
+      }
+    } catch (Exception e) {
+      Log.e(LOG_TAG, "Creating calendar failed.", e);
+    }
+    return null;
+  };
+
+  @SuppressWarnings("MissingPermission") // already requested in calling method
+  public void deleteCalendar(String calendarName) {
+    try {
+      Uri evuri = CalendarContract.Calendars.CONTENT_URI;
+      final ContentResolver contentResolver = cordova.getActivity().getContentResolver();
+      Cursor result = contentResolver.query(evuri, new String[] {CalendarContract.Calendars._ID, CalendarContract.Calendars.NAME, CalendarContract.Calendars.CALENDAR_DISPLAY_NAME}, null, null, null);
+      if (result != null) {
+        while (result.moveToNext()) {
+          if (result.getString(1).equals(calendarName) || result.getString(2).equals(calendarName)) {
+            long calid = result.getLong(0);
+            Uri deleteUri = ContentUris.withAppendedId(evuri, calid);
+            contentResolver.delete(deleteUri, null, null);
+          }
+        }
+        result.close();
+      }
+
+      // also delete previously crashing calendars, see https://github.com/EddyVerbruggen/Calendar-PhoneGap-Plugin/issues/241
+      deleteCrashingCalendars(contentResolver);
+    } catch (Throwable t) {
+      System.err.println(t.getMessage());
+      t.printStackTrace();
+    }
+  }
+
+  @SuppressWarnings("MissingPermission") // already requested in calling method
+  private void deleteCrashingCalendars(ContentResolver contentResolver) {
+    // first find any faulty Calendars
+    final String fixingAccountName = "FixingAccountName";
+    String selection = CalendarContract.Calendars.ACCOUNT_NAME + " IS NULL";
+    Uri uri = CalendarContract.Calendars.CONTENT_URI;
+    uri = uri.buildUpon()
+        .appendQueryParameter(CalendarContract.CALLER_IS_SYNCADAPTER, "true")
+        .appendQueryParameter(CalendarContract.Calendars.ACCOUNT_NAME, fixingAccountName)
+        .appendQueryParameter(CalendarContract.Calendars.ACCOUNT_TYPE, CalendarContract.ACCOUNT_TYPE_LOCAL)
         .build();
+    ContentValues values = new ContentValues();
+    values.put(CalendarContract.Calendars.ACCOUNT_NAME, fixingAccountName);
+    values.put(CalendarContract.Calendars.ACCOUNT_TYPE, CalendarContract.ACCOUNT_TYPE_LOCAL);
+    int count = contentResolver.update(uri, values, selection, null);
 
-    Uri result = this.cordova.getActivity().getApplicationContext().getContentResolver().insert(calUri, cv);
-    int i=0;
+    // now delete any faulty Calendars
+    if (count > 0) {
+      Uri evuri = CalendarContract.Calendars.CONTENT_URI;
+      Cursor result = contentResolver.query(evuri, new String[] {CalendarContract.Calendars._ID, CalendarContract.Calendars.ACCOUNT_NAME}, null, null, null);
+      if (result != null) {
+        while (result.moveToNext()) {
+          if (result.getString(1).equals(fixingAccountName)) {
+            long calid = result.getLong(0);
+            Uri deleteUri = ContentUris.withAppendedId(evuri, calid);
+            contentResolver.delete(deleteUri, null, null);
+          }
+        }
+        result.close();
+      }
+    }
   }
 
   public static boolean isAllDayEvent(final Date startDate, final Date endDate) {

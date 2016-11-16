@@ -33,16 +33,16 @@ angular.module('app.controllers').controller('abstractCreatePollCtrl',function (
           
           if(g.sections.length > 0){
             msg = '<p>Send to all group members or send to section(s) of a group?</p>'
-            msg += `<ion-checkbox class="group-section-picker" ng-model="data.selectedSections.all" ng-change="sectionSelectionChanged('all')">
-                      All (`+allMemberCount+` members)
-                    </ion-checkbox>`
+            msg += '<ion-checkbox class="group-section-picker" ng-model="data.selectedSections.all" ng-change="sectionSelectionChanged(\'all\')">'
+            msg += 'All ('+allMemberCount+' members)'
+            msg += '</ion-checkbox>'
             g.sections.forEach(function(s){
               $scope.data.selectedSections[s.id] = false
-              msg += `<ion-checkbox class="group-section-picker"
-                        ng-model="data.selectedSections[`+s.id+`]"
-                        ng-change="sectionSelectionChanged(`+s.id+`)" >
-                        `+s.title+` (`+s.members.length+` members)
-                      </ion-checkbox>`
+              msg += '<ion-checkbox class="group-section-picker"'
+              msg += 'ng-model="data.selectedSections['+s.id+']"'
+              msg += 'ng-change="sectionSelectionChanged('+s.id+')" >'
+              msg += s.title+' ('+s.members.length+' members)'
+              msg += '</ion-checkbox>'
             })
           }
 
