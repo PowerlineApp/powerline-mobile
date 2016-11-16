@@ -1,4 +1,8 @@
-<ion-view view-title="New Group">
+<ion-view view-title="New Group" hide-back-button="fromMenu">
+  <ion-nav-buttons side="left">
+    <button menu-toggle="left" class="button button-icon icon ion-navicon" ng-show="fromMenu"></button>
+  </ion-nav-buttons>
+
   <ion-nav-buttons side="right">
     <button class="button button-clear" ng-click="send()">Send</button>
   </ion-nav-buttons>

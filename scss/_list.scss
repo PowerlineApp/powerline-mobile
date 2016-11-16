@@ -1250,8 +1250,10 @@ a.follow-action {
   }
 
   button.delete-action {
-    background-color: #ff4444;
-    color: white;
+    border-color: transparent;
+    background: 0 0;
+    box-shadow: none;
+    color: #fd0517;
   }
 
   button.cancel-action {

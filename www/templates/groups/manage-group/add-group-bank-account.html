@@ -57,16 +57,24 @@
           </select>
         </div>        
         <div class="item-floating-label text-field-1" ng-show="requireSSN()">
-          <span class="input-label">Last Four Digits of Social Security Number</span>
+          <span class="input-label">Last 4 digits of SSN/EIN</span>
           <input type="text" name="ssn_last_4" ng-model="data.powerline.ssn_last_4">
         </div>
-        <div class="item-floating-label text-field-1">
+        <div class="item-floating-label text-field-1" ng-class="{invalid: errorRNumber}">
           <span class="input-label">Routing Number</span>
           <input type="text" name="routing_number" ng-model="data.stripe.routing_number">
         </div>
-        <div class="item-floating-label text-field-1">
+        <div class="item-floating-label text-field-1" ng-class="{invalid: errorRNumber}">
+          <span class="input-label">Confirm Routing Number</span>
+          <input type="text" name="routing_number" ng-model="data.stripe.routing_number1">
+        </div>
+        <div class="item-floating-label text-field-1" ng-class="{invalid: errorANumber}">
           <span class="input-label">Account Number</span>
           <input type="text" name="account_number" ng-model="data.stripe.account_number">
+        </div>
+        <div class="item-floating-label text-field-1" ng-class="{invalid: errorANumber}">
+          <span class="input-label">Confirm Account Number</span>
+          <input type="text" name="account_number" ng-model="data.stripe.account_number1">
         </div>
       </fieldset>
 
