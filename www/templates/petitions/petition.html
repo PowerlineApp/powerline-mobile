@@ -72,9 +72,11 @@
     <tab-panel>
       <ul class="header">
         <li ng-click="open($event)">Discussion</li>
+        <li ng-click="open($event)">More</li>
       </ul>
       <tabs>
         <tab><discussions id="petition.id" entity="'poll'"></discussions></tab>
+        <tab><show-attachments content-item="petition"></show-attachments></tab>
       </tabs>
     </tab-panel>
   </ion-content>

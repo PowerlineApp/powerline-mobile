@@ -1,0 +1,35 @@
+<div class="groups-1">
+  <div style="text-align: center" ng-show="noAttachments()">
+    No attachments
+  </div>
+  <div class="group-1" i-groups="0" ng-show="contentItem.attachments.text.length">
+      <h3 ng-click="toggle()" >Information <i></i></h3>
+      <ul i-toggle-elem>
+          <li ng-repeat="item in contentItem.attachments.text">
+              <p ng-bind="item.text"></p>
+          </li>
+      </ul>
+  </div>
+
+  <div class="group-1" i-groups="0" ng-show="contentItem.attachments.image.length">
+      <h3 ng-click="toggle()" >Photos <i></i></h3>
+      <ul i-toggle-elem class="images"
+          ng-class="{two: contentItem.attachments.image.length == 2, three: contentItem.attachments.image.length == 3}">
+          <li ng-repeat="item in contentItem.attachments.image">
+              <img ng-src="{{ item.imageSrc }}" />
+          </li>
+      </ul>
+  </div>
+
+  <div class="group-1" i-groups="0" ng-show="contentItem.attachments.video.length">
+      <h3 ng-click="toggle()" >Videos <i></i></h3>
+      <ul i-toggle-elem class="images">
+          <li ng-repeat="item in contentItem.attachments.video">
+              <div class="video-item">
+                <youtube link="item.text"></youtube>
+                <br><br>
+              </div>
+          </li>
+      </ul>
+  </div>
+</div>
