@@ -105,7 +105,11 @@ angular.module('app.controllers').controller('getPostCtrl',function ($scope, top
           $scope.showToast('Post boosted successfully.')
         }, function(error){
           $scope.hideSpinner()
-          $scope.showSaveAlert(JSON.stringify(error))
+          $ionicPopup.alert({
+            cssClass: 'popup-by-ionic',
+            title: 'Failed to create content',
+            template: JSON.stringify(error)
+          });
         })
       }
     })

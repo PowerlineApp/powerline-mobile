@@ -18,6 +18,7 @@ angular.module('app.services').factory('userPetitions',function ($q, session, se
       this._isBoosted = data.boosted
       this.title = data.title
       this.id = data.id
+      this.groupID = data.group_id
     }
 
     this._load(rawData)
@@ -28,6 +29,13 @@ angular.module('app.services').factory('userPetitions',function ($q, session, se
 
     this.isBoosted = function(){
       return this._isBoosted
+    }
+
+    this.boost = function(){
+      var that = this
+      return $http.patch(serverConfig.url + '/api/v2/micro-petitions/' + this.id).then(function(){
+        that._isBoosted = true
+      })
     }
 
     this.ownedByCurrentUser = function(){

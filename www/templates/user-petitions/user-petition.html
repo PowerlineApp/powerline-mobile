@@ -40,10 +40,19 @@
       <div class="title">
         <strong ng-bind="userPetition.owner.name" ng-click="navigateTo('owner-profile', userPetition.owner)"></strong>
 
-        <a ng-show="userPetition.ownedByCurrentUser() && !userPetition.isBoosted()" ng-click="onEditBtnClicked()"><i ng-class="{'ion-edit':inEditMode==false,'ion-checkmark':inEditMode==true}" style="font-size: 22px;
-          position: absolute; right: 70px;"></i></a>
-        <a ng-show="userPetition.ownedByCurrentUser()" ng-click="showDeleteConfirm()"><i class="button-assertive icon ion-trash-a" style="font-size: 22px;
-          position: absolute; right: 30px;"></i></a>
+        <a ng-show="userPetition.ownedByCurrentUser()" ng-click="showDeleteConfirm()">
+          <i class="button-assertive icon ion-trash-a action-icon"></i>
+        </a>
+
+        <a ng-show="userPetition.ownedByCurrentUser() && !userPetition.isBoosted()" ng-click="onEditBtnClicked()">
+          <i class="action-icon" ng-class="{'ion-edit':inEditMode==false,'ion-checkmark':inEditMode==true}">
+          </i>
+        </a>
+
+        <a ng-show="isBoostable()" ng-click="onBoostButtonClicked()">
+          <i class="button-assertive icon ion-flash action-icon">
+          </i>
+        </a>
       </div>
       
       <h1 ng-bind="userPetition.title" ng-show="userPetition.title"></h1>
