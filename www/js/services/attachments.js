@@ -141,7 +141,7 @@ angular.module('app.directives').directive('addAttachments', function (device, $
 
         $scope.addImage = function(){
           if(!device.isSmartphone()){
-            $scope.contentItem.attachments.images.push('images/v2/logo.png')
+            alert('This feature is not supported in browser, works only in smartphone app. If you see this message in Powerline smartphone app, please report us a bug.')
           } else {
             navigator.camera.getPicture(function(img) {
               var imageB64URI = img
