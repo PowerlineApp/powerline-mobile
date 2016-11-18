@@ -149,7 +149,7 @@ angular.module('app').run(function ($location, layout, spinnerIndicator, $rootSc
   };
 
   $rootScope.confirm = function () {
-    if($window.navigator.notification)
+    if($window.navigator.notification && $window.navigator.notification.confirm)
       $window.navigator.notification.confirm.apply(null, arguments);
   };
   

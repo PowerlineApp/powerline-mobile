@@ -23,7 +23,7 @@
     </div>
 
     <div class="title-field" ng-show="textAttachmentVisible()">
-        <textarea ng-model="attachments.text[0]" maxlength="2500" placeholder="Attachment text here">
+        <textarea ng-model="contentItem.attachments.text[0]" maxlength="2500" placeholder="Attachment text here">
         </textarea>    
     </div>
     <div style="width: 200px;" class="margin-v-20">
@@ -33,12 +33,12 @@
       </button>
     </div>
 
-    <div class="item" ng-repeat="imgURI in attachments.images track by $index">
+    <div class="item" ng-repeat="imgURI in contentItem.attachments.images track by $index">
        <button style="float:right; position: relative; top: -21px; right: -23px;" 
         class="button icon ion-close-circled button-clear"
         ng-click="removeImage($index)">
         </button>
-        <img style="width: 70%;" ng-src="{{imgURI}}">
+        <img style="width: 70%;" ng-src="data:image/jpeg;base64,{{imgURI}}">
     </div>
 
     <div style="width: 200px;" class="margin-v-20">
@@ -47,13 +47,13 @@
         Add video
       </button>
     </div>
-    <div class="title-field" ng-repeat="videoURL in attachments.videos track by $index">
+    <div class="title-field" ng-repeat="videoURL in contentItem.attachments.videos track by $index">
         <button style="float:right; position: relative; top: -12px; right: -14px;" 
         class="button icon ion-close-circled button-clear"
         ng-click="removeVideo($index)">
         </button>
         <div style="overflow: hidden;">
-          <input ng-model="attachments.videos[$index]" maxlength="255" required placeholder="Youtube video URL" />
+          <input ng-model="contentItem.attachments.videos[$index]" maxlength="255" required placeholder="Youtube video URL" />
         </div>
     </div>
 

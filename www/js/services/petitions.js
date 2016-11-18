@@ -1,4 +1,4 @@
-angular.module('app.services').factory('petitions',function ($q, session, serverConfig, $http, $sce, iParse, $rootScope) {
+angular.module('app.services').factory('petitions',function ($q, session, serverConfig, $http, $sce, iParse, $rootScope, attachmentsService) {
 
   var PetitionInstance = function(rawData){
     this._load = function(data){
@@ -131,7 +131,7 @@ angular.module('app.services').factory('petitions',function ($q, session, server
       return $http.delete(serverConfig.url + '/api/v2/user/polls/'+petitionID)      
     },
 
-    create: function(title, description, groupID, sectionsToPublishIn){
+    create: function(title, description, groupID, sectionsToPublishIn, attachments){
       var data = {petition_title: title, 
         petition_body: description, 
         subject: '.', // not sure what is this, but backend will fail to create petition wihtout it
@@ -147,10 +147,12 @@ angular.module('app.services').factory('petitions',function ($q, session, server
 
       createPetitionRequest.then(function(response){
         var petitionID = response.data.id
-        var addOptionsRequests = []
-        addOptionsRequests.push(service.addOption(petitionID, 'sign'))
-        addOptionsRequests.push(service.addOption(petitionID, 'unsign'))
-        $q.all(addOptionsRequests).then(function(){
+        var requests = []
+        requests.push(service.addOption(petitionID, 'sign'))
+        requests.push(service.addOption(petitionID, 'unsign'))
+        requests.push(attachmentsService.add(petitionID, attachments))
+
+        $q.all(requests).then(function(){
           service.publish(petitionID).then(function(){
             d.resolve(petitionID)
           }, function(error){

@@ -1,36 +1,60 @@
 // this is not the best place to put this logic, once we'll have 
 // a model for leader content item, it should go there
-angular.module('app.services').service('attachments', function ($http, serverConfig, youtube) {
+angular.module('app.services').service('attachmentsService', function ($http, serverConfig, youtube, $q) {
   var service = {}
 
-  service.addVideo = function(leaderContentItemID, videoURL){
+  service.add = function(contentItemID, attachments){
+    var d = $q.defer();
+
+    var r = []
+    if(attachments && attachments.text && attachments.text.length > 0)
+      r.push(service.addText(contentItemID, attachments.text[0]))
+
+    if(attachments && attachments.images && attachments.images.length > 0)
+      attachments.images.forEach(function(image){
+        r.push(service.addImage(contentItemID, image))
+      })
+
+    if(attachments && attachments.videos && attachments.videos.length > 0)
+      attachments.videos.forEach(function(video){
+        r.push(service.addVideo(contentItemID, video))
+      })      
+
+    $q.all(r).then(function(){
+      d.resolve()
+    })  
+    
+    return d.promise; 
+  }
+
+  service.addVideo = function(contentItemID, videoURL){
     var payload = JSON.stringify({type: 'video', content: videoURL})
     var headers = {headers: {'Content-Type': 'application/json'}}
-    return $http.post(serverConfig.url + '/api/v2/polls/'+leaderContentItemID+'/educational-contexts', payload, headers)  }
+    return $http.post(serverConfig.url + '/api/v2/polls/'+contentItemID+'/educational-contexts', payload, headers)  }
 
-  service.addPhoto = function(leaderContentItemID, photoURL){
-    var payload = JSON.stringify({type: 'photo', content: photoURL})
+  service.addImage = function(contentItemID, image){
+    var payload = JSON.stringify({type: 'photo', content: image})
     var headers = {headers: {'Content-Type': 'application/json'}}
-    return $http.post(serverConfig.url + '/api/v2/polls/'+leaderContentItemID+'/educational-contexts', payload, headers)
+    return $http.post(serverConfig.url + '/api/v2/polls/'+contentItemID+'/educational-contexts', payload, headers)
   }
 
-  service.addText = function(leaderContentItemID, text){
+  service.addText = function(contentItemID, text){
     var payload = JSON.stringify({type: 'text', content: text})
     var headers = {headers: {'Content-Type': 'application/json'}}
-    return $http.post(serverConfig.url + '/api/v2/polls/'+leaderContentItemID+'/educational-contexts', payload, headers)
+    return $http.post(serverConfig.url + '/api/v2/polls/'+contentItemID+'/educational-contexts', payload, headers)
   }
 
-  service.load = function(leaderContentItem){
-   $http.get(serverConfig.url + '/api/v2/polls/'+leaderContentItem.id+'/educational-contexts').then(function(response){
-      leaderContentItem.attachments = {};
+  service.load = function(contentItem){
+   $http.get(serverConfig.url + '/api/v2/polls/'+contentItem.id+'/educational-contexts').then(function(response){
+      contentItem.attachments = {};
       _(response.data).each(function (eduItem) {
-        if (!leaderContentItem.attachments[eduItem.type]) {
-          leaderContentItem.attachments[eduItem.type] = [];
+        if (!contentItem.attachments[eduItem.type]) {
+          contentItem.attachments[eduItem.type] = [];
         }
         if (eduItem.type === 'video') {
           eduItem.preview = youtube.generatePreviewLink(youtube.parseId(eduItem.text));
         }
-        leaderContentItem.attachments[eduItem.type].push(eduItem);
+        contentItem.attachments[eduItem.type].push(eduItem);
       });
    })
   }
@@ -38,7 +62,7 @@ angular.module('app.services').service('attachments', function ($http, serverCon
   return service
 })
 
-angular.module('app.directives').directive('showAttachments', function (attachments) {
+angular.module('app.directives').directive('showAttachments', function (attachmentsService) {
     return {
       restrict: 'E',
       scope: {
@@ -47,35 +71,39 @@ angular.module('app.directives').directive('showAttachments', function (attachme
       templateUrl: 'templates/attachments/show_attachments.html',
       controller: function ($scope) {
         $scope.noAttachments = function(){
-          var li = $scope.contentItem
-          return li && (li.attachments == null || _.isEmpty(li.attachments))
+          var ci = $scope.contentItem
+          return ci && (ci.attachments == null || _.isEmpty(ci.attachments))
         }
 
         $scope.$watch('contentItem', function (val) {
           if($scope.contentItem)
-            attachments.load( $scope.contentItem)
+            attachmentsService.load( $scope.contentItem)
         });
       }
     };
 })
 
-angular.module('app.directives').directive('addAttachments', function (attachments, device, $ionicPopup) {
+angular.module('app.directives').directive('addAttachments', function (device, $ionicPopup) {
     return {
       restrict: 'E',
-      scope: {},
+      scope: {contentItem: '='},
       templateUrl: 'templates/attachments/add_attachments.html',
       controller: function ($scope) {
-        $scope.attachments = {text: [], images: [], videos: []}
-        $scope.displayAttachmentsForm = true
+        $scope.$watch('contentItem', function (val) {
+          if($scope.contentItem)
+            $scope.contentItem.attachments = {text: [], images: [], videos: []}
+        });
+        
+        $scope.displayAttachmentsForm = false
         var MAX_ATTACHMENT_ITEMS = 3
 
         var canAddMoreContent = function(){
-          var a = $scope.attachments
+          var a = $scope.contentItem.attachments
           return (a.text.length + a.images.length + a.videos.length) < MAX_ATTACHMENT_ITEMS
         } 
 
         $scope.addText = function(){
-          $scope.attachments.text = ['']
+          $scope.contentItem.attachments.text = ['']
         }
 
         $scope.removeText = function(){
@@ -94,17 +122,17 @@ angular.module('app.directives').directive('addAttachments', function (attachmen
           });
           confirmPopup.then(function(res) {
             if (res) 
-              $scope.attachments.text = []
+              $scope.contentItem.attachments.text = []
           });
           
         }
 
         $scope.addTextButtonVisible = function(){
-          return canAddMoreContent() && $scope.attachments.text.length == 0
+          return canAddMoreContent() && $scope.contentItem.attachments.text.length == 0
         }
 
         $scope.textAttachmentVisible = function(){
-          return $scope.attachments.text.length > 0
+          return $scope.contentItem.attachments.text.length > 0
         }
 
         $scope.addImageButtonVisible = function(){
@@ -113,11 +141,11 @@ angular.module('app.directives').directive('addAttachments', function (attachmen
 
         $scope.addImage = function(){
           if(!device.isSmartphone()){
-            $scope.attachments.images.push('images/v2/logo.png')
+            $scope.contentItem.attachments.images.push('images/v2/logo.png')
           } else {
             navigator.camera.getPicture(function(img) {
-              var imageB64URI = 'data:image/jpeg;base64,' + img
-              $scope.attachments.images.push(imageB64URI)
+              var imageB64URI = img
+              $scope.contentItem.attachments.images.push(imageB64URI)
               $scope.$apply();
             }, function(e) {
               //  image selection in album canceled by user
@@ -147,7 +175,7 @@ angular.module('app.directives').directive('addAttachments', function (attachmen
           });
           confirmPopup.then(function(res) {
             if (res) 
-              $scope.attachments.images.splice(parseInt(imagePos), 1)
+              $scope.contentItem.attachments.images.splice(parseInt(imagePos), 1)
           });
         }
 
@@ -156,7 +184,7 @@ angular.module('app.directives').directive('addAttachments', function (attachmen
         }
 
         $scope.addVideo = function(){
-          $scope.attachments.videos.push('')
+          $scope.contentItem.attachments.videos.push('')
         }
 
         $scope.removeVideo = function(videoPos){
@@ -175,7 +203,7 @@ angular.module('app.directives').directive('addAttachments', function (attachmen
           });
           confirmPopup.then(function(res) {
             if (res) 
-              $scope.attachments.videos.splice(parseInt(videoPos), 1)
+              $scope.contentItem.attachments.videos.splice(parseInt(videoPos), 1)
           });
         }
       }

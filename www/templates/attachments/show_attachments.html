@@ -11,12 +11,12 @@
       </ul>
   </div>
 
-  <div class="group-1" i-groups="0" ng-show="contentItem.attachments.image.length">
+  <div class="group-1" i-groups="0" ng-show="contentItem.attachments.photo.length">
       <h3 ng-click="toggle()" >Photos <i></i></h3>
       <ul i-toggle-elem class="images"
-          ng-class="{two: contentItem.attachments.image.length == 2, three: contentItem.attachments.image.length == 3}">
-          <li ng-repeat="item in contentItem.attachments.image">
-              <img ng-src="{{ item.imageSrc }}" />
+          ng-class="{two: contentItem.attachments.photo.length == 2, three: contentItem.attachments.image.length == 3}">
+          <li ng-repeat="item in contentItem.attachments.photo">
+              <img ng-src="data:image/jpeg;base64,{{ item.text }}" />
           </li>
       </ul>
   </div>

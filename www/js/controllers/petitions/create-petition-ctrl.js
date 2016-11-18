@@ -20,7 +20,7 @@ angular.module('app.controllers').controller('createPetitionCtrl',function ($sco
   $scope.send = function(){
     var groupID = $scope.data.group.id
     $scope.showSpinner();
-    petitions.create($scope.data.title,$scope.data.petition_body,groupID, $scope.sectionsToPublishIn()).then(function(petitionID){
+    petitions.create($scope.data.title,$scope.data.petition_body,groupID, $scope.sectionsToPublishIn(), $scope.data.attachments).then(function(petitionID){
         $scope.hideSpinner();
         $rootScope.showToast('Petition successfully created!');
         $rootScope.path('/petition/'+petitionID);
