@@ -11,18 +11,18 @@
         <fieldset>
           <div class="item-floating-label text-field-1" ng-class="{invalid: registrationForm.first_name.$invalid && registrationForm.$filled}">
             <span class="input-label">First Name<asterisk>*</asterisk></span>
-            <input type="text" ng-model="data.first_name" required name="first_name" autocapitalize="on" i-capitalize />
+            <input type="text" ng-model="data.first_name" required name="first_name" autocapitalize="on" i-capitalize tabindex="1" />
           </div>
           <div class="item-floating-label text-field-1" ng-class="{invalid: registrationForm.last_name.$invalid && registrationForm.$filled}">
             <span class="input-label">Last Name<asterisk>*</asterisk></span>
-            <input type="text" ng-model="data.last_name" required name="last_name" autocapitalize="on" i-capitalize />
+            <input type="text" ng-model="data.last_name" required name="last_name" autocapitalize="on" i-capitalize tabindex="2" />
           </div>
           <div class="item-floating-label text-field-1" ng-class="{invalid: registrationForm.username.$invalid && registrationForm.$filled}">
             <span class="input-label">Username<asterisk>*</asterisk></span>
             <i class="icon-field icon-username"></i>
             <input type="text" ng-model="data.username"
                    ng-pattern="/^[a-zA-Z0-9._-]+[a-zA-Z0-9]$/"
-                   required name="username" autocapitalize="off" autocorrect="off" />
+                   required name="username" autocapitalize="off" autocorrect="off" tabindex="3" />
           </div>
         </fieldset>
         <fieldset ng-if="!data.facebook_id">
@@ -35,12 +35,12 @@
             <span class="input-label">Password<asterisk>*</asterisk></span>
             <i class="icon-field icon-protected"></i>
             <input type="password"  class="password"  ng-model="data.password" ng-required="!data.facebook_id"
-                   i-repeat="confirm" name="password" i-password-validator/>
+                   i-repeat="confirm" name="password" i-password-validator tabindex="4" />
           </div>
           <div class="item-floating-label text-field-1" ng-class="{invalid: registrationForm.confirm.$invalid && registrationForm.$filled}">
             <span class="input-label">Confirm Password<asterisk>*</asterisk></span>
             <i class="icon-field icon-protected"></i>
-            <input type="password"  class="password" ng-model="data.confirm" ng-required="!data.facebook_id" i-repeat="password" name="confirm"/>
+            <input type="password" class="password" ng-model="data.confirm" ng-required="!data.facebook_id" i-repeat="password" name="confirm" tabindex="5" ng-enter="next(registrationForm)" />
           </div>
         </fieldset>
 

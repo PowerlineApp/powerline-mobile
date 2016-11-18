@@ -354,4 +354,46 @@ angular.module('app.directives').directive('iPlaceholder',function () {
       }
     });
   };
+}).directive('focusMe', function($timeout) {
+  return {
+    link: function(scope, element, attrs) {
+      scope.$watch(attrs.focusMe, function(value) {
+        if(value === true) { 
+          console.log('value=',value);
+          $timeout(function() {
+            element[0].focus();
+            scope[attrs.focusMe] = false;
+          });
+        }
+      });
+    }
+  };
+}).directive('ngEnter', function () {
+    return function (scope, element, attrs) {
+      element.bind("keydown keypress", function (event) {
+          if(event.which === 13) {
+              scope.$apply(function (){
+                  scope.$eval(attrs.ngEnter);
+              });
+
+              event.preventDefault();
+          }
+      });
+    };
+}).directive("tabindex", function () {
+  return {
+    restrict: "A",
+    link: function ($scope, elem, attrs) {
+
+        elem.bind('keydown', function(e) {
+          var code = e.keyCode || e.which;
+          if (code === 13) {
+            e.preventDefault();
+            var tabindex = parseInt(attrs.tabindex) + 1;
+            $('input[tabindex='+tabindex+']').focus();
+          }
+        });
+    }
+  }
 });
+

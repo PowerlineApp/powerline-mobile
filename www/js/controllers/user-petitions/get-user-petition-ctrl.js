@@ -1,6 +1,23 @@
 angular.module('app.controllers').controller('getUserPetitionCtrl',function ($scope,  $stateParams,
                                    layout, $ionicPopup, $rootScope, userPetitions, activity, groups) {
                                    
+  $scope.placeholders = ['It\'s all about different perspectives. Be kind.',
+                          'Don\'t attack people. Understand them.',
+                          'Listen first. Then ask questions'];
+  $scope.placeholder = '';
+
+  $scope.$on('$ionicView.beforeEnter', function(){
+    var indexPlaceholder = JSON.parse( window.localStorage.getItem('indexPlaceholder'));
+    if (typeof indexPlaceholder === "undefined" || indexPlaceholder == null){
+      indexPlaceholder = 0;
+    }else{
+      indexPlaceholder = parseInt(indexPlaceholder);
+    }
+    $scope.placeholder = $scope.placeholders[indexPlaceholder%3];
+    indexPlaceholder++;
+    window.localStorage.setItem( 'indexPlaceholder', JSON.stringify(indexPlaceholder));
+  })
+  
   if (!$scope.userPetition) {
     $scope.showSpinner();
   }
@@ -30,6 +47,7 @@ angular.module('app.controllers').controller('getUserPetitionCtrl',function ($sc
   $scope.deleteClicked = false;
   $scope.showDeleteConfirm = function() {
     var confirmPopup = $ionicPopup.confirm({
+      cssClass: 'deleteConfirmTitle',
       title: 'Delete User Petition',
       template: 'Are you sure you want to delete this user petition?'
     });

@@ -1,4 +1,4 @@
-angular.module('app.controllers').controller('groups',function ($scope, groups, $state, $rootScope, $http, serverConfig, $location) {
+angular.module('app.controllers').controller('groups',function ($scope, groups, $state, $stateParams, $rootScope, $http, serverConfig, $location) {
   
   $scope.groupsGrupedByFirstLetter = [];
 
@@ -269,8 +269,17 @@ angular.module('app.controllers').controller('groups',function ($scope, groups, 
     $scope.path('/groups');
   }
 
-}).controller('groups.create',function ($scope, groups, profile, $location) {
+}).controller('groups.create',function ($scope, $stateParams, groups, profile, $location) {
 
+  $scope.$on('$ionicView.beforeEnter', function(){
+    if ($stateParams.fromWhere == 'menu')
+    {
+      $scope.fromMenu = true;
+    }else {
+      $scope.fromMenu = false;
+    }
+  });
+  
   $scope.data = {}
   profile.load().then(function(user){
     $scope.data = {
