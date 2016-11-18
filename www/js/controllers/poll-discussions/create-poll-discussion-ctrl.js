@@ -1,4 +1,4 @@
-angular.module('app.controllers').controller('createPollDiscussionCtrl',function ($scope, $stateParams,questions, $controller, $http, serverConfig, $rootScope) {
+angular.module('app.controllers').controller('createPollDiscussionCtrl',function ($scope, $stateParams,questions, $controller, $http, serverConfig, $rootScope, attachmentsService) {
   $controller('abstractCreatePollCtrl', {$scope: $scope});
   $scope.prepareGroupPicker(true)
   
@@ -23,15 +23,20 @@ angular.module('app.controllers').controller('createPollDiscussionCtrl',function
     var createDiscussionRequest = $http.post(serverConfig.url + '/api/v2/groups/'+groupID+'/polls', payload, headers)
     createDiscussionRequest.then(function(response){
       var discussionID = response.data.id
-      questions.publishPoll(discussionID).then(function(response){
-        $scope.hideSpinner();
-        $rootScope.showToast('Discussion successfully created!');
-        $rootScope.path('/question/news/'+response.data.id);
-      }, function(error){
-        $scope.hideSpinner();
-        console.log(error)
-        $scope.createContentAlert('Failed to publish discussion due to: '+JSON.stringify(error.data))
+      attachmentsService.add(discussionID, $scope.data.attachments).then(function(){
+
+        questions.publishPoll(discussionID).then(function(response){
+          $scope.hideSpinner();
+          $rootScope.showToast('Discussion successfully created!');
+          $rootScope.path('/question/news/'+response.data.id);
+        }, function(error){
+          $scope.hideSpinner();
+          console.log(error)
+          $scope.createContentAlert('Failed to publish discussion due to: '+JSON.stringify(error.data))
+        })
+
       })
+
     }, function(error){
       $scope.hideSpinner();
       if(error.status == 403)

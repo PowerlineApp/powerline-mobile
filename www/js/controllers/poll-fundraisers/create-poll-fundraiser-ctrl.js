@@ -1,4 +1,4 @@
-angular.module('app.controllers').controller('createPollFundraiserCtrl',function ($scope, $stateParams, $document, $controller, $rootScope, $q, questions, $http, serverConfig, SequentialAjax) {
+angular.module('app.controllers').controller('createPollFundraiserCtrl',function ($scope, $stateParams, $document, $controller, $rootScope, $q, questions, $http, serverConfig, SequentialAjax, attachmentsService) {
   $controller('abstractCreatePollCtrl', {$scope: $scope});
   $scope.prepareGroupPicker(true)
 
@@ -219,6 +219,10 @@ angular.module('app.controllers').controller('createPollFundraiserCtrl',function
       sqAjax.add(function(){
         return addCustomAmountToPayment(pollID, "I don't want to donate. Mark as read.")
       })
+
+      sqAjax.add(function(){
+          return attachmentsService.add(pollID, $scope.data.attachments)
+      })  
 
       sqAjax.whenDone().then(function(){
         questions.publishPoll(pollID).then(function(response){
