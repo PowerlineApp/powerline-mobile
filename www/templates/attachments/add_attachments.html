@@ -24,8 +24,6 @@
         <textarea ng-model="attachments.text[0]" maxlength="2500" placeholder="Attachment text here">
         </textarea>    
     </div>
-  </fieldset>
-  <fieldset class="add-post">
     <div style="width: 200px;" class="margin-v-20">
       <button class="btn-large btn-primary icon-left ion-plus-circled"
       ng-click="addImage()" ng-show="addImageButtonVisible()">
@@ -34,11 +32,29 @@
     </div>
 
     <div class="item" ng-repeat="imgURI in attachments.images track by $index">
-      <img style="width: 50%;" ng-src="{{imgURI}}">
-      <button class="button button-stable" style="float:right" ng-click="removeImage({{$index}})">
-        <i class="icon ion-trash-a"></i> Remove
+       <button style="float:right; position: relative; top: -21px; right: -23px;" 
+        class="button icon ion-close-circled button-clear"
+        ng-click="removeImage($index)">
+        </button>
+        <img style="width: 70%;" ng-src="{{imgURI}}">
+    </div>
+
+    <div style="width: 200px;" class="margin-v-20">
+      <button class="btn-large btn-primary icon-left ion-plus-circled"
+      ng-click="addVideo()" ng-show="addVideoButtonVisible()">
+        Add video
       </button>
     </div>
+    <div class="title-field" ng-repeat="videoURL in attachments.videos track by $index">
+        <button style="float:right; position: relative; top: -12px; right: -14px;" 
+        class="button icon ion-close-circled button-clear"
+        ng-click="removeVideo($index)">
+        </button>
+        <div style="overflow: hidden;">
+          <input ng-model="attachments.videos[$index]" maxlength="255" required placeholder="Youtube video URL" />
+        </div>
+    </div>
+
   </fieldset>
 </div>
   

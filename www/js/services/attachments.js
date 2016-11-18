@@ -59,7 +59,7 @@ angular.module('app.directives').directive('showAttachments', function (attachme
     };
 })
 
-angular.module('app.directives').directive('addAttachments', function (attachments, $ionicPopup) {
+angular.module('app.directives').directive('addAttachments', function (attachments, device, $ionicPopup) {
     return {
       restrict: 'E',
       scope: {},
@@ -112,7 +112,7 @@ angular.module('app.directives').directive('addAttachments', function (attachmen
         }
 
         $scope.addImage = function(){
-          if(!ionic.Platform.isAndroid() && !ionic.Platform.isIOS()){
+          if(!device.isSmartphone()){
             $scope.attachments.images.push('images/v2/logo.png')
           } else {
             navigator.camera.getPicture(function(img) {
@@ -129,7 +129,6 @@ angular.module('app.directives').directive('addAttachments', function (attachmen
               sourceType: navigator.camera.PictureSourceType.PHOTOLIBRARY
             });
           }
-
         }
 
         $scope.removeImage = function(imagePos){
@@ -152,6 +151,33 @@ angular.module('app.directives').directive('addAttachments', function (attachmen
           });
         }
 
+        $scope.addVideoButtonVisible = function(){
+          return canAddMoreContent()
+        }
+
+        $scope.addVideo = function(){
+          $scope.attachments.videos.push('')
+        }
+
+        $scope.removeVideo = function(videoPos){
+          var confirmPopup = $ionicPopup.confirm({
+            title: 'Remove video?',
+            cssClass: 'popup-by-ionic',
+            buttons: [{
+              text: 'No'
+            }, {
+              text: 'Yes',
+              type: 'button-assertive',
+              onTap: function(e) {
+                return (true)
+              }
+            }]
+          });
+          confirmPopup.then(function(res) {
+            if (res) 
+              $scope.attachments.videos.splice(parseInt(videoPos), 1)
+          });
+        }
       }
     }
 })
