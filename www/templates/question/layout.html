@@ -47,17 +47,11 @@
     <tab-panel>
       <ul class="header">
         <li ng-click="open($event)">Discussion</li>
-        <li ng-click="open($event)">Influences</li>
         <li ng-click="open($event)">More</li>
       </ul>
       <tabs>
         <tab><discussions id="q.id" entity="'poll'"></discussions></tab>
-        <tab>
-          <div ng-if="!loading">
-            <div ng-controller="question.influences" ng-include=" 'templates/question/influences.html' "></div>
-          </div>
-        </tab>
-        <tab><ng-include src="'templates/question/educational-context.html'"></ng-include></tab>
+        <tab><show-attachments content-item="q"></show-attachments></tab>
       </tabs>
     </tab-panel>
   </ion-content>

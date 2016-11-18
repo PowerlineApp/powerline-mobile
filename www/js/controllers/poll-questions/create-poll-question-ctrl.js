@@ -1,4 +1,4 @@
-angular.module('app.controllers').controller('createPollQuestionCtrl',function ($scope, $controller, questions, $rootScope, $q, SequentialAjax) {
+angular.module('app.controllers').controller('createPollQuestionCtrl',function ($scope, $controller, questions, $rootScope, $q, SequentialAjax, attachmentsService) {
   $controller('abstractCreatePollCtrl', {$scope: $scope});
   $scope.prepareGroupPicker(true)
   
@@ -47,6 +47,9 @@ angular.module('app.controllers').controller('createPollQuestionCtrl',function (
           return questions.addOptionToPoll(pollID, answer.answer_text)
         })
       })
+      sqAjax.add(function(){
+          return attachmentsService.add(pollID, $scope.data.attachments)
+      })     
       sqAjax.whenDone().then(function(){
         questions.publishPoll(pollID).then(function(response){
           $scope.hideSpinner();
