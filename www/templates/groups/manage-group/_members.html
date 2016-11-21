@@ -10,19 +10,16 @@
       </tr>
       <tr ng-repeat="member in group.groupMembers | orderBy:'username'">
         <td>
-          <span class="member-label">Username:</span> {{member.username}}<br />
           <span class="member-label">Name:</span> {{member.first_name}} {{member.last_name}}<br />
-          <span class="member-label">Email:</span> {{member.email}}<br/>
           <span class="member-label">Role:</span> {{member.user_role}}
         </td>
         
         <td class="actions">
           <button 
             ng-show="membershipIsPending(member)"
-            style="background-color: #84c0ff"
             class="button-small icon ion-ios-checkmark"
+            style="background-color: rgba(0,0,0,0); color: #5151ff"
             ng-click="approveMembership(member)">
-            Approve Membership
           </button>
           <button 
             ng-show="canBecameManager(member)"
@@ -41,7 +38,6 @@
             ng-show="canRemoveUser(member)"
             class="button-small icon ion-trash-b delete-action"
             ng-click="removeFromGroup(member)">
-            Remove from Group
           </button>
         </td>
       </tr>
