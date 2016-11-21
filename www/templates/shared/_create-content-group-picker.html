@@ -12,8 +12,7 @@
     <i class="icon-post"></i>
   </div>
   <ul class="choices" ng-show="data.openChoices">
-    <li ng-repeat="item in groups" ng-click="data.group = item;
-            data.openChoices = false;">
+    <li ng-repeat="item in groups" ng-click="chooseGroup(item)">
       <span>
         <fieldset class="avatar">
           <avatar-img img="item.getIconWhite()" text="item.official_name"></avatar-img>

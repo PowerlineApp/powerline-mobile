@@ -5,9 +5,14 @@ angular.module('app.controllers').controller('abstractCreatePollCtrl',function (
     $scope.groupID = $stateParams.groupID;
     $scope.groups = groups.groupsWhereUserCanCreateContent(isLeaderContent);
     if ($scope.groupID) 
-      $scope.data.group = groups.getGroup($scope.groupID)
+      $scope.chooseGroup(groups.getGroup($scope.groupID))
     else 
       $scope.data.openChoices = true;
+  }
+
+  $scope.chooseGroup = function(group){
+    $scope.data.group = group
+    $scope.data.openChoices = false;
   }
 
   $scope.validate = function(){

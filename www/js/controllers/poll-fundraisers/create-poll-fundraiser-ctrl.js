@@ -1,6 +1,35 @@
-angular.module('app.controllers').controller('createPollFundraiserCtrl',function ($scope, $stateParams, $document, $controller, $rootScope, $q, questions, $http, serverConfig, SequentialAjax, attachmentsService) {
+angular.module('app.controllers').controller('createPollFundraiserCtrl',function ($scope, $stateParams, $document, $controller, $rootScope, $q, questions, $http, serverConfig, SequentialAjax, attachmentsService, $ionicPopup) {
   $controller('abstractCreatePollCtrl', {$scope: $scope});
   $scope.prepareGroupPicker(true)
+
+  $scope.chooseGroup = function(group){
+    $scope.data.group = group
+    $scope.data.openChoices = false;
+    
+    $scope.showSpinner()
+    group.loadBankAccount().then(function(){
+      $scope.hideSpinner()
+      if(group.bankAccount)
+        return false
+
+        $ionicPopup.show({
+          template: 'Group "'+group.official_name+'" does not have bank account set up yet. You must set up bank account first in order to successfully create a fundraiser.',
+          title: 'New Group Fundraiser',
+          cssClass: 'popup-by-ionic',
+          scope: $scope,
+          buttons: [
+            { text: 'Cancel' },
+            {
+              text: 'Setup Bank Account Now',
+              type: 'button-positive',
+              onTap: function(e) {
+                $rootScope.path('/manage-group/'+group.id)
+              }
+            }
+          ]
+        });
+    })
+  }
 
   $scope.data.title_text = ''
   $scope.data.description_text = ''
