@@ -12,7 +12,7 @@ angular.module('app.controllers').controller('createPollEventCtrl',function ($sc
   $scope.data.title = ''
   $scope.data.desc = ''
 
-  $scope.answers = [{desc: '', placeholder: 'Yes, I can make it'}, {desc: '', placeholder: 'No, I can\'t make it'}]
+  $scope.answers = [{desc: 'Yes, I can make it', placeholder: 'Yes, I can make it'}, {desc: 'No, I can\'t make it', placeholder: 'No, I can\'t make it'}]
   $scope.removeAnswer = function(index){
     if($scope.answers.length <= 2)
       $scope.validationAlert('You must provide at least two answers.')
