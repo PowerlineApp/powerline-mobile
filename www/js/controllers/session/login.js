@@ -30,7 +30,7 @@ angular.module('app.controllers').controller('session.login',function ($scope, h
       function (status) {
         $scope.hideSpinner();
         if (!status) {
-          $scope.alert('Check your connection', null, 'Error', 'OK');
+          $scope.alert('Wrong username or password, or no internet connection', null, 'Error', 'OK');
         } else {
           $scope.alert('Incorrect username or password', null, 'Error', 'OK');
         }
