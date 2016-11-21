@@ -13,6 +13,7 @@
         </div>
         <textarea ng-model="data.petition_body" maxlength="2500" name="petition_body"
                   required placeholder="Type your message here"
+                  i-autocomplete
                   ng-init="data.chars_left = 2500"
                   ng-change="data.chars_left = 2500 - data.petition_body.length"></textarea>
     </fieldset>
