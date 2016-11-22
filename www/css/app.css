@@ -1932,7 +1932,7 @@ ion-header-bar .button.back-button.header-item {
     color: #fff; }
 
 .new-post-window {
-  width: 230px;
+  width: 260px;
   position: fixed;
   z-index: 11;
   top: 45px;
