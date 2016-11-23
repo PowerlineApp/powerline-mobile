@@ -9,6 +9,10 @@
       on-refresh="pullToRefresh()">
     </ion-refresher>
     <section class="margin-8">
+      <div ng-show="noRepresentatives()">
+        We can link you to your Elected Representatives in the US, CA, MX, GB, AU, and NZ only. We also support linking to local elected leaders worldwide.
+      </div>
+
       <ul class="profiles-list-two" ng-repeat="group in items" style="margin: 0;">
         <li class="title" >{{ group.title}}</li>
         <li ng-repeat="representative in group.representatives" ng-click="navigateToProfile(representative)">

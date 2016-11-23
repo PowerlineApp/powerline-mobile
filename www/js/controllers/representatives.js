@@ -1,6 +1,9 @@
 angular.module('app.controllers').controller('representatives',function ($scope, representatives, $rootScope) {
 
   $scope.items = [];
+  $scope.noRepresentatives = function(){
+    return $scope.items.length == 0
+  }
 
   function loadRepresentatives(showSpinner){
     $scope.items = representatives.getRepresentativesGroups();
