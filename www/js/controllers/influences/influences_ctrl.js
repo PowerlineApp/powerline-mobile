@@ -18,9 +18,6 @@ angular.module('app.controllers').controller('influences',function ($scope, $loc
   }
 
   $scope.view = influencesCD.view;
-  $scope.isEmpty = function () {
-    return !follows.size();
-  };
 
   $scope.pullToRefresh = function(){
     loadFollowsFromServer();
@@ -38,7 +35,7 @@ angular.module('app.controllers').controller('influences',function ($scope, $loc
   
   //if this page is opened from menu or there is not data, we should refresh data
   $scope.$on('$ionicView.enter', function(){
-    if($scope.isEmpty()  || follows.containsMockUsers)
+    if(!follows.size()  || follows.containsMockUsers)
       loadFollowsFromServer(true);
   });
   

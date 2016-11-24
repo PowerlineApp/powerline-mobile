@@ -6,7 +6,7 @@
     <a class="button button-icon ion-android-add-circle button-clear" href="#/influences/add"></a>
   </ion-nav-buttons>
   
-  <section class="tab two bar bar-subheader" ng-controller="influences.tabs" ng-show="!isEmpty()">
+  <section class="tab two bar bar-subheader" ng-controller="influences.tabs">
     <a ng-click="switchView('following')" ng-class="tabLinkClass('following')">Following</a>
     <a ng-click="switchView('followers')" ng-class="tabLinkClass('followers')">Followers</a>
   </section>
