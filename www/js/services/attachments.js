@@ -33,7 +33,7 @@ angular.module('app.services').service('attachmentsService', function ($http, se
     return $http.post(serverConfig.url + '/api/v2/polls/'+contentItemID+'/educational-contexts', payload, headers)  }
 
   service.addImage = function(contentItemID, image){
-    var payload = JSON.stringify({type: 'photo', content: image})
+    var payload = JSON.stringify({type: 'image', content: image})
     var headers = {headers: {'Content-Type': 'application/json'}}
     return $http.post(serverConfig.url + '/api/v2/polls/'+contentItemID+'/educational-contexts', payload, headers)
   }
