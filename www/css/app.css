@@ -3239,7 +3239,7 @@ a.follow-action {
         font-family: "Lato Bold"; }
       .manage-group-sections .manage-group-section .subscription-levels .subscription-level .desc .audience-and-size {
         color: #788389;
-        font-size: 5px;
+        font-size: 10px;
         margin-top: 4px;
         font-weight: 700; }
   .manage-group-sections .manage-group-section ion-list .item.item-checkbox {

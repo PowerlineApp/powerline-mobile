@@ -133,6 +133,11 @@ angular.module('app.controllers').controller('manageGroupCtrl',function ($scope,
     if($scope.isActiveSubscriptionLevel(planName))
       return false
 
+    if(planName != $scope.groups.subscriptionLevels.FREE && !$scope.group.paymentCard){
+      $scope.addPaymentCard(planName)
+      return false
+    }
+
     var currentPlanNameHuman = $scope.group.subscriptionLevel
     var newPlanNameHuman = planName
 
@@ -196,14 +201,25 @@ angular.module('app.controllers').controller('manageGroupCtrl',function ($scope,
   }  
 
   $scope.showAddPaymentCardPopup = false;
-  $scope.addPaymentCard = function(){
+  $scope.changeToThisPlanAfterCardAdded = null
+  $scope.addPaymentCard = function(planName){
+    if(planName)
+      $scope.changeToThisPlanAfterCardAdded = planName
+    else
+      $scope.changeToThisPlanAfterCardAdded = null
+
     $scope.showAddPaymentCardPopup = true;
     $ionicScrollDelegate.scrollTo(0, 80, true);
   }
 
   $scope.paymentCardAdded = function(){
-    $scope.group.loadPaymentCard()
     $scope.showToast('Payment card successfully added.')
+    $scope.group.loadPaymentCard().then(function(){
+      if($scope.changeToThisPlanAfterCardAdded){
+        $scope.changeSubscriptionLevel($scope.changeToThisPlanAfterCardAdded)
+        $scope.changeToThisPlanAfterCardAdded = null
+      }
+    })
   }
 
   $scope.deletePaymentCard = function(){

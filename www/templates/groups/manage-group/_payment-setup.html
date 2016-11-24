@@ -28,32 +28,6 @@
         Remove Account
       </button>
     </div>
-
-    <div style="padding-top: 10px;">
-      <div ng-hide="group.paymentCard">
-        This group has no associated payment card.
-      </div>
-
-      <div ng-show="group.paymentCard">
-        This group has following payment card:<br/>
-        Card issued by: {{group.paymentCard.brand}}<br />
-        Card number ends with: {{group.paymentCard.last4}}
-      </div>
-    </div>
-
-    <div class="save-button-holder" style="margin-top: 11px;">
-      <button 
-        ng-click="addPaymentCard()"
-        class="button btn-primary">
-        {{group.paymentCard ? 'Change' : 'Add'}}  Payment Card
-      </button>
-      <button 
-      ng-show="group.paymentCard"
-        ng-click="deletePaymentCard()"
-        class="button btn-primary delete-action">
-        Remove Card
-      </button>
-    </div>
   </div>
 </div>
 
@@ -61,8 +35,3 @@
   cancel="showAddBankAccountPopup=false"
   completed="showAddBankAccountPopup=false;bankAccountAdded()"
   group="group"></group-bank-account-form>
-
-<group-payment-card-form ng-show="showAddPaymentCardPopup"
-  cancel="showAddPaymentCardPopup=false"
-  completed="showAddPaymentCardPopup=false;paymentCardAdded()"
-  group="group"></group-payment-card-form>
