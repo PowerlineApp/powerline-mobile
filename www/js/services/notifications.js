@@ -33,7 +33,7 @@ angular.module('app.services').factory('notifications', function ($window, devic
       return false // we are in browser (or plugin not installed)
 
     push = $window.PushNotification.init({
-      "android": {"senderID": serverConfig.senderID, "icon": "notification_icon"},
+      "android": {"senderID": serverConfig.senderID},
       "ios": {"alert": "true", "badge": "true", "sound": "true", "categories": {
         // https://github.com/PowerlineApp/powerline-mobile/issues/226 
         "comment-mentioned": {
