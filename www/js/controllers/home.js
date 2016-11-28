@@ -341,7 +341,7 @@ angular.module('app.controllers').directive('iActivity', function ($rootScope, q
         }
       };
 
-      // if($scope.activity.get('entity').id == 239)
+      // if($scope.activity.get('entity').id == 491)
       //     console.log(JSON.stringify($scope.activity))
       // else return
 
