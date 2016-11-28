@@ -362,6 +362,28 @@ angular.module('app.services').factory('GroupModel', function(groupsInvites, $ht
         that.loadSections()
       })
     }
+
+    this.loadUserContentSettings = function(){
+      var that = this
+      return $http.get(serverConfig.url + '/api/v2/groups/'+this.id+'/micro-petitions-config').then(function(response){
+        that.petition_percent = response.data.petition_percent || 10
+        that.petition_per_month = response.data.petition_per_month || 30
+        that.petition_duration = response.data.petition_duration || 7
+      })           
+    }
+
+    this.updateUserContentSettings = function(){
+      var that = this
+      var payload = JSON.stringify({petition_percent: this.petition_percent, 
+        petition_per_month: this.petition_per_month, 
+        petition_duration: this.petition_duration})
+      var headers = {headers: {'Content-Type': 'application/json'}}
+      return $http.put(serverConfig.url + '/api/v2/groups/'+this.id+'/micro-petitions-config', payload, headers).then(function(response){
+        that.petition_percent = response.data.petition_percent || 10
+        that.petition_per_month = response.data.petition_per_month || 30
+        that.petition_duration = response.data.petition_duration || 7
+      })    
+    }
   }
 
   return model

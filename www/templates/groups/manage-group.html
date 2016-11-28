@@ -18,6 +18,7 @@
       <div ng-include="'templates/groups/manage-group/_group-permissions.html'"></div>
       <div ng-include="'templates/groups/manage-group/_members.html'"></div>
       <div ng-include="'templates/groups/manage-group/_sections.html'"></div>
+      <div ng-show="usingPaidSubscription()" ng-include="'templates/groups/manage-group/_user-content-settings.html'"></div>
       <div ng-include="'templates/groups/manage-group/_group-invites.html'"></div>
     </section>
 
