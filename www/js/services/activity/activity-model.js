@@ -1,5 +1,5 @@
 angular.module('app.services').factory('ActivityModel',
-  function (JsModel, groups, $http, follows, iStorage, serverConfig, session, userPetitions, petitions, posts) {
+  function (JsModel, groups, $http, follows, iStorage, serverConfig, session, userPetitions, petitions, posts, attachmentsService) {
 
    return JsModel.extend({
       icons: {
@@ -48,6 +48,10 @@ angular.module('app.services').factory('ActivityModel',
         return this.get('entity').type
       },
 
+      hasAttachments: function(){
+        return this.attachment_image || this.attachment_video
+      },
+
       prepare: function () {
         if(this.dataType() == 'user-petition')
           $.extend(this, new UserPetitionMixin(userPetitions, groups))
@@ -59,6 +63,8 @@ angular.module('app.services').factory('ActivityModel',
           $.extend(this, new PollOtherMixin(serverConfig, $http))
         else if(this.dataType() == 'post')
           $.extend(this, new PostMixin(posts, groups))
+
+        attachmentsService.prepareActivityItemAttachments(this)
       },
       setRead: function () {
         this.refreshPriorityZone()

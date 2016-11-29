@@ -59,6 +59,25 @@ angular.module('app.services').service('attachmentsService', function ($http, se
    })
   }
 
+  service.prepareActivityItemAttachments = function(aItem){
+    aItem.attachment_image = null;
+    aItem.attachment_video = null;
+
+    if(!(aItem.get('poll') && aItem.get('poll').educational_context))
+      return false
+
+    _(aItem.get('poll').educational_context).each(function (eduItem) {
+      // if there are multiple photos or videos, take first one
+      if(eduItem.type  == 'image' && aItem.attachment_image == null)
+        aItem.attachment_image = eduItem
+      
+      if(eduItem.type  == 'video' && aItem.attachment_video == null){
+        eduItem.preview = youtube.generatePreviewLink(youtube.parseId(eduItem.text));
+        aItem.attachment_video = eduItem
+      }
+    })
+  }
+
   return service
 })
 

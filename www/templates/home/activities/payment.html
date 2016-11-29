@@ -25,7 +25,8 @@
       bo-html="description" 
       ng-click="navigateToActivity(activity, null, $event)" i-content-link>
     </p>
-    <ng-include src="'templates/home/activities/_link-preview-metadata.html'" ng-show="activity.hasLinkPreviewMetadata()">
+    <ng-include src="'templates/home/activities/_attachments.html'" ng-show="activity.hasAttachments()"></ng-include>
+    <ng-include src="'templates/home/activities/_link-preview-metadata.html'" ng-show="activity.hasLinkPreviewMetadata()"></ng-include>
   </div>
   <div class="item-footer">
     <div class="control" ng-click="navigateToActivity(activity)"><a>Pay</a></div>
