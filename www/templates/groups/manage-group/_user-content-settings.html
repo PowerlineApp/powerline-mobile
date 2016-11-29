@@ -4,7 +4,7 @@
   <div class="content" ng-show="isExpanded('user-content-settings')">
     <div>
       <div class="label">
-        Limit of user petitions and posts per month (choose value between 1 and 1000)
+        Limit of user petitions and posts per month<br/>(choose value between 1 and 1000)
       </div>
       <input 
         type="number"
@@ -12,15 +12,15 @@
         ng-model="group.petition_per_month" 
         maxlength="4" />
       <div class="label">
-        Quorum percentage (choose value between 0 an 50)
+        Quorum percentage<br/>(choose value between 1 an 50)
       </div>
       <input 
         type="number"
         style="width: 100px"
         ng-model="group.petition_percent" 
-        maxlength="2" /> &#37;
+        maxlength="2" />
       <div class="label">
-        Quorum duration in days
+        Quorum duration in days<br/>(choose value between 1 an 30)
       </div>
       <input 
         type="number"

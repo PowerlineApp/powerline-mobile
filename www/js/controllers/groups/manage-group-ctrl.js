@@ -626,30 +626,17 @@ angular.module('app.controllers').controller('manageGroupCtrl',function ($scope,
   $scope.usingPaidSubscription = function(){
     return $scope.group.subscriptionLevelIsFree && !$scope.group.subscriptionLevelIsFree()
   }
-  
   $scope.updateUserContentSettings = function(){
-    if($scope.group.petition_per_month == null){
-      $scope.validationAlert('Limit of user petitions and posts per month cannot be blank')
-      return false
-    }
     if($scope.group.petition_per_month < 1 || 1000 < $scope.group.petition_per_month ){
       $scope.validationAlert('Limit of user petitions and posts must be between 1 and 1000')
       return false
     }  
-    if($scope.group.petition_percent == null){
-      $scope.validationAlert('Quorum percentage cannot be blank')
-      return false
-    }  
-    if($scope.group.petition_percent < 0 || 50 < $scope.group.petition_percent ){
-      $scope.validationAlert('Quorum percentage must be between 0 and 50')
+    if($scope.group.petition_percent < 1 || 50 < $scope.group.petition_percent ){
+      $scope.validationAlert('Quorum percentage must be between 1 and 50')
       return false
     }    
-    if($scope.group.petition_duration == null){
-      $scope.validationAlert('Quorum duration cannot be blank')
-      return false
-    }  
-    if($scope.group.petition_duration < 0){
-      $scope.validationAlert('Quorum duration must be positive integer')
+    if($scope.group.petition_duration < 1 || 30 < $scope.group.petition_duration){
+      $scope.validationAlert('Quorum duration must be between 1 and 30')
       return false
     }    
 
