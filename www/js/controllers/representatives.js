@@ -22,7 +22,9 @@ angular.module('app.controllers').controller('representatives',function ($scope,
   }
   
   $scope.navigateToProfile = function (item) {
-    $scope.path('/representative/' + (item.representative ? item.representative.id : 0) + '/' + item.storage_id);
+    var representativeID = item.representative ? item.representative.id : 0
+    var ciceroID = item.storage_id
+    $scope.path('/representative/' + representativeID + '/' +ciceroID );
   };
 
   $scope.pullToRefresh = function(){
