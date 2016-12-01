@@ -30,7 +30,6 @@ angular.module('app.controllers')
     });
 
     $scope.select = function (option) {
-      console.log(option)
       $scope.data.option = option;
       if (option.payment_amount || (option.is_user_amount  && option.value != "I don't want to donate. Mark as read.")) {
         $scope.data.showCardsInfo = true;
