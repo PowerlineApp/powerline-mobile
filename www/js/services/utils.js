@@ -4,8 +4,13 @@ angular.module('app.services').factory('youtube',function () {
 
   return {
     parseId: function (url) {
+      var yid = null
       //noinspection JSUnresolvedFunction
-      return (/(&|\?)v=(.+?)(&|$)/.exec((url || '').trimRight()) || [undefined, undefined, null])[2];
+      if(url.indexOf('youtu.be') >= 0){ // https://youtu.be/iOmgD_aCSPM
+        yid =  _.last(url.split('/'))
+      } else // https://www.youtube.com/watch?v=iOmgD_aCSPM
+        yid =  (/(&|\?)v=(.+?)(&|$)/.exec((url || '').trimRight()) || [undefined, undefined, null])[2];
+      return yid
     },
 
     generatePreviewLink: function (id, previewId) {
