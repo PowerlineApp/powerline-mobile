@@ -20,10 +20,12 @@ angular.module('app.controllers').controller('question',function ($scope, $locat
       $scope.subview = optionsSubview;
     }
 
-    $scope.answer_message = iStorageMemory.get('question-answered-' + $scope.q.id);
-    if (!$scope.answer_message) {
-      $scope.answer_message = question.is_answered ? 'You answered' : ' You did not answer';
-    }
+    $scope.answer_message = null
+    if (question.answer_entity) 
+      $scope.answer_message = 'You answered \"'+ question.answer_entity.option.value + '\"'
+    else
+      $scope.answer_message = 'You did not answer'
+
     layout.focus($location.search().focus);
   }, function (error) {
     $scope.alert(error, function () {

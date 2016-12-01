@@ -55,7 +55,7 @@
       </section>
 
       <section class="info-message" ng-show="q.is_answered" style="padding: 15px;">
-        <p>You RSVP’d</p>
+        <p>You RSVP’d ("{{q.answer_entity.option.value}}")</p>
         <button class="btn-medium btn-primary" ng-click="addToCalendar()">Re-add to calendar</button>
       </section>
 
