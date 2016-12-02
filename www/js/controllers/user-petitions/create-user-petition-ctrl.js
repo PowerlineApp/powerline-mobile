@@ -28,6 +28,7 @@ angular.module('app.controllers').controller('createUserPetitionCtrl',function (
     userPetitions.create($scope.data.group.id, title, body).then(function(response){
       $scope.hideSpinner();
       $rootScope.showToast('User petition successfully created!');
+      $scope.updateActivityNewsfeed()
       $rootScope.path('/user-petition/'+response.data.id);
     }).catch(function(response){
       $scope.hideSpinner();

@@ -266,6 +266,7 @@ angular.module('app.controllers').controller('createPollFundraiserCtrl',function
         questions.publishPoll(pollID).then(function(response){
           $scope.hideSpinner();
           $rootScope.showToast('Fundraiser successfully created!');
+          $scope.updateActivityNewsfeed()
           if(isCrowdfunding)
             $rootScope.path('/payment-polls/crowdfunding-payment-request/'+response.data.id);
           else

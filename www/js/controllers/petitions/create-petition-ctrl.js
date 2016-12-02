@@ -23,6 +23,7 @@ angular.module('app.controllers').controller('createPetitionCtrl',function ($sco
     petitions.create($scope.data.title,$scope.data.petition_body,groupID, $scope.sectionsToPublishIn(), $scope.data.attachments).then(function(petitionID){
         $scope.hideSpinner();
         $rootScope.showToast('Petition successfully created!');
+        $scope.updateActivityNewsfeed()
         $rootScope.path('/petition/'+petitionID);
     }, function(error){
       $scope.hideSpinner();

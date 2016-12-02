@@ -1,4 +1,4 @@
-angular.module('app.controllers').controller('abstractCreatePollCtrl',function ($scope, $stateParams, groups, $ionicPopup, $q) {
+angular.module('app.controllers').controller('abstractCreatePollCtrl',function ($scope, $stateParams, groups, $ionicPopup, $q, $rootScope, activity) {
   $scope.data = {}
 
   $scope.prepareGroupPicker = function(isLeaderContent){
@@ -20,6 +20,9 @@ angular.module('app.controllers').controller('abstractCreatePollCtrl',function (
   }
   $scope.send = function(){
     // implement in inherited controller
+  }
+  $scope.updateActivityNewsfeed = function(){
+    activity.youShouldRefreshActivities()
   }
 
   $scope.sendButtonClicked = function(doNotShowMemberCountAlert){

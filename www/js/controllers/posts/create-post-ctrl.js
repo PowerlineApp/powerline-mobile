@@ -38,6 +38,7 @@ angular.module('app.controllers').controller('createPostCtrl',function ($scope, 
     posts.create($scope.data.group.id, $scope.data.post_text).then(function(response){
       $scope.hideSpinner();
       $rootScope.showToast('Post successfully created!');
+      $scope.updateActivityNewsfeed()
       $rootScope.path('/post/'+response.data.id);
     }).catch(function(response){
       $scope.hideSpinner();

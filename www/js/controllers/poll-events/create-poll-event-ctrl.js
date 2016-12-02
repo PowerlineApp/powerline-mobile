@@ -110,6 +110,7 @@ angular.module('app.controllers').controller('createPollEventCtrl',function ($sc
         questions.publishPoll(pollID).then(function(response){
           $scope.hideSpinner();
           $rootScope.showToast('Event successfully created!');
+          $scope.updateActivityNewsfeed()
           $rootScope.path('/leader-event/'+response.data.id);
         })
       })

@@ -54,6 +54,7 @@ angular.module('app.controllers').controller('createPollQuestionCtrl',function (
         questions.publishPoll(pollID).then(function(response){
           $scope.hideSpinner();
           $rootScope.showToast('Poll successfully created!');
+          $scope.updateActivityNewsfeed()
           $rootScope.path('/questions/'+response.data.id);
         })
       })

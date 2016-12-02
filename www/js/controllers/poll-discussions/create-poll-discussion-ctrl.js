@@ -47,6 +47,7 @@ angular.module('app.controllers').controller('createPollDiscussionCtrl',function
         questions.publishPoll(discussionID).then(function(response){
           $scope.hideSpinner();
           $rootScope.showToast('Discussion successfully created!');
+          $scope.updateActivityNewsfeed()
           $rootScope.path('/question/news/'+response.data.id);
         }, function(error){
           $scope.hideSpinner();
