@@ -106,6 +106,15 @@ angular.module('app.services').factory('groups',function ($resource, serverConfi
         })
     },
 
+    groupsWhereUserCanInviteSupporters: function(excludeGroupID){
+      result = this.groupsJoinedByCurrentUser().filter(function(g){
+        return g.groupTypeIsCommon() && g.id != excludeGroupID
+      })
+
+      return _(result).sortBy(function (group) {
+        return -group.groupTypeAsInteger();
+      });
+    },
 
     groupsJoinedByCurrentUser: function () {
       var result = service.getAllUserGroups().filter(function(g){

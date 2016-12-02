@@ -384,6 +384,20 @@ angular.module('app.services').factory('GroupModel', function(groupsInvites, $ht
         that.petition_duration = response.data.petition_duration || 7
       })    
     }
+
+    this.inviteSupportersToThisGroup = function(opts){
+      var data = {}
+      if(opts.postID)
+        data.post = opts.postID
+      else if (opts.userPetitionID)
+        data.user_petition = opts.userPetitionID
+      else 
+        throw new Error('inviteSupportersToThisGroup: missing target ID (either postID or userPetitionID)')
+
+      var payload = JSON.stringify(data)
+      var headers = {headers: {'Content-Type': 'application/json'}}
+      return $http.put(serverConfig.url + '/api/v2/groups/'+this.id+'/invites', payload, headers)
+    }
   }
 
   return model

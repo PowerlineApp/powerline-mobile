@@ -51,7 +51,10 @@
           <i class="button-assertive icon ion-flash action-icon">
           </i>
         </a>
-
+        <a ng-show="canInviteSupporters()" ng-click="inviteSupporters()">
+          <i class="button-assertive icon ion-speakerphone action-icon">
+          </i>
+        </a>
       </div>
       
       <h1 ng-bind="post.title" ng-show="post.title"></h1>

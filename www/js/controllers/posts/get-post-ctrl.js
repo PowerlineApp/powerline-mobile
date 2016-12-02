@@ -115,4 +115,50 @@ angular.module('app.controllers').controller('getPostCtrl',function ($scope, top
       }
     })
   }
+
+  $scope.canInviteSupporters = function(){
+    if(!$scope.post)
+      return false
+    var isBoosted = $scope.post.isBoosted()
+    var isOwner = $scope.post.ownedByCurrentUser()
+    var hasAtLeastOneOtherGroup = groups.groupsWhereUserCanInviteSupporters($scope.post.groupID).length > 0
+    return isOwner && isBoosted && hasAtLeastOneOtherGroup
+  }
+
+  $scope.invite = {}
+  $scope.inviteSupporters = function(){
+
+    var msg = "<div style='padding-bottom:11px'>Invite this post's supporters to join a group. This can only be done once.</div>"
+    msg += '<ion-list>'
+    groups.groupsWhereUserCanInviteSupporters($scope.post.groupID).forEach(function(g){
+      msg += '<ion-radio ng-model="invite.groupID" ng-value="\''+g.id+'\'">'+g.official_name+'</ion-radio>'
+    })
+    
+    msg += '</ion-list>'
+    var invitePopup = $ionicPopup.confirm({
+      title: 'Invite Supporters to Group',
+      cssClass: 'popup-by-ionic publish-content',
+      content: msg,
+      scope: $scope,
+      buttons: [
+        { text: 'Cancel' },
+        {
+          text: '<b>Invite</b>',
+          type: 'button-positive',
+          onTap: function(e) {
+            if ($scope.invite.groupID){
+              var g = groups.get($scope.invite.groupID)
+              $scope.showSpinner()
+              g.inviteSupportersToThisGroup({postID : $scope.post.id}).then(function(){
+                $scope.hideSpinner()
+                $scope.showToast('Invitations to join group "'+g.official_name+'" were sent to supporters.')
+              })
+            } else
+              e.preventDefault();
+            return(true)
+          }
+        }
+      ]
+    });
+  }
 })
