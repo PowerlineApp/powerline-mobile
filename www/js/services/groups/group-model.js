@@ -385,18 +385,20 @@ angular.module('app.services').factory('GroupModel', function(groupsInvites, $ht
       })    
     }
 
-    this.inviteSupportersToThisGroup = function(opts){
+    this.inviteSupporters = function(contentItem){
       var data = {}
-      if(opts.postID)
-        data.post = opts.postID
-      else if (opts.userPetitionID)
-        data.user_petition = opts.userPetitionID
+      if(contentItem.constructor.name == 'PostInstance')
+        data.post = contentItem.id
+      else if (contentItem.constructor.name == 'UserPetitionInstance')
+        data.user_petition = contentItem.id
       else 
-        throw new Error('inviteSupportersToThisGroup: missing target ID (either postID or userPetitionID)')
+        throw new Error('inviteSupportersToThisGroup: unsupported content item provided: '+contentItem.constructor.name)
 
       var payload = JSON.stringify(data)
       var headers = {headers: {'Content-Type': 'application/json'}}
-      return $http.put(serverConfig.url + '/api/v2/groups/'+this.id+'/invites', payload, headers)
+      return $http.put(serverConfig.url + '/api/v2/groups/'+this.id+'/invites', payload, headers).then(function(){
+        contentItem.setSupportersWereInvited()
+      })
     }
   }
 

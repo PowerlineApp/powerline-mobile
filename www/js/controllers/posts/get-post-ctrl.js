@@ -119,10 +119,11 @@ angular.module('app.controllers').controller('getPostCtrl',function ($scope, top
   $scope.canInviteSupporters = function(){
     if(!$scope.post)
       return false
+    var alreadyInvited = $scope.post.supportersWereInvited()
     var isBoosted = $scope.post.isBoosted()
     var isOwner = $scope.post.ownedByCurrentUser()
     var hasAtLeastOneOtherGroup = groups.groupsWhereUserCanInviteSupporters($scope.post.groupID).length > 0
-    return isOwner && isBoosted && hasAtLeastOneOtherGroup
+    return !alreadyInvited && isOwner && isBoosted && hasAtLeastOneOtherGroup
   }
 
   $scope.invite = {}
@@ -149,7 +150,7 @@ angular.module('app.controllers').controller('getPostCtrl',function ($scope, top
             if ($scope.invite.groupID){
               var g = groups.get($scope.invite.groupID)
               $scope.showSpinner()
-              g.inviteSupportersToThisGroup({postID : $scope.post.id}).then(function(){
+              g.inviteSupporters($scope.post).then(function(){
                 $scope.hideSpinner()
                 $scope.showToast('Invitations to join group "'+g.official_name+'" were sent to supporters.')
               })

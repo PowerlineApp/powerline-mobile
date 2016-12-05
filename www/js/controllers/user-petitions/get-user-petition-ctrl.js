@@ -115,10 +115,11 @@ angular.module('app.controllers').controller('getUserPetitionCtrl',function ($sc
   $scope.canInviteSupporters = function(){
     if(!$scope.userPetition)
       return false
+      var alreadyInvited = $scope.userPetition.supportersWereInvited()
     var isBoosted = $scope.userPetition.isBoosted()
     var isOwner = $scope.userPetition.ownedByCurrentUser()
     var hasAtLeastOneOtherGroup = groups.groupsWhereUserCanInviteSupporters($scope.userPetition.groupID).length > 0
-    return isOwner && isBoosted && hasAtLeastOneOtherGroup
+    return !alreadyInvited && isOwner && isBoosted && hasAtLeastOneOtherGroup
   }
 
   $scope.invite = {}
@@ -145,7 +146,7 @@ angular.module('app.controllers').controller('getUserPetitionCtrl',function ($sc
             if ($scope.invite.groupID){
               var g = groups.get($scope.invite.groupID)
               $scope.showSpinner()
-              g.inviteSupportersToThisGroup({userPetitionID : $scope.userPetition.id}).then(function(){
+              g.inviteSupporters($scope.userPetition).then(function(){
                 $scope.hideSpinner()
                 $scope.showToast('Invitations to join group "'+g.official_name+'" were sent to supporters.')
               })

@@ -38,6 +38,7 @@ angular.module('app.services').factory('posts',function ($q, session, serverConf
       this.title = data.title
       this.id = data.id
       this.groupID = data.group.id
+      this.supporters_were_invited = data.supporters_were_invited
     }
 
     this._load(rawData)
@@ -76,6 +77,14 @@ angular.module('app.services').factory('posts',function ($q, session, serverConf
       }
       else 
         return null
+    }
+
+    this.supportersWereInvited = function(){
+      return this.supporters_were_invited
+    }
+    
+    this.setSupportersWereInvited = function(){
+      this.supporters_were_invited = true
     }
 
     this.ownedByCurrentUser = function(){
