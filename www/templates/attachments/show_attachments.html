@@ -16,10 +16,12 @@
       <ul i-toggle-elem class="images"
           ng-class="{two: contentItem.attachments.image.length == 2, three: contentItem.attachments.image.length == 3}">
           <li ng-repeat="item in contentItem.attachments.image">
-              <img ng-src="{{ item.imageSrc }}" />
+              <img ng-src="{{ item.imageSrc }}" ng-click="showInModalImageViewer(item.imageSrc)" />
           </li>
       </ul>
   </div>
+
+  <ng-include src="'templates/shared/_modal-image-viewer.html'"></ng-include>
 
   <div class="group-1" i-groups="0" ng-show="contentItem.attachments.video.length">
       <h3 ng-click="toggle()" >Videos <i></i></h3>

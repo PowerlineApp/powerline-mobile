@@ -1,5 +1,5 @@
-<div ng-show="activity.attachment_image" ng-click="navigateToActivity(activity)">
-  <img style="width: 100%;" ng-src="{{activity.attachment_image.imageSrc}}">
+<div ng-show="activity.attachment_image">
+  <img style="width: 100%;" ng-src="{{activity.attachment_image.imageSrc}}" ng-click="showInModalImageViewer(activity.attachment_image.imageSrc)">
 </div>
 <div class="video-item" ng-show="activity.attachment_video">
   <youtube link="activity.attachment_video.text"></youtube>

@@ -1,10 +1,10 @@
 angular.module('app.controllers').controller('home', function ($scope, $timeout, socialActivity, homeCtrlParams,
-        profile, activity, groups, $ionicScrollDelegate, favorite, $ionicPlatform) {
+        profile, activity, groups, $ionicScrollDelegate, favorite, $ionicPlatform, $rootScope) {
   $scope.filter = homeCtrlParams.filter;
 
   $scope.isLoadMore = false;
   var activityCollection = activity.getActivities();
-
+  
   $scope.changeGroupFilter = function(group){
     var isDifferentGroupThanCurrentlyActive = $scope.filter.selectedGroup != group
     if(!$scope.isSpinnerShow && isDifferentGroupThanCurrentlyActive)
@@ -18,6 +18,10 @@ angular.module('app.controllers').controller('home', function ($scope, $timeout,
     }
 
   }
+
+  $scope.closeModalImageViewer = function(){
+    $rootScope.modalImageUrl = null
+  } 
 
   $scope.canCreateLeaderContent = function(){
     var selectedGroupID = null
@@ -165,6 +169,11 @@ angular.module('app.controllers').controller('home', function ($scope, $timeout,
     }
 
   });
+
+  $scope.$on('$ionicView.leave', function () {
+    $scope.closeModalImageViewer()
+  })
+
   //call this because cache may be loaded
   setFiltersData();
   refreshListOfActivities();
@@ -389,6 +398,10 @@ angular.module('app.controllers').directive('iActivity', function ($rootScope, q
           url = 'http://'+url
         $rootScope.openSystem(url)
       }
+
+      $scope.showInModalImageViewer = function(url){
+        $rootScope.modalImageUrl = url
+      }   
 
       $scope.followIcons = function(){
         if(activityOwnerFollow && activityOwnerFollow.isFollowedByCurrentUser() && activityOwnerFollow.hasApprovedCurrentUser())

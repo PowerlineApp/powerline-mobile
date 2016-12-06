@@ -1,0 +1,12 @@
+<ion-modal-view ng-if="modalImageUrl" class="modal-image-viewer" ng-click="closeModalImageViewer()">
+	<ion-scroll zooming="true"
+      direction="xy" 
+      delegate-handle="zoom-pane" 
+      class="zoom-pane" 
+      min-zoom="1" 
+      scrollbar-x="false" 
+      scrollbar-y="false" 
+      overflow-scroll="false">
+        <img ng-src="{{modalImageUrl}}" >
+	</ion-scroll>	
+</ion-modal-view>

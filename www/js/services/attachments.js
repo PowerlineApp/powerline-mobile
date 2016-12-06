@@ -98,6 +98,14 @@ angular.module('app.directives').directive('showAttachments', function (attachme
           if($scope.contentItem)
             attachmentsService.load( $scope.contentItem)
         });
+
+        $scope.showInModalImageViewer = function(url){
+          $scope.modalImageUrl = url
+        }   
+
+        $scope.closeModalImageViewer = function(){
+          $scope.modalImageUrl = null
+        } 
       }
     };
 })
