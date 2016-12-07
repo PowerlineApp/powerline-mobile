@@ -70,7 +70,6 @@ angular.module('app.controllers').controller('group.members',function ($scope, g
         var memberAsFollowable = follows.getOrCreateUser(groupMember.id);
         memberAsFollowable.followByCurrentUser().then(function () {
           follows.load()
-          $scope.showToast('Follow request sent!');
           groupMember.isFollowed = true
         }); 
       }

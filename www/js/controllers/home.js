@@ -9,7 +9,7 @@ angular.module('app.controllers').controller('home', function ($scope, $timeout,
     var isDifferentGroupThanCurrentlyActive = $scope.filter.selectedGroup != group
     if(!$scope.isSpinnerShow && isDifferentGroupThanCurrentlyActive)
       $scope.showSpinner();
-    
+
     if(isDifferentGroupThanCurrentlyActive){
       // we want to make sure the spinner is displayed prior the rendering starts
       $timeout(function(){
@@ -35,12 +35,12 @@ angular.module('app.controllers').controller('home', function ($scope, $timeout,
       $scope.activities = homeCtrlParams.filter.selectedGroup.activities
     else
       $scope.activities = activityCollection.getFilteredModels();
-    
+
     //we want to wait until rendering is finished
     $timeout(function(){
       $scope.hideSpinner()
     }, 0);
-  } 
+  }
 
   function setFiltersData() {
     homeCtrlParams.filter.groups = groups.groupsJoinedByCurrentUser();
@@ -75,7 +75,7 @@ angular.module('app.controllers').controller('home', function ($scope, $timeout,
         $scope.isLoadMore = true;
       }
       prepare();
-      
+
       $scope.$emit('home.activities-reloaded');
       $scope.$broadcast('scroll.refreshComplete');
       $scope.$broadcast('scroll.infiniteScrollComplete');
@@ -221,6 +221,7 @@ angular.module('app.controllers').directive('iActivity', function ($rootScope, q
         discussion.rate(comment, action).then(function (comment) {
           $scope.activity.set('rate_up', comment.rate_up).set('rate_down', comment.rate_down);
           $scope.sending = false;
+          $rootScope.showToast((action === 'down' ? 'Down' : 'Up') + ' voted!');
         }, function () {
           $scope.sending = false;
         });
@@ -280,7 +281,7 @@ angular.module('app.controllers').directive('iActivity', function ($rootScope, q
         $scope.sending = false;
         $scope.showToast('User petition unsigned.');
       });
-    };    
+    };
   }
 
   function petitionCtrl($scope) {
@@ -334,10 +335,10 @@ angular.module('app.controllers').directive('iActivity', function ($rootScope, q
       $scope.bookmarkButtonClicked = function(){
         if($scope.isBookmarked()){
           favorite.removeBookmark($scope.activity)
-          $scope.showToast('Item was removed from Favorites');
+          $scope.showToast('Removed from Favorites!');
         } else {
          favorite.addBookmark($scope.activity)
-         $scope.showToast('Item was added to Favorites');
+         $scope.showToast('Saved to Favorites!');
         }
       }
       $scope.navigateToActivity = function (activity, focus, e) {
@@ -367,7 +368,7 @@ angular.module('app.controllers').directive('iActivity', function ($rootScope, q
       $scope.isDefaultAvatar = $rootScope.isDefaultAvatar($scope.avatar_file_path);
 
       var activityOwnerID = null, activityOwnerFollow = null;
-      
+
       if($scope.activity.getCreator()){
         activityOwnerID = $scope.activity.getCreator().id
         activityOwnerFollow = follows.getOrCreateUser(activityOwnerID);
@@ -384,12 +385,10 @@ angular.module('app.controllers').directive('iActivity', function ($rootScope, q
           activityOwnerFollow.followByCurrentUser().then(function () {
             $scope.activity.followable = false;
             $scope.sending = false;
-            $scope.showToast('Follow request sent!');
             follows.load().then(function(){
               activityOwnerFollow = follows.getOrCreateUser(activityOwnerID);
             })
-          });          
-          msg = 'Follow request sent!'
+          });
         }
       }
 
