@@ -34,7 +34,6 @@ angular.module('app.controllers').controller('influences.search',function ($scop
   $scope.follow = function (user) {
     user.followByCurrentUser()
     $scope.results = _($scope.results).without(user);
-    $scope.showToast('Follow request sent!');
   };
 
   $scope.facebookFollow = function (facebookFriend) {

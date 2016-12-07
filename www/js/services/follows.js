@@ -7,7 +7,7 @@ angular.module('app.services').factory('follows', function ($http,serverConfig, 
       this.avatar_file_name = userData.avatar_file_name
       this.user_id = userData.id
       this.username = userData.username
-      this.full_name = userData.full_name      
+      this.full_name = userData.full_name
 
       if(userIsFollowingCurrentUser){
         this.is_approved_by_current_user = userData.status == 'active'
@@ -38,9 +38,16 @@ angular.module('app.services').factory('follows', function ($http,serverConfig, 
       this.roles = _.without(this.roles, role)
     }
 
-    this.approve = function(){
+    this.approve = function(triggerToast){
+      if (typeof(triggerToast) === 'undefined') {
+        triggerToast = true;
+      }
       this.is_approved_by_current_user = true
-      return $http.patch(serverConfig.url + '/api/v2/user/followers/'+this.user_id)
+      return $http.patch(serverConfig.url + '/api/v2/user/followers/' + this.user_id).success(function () {
+        if (triggerToast) {
+          $rootScope.showToast('Approved follow request!');
+        }
+      });
     }
 
     this.unApprove = function(){
@@ -48,9 +55,16 @@ angular.module('app.services').factory('follows', function ($http,serverConfig, 
       return $http.delete(serverConfig.url + '/api/v2/user/followers/'+this.user_id)
     }
 
-    this.followByCurrentUser = function(){
+    this.followByCurrentUser = function(triggerToast){
+      if (typeof(triggerToast) === 'undefined') {
+        triggerToast = true;
+      }
       this.addRole('isFollowedByCurrentUser')
-      return $http.put(serverConfig.url + '/api/v2/user/followings/'+this.user_id)
+      return $http.put(serverConfig.url + '/api/v2/user/followings/' + this.user_id).success(function () {
+        if (triggerToast) {
+          $rootScope.showToast('Follow request sent!');
+        }
+      });
     }
 
     this.unFollowByCurrentUser = function(){
@@ -92,7 +106,7 @@ angular.module('app.services').factory('follows', function ($http,serverConfig, 
           u.addRole('isFollowedByCurrentUser')
           u.setData(userData)
         }
-          
+
         else{
           u = new FUser(userData, 'isFollowedByCurrentUser')
           service.users.push(u)
@@ -156,12 +170,12 @@ angular.module('app.services').factory('follows', function ($http,serverConfig, 
 
   service.getOrCreateUser = function(uID){
     var u = service.getUser(uID)
-    
+
     if(u == null){
       u = new FUser({id: uID})
       service.users.push(u)
     }
-      
+
     return u
   }
 

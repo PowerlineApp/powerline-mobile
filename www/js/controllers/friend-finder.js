@@ -13,7 +13,6 @@ angular.module('app.controllers').controller('friendFinderController', function 
 
   $scope.add = function (friend) {
     FriendFinder.follow(friend).then(function(){
-       $scope.showToast('Follow request sent!');
        friend.followButtonClicked = true
     })
   };

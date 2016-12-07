@@ -31,7 +31,6 @@ angular.module('app.controllers').controller('influence.profile',
     } else {
       $scope.follow.followByCurrentUser().then(function(){
         $rootScope.$broadcast('influences-updated');
-        $scope.showToast('Follow request sent!');
         $state.reload();
       }, $state.reload);
     }
