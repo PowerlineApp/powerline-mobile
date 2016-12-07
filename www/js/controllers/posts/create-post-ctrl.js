@@ -34,7 +34,6 @@ angular.module('app.controllers').controller('createPostCtrl',function ($scope, 
   $scope.send = function(postForm) {
     $scope.showSpinner();
 
-
     posts.create($scope.data.group.id, $scope.data.post_text).then(function(response){
       $scope.hideSpinner();
       $rootScope.showToast('Post successfully created!');

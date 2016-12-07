@@ -53,6 +53,18 @@ angular.module('app.directives')
       var newPosition = autocompleteScope.element.val().length;
       autocompleteScope.element[0].selectionStart = newPosition;
       autocompleteScope.element[0].selectionEnd = newPosition;
+
+      // see #433. 
+      // this code is inside $apply/$digest and despite that the ng-model is not updated
+      // that is why I used this ugly solution
+
+      // get the latest content of the text field
+      var autocompletedTextFieldValue = angular.element(autocompleteScope.element[0]).val()
+      // find out the name of the ng-model data structure which should be updated with the content
+      var ngModelSetter = autocompleteScope.element[0].attributes['ng-model'].value
+      // and update it manually
+      eval('autocompleteScope.invokerScope.'+ngModelSetter+' = autocompletedTextFieldValue')
+
       $timeout(function() {
         autocompleteScope.element.focus();
       }, 100, false);
@@ -97,6 +109,7 @@ angular.module('app.directives')
 
     var textTimer = null;
     return function(scope, element) {
+      autocompleteScope.invokerScope = scope
       element.on('input', function(){
         $timeout.cancel(textTimer);
         textTimer = $timeout(function(){
