@@ -1,0 +1,17 @@
+<div id="registration-finish-progress">
+  <div style="text-align: center; margin-top: -11px">
+    <ion-spinner></ion-spinner>
+  </div>
+  <div style="margin-bottom: 5px; margin-top: 7px;">We are linking you to:</div>
+  <div ng-repeat="msg in finishProgressMessages track by $index"
+    ng-class="progressMessageIsFinished($index)? 'done': 'in-progress'"
+    class="finish-progress-step">
+    <i class="icon ion-checkmark-circled" 
+      ng-if="progressMessageIsFinished($index)">
+    </i>
+    <i class="icon ion-ios-circle-outline" 
+      ng-if="!progressMessageIsFinished($index)">
+    </i>
+    {{msg}}
+  </div>
+</div>

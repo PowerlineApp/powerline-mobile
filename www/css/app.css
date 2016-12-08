@@ -3310,6 +3310,15 @@ a.follow-action {
     width: 100% !important;
     vertical-align: middle !important; }
 
+#registration-finish-progress .done {
+  color: #0c0c54; }
+
+#registration-finish-progress .in-progress {
+  color: grey; }
+
+#registration-finish-progress .finish-progress-step {
+  padding: 3px; }
+
 .group {
   margin-bottom: 12px; }
   .group h3 {

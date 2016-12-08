@@ -1321,3 +1321,17 @@ a.follow-action {
     vertical-align: middle !important;
   }
 }
+
+#registration-finish-progress {
+  .done {
+    color: #0c0c54;
+  }
+
+  .in-progress {
+    color: grey;
+  }
+
+  .finish-progress-step {
+    padding: 3px;
+  }
+}

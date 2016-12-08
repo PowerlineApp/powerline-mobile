@@ -1,5 +1,5 @@
 angular.module('app.controllers').controller('session.registration-step2',
-  function ($scope, session, $location, $window, iStorageMemory, profile, layout, $ionicSideMenuDelegate) {
+  function ($scope, session, $location, $window, iStorageMemory, profile, layout, $ionicSideMenuDelegate, $ionicPopup, $timeout) {
     $ionicSideMenuDelegate.canDragContent(false);
 
     $scope.states = profile.states;
@@ -11,6 +11,41 @@ angular.module('app.controllers').controller('session.registration-step2',
     $scope.$watch($scope.data, function () {
       iStorageMemory.put('registration-form-data', $scope.data);
     });
+
+    $scope.finishProgressMessages = [
+      'Your elected leaders at the local level.',
+      'Elected leaders at the national level.',
+      'Your local group.',
+      'Your state group.',
+      'Your federal group.'
+    ]
+
+    $scope.progressMessageIsFinished = function(pos){
+      return pos < $scope.finishProgressPosition
+    }
+
+    $scope.finishProgressPopup = null
+    $scope.showFinishProgressPopup = function(){
+      $scope.finishProgressPosition = 0
+      $scope.finishProgressPopup = $ionicPopup.show({
+        templateUrl: 'templates/session/_finishing-registration.html',
+        title: 'Completing Registration',
+        cssClass: 'popup-by-ionic',
+        scope: $scope,
+        buttons: []
+      });
+      
+      $timeout(function(){ if($scope.finishProgressPopup) $scope.finishProgressPosition++ }, 2000)
+      $timeout(function(){ if($scope.finishProgressPopup) $scope.finishProgressPosition++ }, 4000)
+      $timeout(function(){ if($scope.finishProgressPopup) $scope.finishProgressPosition++ }, 6000)
+      $timeout(function(){ if($scope.finishProgressPopup) $scope.finishProgressPosition++ }, 8000)
+    }
+
+    $scope.hideFinishProgressPopup = function(){
+      $scope.finishProgressPosition = 5
+      $scope.finishProgressPopup.close()
+      $scope.finishProgressPopup = null
+    }
 
     $scope.next = function (registrationForm) {
       if(!$scope.age.iAmAdult){
@@ -25,15 +60,15 @@ angular.module('app.controllers').controller('session.registration-step2',
         if ((new Date()).getFullYear() - (new Date($scope.data.birth)).getFullYear() < 13) {
           return $scope.alert('Sorry - you must be 13 or older in order to use Powerline!', null, '', 'OK');
         }
-        $scope.showSpinner();
+        $scope.showFinishProgressPopup();
         session.registration($scope.data).then(
           function () {
-            $scope.hideSpinner();
+            $scope.hideFinishProgressPopup();
             iStorageMemory.remove('registration-form-data');
             $location.path('/guide');
           },
           function (response) {
-            $scope.hideSpinner();
+            $scope.hideFinishProgressPopup();
             if (response.data && response.data.errors) {
               _(response.data.errors).each(function (error) {
                 if (registrationForm[error.property]) {
