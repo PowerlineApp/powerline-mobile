@@ -327,6 +327,13 @@ angular.module('app.controllers').directive('iActivity', function ($rootScope, q
     template: '<ng-include src="templateSrc"></ng-include>',
     controller: function ($scope) {
       $scope.activity.prepare()
+      $scope.imageURLFittedToScreenWidth = function(url){
+        if(url.indexOf('imgix.net') > 0)
+          return(url +'&w=' + screen.width)
+        else 
+          return url
+      }
+      $scope.screenWidth = screen.width;
       $scope.showToast = $rootScope.showToast;
       $scope.navigateTo = $rootScope.navigateTo;
       $scope.isBookmarked = function(){
@@ -351,7 +358,7 @@ angular.module('app.controllers').directive('iActivity', function ($rootScope, q
         }
       };
 
-      // if($scope.activity.get('entity').id == 495)
+      // if($scope.activity.get('entity').id == 514)
       //     console.log(JSON.stringify($scope.activity))
       // else return
 
