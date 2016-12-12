@@ -328,7 +328,7 @@ angular.module('app.controllers').directive('iActivity', function ($rootScope, q
     controller: function ($scope) {
       $scope.activity.prepare()
       $scope.imageURLFittedToScreenWidth = function(url){
-        if(url.indexOf('imgix.net') > 0)
+        if(url && url.indexOf('imgix.net') > 0)
           return(url +'&w=' + screen.width)
         else 
           return url
