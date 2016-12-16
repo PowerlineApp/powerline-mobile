@@ -400,6 +400,12 @@ angular.module('app.services').factory('GroupModel', function(groupsInvites, $ht
         contentItem.setSupportersWereInvited()
       })
     }
+
+    this.getPollResponsesReport = function(){
+      return $http.get(serverConfig.url + '/api/v2/groups/'+this.id+'/responses').then(function(response){
+        console.log(response)
+      })      
+    }
   }
 
   return model

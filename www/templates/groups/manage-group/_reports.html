@@ -1,0 +1,15 @@
+<div class="manage-group-section last" id="group-reports" ng-class="isExpanded('group-reports') ? 'active' : ''">
+  <div class="expand-icon" ng-click="toggleVisibility('group-reports')"></div>
+  <div class="title" ng-click="toggleVisibility('group-reports')">Reports</div>
+  <div class="content" ng-show="isExpanded('group-reports')">
+
+    <div style="padding-top: 10px;" class="save-button-holder">
+      <button 
+        ng-click="getPollResponsesReport()"
+        class="button btn-primary">
+        Export Data
+      </button>
+    </div>
+
+  </div>
+</div>

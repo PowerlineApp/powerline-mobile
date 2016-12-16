@@ -669,4 +669,9 @@ angular.module('app.controllers').controller('manageGroupCtrl',function ($scope,
     })
   }
 
+  ////// REPORTS /////////////////////////////////////////////////
+
+  $scope.getPollResponsesReport = function(){
+    $scope.group.getPollResponsesReport()
+  }
 })
