@@ -1,4 +1,4 @@
-angular.module('app.services').factory('SocialActivityModel', function (iStorage, JsModel, follows, $http, serverConfig, session) {
+angular.module('app.services').factory('SocialActivityModel', function (iStorage, JsModel, follows, $http, serverConfig, session, $rootScope) {
   var typeToIcons = {
     'follow-request': 'sa-icon-request-1',
     'micropetition-created': function (activity) {
@@ -25,12 +25,13 @@ angular.module('app.services').factory('SocialActivityModel', function (iStorage
         if (this.get('following')) {
           avatar = this.get('following').avatar_file_name;
           avatarTitle = this.get('following').full_name;
-        } else if (this.get('group')) {
-          avatar = this.get('group').avatar_file_path;
-          avatarTitle = this.get('group').official_name;
+        } else if (this.get('target')) {
+          avatar = this.get('target').image;
+          avatarTitle = this.get('target').full_name;
         }
         this.set('avatar', avatar);
         this.set('avatar_title', avatarTitle);
+        this.set('isDefaultAvatar', $rootScope.isDefaultAvatar(avatar))
         var icon = typeToIcons[this.get('type')];
         this.set('sa-icon', typeof icon === 'function' ? icon(this) : icon);
         if (this.isFollowRequest()) {
