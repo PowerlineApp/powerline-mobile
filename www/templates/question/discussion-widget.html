@@ -16,7 +16,8 @@
       <div class="item" ng-repeat="comment in comment.children| limitTo:commentsLimit track by $index" bindonce>
         <div class="wrap">
           <figure ng-click="navigateTo('influence-profile', comment.user.id)">
-            <img ng-src="{{comment.author_picture}}" width="35">
+            <img ng-if="!isDefaultAvatar(comment.author_picture)" ng-src="{{comment.author_picture}}" width="35">
+            <ng-letter-avatar ng-if="isDefaultAvatar(comment.author_picture)" data="{{comment.user.full_name}}"></ng-letter-avatar>
           </figure>
           <div class="header">
             <strong
