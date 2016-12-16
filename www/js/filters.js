@@ -59,6 +59,8 @@ angular.module('app.filters', []).filter('elapsed', function () {
   };
 }).filter('imgix', function (serverConfig, $window) {
   return function (imgURL, options) {
+    if(imgURL == null)
+      return null
     options = options || {};
     if (!options.w && !options.h) {
       options.w = $window.innerWidth;
