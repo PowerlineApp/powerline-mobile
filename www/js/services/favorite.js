@@ -31,7 +31,7 @@ angular.module('app.services').factory('favorite',
         var that = this
         var aID = activity.get('id')
         var bookmark =  _bookmarks.find(function(b){
-          return(b.detail.id = aID)
+          return(b.detail.id == aID)
         })
         var bID = bookmark.id
 
