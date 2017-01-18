@@ -28,8 +28,8 @@
 
   <section class="footer-fixed" style="padding: 18px 12px;">
     <strong class="right" ng-bind="data.chars_left"></strong>
-    <span ng-show="data.group && data.group.available !== undefined">
-      You have (<strong>{{ data.group.available}}</strong>) petitions left in this group
+    <span ng-show="data.group && data.group.petition_per_month !== undefined">
+      You have (<strong>{{ data.group.petition_per_month}}</strong>) petitions left in this group
     </span>
   </section>
 </ion-view>
