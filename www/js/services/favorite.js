@@ -30,8 +30,8 @@ angular.module('app.services').factory('favorite',
       removeBookmark: function(activity){
         var that = this
         var aID = activity.get('id')
-        var bookmark =  _bookmarks.find(function(b){
-          return(b.detail.id = aID)
+        var bookmark = _.find(_bookmarks, function(b){
+          return(b.detail.id == aID)
         })
         var bID = bookmark.id
 
