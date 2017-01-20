@@ -38,9 +38,10 @@
 
     <section class="q-content">
       <div class="title">
-        <strong ng-click="navigateTo('owner-profile', userPetition.owner)">
-          {{userPetition.owner.name}} | {{group.official_name}}
-        </strong>
+        <div>
+          <strong ng-click="navigateTo('owner-profile', userPetition.owner)">{{userPetition.owner.name}} | </strong>
+          <strong ng-click="navigateTo('group-profile', group)">{{group.official_name}}</strong>
+        </div>
 
         <a ng-show="userPetition.ownedByCurrentUser()" ng-click="showDeleteConfirm()">
           <i class="button-assertive icon ion-trash-a action-icon"></i>
