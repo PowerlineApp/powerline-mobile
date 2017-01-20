@@ -36,7 +36,7 @@
       <div class="title">
         <strong ng-bind="q.user.official_title + ' ' + q.user.first_name + ' ' + q.user.last_name" ng-click="navigateTo('owner-profile', q.user)"></strong>
       </div>
-      <h1 ng-bind="q.title"></h1>
+      <h1 ng-bind="(q.title) + ' | ' + (q.group.official_name)"></h1>
       <p i-bind-taggable="q.subject" i-tags="q.cached_hash_tags"></p>
 
       <section class="margin-v-10" ng-hide="q.is_answered">

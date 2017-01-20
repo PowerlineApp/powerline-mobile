@@ -37,7 +37,8 @@
 
     <section class="q-content">
       <div class="title">
-        <strong ng-bind="petition.owner.name" ng-click="navigateTo('owner-profile', petition.owner)"></strong>
+        <strong ng-click="navigateTo('owner-profile', petition.owner)">
+          {{petition.owner.name}} | {{group.official_name}}</strong>
       </div>
       
       <h1 ng-bind="petition.title" ng-show="petition.title"></h1>
