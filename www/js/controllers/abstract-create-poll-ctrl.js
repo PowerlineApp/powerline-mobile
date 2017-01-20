@@ -1,4 +1,4 @@
-angular.module('app.controllers').controller('abstractCreatePollCtrl',function ($scope, $stateParams, groups, $ionicPopup, $q, $rootScope, activity) {
+angular.module('app.controllers').controller('abstractCreatePollCtrl',function ($scope, $stateParams, groups, $ionicPopup, $q, $rootScope, activity, serverConfig, $http) {
   $scope.data = {}
 
   $scope.prepareGroupPicker = function(isLeaderContent){
@@ -11,7 +11,14 @@ angular.module('app.controllers').controller('abstractCreatePollCtrl',function (
   }
 
   $scope.chooseGroup = function(group){
-    $scope.data.group = group
+    var that = this;
+    $http.get(serverConfig.url + '/api/v2/groups/'+group.id+'/micro-petitions-config').then(function(response){
+      console.log(response);
+      group.posts_remaining = response.data.posts_remaining;
+      group.petitions_remaining = response.data.petitions_remaining;
+      $scope.data.group = group;
+    })
+    $scope.data.group = group;
     $scope.data.openChoices = false;
   }
 
