@@ -406,6 +406,22 @@ angular.module('app.services').factory('GroupModel', function(groupsInvites, $ht
         console.log(response)
       })      
     }
+
+    this.updateAvatar = function(imageData) {
+      var data = {}
+      data.avatar = imageData;
+      var payload = JSON.stringify(data)
+      var headers = {headers: {'Content-Type': 'application/json'}}
+      return $http.put(serverConfig.url + '/api/v2/groups/'+this.id+'/avatar', payload, headers).then(function(response){
+        console.log(response)
+      })
+    }
+
+    this.removeAvatar = function() {
+      return $http.delete(serverConfig.url + '/api/v2/groups/'+this.id + '/avatar').then(function(response){
+        console.log(response)
+      })
+    }
   }
 
   return model
