@@ -251,7 +251,8 @@ angular.module('app.directives').directive('iPlaceholder',function () {
     locality: 'long_name',
     administrative_area_level_1: 'short_name',
     country: 'short_name',
-    postal_code: 'short_name'
+    postal_code: 'short_name',
+    sublocality_level_1: 'short_name'
   };
 
   angular.element(document).delegate('.pac-container', 'click', function () {
@@ -296,7 +297,7 @@ angular.module('app.directives').directive('iPlaceholder',function () {
               scope.data.address1 = data.route ?
                 ((data.street_number ? data.street_number + ' ' : '' ) + data.route) : scope.data.address1
               ;
-              scope.data.city = data.locality || scope.data.city;
+              scope.data.city = data.locality || data.sublocality_level_1 || scope.data.city ;
               scope.data.state = data.administrative_area_level_1 || scope.data.state;
               scope.data.country = data.country || scope.data.country;
               scope.data.zip = data.postal_code || scope.data.zip;
