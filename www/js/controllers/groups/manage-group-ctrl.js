@@ -1,4 +1,4 @@
-angular.module('app.controllers').controller('manageGroupCtrl',function ($scope, groups, $stateParams, $ionicPopup, $ionicScrollDelegate, session, $location) {
+angular.module('app.controllers').controller('manageGroupCtrl',function ($scope, groups, $stateParams, $ionicPopup, $ionicScrollDelegate, session, $location, $ionicActionSheet, $window) {
   var groupID = parseInt($stateParams.id)
   $scope.data = {}
   $scope.group = {members: [], fieldsToFillOnJoin: [], sections: []} 
@@ -78,6 +78,59 @@ angular.module('app.controllers').controller('manageGroupCtrl',function ($scope,
      template: msg
    });
   }
+
+  //////////// Avatar Operation /////////////////////////////////////////
+  $scope.actionAvatar = function() {
+    $ionicActionSheet.show({
+       buttons: [
+         { text: '<b>Upload</b>' },
+       { text: '<b>Remove</b>' }
+       ],
+       cancelText: 'Cancel',
+       cancel: function() {
+          // add cancel code..
+       },
+       buttonClicked: function(index) {
+         if(index == 0) {
+              if($window.navigator && $window.navigator.camera){
+                $window.navigator.camera.getPicture(function (imageData) {
+                  $scope.group.avatar_file_path = 'data:image/jpeg;base64,' + imageData;
+                  $scope.group.avatar_src_prefix = 'data:image/jpeg;base64,';
+                  $scope.$apply();
+                  $scope.showSpinner()
+                  $scope.group.updateAvatar(imageData).then(function() {
+                      $scope.hideSpinner()
+                  });
+                }, function (err) {
+                    console.log(err);
+                }, {
+                  targetWidth: 256,
+                  targetHeight: 256,
+                  encodingType: $window.navigator.camera.EncodingType.JPEG,
+                  sourceType: $window.navigator.camera.PictureSourceType.PHOTOLIBRARY,
+                  destinationType: $window.navigator.camera.DestinationType.DATA_URL,
+                  allowEdit: true,
+                  correctOrientation: true
+                });
+              } else {
+                  alert('this feature is not supported in browser')
+              }
+         } else {
+            $scope.showSpinner()
+            $scope.group.removeAvatar().then(function (data) {
+              $scope.hideSpinner()
+            });
+            $scope.group.isDefaultAvatar = true;
+            $scope.group.avatar_file_path = "https://api-dev.powerli.ne/bundles/civixfront/img/default_group.png";
+            setTimeout(function () {
+              $scope.group.isDefaultAvatar = true;
+              $scope.$apply();
+            });
+         }
+         return true;
+       }
+     });
+  };
 
   //////////// BASIC SETTINGS ///////////////////////////////////////////
   

@@ -21,3 +21,13 @@
     }
   }
 }
+
+.group-avatar {
+    position: absolute;
+    z-index: 1;
+    top: 2px;
+    right: 2px;
+    width: 15px;
+    height: 15px;
+    background-size: 100%;
+}
