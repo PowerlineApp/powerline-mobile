@@ -31,3 +31,36 @@
     height: 15px;
     background-size: 100%;
 }
+
+.account-type {
+    margin-bottom: 5px;
+    margin-top: 5px;
+    .item-input {
+        position: relative;
+        background: #eaf1f4;
+        border: 1px solid #a5bbd9;
+        padding: 6px;
+        border-radius: 5px;
+    }
+    .input-label {
+        margin-left: 7px;
+    }
+    select {
+        background: #eaf1f4;
+    }
+}
+
+.popup-overflow .popup {
+  margin-top: 50px;
+}
+
+.cardForm {
+  .link {
+    color: blue;
+    text-decoration: underline;
+  }
+ .agreement {
+    font-size: 15px;
+    padding: 6px;
+  }
+}
