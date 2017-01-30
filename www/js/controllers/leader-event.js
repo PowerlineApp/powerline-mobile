@@ -1,6 +1,5 @@
 angular.module('app.controllers')
-  .controller('question.leader-event', function ($scope, topBar, $stateParams, questions, activity,
-                                                 homeCtrlParams, $state, layout) {
+  .controller('question.leader-event', function ($scope, topBar, $stateParams, questions, activity, homeCtrlParams, $state, layout, $ionicPopup) {
     
     $scope.data = {
       comment: '',
@@ -58,5 +57,20 @@ angular.module('app.controllers')
       } else {
         alert('window.plugins.calendar not defined. If you are using browser this is expected behaviour, if you use smartphone, this is bug.')
       }
+    };
+
+    $scope.report = function () {
+      var confirmPopup = $ionicPopup.confirm({
+        title: 'Confirm',
+        cssClass: 'popup-by-ionic publish-content',
+        content: 'Do you want to download the report for this item?',
+        scope: $scope
+      });
+
+      confirmPopup.then(function(res) {
+        if(res) {
+          questions.reportPoll($scope.q.id);
+        }
+      });
     };
   });

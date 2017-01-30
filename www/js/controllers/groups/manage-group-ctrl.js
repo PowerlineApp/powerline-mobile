@@ -231,7 +231,6 @@ angular.module('app.controllers').controller('manageGroupCtrl',function ($scope,
       $scope.hideSpinner();
       $scope.profile = profile.get();
       console.log($scope.profile);
-      debugger;
     }
     $ionicScrollDelegate.scrollTo(0, 80, true);
   }
@@ -734,6 +733,17 @@ angular.module('app.controllers').controller('manageGroupCtrl',function ($scope,
   ////// REPORTS /////////////////////////////////////////////////
 
   $scope.getPollResponsesReport = function(){
-    $scope.group.getPollResponsesReport()
+    var confirmPopup = $ionicPopup.confirm({
+      title: 'Confirm',
+      cssClass: 'popup-by-ionic publish-content',
+      content: 'Do you want to download the detailed Membership Roster?',
+      scope: $scope
+    });
+
+    confirmPopup.then(function(res) {
+      if(res) {
+        $scope.group.getPollResponsesReport()
+      }
+    });
   }
 })

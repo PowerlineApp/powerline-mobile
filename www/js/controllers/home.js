@@ -187,10 +187,12 @@ angular.module('app.controllers').run(function (homeCtrlParams, $document, $root
   });
 });
 
-angular.module('app.controllers').controller('preload', function (topBar, session, profile, $location, notifications) {
+angular.module('app.controllers').controller('preload', function (topBar, session, profile, $location, notifications, $ionicPlatform) {
   if (session.token) {
     if (session.is_registration_complete) {
+      $ionicPlatform.ready(function () {
       notifications.init()
+      });
       profile.load().then(function () {
         profile.checkRemind();
       });

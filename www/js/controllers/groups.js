@@ -314,7 +314,7 @@ angular.module('app.controllers').controller('groups',function ($scope, groups, 
       groups.create($scope.data).then(function (group) {
         $scope.hideSpinner();
         $scope.alert('Way to go! You\'ve created a new Powerline group. Invite your followers from the next screen or login via our website for group management features. Check your e-mail for more information.', function () {
-          $scope.path('/groups');
+          $scope.navigateTo('group-profile', group);
           $scope.execApply();
         });
       }, function (response) {
