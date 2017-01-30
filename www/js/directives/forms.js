@@ -345,6 +345,23 @@ angular.module('app.directives').directive('iPlaceholder',function () {
 }).directive('iFlexibleField', function() {
   return function(scope, element, attrs) {
     var minHeight = attrs.iFlexibleField;
+    var arr = ["It's all about different perspectives. Be kind.",
+            "Don't attack people. Understand them.",
+            "Listen first. Then ask questions.",
+            "Take a deep breath."
+    ];
+    var intVal;
+
+    function getRandomInt(min, max) {
+        return Math.floor(Math.random() * (max - min + 1)) + min;
+    }
+
+    function startRotate() {
+      intVal = setInterval(function () {
+        var rdn = getRandomInt(0, 3);
+        element[0].placeholder = arr[rdn];
+      }, 1200);
+    }
 
     element.css('min-height', minHeight + 'px');
     element.css('height', minHeight + 'px');
@@ -354,6 +371,16 @@ angular.module('app.directives').directive('iPlaceholder',function () {
         element.height(element[0].scrollHeight + 'px');
       }
     });
+
+    element.on('focus', function() {
+        clearInterval(intVal);
+    });
+
+    element.on('blur', function() {
+        startRotate();
+    });
+
+    startRotate();
   };
 }).directive('focusMe', function($timeout) {
   return {
