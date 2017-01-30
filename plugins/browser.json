@@ -1,0 +1,70 @@
+{
+    "prepare_queue": {
+        "installed": [],
+        "uninstalled": []
+    },
+    "config_munge": {
+        "files": {}
+    },
+    "installed_plugins": {
+        "cordova-plugin-calendar": {
+            "PACKAGE_NAME": "ne.powerli"
+        },
+        "cordova-plugin-camera": {
+            "PACKAGE_NAME": "ne.powerli"
+        },
+        "cordova-plugin-console": {
+            "PACKAGE_NAME": "ne.powerli"
+        },
+        "cordova-plugin-contacts": {
+            "PACKAGE_NAME": "ne.powerli"
+        },
+        "cordova-plugin-datepicker": {
+            "PACKAGE_NAME": "ne.powerli"
+        },
+        "cordova-plugin-device": {
+            "PACKAGE_NAME": "ne.powerli"
+        },
+        "cordova-plugin-dialogs": {
+            "PACKAGE_NAME": "ne.powerli"
+        },
+        "cordova-plugin-whitelist": {
+            "PACKAGE_NAME": "ne.powerli"
+        },
+        "cordova-plugin-splashscreen": {
+            "PACKAGE_NAME": "ne.powerli"
+        },
+        "ionic-plugin-keyboard": {
+            "PACKAGE_NAME": "ne.powerli"
+        },
+        "phonegap-plugin-push": {
+            "SENDER_ID": "354736666363",
+            "PACKAGE_NAME": "ne.powerli"
+        },
+        "cordova-plugin-inappbrowser": {
+            "PACKAGE_NAME": "ne.powerli"
+        },
+        "cordova-plugin-facebook4": {
+            "APP_ID": "244141112405524",
+            "APP_NAME": "PowerlineApp",
+            "PACKAGE_NAME": "ne.powerli"
+        },
+        "cordova-plugin-statusbar": {
+            "PACKAGE_NAME": "ne.powerli"
+        },
+        "cordova-plugin-vibration": {
+            "PACKAGE_NAME": "ne.powerli"
+        },
+        "cordova-plugin-x-socialsharing": {
+            "PACKAGE_NAME": "ne.powerli"
+        },
+        "cordova-plugin-file": {
+            "PACKAGE_NAME": "ne.powerli"
+        }
+    },
+    "dependent_plugins": {
+        "cordova-plugin-compat": {
+            "PACKAGE_NAME": "ne.powerli"
+        }
+    }
+}

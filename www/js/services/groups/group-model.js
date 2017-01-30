@@ -402,9 +402,45 @@ angular.module('app.services').factory('GroupModel', function(groupsInvites, $ht
     }
 
     this.getPollResponsesReport = function(){
-      return $http.get(serverConfig.url + '/api/v2/groups/'+this.id+'/responses').then(function(response){
+      var config = {
+        headers:  {
+          'Accept': 'text/csv',
+          'Content-Disposition': 'attachment; filename="filename.csv"',
+          'Content-Type': 'text/csv'
+        }
+      };
+      var that = this;
+
+      return $http.get(serverConfig.url + '/api/v2/groups/'+this.id+'/members', config).then(function(response){
         console.log(response)
-      })      
+        that.writeToFile("groupreport"+that.id+".csv", response.data);
+      })
+    }
+
+    this.writeToFile = function(fileName, data) {
+       function errorHandler(err) {
+          console.log(err);
+       }
+       window.resolveLocalFileSystemURL(cordova.file.externalDataDirectory, function (directoryEntry) {
+            directoryEntry.getFile(fileName, { create: true }, function (fileEntry) {
+                fileEntry.createWriter(function (fileWriter) {
+                    fileWriter.onwriteend = function (e) {
+                        // for real-world usage, you might consider passing a success callback
+                        console.log('Write of file "' + fileName + '"" completed.');
+                        alert("Report is created!");
+                    };
+
+                    fileWriter.onerror = function (e) {
+                        // you could hook this up with our global error handler, or pass in an error callback
+                        console.log('Write failed: ' + e.toString());
+                        alert("Report is not created!");
+                    };
+
+                    var blob = new Blob([data], { type: 'text/plain' });
+                    fileWriter.write(blob);
+                }, errorHandler.bind(null, fileName));
+            }, errorHandler.bind(null, fileName));
+        }, errorHandler.bind(null, fileName));
     }
 
     this.updateAvatar = function(imageData) {

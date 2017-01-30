@@ -1,6 +1,5 @@
 angular.module('app.controllers')
-  .controller('question.payment-request', function ($scope, topBar, $stateParams, questions, $state, serverConfig,
-                                                    homeCtrlParams, activity, $http, layout) {
+  .controller('question.payment-request', function ($scope, topBar, $stateParams, questions, $state, serverConfig, homeCtrlParams, activity, $http, layout, $ionicPopup) {
 
     $scope.data = {
       comment: '',
@@ -65,6 +64,21 @@ angular.module('app.controllers')
           $state.reload();
         }, 'Error', 'OK');
 
+      });
+    };
+
+    $scope.report = function () {
+      var confirmPopup = $ionicPopup.confirm({
+        title: 'Confirm',
+        cssClass: 'popup-by-ionic publish-content',
+        content: 'Do you want to download the report for this item?',
+        scope: $scope
+      });
+
+      confirmPopup.then(function(res) {
+        if(res) {
+          questions.reportPoll($scope.q.id);
+        }
       });
     };
 
