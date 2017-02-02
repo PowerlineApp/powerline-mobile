@@ -12,6 +12,9 @@ angular.module('app.directives').directive('avatarImg', function ($rootScope, $f
         scope.isDefaultAvatar = $rootScope.isDefaultAvatar(scope.img);
         if(!scope.isDefaultAvatar){
           scope.imgUrl = $filter('imgix')(scope.img, {w: element.width()||null});
+          if(scope.imgUrl) {
+            scope.imgUrl = scope.imgUrl +'&w=50&h=50&auto=compress,format';
+          }
         }
       });
       scope.$watch('text', function(){
