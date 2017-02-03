@@ -38,7 +38,7 @@
       </div>
       <h1 ng-bind="(q.title) + ' | ' + (q.group.official_name)"></h1>
       <p i-bind-taggable="q.subject" i-tags="q.cached_hash_tags"></p>
-      <div class="report-button" ng-click="report()">
+      <div ng-if="group.user_role=='owner' || group.user_role=='manager'" class="report-button" ng-click="report()">
         <img src="images/icons/reporticon-blue.png" />
       </div>
       <section class="margin-v-10" ng-hide="q.is_answered">

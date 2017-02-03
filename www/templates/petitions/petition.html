@@ -41,7 +41,10 @@
           <strong ng-click="navigateTo('group-profile', group)">{{group.official_name}}</strong>
       </div>
       
-      <h1 ng-bind="petition.title" ng-show="petition.title"></h1>
+      <h1 ng-bind="petition.title" ng-show="petition.title"></h1>\
+      <div ng-if="group.user_role=='owner' || group.user_role=='manager'" class="report-button" ng-click="report()">
+        <img src="images/icons/reporticon-blue.png" />
+      </div>
       <div>
         <p ng-bind-html="petition.html_body" i-content-link></p>
       </div>
