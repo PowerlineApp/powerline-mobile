@@ -330,10 +330,15 @@ angular.module('app.controllers').directive('iActivity', function ($rootScope, q
     controller: function ($scope) {
       $scope.activity.prepare()
       $scope.imageURLFittedToScreenWidth = function(url){
-        if(url && url.indexOf('imgix.net') > 0)
-          return(url +'&w=' + screen.width)
-        else 
-          return url
+        if(url && url.indexOf('imgix.net') > 0) {
+          var w = $(window).width();
+          var h = $(window).height()/2;
+          var url = url +'&w=' + w + '&max-h=' + h + '&auto=compress,format,q=75&fit=crop';
+          return url;
+        }
+        else {
+          return url;
+        }
       }
       $scope.screenWidth = screen.width;
       $scope.showToast = $rootScope.showToast;
@@ -370,6 +375,12 @@ angular.module('app.controllers').directive('iActivity', function ($rootScope, q
         description_raw = $scope.activity.get('description')
       $scope.description = iParse.wrapHashTags(description_raw)
       $scope.avatar_file_path = $scope.activity.get('user').avatar_file_name;
+
+      if($scope.avatar_file_path && $scope.avatar_file_path.indexOf('imgix.net') > 0) {
+          var avatar_file_path = $scope.avatar_file_path +'&w=50&h=50&auto=compress,format';
+          $scope.avatar_file_path = avatar_file_path;
+      }
+
       $scope.iconClass = $scope.activity.getIcon();
       $scope.sent_at_elapsed = elapsedFilter($scope.activity.get('sent_at'));
       $scope.responses_count = $scope.activity.get('responses_count');
