@@ -224,9 +224,9 @@ angular.module('app.services').factory('GroupModel', function(groupsInvites, $ht
           var powerlinePayloadToSubmit = {}
           angular.copy(payload.powerline, powerlinePayloadToSubmit)
           powerlinePayloadToSubmit.currency = payload.stripe.currency
-          powerlinePayloadToSubmit.type = payload.stripe.type
+          //powerlinePayloadToSubmit.type = payload.stripe.type
           powerlinePayloadToSubmit.business_name = payload.stripe.account_holder_name
-          powerlinePayloadToSubmit.type = payload.stripe.account_holder_type
+          powerlinePayloadToSubmit.type = payload.powerline.type
           powerlinePayloadToSubmit.source = stripeToken
           powerlinePayloadToSubmit.country = payload.stripe.country
           if(powerlinePayloadToSubmit.country == 'US')
@@ -411,9 +411,9 @@ angular.module('app.services').factory('GroupModel', function(groupsInvites, $ht
       };
       var that = this;
 
-      return $http.get(serverConfig.url + '/api/v2/groups/'+this.id+'/members', config).then(function(response){
+      return $http.get(serverConfig.url + '/api/v2/groups/'+this.id+'/members-link').then(function(response){
         console.log(response)
-        that.writeToFile("groupreport"+that.id+".csv", response.data);
+        window.open(serverConfig.url+response.data.url, "_system");
       })
     }
 

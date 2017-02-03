@@ -1,16 +1,35 @@
 angular.module('app.controllers')
-  .controller('question.payment-request', function ($scope, topBar, $stateParams, questions, $state, serverConfig, homeCtrlParams, activity, $http, layout, $ionicPopup) {
+  .controller('question.payment-request', function ($scope, topBar, $stateParams, questions, $state, serverConfig, homeCtrlParams, activity, $http, layout, $ionicPopup, groups) {
 
     $scope.data = {
       comment: '',
       privacy: 'public'
     };
 
+    $scope.placeholders = ['It\'s all about different perspectives. Be kind.',
+                            'Don\'t attack people. Understand them.',
+                            'Listen first. Then ask questions.',
+                            'Take a deep breath.'];
+    $scope.placeholder = '';
+
+    $scope.$on('$ionicView.beforeEnter', function(){
+      var indexPlaceholder = JSON.parse( window.localStorage.getItem('indexPlaceholder'));
+      if (typeof indexPlaceholder === "undefined" || indexPlaceholder == null){
+        indexPlaceholder = 0;
+      }else{
+        indexPlaceholder = parseInt(indexPlaceholder);
+      }
+      $scope.placeholder = $scope.placeholders[indexPlaceholder%4];
+      indexPlaceholder++;
+      window.localStorage.setItem( 'indexPlaceholder', JSON.stringify(indexPlaceholder));
+    })
 
     $scope.showSpinner();
     questions.load($stateParams.id).then(function (question) {
       $scope.hideSpinner();
       $scope.q = question;
+
+      $scope.group = groups.get(question.group.id);
 
       $scope.shareTitle = question.title;
       $scope.shareBody = question.subject;
@@ -77,7 +96,12 @@ angular.module('app.controllers')
 
       confirmPopup.then(function(res) {
         if(res) {
-          questions.reportPoll($scope.q.id);
+          $scope.showSpinner();
+          questions.reportPoll($scope.q.id).then(function () {
+            $scope.hideSpinner();
+          }, function (err){
+            $scope.hideSpinner();
+          });
         }
       });
     };

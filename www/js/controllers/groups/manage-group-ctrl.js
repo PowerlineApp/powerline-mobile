@@ -742,7 +742,12 @@ angular.module('app.controllers').controller('manageGroupCtrl',function ($scope,
 
     confirmPopup.then(function(res) {
       if(res) {
-        $scope.group.getPollResponsesReport()
+        $scope.showSpinner()
+        $scope.group.getPollResponsesReport().then(function() {
+          $scope.hideSpinner()
+        }, function (err){
+          $scope.hideSpinner()
+        });
       }
     });
   }

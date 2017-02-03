@@ -137,9 +137,10 @@ angular.module('app.services').factory('questions',function (QuestionResource,
         }
       };
       debugger;
-      return $http.get(serverConfig.url + '/api/v2/polls/'+pollId+'/responses', config).then(function(response){
+      return $http.get(serverConfig.url + '/api/v2/polls/'+pollId+'/responses-link').then(function(response){
         console.log(response)
-        writeToFile("poll" + pollId + ".csv", response.data);
+        window.open(serverConfig.url+response.data.url, "_system");
+        //writeToFile("poll" + pollId + ".csv", response.data);
       })
     }
   };

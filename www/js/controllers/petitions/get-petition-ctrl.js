@@ -1,9 +1,9 @@
-angular.module('app.controllers').controller('getPetitionCtrl',function ($scope,  $stateParams,
-                                   layout, $ionicPopup, $rootScope, petitions) {
+angular.module('app.controllers').controller('getPetitionCtrl',function ($scope,  $stateParams, layout, $ionicPopup, $rootScope, petitions, groups) {
               
   $scope.placeholders = ['It\'s all about different perspectives. Be kind.',
                           'Don\'t attack people. Understand them.',
-                          'Listen first. Then ask questions'];
+                          'Listen first. Then ask questions.',
+                          'Take a deep breath.'];
   $scope.placeholder = '';
 
   $scope.$on('$ionicView.beforeEnter', function(){
@@ -13,7 +13,7 @@ angular.module('app.controllers').controller('getPetitionCtrl',function ($scope,
     }else{
       indexPlaceholder = parseInt(indexPlaceholder);
     }
-    $scope.placeholder = $scope.placeholders[indexPlaceholder%3];
+    $scope.placeholder = $scope.placeholders[indexPlaceholder%4];
     indexPlaceholder++;
     window.localStorage.setItem( 'indexPlaceholder', JSON.stringify(indexPlaceholder));
   })
@@ -37,6 +37,7 @@ angular.module('app.controllers').controller('getPetitionCtrl',function ($scope,
   petitions.get($stateParams.id).then(function (petition) {
     $scope.hideSpinner();
     $scope.petition = petition;
+    $scope.group = groups.get(petition.owner.id);
     layout.focus($stateParams.focus);
   }, function(){
     $scope.hideSpinner();
