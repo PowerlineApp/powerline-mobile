@@ -42,7 +42,7 @@ angular.module('app.directives').directive('groupBankAccountForm', function () {
           country: presetCountry,
           currency: presetCountry.currencies[0],
           account_holder_name: '',
-          account_holder_type: 'company',
+          account_holder_type: 'company'
         }
 
         $scope.requireSSN = function(){
@@ -66,7 +66,8 @@ angular.module('app.directives').directive('groupBankAccountForm', function () {
             city: $scope.profile.city,
             state: $scope.profile.state,
             postal_code: $scope.profile.zip,
-            dob: dob
+            dob: dob,
+            type: 'company'
           }
         }
 
