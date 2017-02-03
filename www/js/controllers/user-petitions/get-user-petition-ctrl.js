@@ -3,7 +3,8 @@ angular.module('app.controllers').controller('getUserPetitionCtrl',function ($sc
                                    
   $scope.placeholders = ['It\'s all about different perspectives. Be kind.',
                           'Don\'t attack people. Understand them.',
-                          'Listen first. Then ask questions'];
+                          'Listen first. Then ask questions.',
+                          'Take a deep breath.'];
   $scope.placeholder = '';
 
   $scope.$on('$ionicView.beforeEnter', function(){
@@ -13,7 +14,7 @@ angular.module('app.controllers').controller('getUserPetitionCtrl',function ($sc
     }else{
       indexPlaceholder = parseInt(indexPlaceholder);
     }
-    $scope.placeholder = $scope.placeholders[indexPlaceholder%3];
+    $scope.placeholder = $scope.placeholders[indexPlaceholder%4];
     indexPlaceholder++;
     window.localStorage.setItem( 'indexPlaceholder', JSON.stringify(indexPlaceholder));
   })

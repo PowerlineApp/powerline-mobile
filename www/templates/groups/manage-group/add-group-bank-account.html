@@ -2,14 +2,20 @@
   <div class="popup padding-10" style="min-height: 200px;">
     <p class="btn-close" ng-click="cancel()"></p>
 
-    <form name="cardForm" ng-show="!loading">
+    <form class="cardForm" name="cardForm" ng-show="!loading">
       <fieldset class="margin-v-20">
-        <h3 style="color: gray;font-size: 12px;">Please enter bank account details</h3><br>
-
-        <div style="padding: 5px">
-          Account type: Business
+        <div class="list account-type">
+          <label class="item item-input item-select">
+            <div class="input-label">
+              Account Type:
+            </div>
+            <select ng-model="data.powerline.type" ng-init="data.powerline.type='company'">
+              <option value="company">Company</option>
+              <option value="individual">Individual</option>
+            </select>
+          </label>
         </div >
-        <div class="item-floating-label text-field-1">
+        <div class="item-floating-label text-field-1" ng-if="data.powerline.type!='individual'">
           <span class="input-label">Business Name</span>
           <input type="text" name="account_holder_name" ng-model="data.stripe.account_holder_name">
         </div>
@@ -20,10 +26,6 @@
         <div class="item-floating-label text-field-1">
           <span class="input-label">Last Name</span>
           <input type="text" name="last_name" ng-model="data.powerline.last_name">
-        </div>
-        <div class="item-floating-label text-field-1">
-          <span class="input-label">Date of Birth</span>
-          <input type="date" name="dob" ng-model="data.powerline.dob">
         </div>
         <div class="item-floating-label text-field-1">
           <span class="input-label">Date of Birth</span>
@@ -64,8 +66,13 @@
             ng-options="item as item for item in data.stripe.country.currencies">
           </select>
         </div>        
+        <div class="item-floating-label text-field-1" ng-if="data.powerline.type!='individual'">
+          <span class="input-label">Tax ID</span>
+          <input type="text" name="tax_id" ng-model="data.powerline.tax_id">
+        </div>
         <div class="item-floating-label text-field-1" ng-show="requireSSN()">
-          <span class="input-label">Last 4 digits of SSN/EIN</span>
+          <!--<span class="input-label">Last 4 digits of SSN/EIN</span>-->
+          <span class="input-label">Last 4 digits of SSN</span>
           <input type="text" name="ssn_last_4" ng-model="data.powerline.ssn_last_4">
         </div>
         <div class="item-floating-label text-field-1" ng-class="{invalid: errorRNumber}">
@@ -83,6 +90,12 @@
         <div class="item-floating-label text-field-1" ng-class="{invalid: errorANumber}">
           <span class="input-label">Confirm Account Number</span>
           <input type="text" name="account_number" ng-model="data.stripe.account_number1">
+        </div>
+        <div class="agreement">
+          By registering your account, you agree to our 
+          <a href="https://powerli.ne/#/legal" target="_system" class="link">Terms of Service</a>
+          and the 
+          <a href="https://stripe.com/ca/connect-account/legal" target="_system" class="link">Stripe Connected Account Agreement.</a>
         </div>
       </fieldset>
 

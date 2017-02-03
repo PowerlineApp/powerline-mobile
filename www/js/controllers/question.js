@@ -1,6 +1,24 @@
 angular.module('app.controllers').controller('question',function ($scope, $location, questions, $stateParams, layout,
                                                                   iStorageMemory, activity) {
 
+  $scope.placeholders = ['It\'s all about different perspectives. Be kind.',
+                          'Don\'t attack people. Understand them.',
+                          'Listen first. Then ask questions.',
+                          'Take a deep breath.'];
+  $scope.placeholder = '';
+
+  $scope.$on('$ionicView.beforeEnter', function(){
+    var indexPlaceholder = JSON.parse( window.localStorage.getItem('indexPlaceholder'));
+    if (typeof indexPlaceholder === "undefined" || indexPlaceholder == null){
+      indexPlaceholder = 0;
+    }else{
+      indexPlaceholder = parseInt(indexPlaceholder);
+    }
+    $scope.placeholder = $scope.placeholders[indexPlaceholder%4];
+    indexPlaceholder++;
+    window.localStorage.setItem( 'indexPlaceholder', JSON.stringify(indexPlaceholder));
+  })
+
   var optionsSubview = 'templates/question/options.html';
   var resultsSubview = 'templates/question/results.html';
 
