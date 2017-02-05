@@ -43,3 +43,10 @@ Our branching strategy is straightforward and well documented . For a detailed l
 * copy powerline config file, e.g. when you want to connect to development backend, run `cp www/config/dev.js www/js/config.js`
 * `ionic serve` -- powerline mobile app should launch in web browser
  
+# Core Principles
+* Frameworks – There’s a lot of moving parts to Powerline, so we should try to be modular and use frameworks and well-known technologies whenever possible
+* Streamlined experience – The user experience (citizen or leader) should flow effortlessly, beautifully, and naturally for a simple, streamlined experience.
+* Mission first – Powerline exists to strengthen democracy, civic engagement, and civil society. Any major feature that does that directly will likely be put in the free tier by the core team. Any major feature that can help generate revenue without putting our mission at risk (or sacrificing our values of accessibility, accountability, integrity, privacy, or people) will likely be put into a Silver or above tier.
+* Simplifying civic engagement – All features, UI, and UX should make engagement easier for the user (citizen or leader) whenever possible. Pre-fill the field automatically, reduce the number of steps, etc.
+* Strengthening leader-community relationships – A leader could be positional (e.g. mayor, director, etc.) or organic (some citizen or group member), but the relationship between a leader and a community is fundamentally different than one community member to another. The concepts of leadership, communities, and the relationships between the two should always be kept in mind in the development of new features.
+* Communication is key - Join us on Slack, create an issue, whatever it takes to communicate. Let’s work together!
