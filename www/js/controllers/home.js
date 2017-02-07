@@ -377,7 +377,7 @@ angular.module('app.controllers').directive('iActivity', function ($rootScope, q
       $scope.avatar_file_path = $scope.activity.get('user').avatar_file_name;
 
       if($scope.avatar_file_path && $scope.avatar_file_path.indexOf('imgix.net') > 0) {
-          var avatar_file_path = $scope.avatar_file_path +'&w=50&h=50&auto=compress,format';
+          var avatar_file_path = $scope.avatar_file_path +'&w=50&h=50&auto=compress,format,q=75';
           $scope.avatar_file_path = avatar_file_path;
       }
 

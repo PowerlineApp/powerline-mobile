@@ -80,4 +80,16 @@ angular.module('app.filters', []).filter('elapsed', function () {
     }
     return newURL;
   };
+}).filter('imgixURL', function (serverConfig, $window) {
+  return function (imgURL, options) {
+    if(imgURL == null)
+      return null
+    options = options || {};
+    if (!options.w && !options.h) {
+      options.w = $window.innerWidth;
+    }
+    var newURL = imgURL + '&format=auto,format=compress,q=75';
+
+    return newURL;
+  };
 });
