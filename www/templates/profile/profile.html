@@ -14,7 +14,7 @@
         <section class="profile-header">
           <div class="avatar" ng-click="view.editMode ? pickPicture() : null">
             <i class="icon-photo" ng-show="view.editMode"></i>
-            <img ng-src="{{(profile.avatar_src_prefix||'') + profile.avatar_file_name}}" ng-if="!isDefaultAvatar()"/>
+            <img ng-src="{{(profile.avatar_src_prefix||'') + profile.avatar_file_name | imgixURL}}" ng-if="!isDefaultAvatar()"/>
             <ng-letter-avatar data="{{profile.full_name| trim}}" ng-if="isDefaultAvatar()"></ng-letter-avatar>
 
           </div>
