@@ -39,6 +39,9 @@
       </div>
 
       <p i-bind-taggable="q.subject" i-tags="q.cached_hash_tags"></p>
+      <div ng-if="q.group.user_role=='owner' || q.group.user_role=='manager'" class="report-button" ng-click="report()">
+        <img src="images/icons/reporticon-blue.png" />
+      </div>
 
       <ng-include src="subview"></ng-include>
       <ng-include src="'templates/widget/share.html'"></ng-include>
