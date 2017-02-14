@@ -1,5 +1,4 @@
-angular.module('app.controllers').controller('question',function ($scope, $location, questions, $stateParams, layout,
-                                                                  iStorageMemory, activity) {
+angular.module('app.controllers').controller('question',function ($scope, $location, questions, $stateParams, layout, groups, iStorageMemory, activity, $ionicPopup) {
 
   $scope.placeholders = ['It\'s all about different perspectives. Be kind.',
                           'Don\'t attack people. Understand them.',
@@ -28,6 +27,7 @@ angular.module('app.controllers').controller('question',function ($scope, $locat
   questions.load($stateParams.id).then(function (question) {
     $scope.loading = false;
     $scope.q = question;
+    $scope.q.group = groups.getGroup(question.group.id);
 
     $scope.shareBody = question.subject;
     $scope.shareImage = question.share_picture;
@@ -68,6 +68,26 @@ angular.module('app.controllers').controller('question',function ($scope, $locat
     }
   };
   
+  $scope.report = function () {
+    var confirmPopup = $ionicPopup.confirm({
+      title: 'Confirm',
+      cssClass: 'popup-by-ionic publish-content',
+      content: 'Do you want to download the report for this item?',
+      scope: $scope
+    });
+
+    confirmPopup.then(function(res) {
+      if(res) {
+        $scope.showSpinner();
+        questions.reportPoll($scope.q.id).then(function () {
+          $scope.hideSpinner();
+        }, function (err){
+          $scope.hideSpinner();
+        });
+      }
+    });
+  };
+  
   $scope.$watch('loading', function(){
     if($scope.loading){
       $scope.showSpinner();
@@ -75,6 +95,7 @@ angular.module('app.controllers').controller('question',function ($scope, $locat
       $scope.hideSpinner();
     }
   });
+
 }).controller('question.answer-form',function ($scope, $state, iStorageMemory, homeCtrlParams, $rootScope) {
 
   $scope.answer = function () {
