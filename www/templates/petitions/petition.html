@@ -43,7 +43,7 @@
       
       <h1 ng-bind="petition.title" ng-show="petition.title"></h1>\
       <div ng-if="group.user_role=='owner' || group.user_role=='manager'" class="report-button" ng-click="report()">
-        <img src="images/icons/reporticon-blue.png" />
+        <img src="images/icons/reporticon-blue.png" style="width:30px"/>
       </div>
       <div>
         <p ng-bind-html="petition.html_body" i-content-link></p>

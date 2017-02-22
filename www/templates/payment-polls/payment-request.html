@@ -37,10 +37,11 @@
         <strong ng-bind="q.user.official_title + ' ' + q.user.first_name + ' ' + q.user.last_name" ng-click="navigateTo('owner-profile', q.user)"></strong>
       </div>
       <h1 ng-bind="(q.title) + ' | ' + (q.group.official_name)"></h1>
-      <p i-bind-taggable="q.subject" i-tags="q.cached_hash_tags"></p>
       <div ng-if="group.user_role=='owner' || group.user_role=='manager'" class="report-button" ng-click="report()">
-        <img src="images/icons/reporticon-blue.png" />
+        <img src="images/icons/reporticon-blue.png" style="width:30px"/>
       </div>
+      <p i-bind-taggable="q.subject" i-tags="q.cached_hash_tags"></p>
+      
       <section class="margin-v-10" ng-hide="q.is_answered">
         <fieldset>
           <div class="checkbox-field-long" ng-repeat="option in q.options" ng-class="{active: data.option === option}"
