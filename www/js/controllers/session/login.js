@@ -50,7 +50,7 @@ angular.module('app.controllers').controller('session.login',function ($scope, h
           session.facebookLogin(params).then(function () {
             $scope.hideSpinner();
             if (!session.is_registration_complete) {
-              $scope.path('/profile');
+              $scope.path('/profile-for-facebook-newscomers');
             } else {
               $scope.path('/main');
             }

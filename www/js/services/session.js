@@ -69,7 +69,7 @@ angular.module('app.services').factory('session', function (notifications, serve
         iStorage.set('token', response.data.token);
         iStorage.set('user_id', response.data.id);
         iStorage.set('is_registration_complete', response.data.is_registration_complete);
-
+        notifications.init()
         return response;
       });
     },

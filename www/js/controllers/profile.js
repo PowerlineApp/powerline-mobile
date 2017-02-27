@@ -31,7 +31,7 @@ angular.module('app.controllers').controller('profile', function ($scope, profil
     $scope.profile = profile.get();
 
     if (!$scope.profile.is_registration_complete) {
-      $scope.alert('Please fill out required fields in order to fully expirience Powerline', null, 'Info', 'OK');
+      $scope.alert('Please fill out required fields in order to fully experience Powerline', null, 'Info', 'OK');
     }
 
     setFormData();

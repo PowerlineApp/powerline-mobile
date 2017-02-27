@@ -136,7 +136,7 @@ angular.module('app.services').factory('questions',function (QuestionResource,
           'Accept': 'text/csv'
         }
       };
-      debugger;
+      //debugger;
       return $http.get(serverConfig.url + '/api/v2/polls/'+pollId+'/responses-link').then(function(response){
         console.log(response)
         window.open(serverConfig.url+response.data.url, "_system");
@@ -215,7 +215,7 @@ angular.module('app.services').factory('questions',function (QuestionResource,
 
   function writeToFile(fileName, data) {
        function errorHandler(err) {
-          console.log(err);
+          console.log("Error = " + err);
        }
        window.resolveLocalFileSystemURL(cordova.file.externalDataDirectory, function (directoryEntry) {
             directoryEntry.getFile(fileName, { create: true }, function (fileEntry) {
