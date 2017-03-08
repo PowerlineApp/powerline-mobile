@@ -127,7 +127,7 @@ angular.module('app').run(function ($location, layout, spinnerIndicator, $rootSc
     }
   };
 
-  $rootScope.confirmAction = function (message, title, buttonLabels) {
+  $rootScope.confirmAction = function (message, title, buttonLabels,cancelCallback) {
     var deferred = $q.defer();
     if ($window.navigator.notification) {
       $window.navigator.notification.confirm(message, function (btn) {
@@ -144,6 +144,7 @@ angular.module('app').run(function ($location, layout, spinnerIndicator, $rootSc
         $rootScope.execApply();
       } else 
         deferred.reject();
+        cancelCallback();
     }
     return deferred.promise;
   };

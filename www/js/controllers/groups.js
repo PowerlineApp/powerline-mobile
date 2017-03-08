@@ -224,7 +224,9 @@ angular.module('app.controllers').controller('groups',function ($scope, groups, 
         if (permissionModel.hasPermissions()) {
           var message = 'The next information will be shared with the group leader: ';
           message += permissionModel.getPermissionsToConfirmByUserForHumans().join("\n")
-          $scope.confirmAction(message, 'Permissions',['OK','Cancel']).then(function(){
+          $scope.confirmAction(message, 'Permissions',['OK','Cancel'],function(){
+			$scope.navigateTo('groups.profile',$scope.group);
+		  }).then(function(){
             join(joinForm);
           })
         } else {
