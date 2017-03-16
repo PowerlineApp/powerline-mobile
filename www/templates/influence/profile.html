@@ -10,21 +10,21 @@
           <p ng-show="data.bio && isFollowedAndApproved()" style="clear: both;"><strong>Bio:</strong> {{ data.bio}}</p>
       </div>
       <br>
-      <button class="btn-large btn-red1" 
-        style="text-transform: capitalize" 
+      <button class="btn-large btn-red1"
+        style="text-transform: capitalize"
         ng-show="follow && follow.isFollowedByCurrentUser() && follow.isApproved()"
         ng-click="changeStatus('unfollow')">
         <i class="icon ion-person" style="font-size: 25px"></i>
-        <i class="icon ion-minus-circled" style="font-size: 14px; vertical-align: middle"></i> 
+        <i class="icon ion-minus-circled" style="font-size: 14px; vertical-align: middle"></i>
         <span style="margin-left: 5px; vertical-align: text-top">Unfollow</span>
       </button>
 
-      <button class="btn-large btn-primary" 
-        style="text-transform: capitalize" 
+      <button class="btn-large btn-primary"
+        style="text-transform: capitalize"
         ng-show="follow && !follow.isFollowedByCurrentUser()"
         ng-click="changeStatus('follow')">
         <i class="icon ion-person" style="font-size: 25px"></i>
-        <i class="icon ion-plus-circled" style="font-size: 14px; vertical-align: middle"></i> 
+        <i class="icon ion-plus-circled" style="font-size: 14px; vertical-align: middle"></i>
         <span style="margin-left: 5px; vertical-align: text-top">Follow</span>
       </button>
       <p ng-if="follow && follow.isFollowedByCurrentUser() && !follow.isApproved()" style="font-style: italic;">pending approval</p>
@@ -62,6 +62,11 @@
     </section>
 
     <section ng-include=" 'templates/home/activities.html' "></section>
+
+    <ion-infinite-scroll
+      ng-if="isLoadMore"
+      on-infinite="loadMoreActivities()">
+    </ion-infinite-scroll>
     
   </ion-content>
 </ion-view>
