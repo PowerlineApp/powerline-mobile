@@ -582,6 +582,9 @@
         @include iphone6AndLower{
           font-size: 16px;
         }
+
+        overflow: visible !important;
+        white-space: normal !important;
       }
       .icon-up-mini, .icon-down-mini {
         display: inline-block;
@@ -702,12 +705,12 @@
     white-space: normal;
     border-width: 0px;
     color: inherit;
-    
-    
+
+
 
     .completion-fill-vertical {
       position: absolute;
-      right: 4px; 
+      right: 4px;
       top: 2px;
       bottom: 42px;
       height: auto;
@@ -726,7 +729,7 @@
       //ignore tap activated styles
       &.activated{
         background-color: transparent!important;
-      } 
+      }
       hash-tag{
         font-family: "Lato Bold";
         color: #4c33cc;
@@ -811,7 +814,7 @@
         background-size: 12px;
         text-indent: 15px;
       }
-      
+
       p{
         margin-top: 5px;
         margin-bottom: 0px;
@@ -861,10 +864,10 @@
         &.follow {
           padding-top: 2px;
           a i:nth-of-type(2){
-            font-size: 14px; 
+            font-size: 14px;
             vertical-align: middle;
           }
-        }        
+        }
         a, span {
           font-size: 13px;
           font-family: 'Lato Bold';
@@ -885,7 +888,7 @@
     & > figure {
       display: block;
       position: absolute;
-      top: 5px; 
+      top: 5px;
       left: 5px;
       width: 50px;
       height: 50px;
@@ -922,7 +925,7 @@
       background: url("../images/v2/cut/sa-right-icon.png") right 23px no-repeat;
       background-size: 18px 14px;
     }
-    
+
     &.follow-request > div{
       display: table;
       width: 100%;
@@ -1033,8 +1036,8 @@
 }
 
 a.follow-action {
-  position:absolute; 
-  right: 10px; 
+  position:absolute;
+  right: 10px;
   top: 25px;
 
   i:nth-of-type(1) {
@@ -1042,7 +1045,7 @@ a.follow-action {
   }
 
   i:nth-of-type(2){
-    font-size: 14px; 
+    font-size: 14px;
     vertical-align: middle
   }
 }
@@ -1058,7 +1061,7 @@ a.follow-action {
   .title {
     font-size: 15px;
     color: #778288;
-    font-weight: 600;    
+    font-weight: 600;
   }
 
   .content {
@@ -1102,7 +1105,7 @@ a.follow-action {
       tr:nth-child(even) {
         background: rgba(235, 235, 235, 0.57);
       }
-      
+
       td.actions-first{
         vertical-align: middle;
         text-align: center;
@@ -1201,7 +1204,7 @@ a.follow-action {
       font-weight: 600;
       z-index: 2;
       text-align: center;
-      
+
         .inner {
           align-self: center;
         }
@@ -1285,7 +1288,7 @@ a.follow-action {
 
   .zoom-pane .scroll {
     min-height: 100% !important;
-    
+
     display: -webkit-box;
     display: -moz-box;
     display: -ms-flexbox;
@@ -1315,7 +1318,7 @@ a.follow-action {
     -ms-flex-align: center;
     align-items: center;
   }
-  
+
   .zoom-pane img {
     width: 100% !important;
     vertical-align: middle !important;

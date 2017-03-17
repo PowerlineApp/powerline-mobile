@@ -2730,7 +2730,9 @@ asterisk {
     min-height: 30px; }
     .comments .item .item-content p {
       color: #636363;
-      line-height: 1.4em; }
+      line-height: 1.4em;
+      overflow: visible !important;
+      white-space: normal !important; }
       .comments .item .item-content p a {
         font-family: "Lato Bold";
         color: #030366; }
