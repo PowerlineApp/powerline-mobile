@@ -6,8 +6,8 @@
       </div>
       <div>
           <p class="title" ng-bind="data.first_name + ' ' + data.last_name"></p>
-          <p class="slogan" ng-bind="data.slogan" ng-show="isFollowedAndApproved()"></p>
-          <p ng-show="data.bio && isFollowedAndApproved()" style="clear: both;"><strong>Bio:</strong> {{ data.bio}}</p>
+          <p class="slogan" ng-bind="data.slogan"></p>
+          <p ng-show="data.bio" style="clear: both;"><strong>Bio:</strong> {{ data.bio}}</p>
       </div>
       <br>
       <button class="btn-large btn-red1"
@@ -32,28 +32,25 @@
 
     <section>
       <ul class="info-list">
-          <li ng-show="data.birth">
-              <p><span>Date of Birth</span></p>
-              <p ng-bind="data.birth"></p>
-              <i class="icon-date"></i>
+
+          <!-- interests -->
+          <li ng-show="data.interests.length && isFollowedAndApproved()">
+            <p><span>Interests</span></p>
+            <div class="interests" ng-show="data.interests.length">
+              <span ng-repeat="item in data.interests" class="active">
+                {{item}}
+              </span>
+              <input type="hidden" ng-model="data.interests" name="interests">
+            </div>
           </li>
-          <li ng-show="data.facebook_link" ng-click="openSystem(data.facebook)">
-              <p><span>Facebook</span></p>
-              <p ng-bind="data.facebook_link"></p>
-          </li>
-          <li ng-show="data.twitter_link" ng-click="openSystem('https://twitter.com/' + data.twitter)">
-              <p><span>Twitter</span></p>
-              <p ng-bind="data.twitter_link"></p>
-          </li>
-          <li ng-show="data.city">
-              <p><span>City</span></p>
-              <p ng-bind="data.city"></p>
-              <i class="icon-address"></i>
-          </li>
-          <li ng-show="data.state">
+
+          <!-- state -->
+          <li ng-show="data.state && isFollowedAndApproved()">
               <p><span>State</span></p>
               <p ng-bind="data.state"></p>
           </li>
+
+          <!-- country -->
           <li ng-show="data.country">
               <p><span>Country</span></p>
               <p ng-bind="data.country"></p>
@@ -67,6 +64,6 @@
       ng-if="isLoadMore"
       on-infinite="loadMoreActivities()">
     </ion-infinite-scroll>
-    
+
   </ion-content>
 </ion-view>
