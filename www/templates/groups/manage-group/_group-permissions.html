@@ -6,15 +6,15 @@
     <div>
       <ion-list>
 
-        <ion-checkbox 
+        <ion-checkbox
         ng-repeat="(pID, pHumanName) in allGroupPermissions"
-        ng-model="data.selectedPermissions[pID]">{{pHumanName}}</ion-checkbox>
+        ng-model="data.selectedPermissions[pID]" ng-disabled="pID=='permissions_responses'">{{pHumanName}}</ion-checkbox>
 
       </ion-list>
     </div>
 
     <div class="save-button-holder">
-      <button ng-show="groupPermissionsAltered()" 
+      <button ng-show="groupPermissionsAltered()"
         ng-click="saveGroupPermissions()"
         class="button btn-primary">
         Save
