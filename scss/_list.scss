@@ -1035,6 +1035,28 @@
   }
 }
 
+.follow-action {
+  position:absolute;
+  right: 10px;
+  top: 25px;
+
+  a.approve {
+
+  }
+  a.ignore {
+    margin-left: 10px;
+  }
+  
+  i:nth-of-type(1) {
+    font-size: 25px;
+  }
+
+  i:nth-of-type(2){
+    font-size: 14px;
+    vertical-align: middle
+  }
+}
+
 a.follow-action {
   position:absolute;
   right: 10px;
@@ -1049,6 +1071,8 @@ a.follow-action {
     vertical-align: middle
   }
 }
+
+
 
 .manage-group-sections .manage-group-section {
   background-color: #f7f8fc;

@@ -7,5 +7,5 @@ angular.module('app.controllers').directive('saItem', function () {
     }
   };
 }).value('influencesCD', {
-  view: 'following'
+  view: 'followers'
 });

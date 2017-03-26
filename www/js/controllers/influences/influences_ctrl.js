@@ -28,15 +28,15 @@ angular.module('app.controllers').controller('influences',function ($scope, $loc
   }, function () {
     $scope.view = influencesCD.view;
   });
-  
+
   $rootScope.$on('influences-updated', function(){
     loadFollowsFromServer(true);
   });
-  
+
   //if this page is opened from menu or there is not data, we should refresh data
   $scope.$on('$ionicView.enter', function(){
     if(!follows.size()  || follows.containsMockUsers)
       loadFollowsFromServer(true);
   });
-  
+
 })

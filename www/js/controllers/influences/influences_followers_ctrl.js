@@ -13,7 +13,7 @@ angular.module('app.controllers').controller('influences.followers',function ($s
       userFollowingCurrentUser.unApprove().then(function(){
         follows.load();
       })
-      
+
     });
   };
 
@@ -22,8 +22,21 @@ angular.module('app.controllers').controller('influences.followers',function ($s
       userFollowingCurrentUser.approve().then(function(){
         follows.load();
       })
-      
+
     });
   };
 
+}).filter('filterByApproved', function() {
+  return function(items) {
+    var filtered = [];
+    angular.forEach(items, function(item) {
+      filtered.push(item);
+    });
+
+    filtered.sort(function(a,b) {
+      return (a.isApprovedByCurrentUser() && !b.isApprovedByCurrentUser() ? 1: -1);
+    });
+
+    return filtered;
+  }
 })

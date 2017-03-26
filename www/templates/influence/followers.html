@@ -1,15 +1,26 @@
 <section ng-controller="influences.followers" class="margin-8">
   <ul class="profiles-list-two">
-    <li ng-repeat="item in data" ng-show="item.isApprovedByCurrentUser()">
+    <li ng-repeat="item in data | filterByApproved">
       <figure ng-click="navigateTo('path', 'influence/profile', item.user_id)">
         <avatar-img img="item.avatar_file_name" text="item.first_name"></avatar-img>
       </figure>
       <p ng-click="navigateTo('path', 'influence/profile', item.user_id)">{{ item.username}}</p>
       <p><span>{{ item.first_name}} {{ item.last_name}}</span></p>
-      <a class="follow-action" ng-click="remove(item)">
+
+      <a class="follow-action" ng-click="remove(item)" ng-show="item.isApprovedByCurrentUser()">
         <i class="icon ion-person calm"></i>
-        <i class="icon ion-minus-circled" style="color: #adb7c6"></i> 
+        <i class="icon ion-minus-circled" style="color: #adb7c6"></i>
       </a>
+
+      <div class="follow-action">
+        <a class="approve" ng-click="approve(item)" ng-show="!item.isApprovedByCurrentUser()">
+          <i class="icon ion-checkmark-round balanced"></i>
+        </a>
+        <a class="ignore" ng-click="remove(item)" ng-show="!item.isApprovedByCurrentUser()">
+          <i class="icon ion-close-round assertive"></i>
+        </a>
+      </div>
+
     </li>
   </ul>
 
