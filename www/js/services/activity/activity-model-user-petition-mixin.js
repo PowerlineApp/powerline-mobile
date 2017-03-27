@@ -12,7 +12,7 @@ function UserPetitionMixin(userPetitions, groups) {
     var notExpired = !this.isExpired()
     var notOwnedByMe = !this.isOwn()
     var notSignedByMe = !this.isSignedbyMe()
-    
+
     return notExpired && notOwnedByMe && notSignedByMe
   }
 
@@ -77,6 +77,10 @@ function UserPetitionMixin(userPetitions, groups) {
   this.creatorName = function(){
     var name = this.get('owner').first_name + ' ' + this.get('owner').last_name
     return name
+  }
+
+  this.ownerName = function(){
+    return this.creatorName()
   }
 
   this.groupName = function(){
