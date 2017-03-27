@@ -2,7 +2,7 @@
 
   <figure ng-click="navigateTo('owner-profile', activity.get('owner'));$event.stopPropagation();">
     <img bo-show="avatar_file_path" bo-src="avatar_file_path" ng-if="!isDefaultAvatar">
-    <ng-letter-avatar data="{{(activity.creatorName()| trim)}}" ng-if="isDefaultAvatar"></ng-letter-avatar>
+    <ng-letter-avatar data="{{(activity.ownerName()| trim)}}" ng-if="isDefaultAvatar"></ng-letter-avatar>
     <span ng-show="activity.isInPriorityZone()"></span>
   </figure>
 
@@ -17,12 +17,12 @@
   </div>
   <div class="item-content">
     <p ng-click="navigateToActivity(activity)"
-      bo-if="activity.get('image_src')" 
+      bo-if="activity.get('image_src')"
       class="picture">
       <img ng-src="{{imagePath}}" zoom-src="{{imagePath}}" zoom-view/>
     </p>
-    <p ng-class="{unanswered: !activity.isSignedbyMe() && !title}" 
-      bo-html="description" 
+    <p ng-class="{unanswered: !activity.isSignedbyMe() && !title}"
+      bo-html="description"
       ng-click="navigateToActivity(activity, null, $event)" i-content-link>
     </p>
     <ng-include src="'templates/home/activities/_attachments.html'" ng-show="activity.hasAttachments()"></ng-include>
@@ -42,7 +42,7 @@
       <a ng-click="bookmarkButtonClicked()">
         <i class="icon ion-star" ng-class="isBookmarked() ? 'active': ''"></i>
       </a>
-    </div>  
+    </div>
     <div class="responses" bo-bind="comments_count"></div>
   </div>
 </article>

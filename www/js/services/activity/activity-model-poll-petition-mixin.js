@@ -4,7 +4,7 @@ function PollPetitionMixin(petitions){
     var notOwnedByMe = !this.isOwn()
     var notSignedByMe = !this.isSignedbyMe()
 
-    return notExpired && notOwnedByMe && notSignedByMe       
+    return notExpired && notOwnedByMe && notSignedByMe
   }
 
   this.canUnsign = function(){
@@ -83,6 +83,10 @@ function PollPetitionMixin(petitions){
       return this.get('user').official_title
     else
       return this.groupName()
+  }
+
+  this.ownerName = function(){
+    return this.groupName()
   }
 
   this.groupName = function(){

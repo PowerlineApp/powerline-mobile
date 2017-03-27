@@ -12,7 +12,7 @@ function PostMixin(posts, groups){
     var notOwnedByMe = !this.isOwn()
 
     return notAnswered && notExpired && notOwnedByMe
-  } 
+  }
 
   this.canUndoVote = function(){
     return this.isAnswered() && !this.isExpired()
@@ -82,6 +82,10 @@ function PostMixin(posts, groups){
   this.creatorName = function(){
     var name = this.get('owner').first_name + ' ' + this.get('owner').last_name
     return name
+  }
+
+  this.ownerName = function(){
+    return this.creatorName()
   }
 
   this.groupName = function(){

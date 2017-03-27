@@ -4,7 +4,7 @@ angular.module('app.controllers').controller('home', function ($scope, $timeout,
 
   $scope.isLoadMore = false;
   var activityCollection = activity.getActivities();
-  
+
   $scope.changeGroupFilter = function(group){
     var isDifferentGroupThanCurrentlyActive = $scope.filter.selectedGroup != group
     if(!$scope.isSpinnerShow && isDifferentGroupThanCurrentlyActive)
@@ -21,7 +21,7 @@ angular.module('app.controllers').controller('home', function ($scope, $timeout,
 
   $scope.closeModalImageViewer = function(){
     $rootScope.modalImageUrl = null
-  } 
+  }
 
   $scope.canCreateLeaderContent = function(){
     var selectedGroupID = null
@@ -365,16 +365,12 @@ angular.module('app.controllers').directive('iActivity', function ($rootScope, q
         }
       };
 
-      // if($scope.activity.get('entity').id == 517)
-      //    console.log(JSON.stringify($scope.activity))
-      // else return
-
       $scope.title = $scope.activity.get('title');
       var description_raw = $scope.activity.get('description_html')
       if(description_raw == null || description_raw.length == 0)
         description_raw = $scope.activity.get('description')
       $scope.description = iParse.wrapHashTags(description_raw)
-      $scope.avatar_file_path = $scope.activity.get('user').avatar_file_name;
+      $scope.avatar_file_path = $scope.activity.get('owner').avatar_file_path;
 
       if($scope.avatar_file_path && $scope.avatar_file_path.indexOf('imgix.net') > 0) {
           var avatar_file_path = $scope.avatar_file_path +'&w=50&h=50&auto=compress,format,q=75';
@@ -420,7 +416,7 @@ angular.module('app.controllers').directive('iActivity', function ($rootScope, q
 
       $scope.showInModalImageViewer = function(url){
         $rootScope.modalImageUrl = url
-      }   
+      }
 
       $scope.followIcons = function(){
         if(activityOwnerFollow && activityOwnerFollow.isFollowedByCurrentUser() && activityOwnerFollow.hasApprovedCurrentUser())

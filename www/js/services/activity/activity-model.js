@@ -15,9 +15,9 @@ angular.module('app.services').factory('ActivityModel',
         expire_at: 'date',
         sent_at: 'date',
         owner: function (owner) {
-          if (owner && owner.avatar_file_name) {
-            owner.avatar_file_path = owner.avatar_file_name;
-          }
+          // if (owner && owner.avatar_file_name) {
+          //   owner.avatar_file_path = owner.avatar_file_name;
+          // }
           return owner;
         }
       },
@@ -30,7 +30,7 @@ angular.module('app.services').factory('ActivityModel',
       },
       isUnanswered: function () {
         return !this.isAnswered()
-      },      
+      },
       setAnswer: function(answer){
         this.set('answers', [answer])
       },
@@ -133,7 +133,7 @@ angular.module('app.services').factory('ActivityModel',
 
         return 1;
       },
-      
+
       hasLinkPreviewMetadata: function(){
         return !!this.get('metadata');
       }

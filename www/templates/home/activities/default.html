@@ -2,7 +2,7 @@
 
   <figure ng-click="navigateTo('owner-profile', activity.get('owner'));$event.stopPropagation();">
     <img bo-show="avatar_file_path" bo-src="avatar_file_path" ng-if="!isDefaultAvatar">
-    <ng-letter-avatar data="{{(activity.creatorName() | trim)}}" ng-if="isDefaultAvatar"></ng-letter-avatar>
+    <ng-letter-avatar data="{{(activity.ownerName() | trim)}}" ng-if="isDefaultAvatar"></ng-letter-avatar>
     <span ng-show="activity.isInPriorityZone()"></span>
   </figure>
   <div class="item-title">
@@ -15,13 +15,13 @@
     <i class="time"><time>{{ sent_at_elapsed }}</time></i>
   </div>
   <div class="item-content">
-    <p ng-click="navigateToActivity(activity)" 
-      bo-if="activity.get('image_src')" 
+    <p ng-click="navigateToActivity(activity)"
+      bo-if="activity.get('image_src')"
       class="picture">
       <img ng-src="{{imagePath}}" zoom-src="{{imagePath}}" zoom-view/>
     </p>
-    <p ng-class="{unanswered: activity.isUnanswered() && !title}" 
-      bo-html="description" 
+    <p ng-class="{unanswered: activity.isUnanswered() && !title}"
+      bo-html="description"
       ng-click="navigateToActivity(activity, null, $event)" i-content-link>
     </p>
     <ng-include src="'templates/home/activities/_link-preview-metadata.html'" ng-show="activity.hasLinkPreviewMetadata()">
@@ -35,8 +35,8 @@
       <a ng-click="bookmarkButtonClicked()">
         <i class="icon ion-star" ng-class="isBookmarked() ? 'active': ''"></i>
       </a>
-    </div>  
-  
+    </div>
+
     <div class="responses" bo-bind="comments_count"></div>
   </div>
 </article>

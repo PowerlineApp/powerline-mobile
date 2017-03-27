@@ -38,6 +38,10 @@ function PollEventMixin(serverConfig, $http){
       return this.groupName()
   }
 
+  this.ownerName = function(){
+    return this.groupName()
+  }
+  
   this.groupName = function(){
     return this.get('owner').official_name
   }
