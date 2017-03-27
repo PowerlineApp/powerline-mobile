@@ -1,6 +1,6 @@
 angular.module('app.services').factory('UsersActivity',
   function ($http, serverConfig, JsModel, UsersActivityCollection, JsCollection, $q, representatives, groups, session, follows, favorite) {
-    
+
     var defaultLimit = 20;
 
     return {
@@ -33,8 +33,7 @@ angular.module('app.services').factory('UsersActivity',
         }
 
         var that = this;
-        return $q.all(promises).then(function () {
-          console.log(UsersActivityCollection.toArray());
+        return $q.all(promises).then(function () {          
           return that.setAnswers();
         });
       },

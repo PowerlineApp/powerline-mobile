@@ -11,7 +11,7 @@
   </li>
   <li class="messages" ng-click="goToMessages()" ng-class="getClass('/messages')">
     <i>
-      <span ng-show="messagesCount">{{ messagesCount}}</span>
+      <span ng-show="messagesCount || newAnnouncementsCount">{{messagesCount > 0 ? messagesCount : ''}}</span>
     </i>
   </li>
 </ul>

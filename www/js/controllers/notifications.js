@@ -5,7 +5,8 @@ angular.module('app.controllers').controller('notifications', function ($scope, 
   $scope.SAState = SocialActivityTabManager.getState();
 
   $scope.$watch(getMessagesCount, function (messagesCount) {
-    $scope.messagesCount = messagesCount;
+    $scope.messagesCount = groupsInvites.get().length + invites.get().size();
+    $scope.newAnnouncementsCount = announcements.getNumberOfNew();
   });
 
   $scope.activity = function () {
