@@ -187,16 +187,29 @@ angular.module('app.services').factory('posts',function ($q, session, serverConf
 
     getComments: function(postID){
       return $http.get(serverConfig.url + '/api/v2/posts/'+postID+'/comments').then(function(response){
+        console.log(JSON.stringify(response));
         return response.data.payload
       })
     },
 
     addComment: function(postID, parentCommentID, commentText, privacy){
-      var payload = JSON.stringify({
-        comment_body:commentText,
-        parent_comment: parentCommentID,
-        privacy: privacy
-      })
+      //console.log('parentCommmentID = ' + parentCommentID);
+      //var payload = {};
+      //if(parentCommentID) {
+        var payload = JSON.stringify({
+          comment_body:commentText,
+          parent_comment: parentCommentID,
+          privacy: privacy
+        });
+      /*}
+      else {
+        console.log('root-comment');
+        payload = JSON.stringify({
+          comment_body:commentText,
+          privacy: privacy
+        });
+      }*/
+       
       var headers = {headers: {'Content-Type': 'application/json'}}
       return $http.post(serverConfig.url + '/api/v2/posts/'+postID+'/comments', payload, headers)
     },

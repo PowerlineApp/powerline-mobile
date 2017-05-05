@@ -7,6 +7,7 @@ angular.module('app.controllers').controller('discussion',function ($scope, topB
   $scope.entity = $scope.entity || $stateParams.entity;
 
   var cache = $cacheFactory.get('discussionController');
+  $scope.is_root = true;
 
   $scope.toTrustedHTML = function(html) {
     return $sce.trustAsHtml(html);
@@ -16,12 +17,14 @@ angular.module('app.controllers').controller('discussion',function ($scope, topB
   $scope.showForm = Boolean(commentId);
 
   $scope.comment = getComment();
+  //console.log('scope.comment='+JSON.stringify($scope.comment));
 
   if (!$stateParams.comment || !$scope.comment) {
     loadComments();
   }
 
   $scope.$watch(getComment, function (newValue) {
+    //console.log("watch - getComment");
     $scope.comment = newValue;
   });
 
@@ -51,7 +54,15 @@ angular.module('app.controllers').controller('discussion',function ($scope, topB
   function getComment() {
     var data = cache.get($scope.id);
     if (data) {
-      return commentId ? data.byId[commentId] : data.root;
+      if(commentId) {
+        $scope.is_root = false;
+        return data.byId[commentId];
+      }
+      else {
+        $scope.is_root = true;
+        return data.root;
+      }
+      //return commentId ? data.byId[commentId] : data.root;
     }
   }
 
@@ -148,13 +159,26 @@ angular.module('app.controllers').controller('discussion',function ($scope, topB
     if (!$scope.data.comment) {
       return;
     }
-    var data = {
-      parent_comment: $scope.comment.id,
-      comment_body: $scope.data.comment,
-      privacy: $scope.data.privacy
-    };
+    //console.log('reply: ' + $scope.is_root);
+    var data = {};
+    if($scope.is_root) {
+      data = {
+        is_root: true,
+        parent_comment: $scope.comment.id,
+        comment_body: $scope.data.comment,
+        privacy: $scope.data.privacy
+      };
+    } else {
+      data = {
+        is_root: false,
+        parent_comment: $scope.comment.id,
+        comment_body: $scope.data.comment,
+        privacy: $scope.data.privacy
+      };
+    }
     $rootScope.showSpinner();
     homeCtrlParams.loaded = false;
+    
     discussion.createComment($scope.entity, $scope.id, data).then(function () {
       $scope.$emit('discussion.comment-added');
       $scope.data.comment = '';

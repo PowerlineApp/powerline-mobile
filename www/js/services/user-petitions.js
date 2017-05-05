@@ -155,11 +155,22 @@ angular.module('app.services').factory('userPetitions',function ($q, session, se
     },
 
     addComment: function(userPetitionID, parentCommentID, commentText, privacy){
-      var payload = JSON.stringify({
-        comment_body:commentText,
-        parent_comment: parentCommentID,
-        privacy: privacy
-      })
+      //console.log('parentCommmentID = ' + parentCommentID);
+      //var payload = {};
+      //if(parentCommentID) {
+        var payload = JSON.stringify({
+          comment_body:commentText,
+          parent_comment: parentCommentID,
+          privacy: privacy
+        });
+      /*}
+      else {
+        console.log('root-comment');
+        payload = JSON.stringify({
+          comment_body:commentText,
+          privacy: privacy
+        });
+      }*/
       var headers = {headers: {'Content-Type': 'application/json'}}
       return $http.post(serverConfig.url + '/api/v2/user-petitions/'+userPetitionID+'/comments', payload, headers)
     },
